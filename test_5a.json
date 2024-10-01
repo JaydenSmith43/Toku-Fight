@@ -1,0 +1,28 @@
+{
+	"frame": 4,
+	"name": "test_5a",
+	"hitbox": [
+		{
+			"damage": 5,
+			"end_frame": 3,
+			"size_x": "entity_0",
+			"size_y": "value_0"
+		},
+		{
+			"damage": 5,
+			"end_frame": 3,
+			"size_x": "entity_0",
+			"size_y": "value_0"
+		}
+	],
+	"frame": 9,
+	"name": "test_5a",
+	"hitbox": [
+		{
+			"damage": 5,
+			"end_frame": 3,
+			"size_x": "entity_0",
+			"size_y": "value_0"
+		}
+	],
+}

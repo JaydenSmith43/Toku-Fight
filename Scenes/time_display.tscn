@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://drk64j6yoyc0"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_v2a6v"]
+font_size = 120
+outline_size = 40
+outline_color = Color(0.215366, 0.18405, 0.14387, 1)
+
+[node name="Label" type="Label"]
+offset_right = 200.0
+offset_bottom = 165.0
+pivot_offset = Vector2(100, 100)
+text = "00
+"
+label_settings = SubResource("LabelSettings_v2a6v")
+horizontal_alignment = 1

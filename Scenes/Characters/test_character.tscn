@@ -1,0 +1,108 @@
+[gd_scene load_steps=18 format=3 uid="uid://yey7lvkuwcd1"]
+
+[ext_resource type="Script" path="res://Scripts/test.gd" id="1_p15gt"]
+[ext_resource type="SpriteFrames" uid="uid://ceblh1v37n0rl" path="res://Sprites/Character/testRyu/ryu_sprite.tres" id="2_lo3f1"]
+[ext_resource type="Shape2D" uid="uid://birlm7ruombro" path="res://Scenes/Characters/testCh1/IdleCol.tres" id="3_0prmg"]
+[ext_resource type="Script" path="res://Scripts/input.gd" id="3_87miu"]
+[ext_resource type="Shape2D" uid="uid://bccqvq0mcbv2j" path="res://Scenes/Characters/testCh1/JumpCol.tres" id="3_cmowc"]
+[ext_resource type="Script" path="res://Scenes/Characters/Hurtbox.gd" id="4_1oxew"]
+[ext_resource type="PackedScene" uid="uid://ook7dmepmfw5" path="res://Scenes/ui.tscn" id="4_qrdf1"]
+[ext_resource type="Script" path="res://Scripts/StateMachine.gd" id="5_2ikf7"]
+[ext_resource type="Script" path="res://Scripts/States/testIdle.gd" id="6_vvwnm"]
+[ext_resource type="Script" path="res://Scripts/States/testAttack.gd" id="7_suixc"]
+[ext_resource type="PackedScene" uid="uid://bh6x5sy31wviu" path="res://Scenes/health_bar.tscn" id="7_xdp0n"]
+[ext_resource type="Script" path="res://Scripts/States/testHadou.gd" id="8_t17ag"]
+[ext_resource type="Script" path="res://Scripts/States/testJump.gd" id="9_lhso1"]
+
+[sub_resource type="Animation" id="Animation_xifwo"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_ega2o"]
+resource_name = "test_jab"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rvoa7"]
+_data = {
+"RESET": SubResource("Animation_xifwo"),
+"test_jab": SubResource("Animation_ega2o")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jciv6"]
+size = Vector2(128, 322)
+
+[node name="test" type="CharacterBody2D"]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_p15gt")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(120, -109)
+scale = Vector2(5, 5)
+sprite_frames = ExtResource("2_lo3f1")
+animation = &"jab"
+autoplay = "idle"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_rvoa7")
+}
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("4_1oxew")
+
+[node name="Collision" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -15)
+shape = SubResource("RectangleShape2D_jciv6")
+debug_color = Color(0, 0.647059, 0.243137, 0.419608)
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, 105)
+shape = ExtResource("3_0prmg")
+
+[node name="AttackTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Input" type="Node" parent="."]
+script = ExtResource("3_87miu")
+
+[node name="UI" parent="." instance=ExtResource("4_qrdf1")]
+
+[node name="HealthBar" parent="UI" instance=ExtResource("7_xdp0n")]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 820.0
+offset_bottom = 70.0
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("5_2ikf7")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("character")]
+script = ExtResource("6_vvwnm")
+idleCol = ExtResource("3_0prmg")
+character = NodePath("../..")
+
+[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("animation", "character")]
+script = ExtResource("7_suixc")
+animation = NodePath("../../AnimationPlayer")
+character = NodePath("../..")
+
+[node name="Hadou" type="Node" parent="StateMachine" node_paths=PackedStringArray("character")]
+script = ExtResource("8_t17ag")
+character = NodePath("../..")
+
+[node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("collision", "character")]
+script = ExtResource("9_lhso1")
+collision = NodePath("../../Collision")
+jumpCol = ExtResource("3_cmowc")
+character = NodePath("../..")
+
+[node name="StateLabel" type="Label" parent="."]
+offset_left = -68.0
+offset_top = -353.0
+offset_right = 71.0
+offset_bottom = -212.0
+theme_override_font_sizes/font_size = 50
+text = "State:
+id"
+horizontal_alignment = 1

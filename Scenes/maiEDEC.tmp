@@ -1,0 +1,60 @@
+[gd_scene load_steps=9 format=3 uid="uid://b10uroexfn4f5"]
+
+[ext_resource type="PackedScene" uid="uid://yey7lvkuwcd1" path="res://Scenes/Characters/test_character.tscn" id="1_w6j6f"]
+[ext_resource type="Script" path="res://Scripts/sine_test.gd" id="2_2e8xl"]
+[ext_resource type="PackedScene" uid="uid://b6u7tfll1bs58" path="res://Scenes/Characters/test_character2.tscn" id="2_25lb3"]
+[ext_resource type="Script" path="res://camera.gd" id="2_l45mj"]
+[ext_resource type="Texture2D" uid="uid://b0cw2yl22axj5" path="res://Sprites/display/a_button.png" id="2_o1m36"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_elf24"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0mm54"]
+size = Vector2(20, 985.75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vq1xu"]
+size = Vector2(2037, 107)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="test_character" parent="." instance=ExtResource("1_w6j6f")]
+position = Vector2(-200, 0)
+scale = Vector2(0.5, 0.5)
+
+[node name="test_character2" parent="." instance=ExtResource("2_25lb3")]
+position = Vector2(200, 0)
+scale = Vector2(0.5, 0.5)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_elf24")
+
+[node name="wall1" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-800, -200)
+shape = SubResource("RectangleShape2D_0mm54")
+
+[node name="wall2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(800, -200)
+shape = SubResource("RectangleShape2D_0mm54")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0.5, 287)
+shape = SubResource("RectangleShape2D_vq1xu")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="sine test" type="Node2D" parent="."]
+position = Vector2(-316, -41)
+script = ExtResource("2_2e8xl")
+
+[node name="Sprite2D" type="Sprite2D" parent="sine test"]
+scale = Vector2(2.59375, 2.59375)
+texture = ExtResource("2_o1m36")
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("character1", "character2")]
+zoom = Vector2(2, 2)
+limit_left = -800
+limit_top = -500
+limit_right = 800
+limit_bottom = 500
+editor_draw_limits = true
+script = ExtResource("2_l45mj")
+character1 = NodePath("../test_character")
+character2 = NodePath("../test_character2")

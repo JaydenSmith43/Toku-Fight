@@ -1,0 +1,97 @@
+extends Node
+
+var I_left : String
+var I_right : String
+var I_up : String
+var I_down : String
+var I_light : String
+
+var inputValue = preload("res://Scenes/input_value.tscn")
+var current_frame : int = 0
+
+var inputs = []
+
+func _ready():
+	if (get_parent().is_in_group("player1")):
+		I_left = "P1_Left"
+		I_right = "P1_Right"
+		I_up = "P1_Up"
+		I_down = "P1_Down"
+		I_light = "P1_Light"
+	else:
+		I_left = "P2_Left"
+		I_right = "P2_Right"
+		I_up = "P2_Up"
+		I_down = "P2_Down"
+		I_light = "P2_Light"
+
+func _input(event):
+	if event is InputEventKey:
+		var input = input_handler(event)
+
+func _physics_process(delta):
+	current_frame += 1
+	add_time(delta)
+
+func input_handler(event):
+	#region 8-way directions
+	if Input.is_action_pressed(I_left) and Input.is_action_pressed(I_right):
+		print("neutral")
+	elif Input.is_action_pressed(I_up) and Input.is_action_pressed(I_down):
+		print("neutral")
+	if Input.is_action_pressed(I_left) and Input.is_action_pressed(I_up):
+		var instance = inputValue.instantiate()
+		instance.type = "up-l"
+		inputs.push_back(instance)
+	elif Input.is_action_pressed(I_left) and Input.is_action_pressed(I_down):
+		var instance = inputValue.instantiate()
+		instance.type = "down-l"
+		inputs.push_back(instance)
+	elif Input.is_action_pressed(I_left) and !Input.is_action_pressed(I_right):
+		var instance = inputValue.instantiate()
+		instance.type = "left"
+		inputs.push_back(instance)
+	elif Input.is_action_pressed(I_right) and Input.is_action_pressed(I_up):
+		var instance = inputValue.instantiate()
+		instance.type = "up-r"
+		inputs.push_back(instance)
+	elif Input.is_action_pressed(I_right) and Input.is_action_pressed(I_down):
+		var instance = inputValue.instantiate()
+		instance.type = "down-r"
+		inputs.push_back(instance)
+	elif Input.is_action_pressed(I_right) and !Input.is_action_pressed(I_left):
+		var instance = inputValue.instantiate()
+		instance.type = "right"
+		inputs.push_back(instance)
+	elif Input.is_action_pressed(I_up):
+		var instance = inputValue.instantiate()
+		instance.type = "up"
+		inputs.push_back(instance)
+	elif Input.is_action_pressed(I_down):
+		var instance = inputValue.instantiate()
+		instance.type = "down"
+		inputs.push_back(instance)
+	#endregion
+	
+	#region buttons
+	if Input.is_action_just_pressed(I_light):
+		var instance = inputValue.instantiate()
+		instance.type = "A"
+		inputs.push_back(instance)
+	#if Input.is_action_just_pressed("Medium"):
+	#	var instance = inputValue.instantiate()
+	#	instance.type = "B"
+	#	inputs.push_back(instance)
+	#if Input.is_action_just_pressed("Heavy"):
+	#	var instance = inputValue.instantiate()
+	#	instance.type = "C"
+	#	inputs.push_back(instance)
+	#endregion
+
+func add_time(delta):
+	var offset = 0
+	for n in inputs.size():
+		inputs[n - offset].buffer_time += delta
+		if inputs[n - offset].buffer_time >= 1:
+			inputs.pop_at(n)
+			offset += 1

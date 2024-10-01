@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://b3p8xxu6wulkq"]
+
+[ext_resource type="Script" path="res://Scripts/screen_boundaries.gd" id="1_6pixc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mnr5r"]
+size = Vector2(85.5, 548)
+
+[node name="ScreenBoundaries" type="StaticBody2D"]
+visible = false
+script = ExtResource("1_6pixc")
+
+[node name="leftWall" type="CollisionShape2D" parent="."]
+position = Vector2(-520, 1)
+shape = SubResource("RectangleShape2D_mnr5r")
+
+[node name="rightWall" type="CollisionShape2D" parent="."]
+position = Vector2(520, 0)
+shape = SubResource("RectangleShape2D_mnr5r")
