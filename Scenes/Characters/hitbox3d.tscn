@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://d3po57kou0xvp"]
+
+[ext_resource type="Script" path="res://Scenes/Characters/Hitbox3D.gd" id="1_xfney"]
+[ext_resource type="Script" path="res://Scenes/Characters/stupid_script.gd" id="2_y756g"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_asypi"]
+
+[node name="Hitbox" type="Area3D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_xfney")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+shape = SubResource("BoxShape3D_asypi")
+disabled = true
+script = ExtResource("2_y756g")
+
+[connection signal="tell_script" from="." to="CollisionShape3D" method="_on_hitbox_tell_script"]

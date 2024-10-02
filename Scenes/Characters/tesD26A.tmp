@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scenes/Characters/3Dtest.gd" id="1_kxq2e"]
 [ext_resource type="Texture2D" uid="uid://beutn5ks3avvh" path="res://Scenes/Characters/grappler38-1_grappler-texture-3.png" id="1_v0ggc"]
-[ext_resource type="Script" path="res://Scenes/Characters/Hurtbox3D.gd" id="2_geeui"]
+[ext_resource type="Script" path="res://Scenes/Characters/Hurtbox.gd" id="2_geeui"]
 [ext_resource type="Script" path="res://Scripts/input.gd" id="4_vqsk8"]
 [ext_resource type="PackedScene" uid="uid://ook7dmepmfw5" path="res://Scenes/ui.tscn" id="5_7e86r"]
 [ext_resource type="PackedScene" uid="uid://bh6x5sy31wviu" path="res://Scenes/health_bar.tscn" id="6_3344m"]
@@ -3160,7 +3160,7 @@ bones/222/rotation = Quaternion(-0.0176067, 1.19208e-09, -0.214477, 0.97657)
 bones/222/scale = Vector3(1, 1, 1)
 
 [node name="belt" type="BoneAttachment3D" parent="Model/rig/Skeleton3D"]
-transform = Transform3D(-0.124461, 9.40636e-08, -0.10972, 1.50874e-07, 0.165919, -2.33095e-08, 0.10972, -1.17347e-07, -0.124461, -0.0878206, 3.10077, -0.0396542)
+transform = Transform3D(-0.124461, -5.21541e-08, -0.10972, -5.58794e-08, 0.165919, -1.84239e-08, 0.10972, 2.42144e-08, -0.124461, -0.0878205, 3.10077, -0.0396544)
 bone_name = "belt"
 bone_idx = 94
 
@@ -3192,7 +3192,6 @@ offset_right = 820.0
 offset_bottom = 70.0
 
 [node name="StateLabel" type="Label" parent="UI/HealthBar"]
-layout_mode = 0
 offset_left = 112.0
 offset_top = 73.0
 offset_right = 251.0

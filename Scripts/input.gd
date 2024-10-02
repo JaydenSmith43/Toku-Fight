@@ -27,7 +27,7 @@ func _ready():
 
 func _input(event):
 	if event is InputEventKey:
-		var input = input_handler(event)
+		input_handler(event)
 
 func _physics_process(delta):
 	current_frame += 1

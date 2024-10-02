@@ -1,7 +1,7 @@
 extends Node
 
 @export var initial_state : State
-@onready var state_label = $"../StateLabel"
+@onready var state_label = $"../UI/HealthBar/StateLabel"
 
 var current_state : State
 var states : Dictionary = {}

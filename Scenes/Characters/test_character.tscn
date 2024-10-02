@@ -1,11 +1,11 @@
 [gd_scene load_steps=18 format=3 uid="uid://yey7lvkuwcd1"]
 
-[ext_resource type="Script" path="res://Scripts/test.gd" id="1_p15gt"]
+[ext_resource type="Script" path="res://Scripts/2Dtest.gd" id="1_p15gt"]
 [ext_resource type="SpriteFrames" uid="uid://ceblh1v37n0rl" path="res://Sprites/Character/testRyu/ryu_sprite.tres" id="2_lo3f1"]
 [ext_resource type="Shape2D" uid="uid://birlm7ruombro" path="res://Scenes/Characters/testCh1/IdleCol.tres" id="3_0prmg"]
 [ext_resource type="Script" path="res://Scripts/input.gd" id="3_87miu"]
 [ext_resource type="Shape2D" uid="uid://bccqvq0mcbv2j" path="res://Scenes/Characters/testCh1/JumpCol.tres" id="3_cmowc"]
-[ext_resource type="Script" path="res://Scenes/Characters/Hurtbox.gd" id="4_1oxew"]
+[ext_resource type="Script" path="res://Scenes/Characters/Hurtbox3D.gd" id="4_1oxew"]
 [ext_resource type="PackedScene" uid="uid://ook7dmepmfw5" path="res://Scenes/ui.tscn" id="4_qrdf1"]
 [ext_resource type="Script" path="res://Scripts/StateMachine.gd" id="5_2ikf7"]
 [ext_resource type="Script" path="res://Scripts/States/testIdle.gd" id="6_vvwnm"]
@@ -82,9 +82,8 @@ script = ExtResource("6_vvwnm")
 idleCol = ExtResource("3_0prmg")
 character = NodePath("../..")
 
-[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("animation", "character")]
+[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("character")]
 script = ExtResource("7_suixc")
-animation = NodePath("../../AnimationPlayer")
 character = NodePath("../..")
 
 [node name="Hadou" type="Node" parent="StateMachine" node_paths=PackedStringArray("character")]

@@ -3,9 +3,9 @@ class_name testIdle
 
 @onready var inputArray = $"../../Input"
 
-@export var move_speed : float = 450.0
-@export var jump_force : float = 700.0
-@export var gravity : float = 1800.0
+@export var move_speed : float = 12.0
+@export var jump_force : float = 45.0
+@export var gravity : float = 60.0
 
 var I_left : String
 var I_right : String
@@ -14,19 +14,14 @@ var I_down : String
 var I_light : String
 
 #@export var collision : CollisionShape2D = null
-@export var idleCol : RectangleShape2D
+#@export var idleCol : BoxShape3D 
+#get boxshape3D from player or create new one for each hitbox/hurtbox change
 
-var otherPlayer : CharacterBody2D
+var otherPlayer : CharacterBody3D
 
 var crouch : bool = false
 
 func Enter():
-	#Add player 1 or 2 logic here for group adding
-	
-	#if (!collision):
-		#collision = get_parent().get_parent().get_child(1) #2nd child
-	#collision.shape = idleCol
-	#collision.position.y = 105
 	
 	if (get_parent().get_parent().is_in_group("player1")):
 		I_left = "P1_Left"
@@ -47,33 +42,35 @@ func Enter():
 	pass
 
 func Exit():
-	print("left idle")
+	pass
+	#print("left idle")
 
 func State_Update(_delta: float):
 	pass
 
 func State_Physics_Update(_delta: float):
 	#print("Distance: " + str(character.position.x - otherPlayer.position.x))
-	if (character.position.x - otherPlayer.position.x > 0):
-		sprite.position.x = -120
-		sprite.flip_h = true
-	else:
-		sprite.position.x = 120
-		sprite.flip_h = false
 	
+	if (character.position.x - otherPlayer.position.x > 0):
+		model.rotation.y = 0
+	else:
+		model.rotation.y = 90
 	
 	if !character.is_on_floor():
-		character.velocity.y += gravity * _delta
+		character.velocity.y -= gravity * _delta
 	
 	character.velocity.x = 0
 	
 	#region Input
 	if Input.is_action_pressed(I_left) and crouch == false: #left
 		character.velocity.x -= move_speed
-		sprite.play("walk")
+		#sprite.play("walk")
+		#TODO play animation
+		
 	if Input.is_action_pressed(I_right) and crouch == false: #right
 		character.velocity.x += move_speed
-		sprite.play("walk")
+		#sprite.play("walk")
+		#TODO play animation
 	
 	if Input.is_action_just_pressed(I_light) and crouch == false: #right
 		if check_fireball():
@@ -84,17 +81,19 @@ func State_Physics_Update(_delta: float):
 			pass
 	
 	if Input.is_action_pressed(I_up) and character.is_on_floor():
-		character.velocity.y = -jump_force
+		character.velocity.y = +jump_force
 		Transitioned.emit(self, "jump")
 		pass
 	
 	if Input.is_action_pressed(I_down):
 		character.velocity.x = 0
-		if sprite.animation != "crouch":
-			sprite.play("crouch")
+		#if sprite.animation != "crouch":
+			#sprite.play("crouch")
+		#TODO
 		crouch = true
 	elif character.velocity.x == 0:
-		sprite.play("idle")
+		#sprite.play("idle")
+		#TODO
 		crouch = false
 	
 	character.move_and_slide()
@@ -109,7 +108,6 @@ func do_A():
 func check_fireball():
 	var motionD : bool = false
 	var motionDR : bool = false
-	var motionR : bool = false
 	
 	var n : int = 0
 	while n < inputArray.inputs.size():

@@ -1,5 +1,5 @@
 class_name Hurtbox
-extends Area2D
+extends Area3D
 
 func _init() -> void:
 	pass
@@ -7,7 +7,7 @@ func _init() -> void:
 func _ready():
 	connect("area_entered", self._on_area_entered)
 
-func _on_area_entered(hitbox : Hitbox) -> void:
+func _on_area_entered(hitbox : Hitbox3D) -> void:
 	if hitbox == null:
 		return
 	

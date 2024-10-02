@@ -1,0 +1,71 @@
+[gd_scene load_steps=11 format=3 uid="uid://b10uroexfn4f5"]
+
+[ext_resource type="PackedScene" uid="uid://yga6ng3yyyl8" path="res://Scenes/main_camera.tscn" id="1_68k7t"]
+[ext_resource type="PackedScene" uid="uid://yey7lvkuwcd1" path="res://Scenes/Characters/test_character.tscn" id="2_r47mh"]
+[ext_resource type="Script" path="res://Scripts/sine_test.gd" id="3_6h5bi"]
+[ext_resource type="Texture2D" uid="uid://b0cw2yl22axj5" path="res://Sprites/display/a_button.png" id="4_pe7hj"]
+[ext_resource type="PackedScene" uid="uid://b3p8xxu6wulkq" path="res://Scenes/screen_boundaries.tscn" id="5_f03iw"]
+[ext_resource type="Script" path="res://Scenes/Characters/Hurtbox3D.gd" id="6_6grem"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_elf24"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0mm54"]
+size = Vector2(20, 985.75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vq1xu"]
+size = Vector2(2037, 107)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_crvs3"]
+size = Vector2(113, 166)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="mainCamera" parent="." node_paths=PackedStringArray("character1", "character2") instance=ExtResource("1_68k7t")]
+character1 = NodePath("../test_1")
+character2 = NodePath("../test_2")
+
+[node name="test_1" parent="." groups=["player1"] instance=ExtResource("2_r47mh")]
+position = Vector2(-150, 160)
+
+[node name="test_2" parent="." groups=["player2"] instance=ExtResource("2_r47mh")]
+position = Vector2(150, 160)
+
+[node name="StageBoundaries" type="StaticBody2D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_elf24")
+
+[node name="wall1" type="CollisionShape2D" parent="StageBoundaries"]
+position = Vector2(-1000, -200)
+shape = SubResource("RectangleShape2D_0mm54")
+
+[node name="wall2" type="CollisionShape2D" parent="StageBoundaries"]
+position = Vector2(1000, -200)
+shape = SubResource("RectangleShape2D_0mm54")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StageBoundaries"]
+position = Vector2(0.5, 287)
+shape = SubResource("RectangleShape2D_vq1xu")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="sine test" type="Node2D" parent="."]
+visible = false
+position = Vector2(-316, -41)
+script = ExtResource("3_6h5bi")
+
+[node name="Sprite2D" type="Sprite2D" parent="sine test"]
+visible = false
+scale = Vector2(2.59375, 2.59375)
+texture = ExtResource("4_pe7hj")
+
+[node name="ScreenBoundaries" parent="." node_paths=PackedStringArray("character1", "character2") instance=ExtResource("5_f03iw")]
+visible = true
+character1 = NodePath("../test_1")
+character2 = NodePath("../test_2")
+
+[node name="Area2D" type="Area2D" parent="."]
+visible = false
+script = ExtResource("6_6grem")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
+position = Vector2(-359, 120)
+shape = SubResource("RectangleShape2D_crvs3")

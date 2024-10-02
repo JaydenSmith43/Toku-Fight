@@ -1,69 +1,42 @@
-[gd_scene load_steps=11 format=3 uid="uid://b10uroexfn4f5"]
+[gd_scene load_steps=6 format=3 uid="uid://bmkea3roxko18"]
 
-[ext_resource type="PackedScene" uid="uid://yga6ng3yyyl8" path="res://Scenes/main_camera.tscn" id="1_188go"]
-[ext_resource type="PackedScene" uid="uid://yey7lvkuwcd1" path="res://Scenes/Characters/test_character.tscn" id="1_w6j6f"]
-[ext_resource type="Script" path="res://Scripts/sine_test.gd" id="2_2e8xl"]
-[ext_resource type="Texture2D" uid="uid://b0cw2yl22axj5" path="res://Sprites/display/a_button.png" id="2_o1m36"]
-[ext_resource type="Script" path="res://Scenes/Characters/Hurtbox.gd" id="6_s2e41"]
-[ext_resource type="PackedScene" uid="uid://b3p8xxu6wulkq" path="res://Scenes/screen_boundaries.tscn" id="6_viys7"]
+[ext_resource type="PackedScene" uid="uid://c7bhntxlkcl7b" path="res://Scenes/Characters/test_grappler.tscn" id="1_7j14h"]
+[ext_resource type="Script" path="res://Scenes/main_camera.gd" id="2_61s7m"]
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_elf24"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_das85"]
+size = Vector3(100, 1, 11.989)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0mm54"]
-size = Vector2(20, 985.75)
+[sub_resource type="BoxMesh" id="BoxMesh_5kyyc"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vq1xu"]
-size = Vector2(2037, 107)
+[sub_resource type="Environment" id="Environment_m2ea4"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_crvs3"]
-size = Vector2(113, 166)
+[node name="Node3D" type="Node3D"]
 
-[node name="Node2D" type="Node2D"]
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
 
-[node name="mainCamera" parent="." node_paths=PackedStringArray("character1", "character2") instance=ExtResource("1_188go")]
-character1 = NodePath("../test_1")
-character2 = NodePath("../test_2")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.358, -0.5, 0)
+shape = SubResource("BoxShape3D_das85")
 
-[node name="test_1" parent="." groups=["player1"] instance=ExtResource("1_w6j6f")]
-position = Vector2(-150, 160)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D"]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 11.989, 0, 0, 0)
+mesh = SubResource("BoxMesh_5kyyc")
+skeleton = NodePath("../../..")
 
-[node name="test_2" parent="." groups=["player2"] instance=ExtResource("1_w6j6f")]
-position = Vector2(150, 160)
+[node name="test1" parent="." groups=["player1"] instance=ExtResource("1_7j14h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.477, 0)
 
-[node name="StageBoundaries" type="StaticBody2D" parent="."]
-physics_material_override = SubResource("PhysicsMaterial_elf24")
+[node name="test2" parent="." groups=["player2"] instance=ExtResource("1_7j14h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.477, 0)
 
-[node name="wall1" type="CollisionShape2D" parent="StageBoundaries"]
-position = Vector2(-1000, -200)
-shape = SubResource("RectangleShape2D_0mm54")
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("character1", "character2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 11)
+script = ExtResource("2_61s7m")
+character1 = NodePath("../test1")
+character2 = NodePath("../test2")
 
-[node name="wall2" type="CollisionShape2D" parent="StageBoundaries"]
-position = Vector2(1000, -200)
-shape = SubResource("RectangleShape2D_0mm54")
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.642788, 0.766044, 0, -0.766044, 0.642788, 0, 12, 10)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StageBoundaries"]
-position = Vector2(0.5, 287)
-shape = SubResource("RectangleShape2D_vq1xu")
-debug_color = Color(0, 0.6, 0.701961, 0.419608)
-
-[node name="sine test" type="Node2D" parent="."]
-visible = false
-position = Vector2(-316, -41)
-script = ExtResource("2_2e8xl")
-
-[node name="Sprite2D" type="Sprite2D" parent="sine test"]
-visible = false
-scale = Vector2(2.59375, 2.59375)
-texture = ExtResource("2_o1m36")
-
-[node name="ScreenBoundaries" parent="." node_paths=PackedStringArray("character1", "character2") instance=ExtResource("6_viys7")]
-visible = true
-character1 = NodePath("../test_1")
-character2 = NodePath("../test_2")
-
-[node name="Area2D" type="Area2D" parent="."]
-script = ExtResource("6_s2e41")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-359, 120)
-shape = SubResource("RectangleShape2D_crvs3")
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_m2ea4")
