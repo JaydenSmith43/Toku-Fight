@@ -13,27 +13,27 @@ var hitbox = preload("res://Scenes/Characters/hitbox3d.tscn")
 func Enter():
 	current_frame = 0
 	played = false
-	
 
 func Exit():
-	pass
-
-func State_Update(_delta: float):
 	pass
 
 func State_Physics_Update(_delta: float):
 	current_frame += 1
 	
-	if (!played): #TODO TODO TODO TODO TODO TODO
+	if (!played):
 		#sprite.play("jab")
 		
-		#new_hitbox.damage
-		#new_hitbox.end_frame
-		#new_hitbox.size_x
-		#new_hitbox.size_y
-		
 		var new_hitbox = hitbox.instantiate()
-		new_hitbox.end_frame = 6
+		new_hitbox.end_frame = 5
+		new_hitbox.pos_y = 5
+		new_hitbox.pos_x = 2
+		new_hitbox.leftside = character.leftside
+		
+		if character.is_in_group("player1"):
+			new_hitbox.player = "player1"
+		else:
+			new_hitbox.player = "player2"
+		
 		get_parent().get_parent().add_child(new_hitbox)
 		
 		played = true ###

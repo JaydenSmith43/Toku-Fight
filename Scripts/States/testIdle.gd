@@ -51,10 +51,14 @@ func State_Update(_delta: float):
 func State_Physics_Update(_delta: float):
 	#print("Distance: " + str(character.position.x - otherPlayer.position.x))
 	
-	if (character.position.x - otherPlayer.position.x > 0):
-		model.rotation.y = 0
-	else:
+	if (character.position.x - otherPlayer.position.x < 0):
 		model.rotation.y = 90
+		character.leftside = true
+		
+	else:
+		model.rotation.y = 0
+		character.leftside = false
+		
 	
 	if !character.is_on_floor():
 		character.velocity.y -= gravity * _delta
@@ -62,6 +66,15 @@ func State_Physics_Update(_delta: float):
 	character.velocity.x = 0
 	
 	#region Input
+	if Input.is_action_pressed(I_left) and character.leftside == true:
+		character.blocking = true
+		pass
+	elif Input.is_action_pressed(I_right) and character.leftside == false:
+		character.blocking = true
+		pass
+	else:
+		character.blocking = false
+	
 	if Input.is_action_pressed(I_left) and crouch == false: #left
 		character.velocity.x -= move_speed
 		#sprite.play("walk")
@@ -73,7 +86,7 @@ func State_Physics_Update(_delta: float):
 		#TODO play animation
 	
 	if Input.is_action_just_pressed(I_light) and crouch == false: #right
-		if check_fireball():
+		if check_fireball_left():
 			do_fireball()
 			pass
 		else:
@@ -83,6 +96,7 @@ func State_Physics_Update(_delta: float):
 	if Input.is_action_pressed(I_up) and character.is_on_floor():
 		character.velocity.y = +jump_force
 		Transitioned.emit(self, "jump")
+		character.blocking = false
 		pass
 	
 	if Input.is_action_pressed(I_down):
@@ -100,12 +114,17 @@ func State_Physics_Update(_delta: float):
 	#endregion
 
 func do_fireball():
+	character.blocking = false
 	Transitioned.emit(self, "hadou")
 	
 func do_A():
+	character.blocking = false
 	Transitioned.emit(self, "attack")
 
-func check_fireball():
+func check_fireball_left():
+	if character.leftside == false:
+		return check_fireball_right()
+	
 	var motionD : bool = false
 	var motionDR : bool = false
 	
@@ -120,6 +139,25 @@ func check_fireball():
 			n += 1
 			continue
 		elif inputArray.inputs[n].type == "right" and motionDR == true:
+			return true
+		n += 1
+	return false
+
+func check_fireball_right():
+	var motionD : bool = false
+	var motionDL : bool = false
+	
+	var n : int = 0
+	while n < inputArray.inputs.size():
+		if inputArray.inputs[n].type == "down":
+			motionD = true
+			n += 1
+			continue
+		elif inputArray.inputs[n].type == "down-l" and motionD == true:
+			motionDL = true
+			n += 1
+			continue
+		elif inputArray.inputs[n].type == "left" and motionDL == true:
 			return true
 		n += 1
 	return false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://c7bhntxlkcl7b"]
+[gd_scene load_steps=24 format=4 uid="uid://c7bhntxlkcl7b"]
 
 [ext_resource type="Script" path="res://Scenes/Characters/3Dtest.gd" id="1_kxq2e"]
 [ext_resource type="Texture2D" uid="uid://beutn5ks3avvh" path="res://Scenes/Characters/grappler38-1_grappler-texture-3.png" id="1_v0ggc"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://Scripts/States/testHadou.gd" id="10_3aeij"]
 [ext_resource type="Script" path="res://Scripts/States/testJump.gd" id="11_py8x3"]
 [ext_resource type="Shape2D" uid="uid://bccqvq0mcbv2j" path="res://Scenes/Characters/testCh1/JumpCol.tres" id="12_tatuv"]
+[ext_resource type="Script" path="res://Scripts/States/blockState.gd" id="13_irytk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rp0qx"]
 size = Vector3(1, 1, 2.19164)
@@ -1582,11 +1583,13 @@ script = ExtResource("1_kxq2e")
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.5, 0.126579)
 shape = SubResource("BoxShape3D_rp0qx")
 
-[node name="Hurtbox" type="Area3D" parent="."]
+[node name="Hurtbox" type="Area3D" parent="." node_paths=PackedStringArray("character", "state_machine")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 collision_layer = 2
-collision_mask = 4
+collision_mask = 16
 script = ExtResource("2_geeui")
+character = NodePath("..")
+state_machine = NodePath("../StateMachine")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.80028, -0.0472412)
@@ -3211,15 +3214,23 @@ script = ExtResource("8_5jqhv")
 character = NodePath("../..")
 model = NodePath("../../Model")
 
-[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("character")]
+[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
 script = ExtResource("9_alnoo")
 character = NodePath("../..")
+model = NodePath("../../Model")
 
-[node name="Hadou" type="Node" parent="StateMachine" node_paths=PackedStringArray("character")]
+[node name="Hadou" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
 script = ExtResource("10_3aeij")
 character = NodePath("../..")
+model = NodePath("../../Model")
 
-[node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("character")]
+[node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
 script = ExtResource("11_py8x3")
 jumpCol = ExtResource("12_tatuv")
 character = NodePath("../..")
+model = NodePath("../../Model")
+
+[node name="Block" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+script = ExtResource("13_irytk")
+character = NodePath("../..")
+model = NodePath("../../Model")

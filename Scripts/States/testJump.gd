@@ -17,7 +17,7 @@ func Exit():
 func State_Update(_delta: float):
 	pass
 
-func State_Physics_Update(_delta: float):
+func State_Physics_Update(_delta: float): #ADD a check for facing left without changing model
 	if !character.is_on_floor():
 		character.velocity.y -= gravity * _delta
 		#character.position.y = lerp()

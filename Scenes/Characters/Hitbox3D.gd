@@ -1,25 +1,29 @@
 class_name Hitbox3D
 extends Area3D
 
-signal tell_script
+signal tell_script(facing, pos_x, pos_y, scale_x, scale_y)
 
 var damage := 10
-var size_x := 130
-var size_y := -128
+var leftside := true
+var player := ""
+var scale_x := 5
+var scale_y := 5
+var pos_x := 0
+var pos_y := 0
 var end_frame := 0
 var current_frame := 0
 
 func _init() -> void:
-	#collision = get_child(1).shape
-	#collision.shape
-	#transform = Vector3(size_x, size_y, 50)
-	#collision_layer = 3
-	#collision_mask = 2
 	pass
 
 func _physics_process(delta):
 	if current_frame == 0:
-		tell_script.emit()
+		if player == "player2":
+			set_collision_layer_value(4, false)
+			set_collision_mask_value(3, false)
+			set_collision_layer_value(5, true)
+			set_collision_mask_value(2, true)
+		tell_script.emit(leftside, pos_x, pos_y, scale_x, scale_y)
 	
 	current_frame += 1
 	

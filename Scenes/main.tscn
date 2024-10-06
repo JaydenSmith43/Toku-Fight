@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bmkea3roxko18"]
+[gd_scene load_steps=7 format=3 uid="uid://bmkea3roxko18"]
 
 [ext_resource type="PackedScene" uid="uid://c7bhntxlkcl7b" path="res://Scenes/Characters/test_grappler.tscn" id="1_7j14h"]
 [ext_resource type="Script" path="res://Scenes/main_camera.gd" id="2_61s7m"]
+[ext_resource type="PackedScene" uid="uid://b2ax3p2ss2g8q" path="res://Scenes/3d_boundaries.tscn" id="3_8rhal"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_das85"]
 size = Vector3(100, 1, 11.989)
@@ -12,25 +13,48 @@ size = Vector3(100, 1, 11.989)
 
 [node name="Node3D" type="Node3D"]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.358, -0.5, 0)
-shape = SubResource("BoxShape3D_das85")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D"]
-transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 11.989, 0, 0, 0)
-mesh = SubResource("BoxMesh_5kyyc")
-skeleton = NodePath("../../..")
-
 [node name="test1" parent="." groups=["player1"] instance=ExtResource("1_7j14h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.477, 0)
 
 [node name="test2" parent="." groups=["player2"] instance=ExtResource("1_7j14h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.477, 0)
 
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_das85")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor/CollisionShape3D"]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 11.989, 0, 0, 0)
+mesh = SubResource("BoxMesh_5kyyc")
+skeleton = NodePath("../../..")
+
+[node name="Wall" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -50, 48, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall"]
+shape = SubResource("BoxShape3D_das85")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall/CollisionShape3D"]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 11.989, 0, 0, 0)
+mesh = SubResource("BoxMesh_5kyyc")
+skeleton = NodePath("../..")
+
+[node name="Wall2" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 50, 48, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall2"]
+shape = SubResource("BoxShape3D_das85")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall2/CollisionShape3D"]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 11.989, 0, 0, 0)
+mesh = SubResource("BoxMesh_5kyyc")
+skeleton = NodePath("../../../Wall2")
+
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("character1", "character2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 11)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 18)
+fov = 40.0
 script = ExtResource("2_61s7m")
 character1 = NodePath("../test1")
 character2 = NodePath("../test2")
@@ -40,3 +64,7 @@ transform = Transform3D(1, 0, 0, 0, 0.642788, 0.766044, 0, -0.766044, 0.642788, 
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_m2ea4")
+
+[node name="ScreenBoundaries" parent="." node_paths=PackedStringArray("character1", "character2") instance=ExtResource("3_8rhal")]
+character1 = NodePath("../test1")
+character2 = NodePath("../test2")

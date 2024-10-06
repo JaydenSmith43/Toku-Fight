@@ -5,6 +5,8 @@ var I_right : String
 var I_up : String
 var I_down : String
 var I_light : String
+var I_medium : String
+var I_heavy : String
 
 var inputValue = preload("res://Scenes/input_value.tscn")
 var current_frame : int = 0
@@ -18,12 +20,16 @@ func _ready():
 		I_up = "P1_Up"
 		I_down = "P1_Down"
 		I_light = "P1_Light"
+		I_medium = "P1_Medium"
+		I_heavy = "P1_Heavy"
 	else:
 		I_left = "P2_Left"
 		I_right = "P2_Right"
 		I_up = "P2_Up"
 		I_down = "P2_Down"
 		I_light = "P2_Light"
+		I_medium = "P2_Medium"
+		I_heavy = "P2_Heavy"
 
 func _input(event):
 	if event is InputEventKey:
@@ -78,14 +84,14 @@ func input_handler(event):
 		var instance = inputValue.instantiate()
 		instance.type = "A"
 		inputs.push_back(instance)
-	#if Input.is_action_just_pressed("Medium"):
-	#	var instance = inputValue.instantiate()
-	#	instance.type = "B"
-	#	inputs.push_back(instance)
-	#if Input.is_action_just_pressed("Heavy"):
-	#	var instance = inputValue.instantiate()
-	#	instance.type = "C"
-	#	inputs.push_back(instance)
+	if Input.is_action_just_pressed(I_medium):
+		var instance = inputValue.instantiate()
+		instance.type = "B"
+		inputs.push_back(instance)
+	if Input.is_action_just_pressed(I_heavy):
+		var instance = inputValue.instantiate()
+		instance.type = "C"
+		inputs.push_back(instance)
 	#endregion
 
 func add_time(delta):

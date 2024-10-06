@@ -6,12 +6,11 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_asypi"]
 
 [node name="Hitbox" type="Area3D"]
-collision_layer = 4
-collision_mask = 2
+collision_layer = 8
+collision_mask = 4
 script = ExtResource("1_xfney")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 shape = SubResource("BoxShape3D_asypi")
 disabled = true
 script = ExtResource("2_y756g")
