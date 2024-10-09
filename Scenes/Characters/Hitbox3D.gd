@@ -6,8 +6,8 @@ signal tell_script(facing, pos_x, pos_y, scale_x, scale_y)
 var damage := 10
 var leftside := true
 var player := ""
-var scale_x := 5
-var scale_y := 5
+var scale_x := 0
+var scale_y := 0
 var pos_x := 0
 var pos_y := 0
 var end_frame := 0
@@ -17,13 +17,12 @@ func _init() -> void:
 	pass
 
 func _physics_process(delta):
-	if current_frame == 0:
-		if player == "player2":
-			set_collision_layer_value(4, false)
-			set_collision_mask_value(3, false)
-			set_collision_layer_value(5, true)
-			set_collision_mask_value(2, true)
-		tell_script.emit(leftside, pos_x, pos_y, scale_x, scale_y)
+	if player == "player2":
+		set_collision_layer_value(4, false)
+		set_collision_mask_value(3, false)
+		set_collision_layer_value(5, true)
+		set_collision_mask_value(2, true)
+	tell_script.emit(leftside, pos_x, pos_y, scale_x, scale_y)
 	
 	current_frame += 1
 	

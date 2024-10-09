@@ -8,11 +8,11 @@
 [ext_resource type="Script" path="res://Scenes/Characters/Hurtbox3D.gd" id="4_1oxew"]
 [ext_resource type="PackedScene" uid="uid://ook7dmepmfw5" path="res://Scenes/ui.tscn" id="4_qrdf1"]
 [ext_resource type="Script" path="res://Scripts/StateMachine.gd" id="5_2ikf7"]
-[ext_resource type="Script" path="res://Scripts/States/testIdle.gd" id="6_vvwnm"]
-[ext_resource type="Script" path="res://Scripts/States/testAttack.gd" id="7_suixc"]
+[ext_resource type="Script" path="res://Scripts/States/S_Idle.gd" id="6_vvwnm"]
+[ext_resource type="Script" path="res://Scripts/States/S_Ground_Attack.gd" id="7_suixc"]
 [ext_resource type="PackedScene" uid="uid://bh6x5sy31wviu" path="res://Scenes/health_bar.tscn" id="7_xdp0n"]
-[ext_resource type="Script" path="res://Scripts/States/testHadou.gd" id="8_t17ag"]
-[ext_resource type="Script" path="res://Scripts/States/testJump.gd" id="9_lhso1"]
+[ext_resource type="Script" path="res://Scripts/States/S_Fireball.gd" id="8_t17ag"]
+[ext_resource type="Script" path="res://Scripts/States/S_Jump.gd" id="9_lhso1"]
 
 [sub_resource type="Animation" id="Animation_xifwo"]
 length = 0.001
