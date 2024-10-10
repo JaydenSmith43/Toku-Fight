@@ -1,8 +1,22 @@
 {
 	"anim_name": "5a",
 	"move_end_frame": 20,
-	"hitbox_frames": [
-		{"frame":5, "damage":10, "scale_x":1, "scale_y":1, "pos_x":5, "pos_y":2, "end_frame": 3},
-		{"frame":15, "damage":10, "scale_x":1, "scale_y":1, "pos_x":5, "pos_y":2, "end_frame": 3}
-	]
+	"frames": [
+		{
+			"frame":10,
+			"hitbox1": 
+				{"damage":1, "pos_x":3, "pos_y":4, "scale_x":1, "scale_y":1,  "end_frame": 20},
+			"hitbox2": 
+				{"damage":1, "pos_x":3, "pos_y":4.4, "scale_x":1, "scale_y":1,  "end_frame": 20},
+		},
+		{
+			"frame":15,
+			"hitbox1": 
+				{"damage":1, "pos_x":2, "pos_y":5, "scale_x":1, "scale_y":1,  "end_frame": 30},
+			"hitbox2": 
+				{"damage":1, "pos_x":2, "pos_y":9, "scale_x":1, "scale_y":1,  "end_frame": 30},
+		},
+		
+	],
+	
 }

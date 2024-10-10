@@ -18,16 +18,14 @@ func Enter():
 	StaticData.load_json_file("grappler_5a")
 	anim_name = StaticData.moveData["anim_name"]
 	move_end_frame = StaticData.moveData["move_end_frame"]
+	#load cancel properties
 
 func Exit():
 	pass
 
 func State_Physics_Update(_delta: float):
 	current_frame += 1
-	
-	for data in StaticData.moveData["hitbox_frames"]:
-		if current_frame == data["frame"]:
-			createHitbox(data)
+	checkFrame()
 	
 	if (!played):
 		anim_player.play(anim_name)
@@ -36,8 +34,21 @@ func State_Physics_Update(_delta: float):
 	if current_frame >= move_end_frame:
 		Transitioned.emit(self, "idle")
 
+func checkFrame():
+	for data in StaticData.moveData["frames"]:
+		if current_frame == data["frame"]:
+			var hitbox_string = "hitbox"
+			var hitbox_index = 1
+			var hitbox_input = hitbox_string + str(hitbox_index)
+			
+			while data.has(hitbox_input):
+				createHitbox(data[hitbox_input])
+				hitbox_index += 1
+				hitbox_input = hitbox_string + str(hitbox_index)
+
 func createHitbox(data):
 	var new_hitbox = hitbox.instantiate()
+	new_hitbox.damage = data["damage"]
 	new_hitbox.end_frame = data["end_frame"]
 	new_hitbox.pos_y = data["pos_y"]
 	new_hitbox.pos_x = data["pos_x"]
