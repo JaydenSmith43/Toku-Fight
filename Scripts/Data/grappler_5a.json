@@ -4,17 +4,21 @@
 	"frames": [
 		{
 			"frame":10,
+			"blockstun":10,
+			"hitstun":20,
 			"hitbox1": 
-				{"damage":1, "pos_x":3, "pos_y":4, "scale_x":1, "scale_y":1,  "end_frame": 20},
+				{"damage":1, "pos_x":3, "pos_y":4, "scale_x":1, "scale_y":1,  "end_frame": 30},
 			"hitbox2": 
-				{"damage":1, "pos_x":3, "pos_y":4.4, "scale_x":1, "scale_y":1,  "end_frame": 20},
+				{"damage":1, "pos_x":3, "pos_y":4.3, "scale_x":1, "scale_y":1,  "end_frame": 50}
 		},
 		{
 			"frame":15,
 			"hitbox1": 
-				{"damage":1, "pos_x":2, "pos_y":5, "scale_x":1, "scale_y":1,  "end_frame": 30},
+				{"damage":1, "pos_x":2, "pos_y":5, "scale_x":1, "scale_y":1,  "end_frame": 20},
 			"hitbox2": 
-				{"damage":1, "pos_x":2, "pos_y":9, "scale_x":1, "scale_y":1,  "end_frame": 30},
+				{"damage":1, "pos_x":2, "pos_y":6, "scale_x":1, "scale_y":1,  "end_frame": 20},
+			"hitbox3": 
+				{"damage":1, "pos_x":2, "pos_y":7, "scale_x":1, "scale_y":1,  "end_frame": 20}
 		},
 		
 	],

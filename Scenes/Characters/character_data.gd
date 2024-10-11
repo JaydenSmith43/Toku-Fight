@@ -7,6 +7,8 @@ extends CharacterBody3D
 var health := 100
 var leftside := false
 var blocking := false
+var crouch := false
+var movename := "null"
 
 func _ready():
 	healthbar.init_health(health)
@@ -21,10 +23,6 @@ func _ready():
 		hurtbox.set_collision_mask_value(5, false)
 		hurtbox.set_collision_layer_value(3, true)
 		hurtbox.set_collision_mask_value(4, true)
-		
-
-#func _physics_process(_delta):
-	#print(health)
 
 func take_damage(damage : int):
 	health -= damage

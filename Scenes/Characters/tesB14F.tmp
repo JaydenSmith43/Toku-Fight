@@ -1,6 +1,6 @@
 [gd_scene load_steps=42 format=4 uid="uid://c7bhntxlkcl7b"]
 
-[ext_resource type="Script" path="res://Scenes/Characters/character_data.gd" id="1_kxq2e"]
+[ext_resource type="Script" path="res://Scenes/Characters/3Dtest.gd" id="1_kxq2e"]
 [ext_resource type="Script" path="res://Scenes/Characters/Hurtbox3D.gd" id="2_geeui"]
 [ext_resource type="Texture2D" uid="uid://lyfxsl31x26w" path="res://Scenes/Characters/grappler61_grappler-texture-3.png" id="3_yh7n5"]
 [ext_resource type="Script" path="res://Scripts/input.gd" id="4_vqsk8"]
@@ -11,8 +11,8 @@
 [ext_resource type="Script" path="res://Scripts/States/S_Ground_Attack.gd" id="9_alnoo"]
 [ext_resource type="Script" path="res://Scripts/States/S_Fireball.gd" id="10_3aeij"]
 [ext_resource type="Script" path="res://Scripts/States/S_Jump.gd" id="11_py8x3"]
+[ext_resource type="Shape2D" uid="uid://bccqvq0mcbv2j" path="res://Scenes/Characters/testCh1/JumpCol.tres" id="12_tatuv"]
 [ext_resource type="Script" path="res://Scripts/States/S_Block.gd" id="13_irytk"]
-[ext_resource type="Script" path="res://Scripts/States/S_Prejump.gd" id="14_hm7jx"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rp0qx"]
 size = Vector3(1, 1, 2.19164)
@@ -36385,15 +36385,11 @@ model = NodePath("../../model")
 
 [node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
 script = ExtResource("11_py8x3")
+jumpCol = ExtResource("12_tatuv")
 character = NodePath("../..")
 model = NodePath("../../model")
 
 [node name="Block" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
 script = ExtResource("13_irytk")
-character = NodePath("../..")
-model = NodePath("../../model")
-
-[node name="Prejump" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
-script = ExtResource("14_hm7jx")
 character = NodePath("../..")
 model = NodePath("../../model")

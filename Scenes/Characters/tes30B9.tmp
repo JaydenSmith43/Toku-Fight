@@ -36321,7 +36321,7 @@ bones/222/rotation = Quaternion(-0.0176067, 1.19208e-09, -0.214477, 0.97657)
 bones/222/scale = Vector3(1, 1, 1)
 
 [node name="belt" type="BoneAttachment3D" parent="model/rig/Skeleton3D"]
-transform = Transform3D(-0.13986, -0.077445, -0.0443919, -0.0688096, 0.146095, -0.038085, 0.0568647, -0.0136933, -0.155268, -0.17331, 1.41133, -0.0825229)
+transform = Transform3D(-0.13986, -0.077445, -0.0443918, -0.0688096, 0.146096, -0.0380851, 0.0568647, -0.0136933, -0.155268, -0.17331, 1.41133, -0.0825227)
 bone_name = "belt"
 bone_idx = 94
 

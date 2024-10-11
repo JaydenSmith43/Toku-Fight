@@ -19,4 +19,4 @@ func _on_area_entered(hitbox : Hitbox3D) -> void:
 		hitbox.queue_free()
 	elif owner.has_method("take_damage"):
 		owner.take_damage(hitbox.damage)
-		hitbox.queue_free()
+		hitbox.queue_free() #if hitboxes are grouped, delete the others in the group

@@ -15,7 +15,7 @@ func Enter():
 	current_frame = 0
 	played = false
 	
-	StaticData.load_json_file("grappler_5a")
+	StaticData.load_json_file(character.movename) #send in current character button from idle state
 	anim_name = StaticData.moveData["anim_name"]
 	move_end_frame = StaticData.moveData["move_end_frame"]
 	#load cancel properties
@@ -32,6 +32,7 @@ func State_Physics_Update(_delta: float):
 		played = true
 	
 	if current_frame >= move_end_frame:
+		character.movename = "idle"
 		Transitioned.emit(self, "idle")
 
 func checkFrame():

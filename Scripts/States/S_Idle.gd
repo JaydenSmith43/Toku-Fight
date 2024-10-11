@@ -2,24 +2,18 @@ extends State
 class_name S_Idle
 
 @onready var inputArray = $"../../Input"
-
+@export var gravity : float = 60
 @export var move_speed : float = 12.0
-@export var jump_force : float = 45.0
-@export var gravity : float = 60.0
 
 var I_left : String
 var I_right : String
 var I_up : String
 var I_down : String
 var I_light : String
-
-#@export var collision : CollisionShape2D = null
-#@export var idleCol : BoxShape3D 
-#get boxshape3D from player or create new one for each hitbox/hurtbox change
+var I_medium : String
+var I_heavy : String
 
 var otherPlayer : CharacterBody3D
-
-var crouch : bool = false
 
 func Enter():
 	
@@ -29,6 +23,8 @@ func Enter():
 		I_up = "P1_Up"
 		I_down = "P1_Down"
 		I_light = "P1_Light"
+		I_medium = "P1_Medium"
+		I_heavy = "P1_Heavy"
 		
 		otherPlayer = get_tree().get_nodes_in_group("player2")[0]
 	else:
@@ -37,91 +33,117 @@ func Enter():
 		I_up = "P2_Up"
 		I_down = "P2_Down"
 		I_light = "P2_Light"
+		I_medium = "P2_Medium"
+		I_heavy = "P2_Heavy"
 		
 		otherPlayer = get_tree().get_nodes_in_group("player1")[0]
-	pass
 
 func Exit():
 	pass
 	#print("left idle")
 
-func State_Update(_delta: float):
-	pass
-
 func State_Physics_Update(_delta: float):
 	#print("Distance: " + str(character.position.x - otherPlayer.position.x))
+	if !character.is_on_floor():
+		character.velocity.y -= gravity * _delta
 	
 	if (character.position.x - otherPlayer.position.x < 0):
 		model.rotation_degrees.z = 0
 		model.scale = Vector3(1,1,1)
 		character.leftside = true
-		
 	else:
 		model.rotation_degrees.z = 180
 		model.scale = Vector3(-1,-1,-1)
-		
 		character.leftside = false
-		
-	
-	if !character.is_on_floor():
-		character.velocity.y -= gravity * _delta
 	
 	character.velocity.x = 0
 	
-	#region Input
+	checkInputs()
+
+func checkInputs():
 	if Input.is_action_pressed(I_left) and character.leftside == true:
 		character.blocking = true
-		pass
 	elif Input.is_action_pressed(I_right) and character.leftside == false:
 		character.blocking = true
-		pass
 	else:
 		character.blocking = false
-	
-	if Input.is_action_pressed(I_left) and crouch == false: #left
+
+	if Input.is_action_pressed(I_left) and character.crouch == false:
 		character.velocity.x -= move_speed
 		anim_player.play("ForwardWalk")
-		#TODO play animation
-		
-	if Input.is_action_pressed(I_right) and crouch == false: #right
+	if Input.is_action_pressed(I_right) and character.crouch == false: #TODO BackWalk animation
 		character.velocity.x += move_speed
 		anim_player.play("ForwardWalk")
-		#TODO BackWalk animation
-	
-	if Input.is_action_just_pressed(I_light) and crouch == false: #right
-		if check_fireball_left():
-			do_fireball()
-			pass
-		else:
-			do_A()
-			pass
-	
-	if Input.is_action_pressed(I_up) and character.is_on_floor():
-		character.velocity.y = +jump_force
-		Transitioned.emit(self, "jump")
+
+	if Input.is_action_pressed(I_up):
+		Transitioned.emit(self, "prejump")
 		character.blocking = false
 		pass
-	
-	if Input.is_action_pressed(I_down):
+	elif Input.is_action_pressed(I_down):
 		character.velocity.x = 0
-		#if sprite.animation != "crouch":
-			#sprite.play("crouch")
-		#TODO
-		crouch = true
+		anim_player.play("Crouch")
+		character.crouch = true
 	elif character.velocity.x == 0:
 		anim_player.play("Idle2")
-		#TODO
-		crouch = false
-	
+		character.crouch = false
+
+	if Input.is_action_just_pressed(I_heavy) and character.crouch == false:
+		if check_fireball_left():
+			do_fireball()
+		else:
+			do_5C()
+	elif Input.is_action_just_pressed(I_medium) and character.crouch == false:
+		if check_fireball_left():
+			do_fireball()
+		else:
+			do_5B()
+	elif Input.is_action_just_pressed(I_light) and character.crouch == false:
+		if check_fireball_left():
+			do_fireball()
+		else:
+			do_5A()
+
+	if Input.is_action_just_pressed(I_heavy) and character.crouch == true:
+		do_2C()
+	elif Input.is_action_just_pressed(I_medium) and character.crouch == true:
+		do_2B()
+	elif Input.is_action_just_pressed(I_light) and character.crouch == true:
+		do_2A()
+
 	character.move_and_slide()
-	#endregion
 
 func do_fireball():
 	character.blocking = false
 	Transitioned.emit(self, "hadou")
 	
-func do_A():
+func do_5A():
 	character.blocking = false
+	character.movename = "grappler_5a"
+	Transitioned.emit(self, "attack")
+
+func do_5B():
+	character.blocking = false
+	character.movename = "grappler_5b"
+	Transitioned.emit(self, "attack")
+
+func do_5C():
+	character.blocking = false
+	character.movename = "grappler_5c"
+	Transitioned.emit(self, "attack")
+
+func do_2A():
+	character.blocking = false
+	character.movename = "grappler_2a"
+	Transitioned.emit(self, "attack")
+
+func do_2B():
+	character.blocking = false
+	character.movename = "grappler_2b"
+	Transitioned.emit(self, "attack")
+
+func do_2C():
+	character.blocking = false
+	character.movename = "grappler_2c"
 	Transitioned.emit(self, "attack")
 
 func check_fireball_left():
