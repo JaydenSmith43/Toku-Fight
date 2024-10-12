@@ -1,15 +1,14 @@
 [gd_scene load_steps=7 format=3 uid="uid://bmkea3roxko18"]
 
-[ext_resource type="PackedScene" uid="uid://c7bhntxlkcl7b" path="res://Scenes/Characters/test_grappler.tscn" id="1_7j14h"]
+[ext_resource type="PackedScene" uid="uid://c7bhntxlkcl7b" path="res://Scenes/Characters/grappler/test_grappler.tscn" id="1_7j14h"]
 [ext_resource type="Script" path="res://Scenes/main_camera.gd" id="2_61s7m"]
 [ext_resource type="PackedScene" uid="uid://b2ax3p2ss2g8q" path="res://Scenes/3d_boundaries.tscn" id="3_8rhal"]
+[ext_resource type="Environment" uid="uid://jsqpfw82fbi" path="res://Scenes/world_environment.tres" id="3_28305"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_das85"]
 size = Vector3(100, 1, 11.989)
 
 [sub_resource type="BoxMesh" id="BoxMesh_5kyyc"]
-
-[sub_resource type="Environment" id="Environment_m2ea4"]
 
 [node name="Node3D" type="Node3D"]
 
@@ -55,6 +54,7 @@ skeleton = NodePath("../../../Wall2")
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("character1", "character2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 18)
 fov = 40.0
+size = 13.5631
 script = ExtResource("2_61s7m")
 character1 = NodePath("../test1")
 character2 = NodePath("../test2")
@@ -63,7 +63,7 @@ character2 = NodePath("../test2")
 transform = Transform3D(1, 0, 0, 0, 0.642788, 0.766044, 0, -0.766044, 0.642788, 0, 12, 10)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_m2ea4")
+environment = ExtResource("3_28305")
 
 [node name="ScreenBoundaries" parent="." node_paths=PackedStringArray("character1", "character2") instance=ExtResource("3_8rhal")]
 character1 = NodePath("../test1")

@@ -1,0 +1,103 @@
+[gd_scene load_steps=9 format=3 uid="uid://cie2e7ge67p4w"]
+
+[ext_resource type="Script" path="res://Scenes/hitbox_editor.gd" id="1_wv2dy"]
+[ext_resource type="Environment" uid="uid://jsqpfw82fbi" path="res://Scenes/world_environment.tres" id="2_00ntm"]
+
+[sub_resource type="Theme" id="Theme_t275h"]
+default_font_size = 30
+
+[sub_resource type="Theme" id="Theme_im8cm"]
+default_font_size = 65
+
+[sub_resource type="Theme" id="Theme_7773o"]
+default_font_size = 65
+
+[sub_resource type="Theme" id="Theme_vco7c"]
+default_font_size = 35
+
+[sub_resource type="Theme" id="Theme_12ksq"]
+default_font_size = 30
+
+[sub_resource type="Theme" id="Theme_auj21"]
+default_font_size = 30
+
+[node name="Node3D" type="Node3D" node_paths=PackedStringArray("animation_option_button", "line_edit")]
+script = ExtResource("1_wv2dy")
+animation_option_button = NodePath("AnimationOptionButton")
+line_edit = NodePath("LineEdit")
+
+[node name="FrameLabel" type="Label" parent="."]
+offset_top = 204.0
+offset_right = 245.0
+offset_bottom = 246.0
+theme = SubResource("Theme_t275h")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "Current Frame:"
+
+[node name="HitboxButton" type="Button" parent="."]
+offset_top = 578.0
+offset_right = 450.0
+offset_bottom = 678.0
+theme = SubResource("Theme_im8cm")
+text = "Create Hitbox"
+
+[node name="CharacterOptionButton" type="OptionButton" parent="."]
+offset_right = 450.0
+offset_bottom = 100.0
+theme = SubResource("Theme_7773o")
+selected = 0
+item_count = 3
+popup/item_0/text = "grappler"
+popup/item_1/text = "kamenjogger"
+popup/item_1/id = 1
+popup/item_2/id = 2
+
+[node name="AnimationOptionButton" type="OptionButton" parent="."]
+offset_top = 120.0
+offset_right = 450.0
+offset_bottom = 182.0
+theme = SubResource("Theme_vco7c")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 4)
+projection = 1
+size = 8.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("2_00ntm")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.642788, 0.766044, 0, -0.766044, 0.642788, 0, 12, 10)
+
+[node name="LeftButton" type="Button" parent="."]
+offset_left = 348.0
+offset_top = 195.0
+offset_right = 398.0
+offset_bottom = 266.0
+theme = SubResource("Theme_12ksq")
+text = "<"
+
+[node name="RightButton" type="Button" parent="."]
+offset_left = 400.0
+offset_top = 195.0
+offset_right = 450.0
+offset_bottom = 266.0
+theme = SubResource("Theme_12ksq")
+text = ">"
+
+[node name="LineEdit" type="LineEdit" parent="."]
+offset_left = 223.0
+offset_top = 204.0
+offset_right = 343.0
+offset_bottom = 254.0
+theme = SubResource("Theme_auj21")
+text = "1"
+placeholder_text = "1"
+
+[connection signal="item_selected" from="CharacterOptionButton" to="." method="_on_option_button_item_selected"]
+[connection signal="item_selected" from="AnimationOptionButton" to="." method="_on_animation_option_button_item_selected"]
+[connection signal="pressed" from="LeftButton" to="." method="_on_left_button_pressed"]
+[connection signal="pressed" from="RightButton" to="." method="_on_right_button_pressed"]
+[connection signal="text_changed" from="LineEdit" to="." method="_on_line_edit_text_changed"]

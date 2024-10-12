@@ -14,7 +14,7 @@
 		{
 			"frame":15,
 			"hitbox1": 
-				{"damage":1, "pos_x":2, "pos_y":5, "scale_x":1, "scale_y":1,  "end_frame": 20},
+				{"damage":1, "pos_x":2, "pos_y":5, "scale_x":1, "scale_y":1,  "end_frame": 2},
 			"hitbox2": 
 				{"damage":1, "pos_x":2, "pos_y":6, "scale_x":1, "scale_y":1,  "end_frame": 20},
 			"hitbox3": 

@@ -1,0 +1,101 @@
+[gd_scene load_steps=16 format=3 uid="uid://c7bhntxlkcl7b"]
+
+[ext_resource type="Script" path="res://Scenes/Characters/character_data.gd" id="1_kxq2e"]
+[ext_resource type="Script" path="res://Scenes/Characters/Hurtbox3D.gd" id="2_geeui"]
+[ext_resource type="PackedScene" uid="uid://1h0q2rqr7tyo" path="res://Scenes/Characters/grappler/grappler_model.tscn" id="3_hvpd6"]
+[ext_resource type="Script" path="res://Scripts/input.gd" id="4_vqsk8"]
+[ext_resource type="PackedScene" uid="uid://ook7dmepmfw5" path="res://Scenes/ui.tscn" id="5_7e86r"]
+[ext_resource type="PackedScene" uid="uid://bh6x5sy31wviu" path="res://Scenes/health_bar.tscn" id="6_3344m"]
+[ext_resource type="Script" path="res://Scripts/StateMachine.gd" id="7_0d10p"]
+[ext_resource type="Script" path="res://Scripts/States/S_Idle.gd" id="8_5jqhv"]
+[ext_resource type="Script" path="res://Scripts/States/S_Ground_Attack.gd" id="9_alnoo"]
+[ext_resource type="Script" path="res://Scripts/States/S_Fireball.gd" id="10_3aeij"]
+[ext_resource type="Script" path="res://Scripts/States/S_Jump.gd" id="11_py8x3"]
+[ext_resource type="Script" path="res://Scripts/States/S_Block.gd" id="13_irytk"]
+[ext_resource type="Script" path="res://Scripts/States/S_Prejump.gd" id="14_hm7jx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rp0qx"]
+size = Vector3(1, 1, 2.19164)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_l04hr"]
+size = Vector3(1, 5.64746, 2.93799)
+
+[node name="Grappler" type="CharacterBody3D"]
+script = ExtResource("1_kxq2e")
+
+[node name="collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.5, 0.126579)
+shape = SubResource("BoxShape3D_rp0qx")
+
+[node name="Hurtbox" type="Area3D" parent="." node_paths=PackedStringArray("character", "state_machine")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+collision_layer = 2
+collision_mask = 16
+script = ExtResource("2_geeui")
+character = NodePath("..")
+state_machine = NodePath("../StateMachine")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 0)
+shape = SubResource("BoxShape3D_l04hr")
+
+[node name="model" parent="." instance=ExtResource("3_hvpd6")]
+
+[node name="AttackTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Input" type="Node" parent="."]
+script = ExtResource("4_vqsk8")
+
+[node name="UI" parent="." instance=ExtResource("5_7e86r")]
+
+[node name="HealthBar" parent="UI" instance=ExtResource("6_3344m")]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 820.0
+offset_bottom = 70.0
+
+[node name="StateLabel" type="Label" parent="UI/HealthBar"]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 73.0
+offset_right = 251.0
+offset_bottom = 214.0
+theme_override_font_sizes/font_size = 50
+text = "State:
+id"
+horizontal_alignment = 1
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("7_0d10p")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+script = ExtResource("8_5jqhv")
+character = NodePath("../..")
+model = NodePath("../../model")
+
+[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+script = ExtResource("9_alnoo")
+character = NodePath("../..")
+model = NodePath("../../model")
+
+[node name="Hadou" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+script = ExtResource("10_3aeij")
+character = NodePath("../..")
+model = NodePath("../../model")
+
+[node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+script = ExtResource("11_py8x3")
+character = NodePath("../..")
+model = NodePath("../../model")
+
+[node name="Block" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+script = ExtResource("13_irytk")
+character = NodePath("../..")
+model = NodePath("../../model")
+
+[node name="Prejump" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+script = ExtResource("14_hm7jx")
+character = NodePath("../..")
+model = NodePath("../../model")

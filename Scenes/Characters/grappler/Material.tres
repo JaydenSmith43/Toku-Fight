@@ -1,6 +1,6 @@
 [gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://ranexxjs65mb"]
 
-[ext_resource type="Texture2D" uid="uid://lyfxsl31x26w" path="res://Scenes/Characters/grappler61_grappler-texture-3.png" id="1_7615q"]
+[ext_resource type="Texture2D" uid="uid://ds6xsbte2mi6t" path="res://Scenes/Characters/grappler/grappler61_grappler-texture-3.png" id="1_7615q"]
 
 [resource]
 resource_name = "Material"
