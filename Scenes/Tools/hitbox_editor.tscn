@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://cie2e7ge67p4w"]
 
-[ext_resource type="Script" path="res://Scripts/hitbox_editor.gd" id="1_1srkk"]
+[ext_resource type="Script" path="res://Scripts/box_editor.gd" id="1_1srkk"]
 [ext_resource type="Script" path="res://Scenes/Tools/editor_camera.gd" id="2_e446d"]
 [ext_resource type="Environment" uid="uid://jsqpfw82fbi" path="res://world_environment.tres" id="2_ekjgq"]
 [ext_resource type="Material" uid="uid://boov5m5w86nyq" path="res://Materials/grid_mat.tres" id="3_14lqj"]
@@ -27,9 +27,10 @@ default_font_size = 30
 material = ExtResource("3_14lqj")
 size = Vector2(15, 15)
 
-[node name="Node3D" type="Node3D" node_paths=PackedStringArray("animation_option_button", "line_edit", "total_frame_label")]
+[node name="Node3D" type="Node3D" node_paths=PackedStringArray("animation_option_button", "character_option_button", "line_edit", "total_frame_label")]
 script = ExtResource("1_1srkk")
 animation_option_button = NodePath("AnimationOptionButton")
+character_option_button = NodePath("CharacterOptionButton")
 line_edit = NodePath("LineEdit")
 total_frame_label = NodePath("TotalFrameLabel")
 

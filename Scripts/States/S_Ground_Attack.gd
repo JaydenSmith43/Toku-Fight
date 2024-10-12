@@ -6,7 +6,6 @@ var current_frame = 0
 var move_end_frame = 10
 var hitbox = preload("res://Scenes/Characters/hitbox3d.tscn")
 var anim_name := ""
-#var new_hitbox := Hitbox3D.new()
 
 #@export var animation_player : AnimationPlayer
 #TODO SEND IN JSON DATA INTO THIS ATTACK STATE TO BE READ
@@ -25,7 +24,7 @@ func Exit():
 
 func State_Physics_Update(_delta: float):
 	current_frame += 1
-	checkFrame()
+	check_frame()
 	
 	if (!played):
 		anim_player.play(anim_name)
@@ -35,7 +34,7 @@ func State_Physics_Update(_delta: float):
 		character.movename = "idle"
 		Transitioned.emit(self, "idle")
 
-func checkFrame():
+func check_frame():
 	for data in StaticData.moveData["frames"]:
 		if current_frame == data["frame"]:
 			var hitbox_string = "hitbox"
@@ -43,11 +42,11 @@ func checkFrame():
 			var hitbox_input = hitbox_string + str(hitbox_index)
 			
 			while data.has(hitbox_input):
-				createHitbox(data[hitbox_input])
+				create_hitbox(data[hitbox_input])
 				hitbox_index += 1
 				hitbox_input = hitbox_string + str(hitbox_index)
 
-func createHitbox(data):
+func create_hitbox(data):
 	var new_hitbox = hitbox.instantiate()
 	new_hitbox.damage = data["damage"]
 	new_hitbox.end_frame = data["end_frame"]

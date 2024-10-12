@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://d3po57kou0xvp"]
 
-[ext_resource type="Script" path="res://Scenes/Characters/Hitbox3D.gd" id="1_xfney"]
-[ext_resource type="Script" path="res://Scenes/Characters/hitbox_collision.gd" id="2_y756g"]
+[ext_resource type="Script" path="res://Scripts/Data/hitbox3D.gd" id="1_xfney"]
+[ext_resource type="Script" path="res://Scripts/Data/hitbox_collision.gd" id="2_y756g"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_asypi"]
 

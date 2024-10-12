@@ -19,7 +19,7 @@ func _ready():
 		#label.position.x = 1000 #TODO TODO TODO TODO TODO
 		#print(label.position.x)
 		
-		hurtbox.set_collision_layer_value(2, false)
+		hurtbox.set_collision_layer_value(2, false) #TODO TODO TODO TODO move to hurtbox initialization
 		hurtbox.set_collision_mask_value(5, false)
 		hurtbox.set_collision_layer_value(3, true)
 		hurtbox.set_collision_mask_value(4, true)

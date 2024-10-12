@@ -1,13 +1,17 @@
 extends Node3D
 
 @export var animation_option_button : OptionButton
+@export var character_option_button : OptionButton
 @export var line_edit : LineEdit
 @export var total_frame_label : Label
 var grappler_model = preload("res://Scenes/Characters/grappler/grappler_model.tscn")
+var hitbox = preload("res://Scenes/Characters/hitbox3d_editor.tscn")
 
 var current_model
 var current_anim_player : AnimationPlayer
+var current_frame = 1
 var animations = []
+var current_boxes = []
 #var current_frame : int = 1
 
 func _ready() -> void:
@@ -38,22 +42,64 @@ func load_animation():
 	current_anim_player.play(animation_option_button.get_item_text(animation_option_button.get_selected_id()))
 	_on_line_edit_text_changed(str(int(line_edit.text)))
 	total_frame_label.text = "Total Frames: " + str(int(current_anim_player.current_animation_length * 60))
-
+	check_for_file()
+ 
 func load_anim_frame(frame : float):
+	current_frame = frame
 	current_anim_player.play()
 	current_anim_player.seek(frame/60, true)
 	current_anim_player.speed_scale = 0
+	load_frame_data()
 
-func create_hitbox(type: int):
-	match type:
-		0:
+func check_for_file():
+	var charactername = character_option_button.get_item_text(character_option_button.get_selected_id())
+	var movename = animation_option_button.get_item_text(animation_option_button.get_selected_id())
+	StaticData.load_json_file(charactername + "_" + movename)
+	load_frame_data()
+
+func load_frame_data():
+	for box in current_boxes:
+		if box == null:
 			pass
-		1:
-			pass
-		2:
-			pass
-		3:
-			pass
+		else:
+			queue_free()
+	
+	load_previous_active_frames()
+	
+	if StaticData.moveData.has("frames"):
+		for data in StaticData.moveData["frames"]:
+			if current_frame == data["frame"]:
+				load_hitbox_data(data)
+
+func load_previous_active_frames():
+	pass
+	#if StaticData.moveData.has("frames"):
+		#for data in StaticData.moveData["frames"]:
+			#if current_frame == data["frame"]:
+				#load_hitbox_data(data)
+
+func load_hitbox_data(data):
+	var hitbox_string = "hitbox"
+	var hitbox_index = 1
+	var hitbox_input = hitbox_string + str(hitbox_index)
+	
+	while data.has(hitbox_input):
+		create_hitbox(data[hitbox_input])
+		hitbox_index += 1
+		hitbox_input = hitbox_string + str(hitbox_index)
+
+func create_hitbox(data):
+	var new_hitbox = hitbox.instantiate()
+	new_hitbox.damage = data["damage"]
+	new_hitbox.end_frame = data["end_frame"]
+	new_hitbox.pos_y = data["pos_y"]
+	new_hitbox.pos_x = data["pos_x"]
+	new_hitbox.scale_x = data["scale_x"]
+	new_hitbox.scale_y = data["scale_y"]
+	new_hitbox.leftside = true
+	new_hitbox.player = "player1"
+	current_boxes.append(new_hitbox)
+	add_child(new_hitbox)
 
 func _on_option_button_item_selected(index: int) -> void:
 	match index:
@@ -64,7 +110,7 @@ func _on_option_button_item_selected(index: int) -> void:
 		2:
 			load_character_data()
 
-func _on_animation_option_button_item_selected(index: int) -> void:
+func _on_animation_option_button_item_selected(_index: int) -> void:
 	load_animation()
 
 func _on_right_button_pressed() -> void:

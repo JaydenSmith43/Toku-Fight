@@ -3,7 +3,7 @@
 	"move_end_frame": 30,
 	"frames": [
 		{
-			"frame":8,
+			"frame":1,
 			"blockstun":20,
 			"hitstun":40,
 			"hitbox1": 
