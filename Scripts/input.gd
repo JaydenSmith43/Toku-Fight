@@ -8,7 +8,7 @@ var I_light : String
 var I_medium : String
 var I_heavy : String
 
-var inputValue = preload("res://Scenes/input_value.tscn")
+var inputValue = preload("res://Scenes/Tools/input_value.tscn")
 var current_frame : int = 0
 
 var inputs = []

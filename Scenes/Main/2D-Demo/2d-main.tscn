@@ -1,10 +1,10 @@
 [gd_scene load_steps=11 format=3 uid="uid://b10uroexfn4f5"]
 
-[ext_resource type="PackedScene" uid="uid://yga6ng3yyyl8" path="res://Scenes/main_camera.tscn" id="1_68k7t"]
+[ext_resource type="PackedScene" uid="uid://yga6ng3yyyl8" path="res://Scenes/Main/2D-Demo/main_camera.tscn" id="1_68k7t"]
 [ext_resource type="PackedScene" uid="uid://yey7lvkuwcd1" path="res://Scenes/Characters/test_character.tscn" id="2_r47mh"]
 [ext_resource type="Script" path="res://Scripts/sine_test.gd" id="3_6h5bi"]
 [ext_resource type="Texture2D" uid="uid://b0cw2yl22axj5" path="res://Sprites/display/a_button.png" id="4_pe7hj"]
-[ext_resource type="PackedScene" uid="uid://b3p8xxu6wulkq" path="res://Scenes/screen_boundaries.tscn" id="5_f03iw"]
+[ext_resource type="PackedScene" uid="uid://b3p8xxu6wulkq" path="res://Scenes/Main/2D-Demo/screen_boundaries.tscn" id="5_f03iw"]
 [ext_resource type="Script" path="res://Scenes/Characters/Hurtbox3D.gd" id="6_6grem"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_elf24"]

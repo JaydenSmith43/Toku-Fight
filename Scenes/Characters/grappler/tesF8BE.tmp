@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://c7bhntxlkcl7b"]
 
-[ext_resource type="Script" path="res://Scripts/character_data.gd" id="1_kxq2e"]
+[ext_resource type="Script" path="res://Scenes/Characters/character_data.gd" id="1_kxq2e"]
 [ext_resource type="Script" path="res://Scenes/Characters/Hurtbox3D.gd" id="2_geeui"]
 [ext_resource type="PackedScene" uid="uid://1h0q2rqr7tyo" path="res://Scenes/Characters/grappler/grappler_model.tscn" id="3_hvpd6"]
 [ext_resource type="Script" path="res://Scripts/input.gd" id="4_vqsk8"]

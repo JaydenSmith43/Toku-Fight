@@ -1,9 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://cp8mtuqrprxjf"]
+[gd_scene load_steps=6 format=3 uid="uid://cp8mtuqrprxjf"]
 
 [ext_resource type="Script" path="res://Scenes/Characters/Hitbox3D_editor.gd" id="1_0y2xl"]
-[ext_resource type="Script" path="res://Scenes/Characters/stupid_script.gd" id="2_00ij2"]
+[ext_resource type="Script" path="res://Scenes/Characters/hitbox_collision.gd" id="2_00ij2"]
+[ext_resource type="Material" uid="uid://bsy2dn4qn34yq" path="res://Materials/hitbox_mat.tres" id="3_uicbp"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_asypi"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_8dcu3"]
+material = ExtResource("3_uicbp")
 
 [node name="Hitbox" type="Area3D"]
 collision_layer = 8
@@ -14,5 +18,9 @@ script = ExtResource("1_0y2xl")
 shape = SubResource("BoxShape3D_asypi")
 disabled = true
 script = ExtResource("2_00ij2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("BoxMesh_8dcu3")
+skeleton = NodePath("../..")
 
 [connection signal="tell_script" from="." to="CollisionShape3D" method="_on_hitbox_tell_script"]

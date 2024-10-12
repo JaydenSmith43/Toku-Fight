@@ -3,6 +3,7 @@ extends Area3D
 
 signal tell_script(facing, pos_x, pos_y, scale_x, scale_y)
 
+var shape : BoxShape3D
 var damage := 10
 var leftside := true
 var player := ""

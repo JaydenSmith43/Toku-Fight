@@ -8,7 +8,7 @@ var data_file_path = ""
 	#moveData = load_json_file(data_file_path)
 
 func load_json_file(fileName : String):
-	data_file_path = "res://Scripts/Data/" + fileName + ".json"
+	data_file_path = "res://Scripts/MoveData/" + fileName + ".json"
 	
 	if FileAccess.file_exists(data_file_path):
 		var dataFile = FileAccess.open(data_file_path, FileAccess.READ)

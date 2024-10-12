@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://t2m8j3gd7je0"
-path="res://.godot/imported/grappler61.glb-b585f6f6739263c5c287ced8f4b6c3c7.scn"
+path="res://.godot/imported/grappler61.glb-c24d3d3d5454672dda9f535f41b55456.scn"
 
 [deps]
 
-source_file="res://Scenes/Characters/grappler/grappler61.glb"
-dest_files=["res://.godot/imported/grappler61.glb-b585f6f6739263c5c287ced8f4b6c3c7.scn"]
+source_file="res://Models/grappler61.glb"
+dest_files=["res://.godot/imported/grappler61.glb-c24d3d3d5454672dda9f535f41b55456.scn"]
 
 [params]
 
