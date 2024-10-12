@@ -5,6 +5,7 @@ var grappler_model = preload("res://Scenes/Characters/grappler/grappler_model.ts
 #var kamenjogger_model
 @export var animation_option_button : OptionButton
 @export var line_edit : LineEdit
+@export var total_frame_label : Label
 
 var current_model
 var current_anim_player : AnimationPlayer
@@ -37,6 +38,7 @@ func load_character_data():
 func load_animation():
 	current_anim_player.play(animation_option_button.get_item_text(animation_option_button.get_selected_id()))
 	_on_line_edit_text_changed(str(int(line_edit.text)))
+	total_frame_label.text = "Total Frames: " + str(int(current_anim_player.current_animation_length * 60))
 
 func load_anim_frame(frame : float):
 	current_anim_player.play()
