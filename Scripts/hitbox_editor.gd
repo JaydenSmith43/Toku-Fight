@@ -1,14 +1,13 @@
 extends Node3D
 
-var grappler_model = preload("res://Scenes/Characters/grappler/grappler_model.tscn")
-#var tokuguy_model
-#var kamenjogger_model
 @export var animation_option_button : OptionButton
 @export var line_edit : LineEdit
 @export var total_frame_label : Label
+var grappler_model = preload("res://Scenes/Characters/grappler/grappler_model.tscn")
 
 var current_model
 var current_anim_player : AnimationPlayer
+var animations = []
 #var current_frame : int = 1
 
 func _ready() -> void:
@@ -45,6 +44,17 @@ func load_anim_frame(frame : float):
 	current_anim_player.seek(frame/60, true)
 	current_anim_player.speed_scale = 0
 
+func create_hitbox(type: int):
+	match type:
+		0:
+			pass
+		1:
+			pass
+		2:
+			pass
+		3:
+			pass
+
 func _on_option_button_item_selected(index: int) -> void:
 	match index:
 		0:
@@ -56,7 +66,6 @@ func _on_option_button_item_selected(index: int) -> void:
 
 func _on_animation_option_button_item_selected(index: int) -> void:
 	load_animation()
-
 
 func _on_right_button_pressed() -> void:
 	line_edit.text = str(int(line_edit.text) + 1)

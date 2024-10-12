@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://cie2e7ge67p4w"]
+[gd_scene load_steps=12 format=3 uid="uid://cie2e7ge67p4w"]
 
 [ext_resource type="Script" path="res://Scripts/hitbox_editor.gd" id="1_1srkk"]
+[ext_resource type="Script" path="res://Scenes/Tools/editor_camera.gd" id="2_e446d"]
 [ext_resource type="Environment" uid="uid://jsqpfw82fbi" path="res://world_environment.tres" id="2_ekjgq"]
 [ext_resource type="Material" uid="uid://boov5m5w86nyq" path="res://Materials/grid_mat.tres" id="3_14lqj"]
 
@@ -101,6 +102,7 @@ theme = SubResource("Theme_vco7c")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 4)
 projection = 1
 size = 8.0
+script = ExtResource("2_e446d")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("2_ekjgq")
