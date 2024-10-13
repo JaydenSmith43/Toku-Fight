@@ -13,10 +13,16 @@ var anim_name := ""
 func Enter():
 	current_frame = 0
 	played = false
+
+	if character.get_groups()[0] == "player1":
+		StaticData.load_json_file(character.movename, character.get_groups()[0]) #send in current character button from idle state
+		anim_name = StaticData.P1_move_data["anim_name"]
+		move_end_frame = StaticData.P1_move_data["move_end_frame"]
+	else:
+		StaticData.load_json_file(character.movename, character.get_groups()[0]) #send in current character button from idle state
+		anim_name = StaticData.P2_move_data["anim_name"]
+		move_end_frame = StaticData.P2_move_data["move_end_frame"]
 	
-	StaticData.load_json_file(character.movename) #send in current character button from idle state
-	anim_name = StaticData.moveData["anim_name"]
-	move_end_frame = StaticData.moveData["move_end_frame"]
 	#load cancel properties
 
 func Exit():
@@ -35,16 +41,28 @@ func State_Physics_Update(_delta: float):
 		Transitioned.emit(self, "idle")
 
 func check_frame():
-	for data in StaticData.moveData["frames"]:
-		if current_frame == data["frame"]:
-			var hitbox_string = "hitbox"
-			var hitbox_index = 1
-			var hitbox_input = hitbox_string + str(hitbox_index)
+	if character.get_groups()[0] == "player1":
+		for data in StaticData.P1_move_data["frames"]:
+			if current_frame == data["frame"]:
+				var hitbox_string = "hitbox"
+				var hitbox_index = 1
+				var hitbox_input = hitbox_string + str(hitbox_index)
 			
-			while data.has(hitbox_input):
-				create_hitbox(data[hitbox_input])
-				hitbox_index += 1
-				hitbox_input = hitbox_string + str(hitbox_index)
+				while data.has(hitbox_input):
+					create_hitbox(data[hitbox_input])
+					hitbox_index += 1
+					hitbox_input = hitbox_string + str(hitbox_index)
+	else:
+		for data in StaticData.P2_move_data["frames"]:
+			if current_frame == data["frame"]:
+				var hitbox_string = "hitbox"
+				var hitbox_index = 1
+				var hitbox_input = hitbox_string + str(hitbox_index)
+			
+				while data.has(hitbox_input):
+					create_hitbox(data[hitbox_input])
+					hitbox_index += 1
+					hitbox_input = hitbox_string + str(hitbox_index)
 
 func create_hitbox(data):
 	var new_hitbox = hitbox.instantiate()

@@ -1,10 +1,11 @@
 extends Node
 
-var moveData = {}
+var P1_move_data = {}
+var P2_move_data = {}
 
 var data_file_path = ""
 
-func load_json_file(fileName : String):
+func load_json_file(fileName : String, player : String):
 	data_file_path = "res://Scripts/MoveData/" + fileName + ".json"
 	
 	if FileAccess.file_exists(data_file_path):
@@ -12,7 +13,10 @@ func load_json_file(fileName : String):
 		var parsedResult = JSON.parse_string(dataFile.get_as_text())
 		
 		if parsedResult is Dictionary:
-			moveData = parsedResult
+			if player == "player1":
+				P1_move_data = parsedResult
+			else:
+				P2_move_data = parsedResult
 		else:
 			print("Error reading file!")
 	else:
