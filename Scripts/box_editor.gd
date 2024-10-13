@@ -54,7 +54,7 @@ func load_anim_frame(frame : float):
 func check_for_file():
 	var charactername = character_option_button.get_item_text(character_option_button.get_selected_id())
 	var movename = animation_option_button.get_item_text(animation_option_button.get_selected_id())
-	StaticData.load_json_file(charactername + "_" + movename)
+	StaticData.load_json_file(charactername + "_" + movename, "player1")
 	load_frame_data()
 
 func load_frame_data():
@@ -66,15 +66,15 @@ func load_frame_data():
 	
 	load_previous_active_frames()
 	
-	if StaticData.moveData.has("frames"):
-		for data in StaticData.moveData["frames"]:
+	if StaticData.P1_move_data.has("frames"):
+		for data in StaticData.P1_move_data["frames"]:
 			if current_frame == data["frame"]:
 				load_hitbox_data(data)
 
 func load_previous_active_frames():
-	if StaticData.moveData.has("frames"):
+	if StaticData.P1_move_data.has("frames"):
 		for prev_frame in range(1, current_frame):
-			for data in StaticData.moveData["frames"]:
+			for data in StaticData.P1_move_data["frames"]:
 				if prev_frame == data["frame"]:
 					load_prev_hitbox_data(prev_frame, data)
 
@@ -85,7 +85,7 @@ func load_prev_hitbox_data(prev_frame: int, data):
 	
 	while data.has(hitbox_input):
 		if(prev_frame + data[hitbox_input]["end_frame"] -  1 >= current_frame):
-			create_hitbox(data[hitbox_input])
+			create_hitbox(data[hitbox_input], hitbox_input)
 			hitbox_index += 1
 			hitbox_input = hitbox_string + str(hitbox_index)
 		else:
@@ -97,11 +97,11 @@ func load_hitbox_data(data):
 	var hitbox_input = hitbox_string + str(hitbox_index)
 	
 	while data.has(hitbox_input):
-		create_hitbox(data[hitbox_input])
+		create_hitbox(data[hitbox_input], hitbox_input)
 		hitbox_index += 1
 		hitbox_input = hitbox_string + str(hitbox_index)
 
-func create_hitbox(data):
+func create_hitbox(data, name : String):
 	var new_hitbox = hitbox.instantiate()
 	new_hitbox.damage = data["damage"]
 	new_hitbox.end_frame = data["end_frame"]
@@ -111,6 +111,7 @@ func create_hitbox(data):
 	new_hitbox.scale_y = data["scale_y"]
 	new_hitbox.leftside = true
 	new_hitbox.player = "player1"
+	new_hitbox.label.text = name
 	current_boxes.append(new_hitbox)
 	add_child(new_hitbox)
 

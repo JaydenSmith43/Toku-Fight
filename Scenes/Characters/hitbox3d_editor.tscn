@@ -9,11 +9,12 @@
 [sub_resource type="BoxMesh" id="BoxMesh_8dcu3"]
 material = ExtResource("3_uicbp")
 
-[node name="Hitbox" type="Area3D" node_paths=PackedStringArray("mesh")]
+[node name="Hitbox" type="Area3D" node_paths=PackedStringArray("mesh", "label")]
 collision_layer = 8
 collision_mask = 4
 script = ExtResource("1_0y2xl")
 mesh = NodePath("CollisionShape3D/MeshInstance3D")
+label = NodePath("CollisionShape3D/MeshInstance3D/Label3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_asypi")

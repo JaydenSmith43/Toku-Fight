@@ -3,6 +3,7 @@ extends Area3D
 
 signal tell_script(facing, pos_x, pos_y, scale_x, scale_y, scale_z)
 @export var mesh : MeshInstance3D
+@export var label : Label3D
 
 var shape : BoxShape3D
 var damage := 10
@@ -22,3 +23,6 @@ func _ready() -> void:
 
 func destroy():
 	queue_free()
+
+func change_label_text(text : String):
+	label.text = text
