@@ -4,9 +4,6 @@ var moveData = {}
 
 var data_file_path = ""
 
-#func _ready():
-	#moveData = load_json_file(data_file_path)
-
 func load_json_file(fileName : String):
 	data_file_path = "res://Scripts/MoveData/" + fileName + ".json"
 	

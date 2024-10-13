@@ -24,4 +24,7 @@ script = ExtResource("2_00ij2")
 mesh = SubResource("BoxMesh_8dcu3")
 skeleton = NodePath("../..")
 
+[node name="Label3D" type="Label3D" parent="CollisionShape3D/MeshInstance3D"]
+text = "hitbox1"
+
 [connection signal="tell_script" from="." to="CollisionShape3D" method="_on_hitbox_tell_script"]

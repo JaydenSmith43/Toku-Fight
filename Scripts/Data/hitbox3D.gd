@@ -1,7 +1,7 @@
 class_name Hitbox3D
 extends Area3D
 
-signal tell_script(facing, pos_x, pos_y, scale_x, scale_y)
+signal tell_script(facing, pos_x, pos_y, scale_x, scale_y, scale_z)
 
 var shape : BoxShape3D
 var damage := 10
@@ -20,7 +20,7 @@ func _ready() -> void:
 		set_collision_mask_value(3, false)
 		set_collision_layer_value(5, true)
 		set_collision_mask_value(2, true)
-	tell_script.emit(leftside, pos_x, pos_y, scale_x, scale_y)
+	tell_script.emit(leftside, pos_x, pos_y, scale_x, scale_y, 1)
 
 func _physics_process(_delta):
 	current_frame += 1

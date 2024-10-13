@@ -62,7 +62,7 @@ func load_frame_data():
 		if box == null:
 			pass
 		else:
-			queue_free()
+			box.queue_free()
 	
 	load_previous_active_frames()
 	
@@ -72,11 +72,24 @@ func load_frame_data():
 				load_hitbox_data(data)
 
 func load_previous_active_frames():
-	pass
-	#if StaticData.moveData.has("frames"):
-		#for data in StaticData.moveData["frames"]:
-			#if current_frame == data["frame"]:
-				#load_hitbox_data(data)
+	if StaticData.moveData.has("frames"):
+		for prev_frame in range(1, current_frame):
+			for data in StaticData.moveData["frames"]:
+				if prev_frame == data["frame"]:
+					load_prev_hitbox_data(prev_frame, data)
+
+func load_prev_hitbox_data(prev_frame: int, data):
+	var hitbox_string = "hitbox"
+	var hitbox_index = 1
+	var hitbox_input = hitbox_string + str(hitbox_index)
+	
+	while data.has(hitbox_input):
+		if(prev_frame + data[hitbox_input]["end_frame"] -  1 >= current_frame):
+			create_hitbox(data[hitbox_input])
+			hitbox_index += 1
+			hitbox_input = hitbox_string + str(hitbox_index)
+		else:
+			break
 
 func load_hitbox_data(data):
 	var hitbox_string = "hitbox"
