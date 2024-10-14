@@ -10,25 +10,32 @@ var hitbox = preload("res://Scenes/Characters/hitbox3d_editor.tscn")
 var current_model
 var current_anim_player : AnimationPlayer
 var current_frame = 1
-var animations = []
+var animations = [] ###
 var current_boxes = []
-#var current_frame : int = 1
+
+var move_data = []
 
 func _ready() -> void:
-	load_character_data()
+	load_character_data(0)
 
 func _physics_process(_delta):
 	#if current_anim_player.is_playing():
 		#current_anim_player.pause()
 	pass
 
-func load_character_data():
+func load_character_data(index : int):
 	if current_model:
 		current_model.queue_free()
 	
 	animation_option_button.clear()
 	
-	current_model = grappler_model.instantiate()
+	match index:
+		0:
+			current_model = grappler_model.instantiate()
+		1:
+			current_model = grappler_model.instantiate()
+		2:
+			current_model = grappler_model.instantiate()
 	add_child(current_model)
 	
 	current_anim_player = current_model.get_node("AnimationPlayer")
@@ -56,6 +63,7 @@ func check_for_file():
 	var movename = animation_option_button.get_item_text(animation_option_button.get_selected_id())
 	StaticData.load_json_file(charactername + "_" + movename, "player1")
 	load_frame_data()
+	load_array_data()
 
 func load_frame_data():
 	for box in current_boxes:
@@ -70,6 +78,17 @@ func load_frame_data():
 		for data in StaticData.P1_move_data["frames"]:
 			if current_frame == data["frame"]:
 				load_hitbox_data(data)
+
+func load_array_data():
+	var anim_frame_data = {}
+	anim_frame_data["anim_name"] = StaticData.P1_move_data["anim_name"]
+	anim_frame_data["move_end_frame"] = StaticData.P1_move_data["move_end_frame"]
+	
+	if StaticData.P1_move_data.has("frames"):
+		for data in StaticData.P1_move_data["frames"]:
+			anim_frame_data["frames"] = data
+	move_data.clear()
+	move_data.append(anim_frame_data)
 
 func load_previous_active_frames():
 	if StaticData.P1_move_data.has("frames"):
@@ -118,11 +137,11 @@ func create_hitbox(data, name : String):
 func _on_option_button_item_selected(index: int) -> void:
 	match index:
 		0:
-			load_character_data()
+			load_character_data(0)
 		1:
-			load_character_data()
+			load_character_data(1)
 		2:
-			load_character_data()
+			load_character_data(2)
 
 func _on_animation_option_button_item_selected(_index: int) -> void:
 	load_animation()
