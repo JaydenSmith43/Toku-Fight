@@ -27,11 +27,12 @@ default_font_size = 30
 material = ExtResource("3_14lqj")
 size = Vector2(15, 15)
 
-[node name="Node3D" type="Node3D" node_paths=PackedStringArray("animation_option_button", "character_option_button", "line_edit", "total_frame_label")]
+[node name="Node3D" type="Node3D" node_paths=PackedStringArray("animation_option_button", "character_option_button", "current_frame_edit", "end_frame_edit", "total_frame_label")]
 script = ExtResource("1_1srkk")
 animation_option_button = NodePath("AnimationOptionButton")
 character_option_button = NodePath("CharacterOptionButton")
-line_edit = NodePath("LineEdit")
+current_frame_edit = NodePath("CurrentFrameEdit")
+end_frame_edit = NodePath("EndFrameEdit")
 total_frame_label = NodePath("TotalFrameLabel")
 
 [node name="FrameLabel" type="Label" parent="."]
@@ -45,14 +46,24 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "Current Frame:"
 
 [node name="TotalFrameLabel" type="Label" parent="."]
-offset_top = 271.0
+offset_top = 340.0
 offset_right = 245.0
-offset_bottom = 313.0
+offset_bottom = 382.0
 theme = SubResource("Theme_t275h")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "Total Frames: 00"
+
+[node name="EndFrameLabel" type="Label" parent="."]
+offset_top = 278.0
+offset_right = 245.0
+offset_bottom = 320.0
+theme = SubResource("Theme_t275h")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "End Frame:"
 
 [node name="HitboxButton" type="Button" parent="."]
 offset_top = 578.0
@@ -127,7 +138,7 @@ offset_bottom = 266.0
 theme = SubResource("Theme_12ksq")
 text = ">"
 
-[node name="LineEdit" type="LineEdit" parent="."]
+[node name="CurrentFrameEdit" type="LineEdit" parent="."]
 offset_left = 223.0
 offset_top = 204.0
 offset_right = 343.0
@@ -141,8 +152,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -34.04)
 material_override = ExtResource("3_14lqj")
 mesh = SubResource("QuadMesh_ysvca")
 
+[node name="EndFrameEdit" type="LineEdit" parent="."]
+offset_left = 223.0
+offset_top = 274.0
+offset_right = 343.0
+offset_bottom = 324.0
+theme = SubResource("Theme_auj21")
+text = "1"
+placeholder_text = "1"
+
+[connection signal="button_down" from="HitboxButton" to="." method="_on_hitbox_button_button_down"]
 [connection signal="item_selected" from="CharacterOptionButton" to="." method="_on_option_button_item_selected"]
 [connection signal="item_selected" from="AnimationOptionButton" to="." method="_on_animation_option_button_item_selected"]
 [connection signal="pressed" from="LeftButton" to="." method="_on_left_button_pressed"]
 [connection signal="pressed" from="RightButton" to="." method="_on_right_button_pressed"]
-[connection signal="text_changed" from="LineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="text_changed" from="CurrentFrameEdit" to="." method="_on_current_frame_edit_text_changed"]
+[connection signal="text_changed" from="EndFrameEdit" to="." method="_on_end_frame_edit_text_changed"]

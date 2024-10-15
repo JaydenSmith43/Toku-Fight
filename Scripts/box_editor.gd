@@ -2,8 +2,10 @@ extends Node3D
 
 @export var animation_option_button : OptionButton
 @export var character_option_button : OptionButton
-@export var line_edit : LineEdit
+@export var current_frame_edit : LineEdit
+@export var end_frame_edit : LineEdit
 @export var total_frame_label : Label
+
 var grappler_model = preload("res://Scenes/Characters/grappler/grappler_model.tscn")
 var hitbox = preload("res://Scenes/Characters/hitbox3d_editor.tscn")
 
@@ -12,16 +14,10 @@ var current_anim_player : AnimationPlayer
 var current_frame = 1
 var animations = [] ###
 var current_boxes = []
-
-var move_data = []
+var move_data = {}
 
 func _ready() -> void:
 	load_character_data(0)
-
-func _physics_process(_delta):
-	#if current_anim_player.is_playing():
-		#current_anim_player.pause()
-	pass
 
 func load_character_data(index : int):
 	if current_model:
@@ -47,9 +43,10 @@ func load_character_data(index : int):
 
 func load_animation():
 	current_anim_player.play(animation_option_button.get_item_text(animation_option_button.get_selected_id()))
-	_on_line_edit_text_changed(str(int(line_edit.text)))
-	total_frame_label.text = "Total Frames: " + str(int(current_anim_player.current_animation_length * 60))
+	_on_current_frame_edit_text_changed(str(int(current_frame_edit.text)))
+	total_frame_label.text = "Total Anim Frames: " + str(int(current_anim_player.current_animation_length * 60))
 	check_for_file()
+	end_frame_edit.text = str(move_data["move_end_frame"])
  
 func load_anim_frame(frame : float):
 	current_frame = frame
@@ -61,9 +58,10 @@ func load_anim_frame(frame : float):
 func check_for_file():
 	var charactername = character_option_button.get_item_text(character_option_button.get_selected_id())
 	var movename = animation_option_button.get_item_text(animation_option_button.get_selected_id())
+	
 	StaticData.load_json_file(charactername + "_" + movename, "player1")
-	load_frame_data()
 	load_array_data()
+	load_frame_data()
 
 func load_frame_data():
 	for box in current_boxes:
@@ -74,26 +72,19 @@ func load_frame_data():
 	
 	load_previous_active_frames()
 	
-	if StaticData.P1_move_data.has("frames"):
-		for data in StaticData.P1_move_data["frames"]:
+	if move_data.has("frames"):
+		for data in move_data["frames"]:
 			if current_frame == data["frame"]:
 				load_hitbox_data(data)
 
 func load_array_data():
-	var anim_frame_data = {}
-	anim_frame_data["anim_name"] = StaticData.P1_move_data["anim_name"]
-	anim_frame_data["move_end_frame"] = StaticData.P1_move_data["move_end_frame"]
-	
-	if StaticData.P1_move_data.has("frames"):
-		for data in StaticData.P1_move_data["frames"]:
-			anim_frame_data["frames"] = data
 	move_data.clear()
-	move_data.append(anim_frame_data)
+	move_data = StaticData.P1_move_data
 
 func load_previous_active_frames():
-	if StaticData.P1_move_data.has("frames"):
+	if move_data.has("frames"):
 		for prev_frame in range(1, current_frame):
-			for data in StaticData.P1_move_data["frames"]:
+			for data in move_data["frames"]:
 				if prev_frame == data["frame"]:
 					load_prev_hitbox_data(prev_frame, data)
 
@@ -104,7 +95,7 @@ func load_prev_hitbox_data(prev_frame: int, data):
 	
 	while data.has(hitbox_input):
 		if(prev_frame + data[hitbox_input]["end_frame"] -  1 >= current_frame):
-			create_hitbox(data[hitbox_input], hitbox_input)
+			create_hitbox_from_data(data[hitbox_input], hitbox_input)
 			hitbox_index += 1
 			hitbox_input = hitbox_string + str(hitbox_index)
 		else:
@@ -116,11 +107,11 @@ func load_hitbox_data(data):
 	var hitbox_input = hitbox_string + str(hitbox_index)
 	
 	while data.has(hitbox_input):
-		create_hitbox(data[hitbox_input], hitbox_input)
+		create_hitbox_from_data(data[hitbox_input], hitbox_input)
 		hitbox_index += 1
 		hitbox_input = hitbox_string + str(hitbox_index)
 
-func create_hitbox(data, name : String):
+func create_hitbox_from_data(data, name : String):
 	var new_hitbox = hitbox.instantiate()
 	new_hitbox.damage = data["damage"]
 	new_hitbox.end_frame = data["end_frame"]
@@ -133,6 +124,46 @@ func create_hitbox(data, name : String):
 	new_hitbox.label.text = name
 	current_boxes.append(new_hitbox)
 	add_child(new_hitbox)
+
+func create_new_hitbox(name : String):
+	var new_hitbox = hitbox.instantiate()
+	new_hitbox.damage = 1
+	new_hitbox.end_frame = 1
+	new_hitbox.pos_y = 0
+	new_hitbox.pos_x = 0
+	new_hitbox.scale_x = 1
+	new_hitbox.scale_y = 1
+	new_hitbox.leftside = true
+	new_hitbox.player = "player1"
+	new_hitbox.label.text = name
+	current_boxes.append(new_hitbox)
+	add_child(new_hitbox)
+	
+	var same_frame = false
+	var new_data = {
+		frame = current_frame,
+		blockstun = 1,
+		hitstun = 1
+	}
+	
+	new_data[name] = {
+		damage = 1,
+		pos_x = 0,
+		pos_y = 0,
+		scale_x = 1,
+		scale_y = 1,
+		end_frame = 1
+	}
+	
+	for data in move_data["frames"]:
+		if data["frame"] == current_frame:
+			data[name] = new_data[name]
+			same_frame = true
+	
+	if same_frame == false:
+		move_data["frames"].append(new_data)
+	
+	print("thing")
 
 func _on_option_button_item_selected(index: int) -> void:
 	match index:
@@ -147,13 +178,30 @@ func _on_animation_option_button_item_selected(_index: int) -> void:
 	load_animation()
 
 func _on_right_button_pressed() -> void:
-	line_edit.text = str(int(line_edit.text) + 1)
-	_on_line_edit_text_changed(str(int(line_edit.text)))
+	current_frame_edit.text = str(int(current_frame_edit.text) + 1)
+	_on_current_frame_edit_text_changed(str(int(current_frame_edit.text)))
 
 func _on_left_button_pressed() -> void:
-	line_edit.text = str(int(line_edit.text) - 1)
-	_on_line_edit_text_changed(str(int(line_edit.text)))
+	current_frame_edit.text = str(int(current_frame_edit.text) - 1)
+	_on_current_frame_edit_text_changed(str(int(current_frame_edit.text)))
 
-func _on_line_edit_text_changed(new_text: String) -> void:
+func _on_end_frame_edit_text_changed(new_text: String) -> void:
+	if int(new_text) is int:
+		move_data["move_end_frame"] = int(new_text)
+
+func _on_current_frame_edit_text_changed(new_text: String) -> void:
 	if int(new_text) is int and int(new_text) > 0:
 		load_anim_frame(int(new_text))
+
+func _on_hitbox_button_button_down() -> void:
+	var hitbox_string = "hitbox"
+	var hitbox_index = 1
+	var hitbox_input = hitbox_string + str(hitbox_index)
+	
+	for data in move_data["frames"]:
+		if data["frame"] == current_frame:
+			while data.has(hitbox_input):
+				hitbox_index += 1
+				hitbox_input = hitbox_string + str(hitbox_index)
+	create_new_hitbox(hitbox_input)
+	pass
