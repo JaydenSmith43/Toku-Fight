@@ -27,10 +27,11 @@ default_font_size = 30
 material = ExtResource("3_14lqj")
 size = Vector2(15, 15)
 
-[node name="Node3D" type="Node3D" node_paths=PackedStringArray("animation_option_button", "character_option_button", "current_frame_edit", "end_frame_edit", "total_frame_label")]
+[node name="Node3D" type="Node3D" node_paths=PackedStringArray("animation_option_button", "character_option_button", "hitbox_option_button", "current_frame_edit", "end_frame_edit", "total_frame_label")]
 script = ExtResource("1_1srkk")
 animation_option_button = NodePath("AnimationOptionButton")
 character_option_button = NodePath("CharacterOptionButton")
+hitbox_option_button = NodePath("HitboxOptionButton")
 current_frame_edit = NodePath("CurrentFrameEdit")
 end_frame_edit = NodePath("EndFrameEdit")
 total_frame_label = NodePath("TotalFrameLabel")
@@ -104,6 +105,13 @@ popup/item_1/text = "kamenjogger"
 popup/item_1/id = 1
 popup/item_2/id = 2
 
+[node name="HitboxOptionButton" type="OptionButton" parent="."]
+offset_left = 1470.0
+offset_right = 1920.0
+offset_bottom = 100.0
+theme = SubResource("Theme_7773o")
+selected = 0
+
 [node name="AnimationOptionButton" type="OptionButton" parent="."]
 offset_top = 120.0
 offset_right = 450.0
@@ -163,6 +171,7 @@ placeholder_text = "1"
 
 [connection signal="button_down" from="HitboxButton" to="." method="_on_hitbox_button_button_down"]
 [connection signal="item_selected" from="CharacterOptionButton" to="." method="_on_option_button_item_selected"]
+[connection signal="item_selected" from="HitboxOptionButton" to="." method="_on_hitbox_option_button_item_selected"]
 [connection signal="item_selected" from="AnimationOptionButton" to="." method="_on_animation_option_button_item_selected"]
 [connection signal="pressed" from="LeftButton" to="." method="_on_left_button_pressed"]
 [connection signal="pressed" from="RightButton" to="." method="_on_right_button_pressed"]

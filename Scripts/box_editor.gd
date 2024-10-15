@@ -2,6 +2,7 @@ extends Node3D
 
 @export var animation_option_button : OptionButton
 @export var character_option_button : OptionButton
+@export var hitbox_option_button : OptionButton
 @export var current_frame_edit : LineEdit
 @export var end_frame_edit : LineEdit
 @export var total_frame_label : Label
@@ -46,7 +47,25 @@ func load_animation():
 	_on_current_frame_edit_text_changed(str(int(current_frame_edit.text)))
 	total_frame_label.text = "Total Anim Frames: " + str(int(current_anim_player.current_animation_length * 60))
 	check_for_file()
+	
 	end_frame_edit.text = str(move_data["move_end_frame"])
+	load_box_items()
+
+func load_box_items():
+	hitbox_option_button.clear()
+	
+	var hitbox_string = "hitbox"
+	var hitbox_index = 1
+	var hitbox_input = hitbox_string + str(hitbox_index)
+	
+	for data in move_data["frames"]:
+		var frame = data["frame"]
+		
+		while data.has(hitbox_input):
+			hitbox_option_button.add_item(str(frame) + ": " + hitbox_input)
+			hitbox_index += 1
+			hitbox_input = hitbox_string + str(hitbox_index)
+		hitbox_index = 1
  
 func load_anim_frame(frame : float):
 	current_frame = frame
@@ -96,10 +115,8 @@ func load_prev_hitbox_data(prev_frame: int, data):
 	while data.has(hitbox_input):
 		if(prev_frame + data[hitbox_input]["end_frame"] -  1 >= current_frame):
 			create_hitbox_from_data(data[hitbox_input], hitbox_input)
-			hitbox_index += 1
-			hitbox_input = hitbox_string + str(hitbox_index)
-		else:
-			break
+		hitbox_index += 1
+		hitbox_input = hitbox_string + str(hitbox_index)
 
 func load_hitbox_data(data):
 	var hitbox_string = "hitbox"
@@ -176,6 +193,10 @@ func _on_option_button_item_selected(index: int) -> void:
 
 func _on_animation_option_button_item_selected(_index: int) -> void:
 	load_animation()
+
+func _on_hitbox_option_button_item_selected(index: int) -> void:
+	#load_box_variables
+	pass # Replace with function body.
 
 func _on_right_button_pressed() -> void:
 	current_frame_edit.text = str(int(current_frame_edit.text) + 1)
