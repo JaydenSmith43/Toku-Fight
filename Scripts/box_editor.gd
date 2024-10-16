@@ -272,29 +272,94 @@ func _on_var_frame_edit_text_submitted(new_text: String) -> void:
 			if data["frame"] == float(hitbox_string[0]):
 				data["frame"] = float(new_text)
 				hitbox_option_button.set_item_text(index, new_text + ": " + hitbox_string[1])
+				load_frame_data()
 
 func _on_var_blockstun_edit_text_submitted(new_text: String) -> void:
-	pass # Replace with function body.
+	var index = hitbox_option_button.get_selected_id()
+	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
+	hitbox_string[1] = hitbox_string[1].strip_edges()
+	
+	if new_text.is_valid_float():
+		for data in move_data["frames"]:
+			if data["frame"] == float(hitbox_string[0]):
+				data["blockstun"] = float(new_text)
+				load_frame_data()
 
 func _on_var_hitstun_edit_text_submitted(new_text: String) -> void:
-	pass # Replace with function body.
+	var index = hitbox_option_button.get_selected_id()
+	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
+	hitbox_string[1] = hitbox_string[1].strip_edges()
+	
+	if new_text.is_valid_float():
+		for data in move_data["frames"]:
+			if data["frame"] == float(hitbox_string[0]):
+				data["hitstun"] = float(new_text)
+				load_frame_data()
 
 func _on_var_damage_edit_text_submitted(new_text: String) -> void:
-	pass # Replace with function body.
+	var index = hitbox_option_button.get_selected_id()
+	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
+	hitbox_string[1] = hitbox_string[1].strip_edges()
+	
+	if new_text.is_valid_float():
+		for data in move_data["frames"]:
+			if data["frame"] == float(hitbox_string[0]):
+				data[hitbox_string[1]]["damage"] = float(new_text)
+				load_frame_data()
 
 func _on_var_position_x_edit_text_submitted(new_text: String) -> void:
-	pass # Replace with function body.
+	var index = hitbox_option_button.get_selected_id()
+	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
+	hitbox_string[1] = hitbox_string[1].strip_edges()
+	
+	if new_text.is_valid_float():
+		for data in move_data["frames"]:
+			if data["frame"] == float(hitbox_string[0]):
+				data[hitbox_string[1]]["pos_x"] = float(new_text)
+				load_frame_data()
 
 func _on_var_position_y_edit_text_submitted(new_text: String) -> void:
-	pass # Replace with function body.
+	var index = hitbox_option_button.get_selected_id()
+	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
+	hitbox_string[1] = hitbox_string[1].strip_edges()
+	
+	if new_text.is_valid_float():
+		for data in move_data["frames"]:
+			if data["frame"] == float(hitbox_string[0]):
+				data[hitbox_string[1]]["pos_y"] = float(new_text)
+				load_frame_data()
 
 func _on_var_scale_x_edit_text_submitted(new_text: String) -> void:
-	pass # Replace with function body.
+	var index = hitbox_option_button.get_selected_id()
+	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
+	hitbox_string[1] = hitbox_string[1].strip_edges()
+	
+	if new_text.is_valid_float():
+		for data in move_data["frames"]:
+			if data["frame"] == float(hitbox_string[0]):
+				data[hitbox_string[1]]["scale_x"] = float(new_text)
+				load_frame_data()
 
 func _on_var_scale_y_edit_text_submitted(new_text: String) -> void:
-	pass # Replace with function body.
+	var index = hitbox_option_button.get_selected_id()
+	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
+	hitbox_string[1] = hitbox_string[1].strip_edges()
+	
+	if new_text.is_valid_float():
+		for data in move_data["frames"]:
+			if data["frame"] == float(hitbox_string[0]):
+				data[hitbox_string[1]]["scale_y"] = float(new_text)
+				load_frame_data()
 
 func _on_var_end_frame_edit_text_submitted(new_text: String) -> void:
-	pass # Replace with function body.
+	var index = hitbox_option_button.get_selected_id()
+	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
+	hitbox_string[1] = hitbox_string[1].strip_edges()
+	
+	if new_text.is_valid_float():
+		for data in move_data["frames"]:
+			if data["frame"] == float(hitbox_string[0]):
+				data[hitbox_string[1]]["end_frame"] = float(new_text)
+				load_frame_data()
 
 #endregion
