@@ -1,15 +1,1 @@
-{
-	"anim_name": "2a",
-	"move_end_frame": 30,
-	"frames": [
-		{
-			"frame":10,
-			"blockstun":20,
-			"hitstun":40,
-			"hitbox1": 
-				{"damage":1, "pos_x":2, "pos_y":1, "scale_x":1.8, "scale_y":1.5,  "end_frame": 20},
-		},
-		
-	],
-	
-}
+{"anim_name":"2a","frames":[{"blockstun":20,"frame":5,"hitbox1":{"damage":1,"end_frame":20,"pos_x":2,"pos_y":1,"scale_x":1.8,"scale_y":1.5},"hitstun":40}],"move_end_frame":30}

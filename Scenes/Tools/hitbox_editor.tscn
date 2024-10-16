@@ -105,6 +105,14 @@ offset_bottom = 678.0
 theme = SubResource("Theme_im8cm")
 text = "Create Hitbox"
 
+[node name="SaveButton" type="Button" parent="."]
+offset_left = 1669.0
+offset_top = 933.0
+offset_right = 1881.0
+offset_bottom = 1033.0
+theme = SubResource("Theme_im8cm")
+text = "Save"
+
 [node name="HurtboxButton" type="Button" parent="."]
 offset_top = 692.0
 offset_right = 450.0
@@ -355,6 +363,7 @@ text = "1"
 placeholder_text = "1"
 
 [connection signal="button_down" from="HitboxButton" to="." method="_on_hitbox_button_button_down"]
+[connection signal="button_down" from="SaveButton" to="." method="_on_save_button_button_down"]
 [connection signal="item_selected" from="CharacterOptionButton" to="." method="_on_option_button_item_selected"]
 [connection signal="item_selected" from="HitboxOptionButton" to="." method="_on_hitbox_option_button_item_selected"]
 [connection signal="item_selected" from="AnimationOptionButton" to="." method="_on_animation_option_button_item_selected"]

@@ -361,5 +361,17 @@ func _on_var_end_frame_edit_text_submitted(new_text: String) -> void:
 			if data["frame"] == float(hitbox_string[0]):
 				data[hitbox_string[1]]["end_frame"] = float(new_text)
 				load_frame_data()
-
 #endregion
+
+
+func _on_save_button_button_down() -> void:
+	var name = character_option_button.get_item_text(character_option_button.get_selected_id())
+	var move = animation_option_button.get_item_text(animation_option_button.get_selected_id())
+	var path = "res://Scripts/MoveData/" + name + "_" + move + ".json"
+	
+	var json_string = JSON.stringify(move_data)
+	var file = FileAccess.open(path, FileAccess.WRITE)
+	
+	#if FileAccess.file_exists(path):
+		#DirAccess.remove_absolute(path)
+	file.store_string(json_string)
