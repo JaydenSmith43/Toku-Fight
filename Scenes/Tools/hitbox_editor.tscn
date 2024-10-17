@@ -47,7 +47,10 @@ var_position_x_edit = NodePath("Variables/VarPositionXEdit")
 var_position_y_edit = NodePath("Variables/VarPositionYEdit")
 var_scale_x_edit = NodePath("Variables/VarScaleXEdit")
 var_scale_y_edit = NodePath("Variables/VarScaleYEdit")
-var_end_frame_edit = NodePath("Variables/VarEndFrameEdit")
+var_damage_edit = NodePath("Variables/VarDamageEdit")
+var_blockstun_edit = NodePath("Variables/VarBlockstunEdit")
+var_hitstun_edit = NodePath("Variables/VarHitstunEdit")
+var_hitstop_edit = NodePath("Variables/VarHitstopEdit")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 4)
