@@ -8,14 +8,15 @@ extends Node3D
 @export var total_frame_label : Label
 
 @export var var_frame_edit : LineEdit
-@export var var_blockstun_edit: LineEdit
-@export var var_hitstun_edit : LineEdit
-@export var var_damage_edit : LineEdit
+@export var var_end_frame_edit : LineEdit
 @export var var_position_x_edit : LineEdit
 @export var var_position_y_edit : LineEdit
 @export var var_scale_x_edit : LineEdit
 @export var var_scale_y_edit : LineEdit
-@export var var_end_frame_edit : LineEdit
+@export var var_damage_edit : LineEdit
+@export var var_blockstun_edit: LineEdit
+@export var var_hitstun_edit : LineEdit
+@export var var_hitstop_edit : LineEdit
 
 var grappler_model = preload("res://Scenes/Characters/grappler/grappler_model.tscn")
 var hitbox = preload("res://Scenes/Characters/hitbox3d_editor.tscn")
@@ -26,6 +27,17 @@ var current_frame = 1
 var animations = [] ###
 var current_boxes = []
 var move_data = {}
+
+var saved_frame = true
+var saved_end_frame = true
+var saved_pos_x = true
+var saved_pos_y = true
+var saved_scale_x = true
+var saved_scale_y = true
+var saved_damage = true
+var hitstop = true
+var blockstun = true
+var hitstun = true
 
 func _ready() -> void:
 	load_character_data(0)
@@ -90,6 +102,8 @@ func load_box_variables(index : int):
 				var_blockstun_edit.text = str(data["blockstun"])
 			if data.has("hitstun"):
 				var_hitstun_edit.text = str(data["hitstun"])
+			if data.has("hitstop"):
+				var_hitstop_edit.text = str(data["hitstop"])
 			if data.has(str(hitbox_string[1])):
 				load_hitbox_variables(data[hitbox_string[1]])
 
@@ -178,19 +192,6 @@ func create_hitbox_from_data(data, name : String):
 	add_child(new_hitbox)
 
 func create_new_hitbox(name : String):
-	var new_hitbox = hitbox.instantiate()
-	new_hitbox.damage = 1
-	new_hitbox.end_frame = 1
-	new_hitbox.pos_y = 0
-	new_hitbox.pos_x = 0
-	new_hitbox.scale_x = 1
-	new_hitbox.scale_y = 1
-	new_hitbox.leftside = true
-	new_hitbox.player = "player1"
-	new_hitbox.label.text = name
-	current_boxes.append(new_hitbox)
-	add_child(new_hitbox)
-	
 	var same_frame = false
 	var new_data = {
 		frame = current_frame,
@@ -216,6 +217,7 @@ func create_new_hitbox(name : String):
 		move_data["frames"].append(new_data)
 	
 	load_box_items()
+	load_frame_data()
 
 func _on_option_button_item_selected(index: int) -> void:
 	match index:
@@ -260,6 +262,9 @@ func _on_hitbox_button_button_down() -> void:
 				hitbox_input = hitbox_string + str(hitbox_index)
 	create_new_hitbox(hitbox_input)
 	pass
+
+func _on_hurtbox_button_button_down() -> void:
+	pass # Replace with function body.
 
 #region variables
 func _on_var_frame_edit_text_submitted(new_text: String) -> void:
@@ -361,6 +366,18 @@ func _on_var_end_frame_edit_text_submitted(new_text: String) -> void:
 			if data["frame"] == float(hitbox_string[0]):
 				data[hitbox_string[1]]["end_frame"] = float(new_text)
 				load_frame_data()
+
+func _on_var_hitstop_edit_text_submitted(new_text: String) -> void:
+	var index = hitbox_option_button.get_selected_id()
+	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
+	hitbox_string[1] = hitbox_string[1].strip_edges()
+	
+	if new_text.is_valid_float():
+		for data in move_data["frames"]:
+			if data["frame"] == float(hitbox_string[0]):
+				data["hitstop"] = float(new_text)
+				load_frame_data()
+
 #endregion
 
 
@@ -372,6 +389,4 @@ func _on_save_button_button_down() -> void:
 	var json_string = JSON.stringify(move_data)
 	var file = FileAccess.open(path, FileAccess.WRITE)
 	
-	#if FileAccess.file_exists(path):
-		#DirAccess.remove_absolute(path)
 	file.store_string(json_string)
