@@ -2,8 +2,9 @@ extends State
 class_name S_Idle
 
 @onready var inputArray = $"../../Input"
-@export var gravity : float = 60
-@export var move_speed : float = 12.0
+var gravity : float = 60
+var move_speed : float = 12.0
+var pushout_distance = 2
 
 var I_left : String
 var I_right : String
@@ -43,9 +44,14 @@ func Exit():
 	#print("left idle")
 
 func State_Physics_Update(_delta: float):
+	if character.colliding:
+		pushout_distance = 2
+	else:
+		pushout_distance = 0
+	
 	#print("Distance: " + str(character.position.x - otherPlayer.position.x))
 	if !character.is_on_floor():
-		character.velocity.y -= gravity * _delta
+		character.velocity.y -= gravity * 1/60
 	
 	if (character.position.x - otherPlayer.position.x < 0):
 		model.rotation_degrees.z = 0
@@ -61,14 +67,28 @@ func State_Physics_Update(_delta: float):
 	checkInputs()
 
 func checkInputs():
-	if Input.is_action_pressed(I_left) and character.leftside == true:
-		character.blocking = true
+	if Input.is_action_pressed(I_left) and Input.is_action_pressed(I_down) and character.leftside == true:
+		character.low_blocking = true
+		character.high_blocking = false
+	elif Input.is_action_pressed(I_right) and Input.is_action_pressed(I_down) and character.leftside == false:
+		character.low_blocking = true
+		character.high_blocking = false
+	elif Input.is_action_pressed(I_left) and character.leftside == true:
+		character.high_blocking = true
+		character.low_blocking = false
 	elif Input.is_action_pressed(I_right) and character.leftside == false:
-		character.blocking = true
+		character.high_blocking = true
+		character.low_blocking = false
 	else:
-		character.blocking = false
+		character.low_blocking = false
+		character.high_blocking = false
 
+	if Input.is_action_pressed(I_left) and Input.is_action_pressed(I_right):
+		character.low_blocking = false
+		character.high_blocking = false
+	
 	if Input.is_action_pressed(I_left) and character.crouch == false:
+		#if character.leftside
 		character.velocity.x -= move_speed
 		anim_player.play("ForwardWalk")
 	if Input.is_action_pressed(I_right) and character.crouch == false: #TODO BackWalk animation
@@ -76,8 +96,8 @@ func checkInputs():
 		anim_player.play("ForwardWalk")
 
 	if Input.is_action_pressed(I_up):
+		character.jump_velocity = character.velocity.x
 		Transitioned.emit(self, "prejump")
-		character.blocking = false
 		pass
 	elif Input.is_action_pressed(I_down):
 		character.velocity.x = 0
@@ -112,37 +132,46 @@ func checkInputs():
 
 	character.move_and_slide()
 
+func do_throw():
+	pass
+
 func do_fireball():
 	character.blocking = false
 	Transitioned.emit(self, "hadou")
 	
 func do_5A():
-	character.blocking = false
+	character.low_blocking = false
+	character.high_blocking = false
 	character.movename = "grappler_5a"
 	Transitioned.emit(self, "attack")
 
 func do_5B():
-	character.blocking = false
+	character.low_blocking = false
+	character.high_blocking = false
 	character.movename = "grappler_5b"
 	Transitioned.emit(self, "attack")
 
 func do_5C():
-	character.blocking = false
+	character.low_blocking = false
+	character.high_blocking = false
 	character.movename = "grappler_5c"
 	Transitioned.emit(self, "attack")
 
 func do_2A():
-	character.blocking = false
+	character.low_blocking = false
+	character.high_blocking = false
 	character.movename = "grappler_2a"
 	Transitioned.emit(self, "attack")
 
 func do_2B():
-	character.blocking = false
+	character.low_blocking = false
+	character.high_blocking = false
 	character.movename = "grappler_2b"
 	Transitioned.emit(self, "attack")
 
 func do_2C():
-	character.blocking = false
+	character.low_blocking = false
+	character.high_blocking = false
 	character.movename = "grappler_2c"
 	Transitioned.emit(self, "attack")
 

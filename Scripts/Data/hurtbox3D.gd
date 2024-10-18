@@ -14,9 +14,30 @@ func _on_area_entered(hitbox : Hitbox3D) -> void:
 	if hitbox == null:
 		return
 	
-	if owner.has_method("take_damage") and character.blocking == true:
-		state_machine.current_state.Transitioned.emit(state_machine.current_state, "block")
-		hitbox.queue_free()
+	if hitbox.height == "low" and character.low_blocking == true:
+		block(hitbox)
+		pass
+	elif hitbox.height == "high" and character.high_blocking == true:
+		block(hitbox)
+		pass
+	elif hitbox.height == "mid" and character.high_blocking == true:
+		block(hitbox)
+		pass
+	elif hitbox.height == "mid" and character.low_blocking == true:
+		block(hitbox)
+		pass
 	elif owner.has_method("take_damage"):
-		owner.take_damage(hitbox.damage)
-		hitbox.queue_free() #if hitboxes are grouped, delete the others in the group
+		hit(hitbox)
+
+func block(hitbox: Hitbox3D):
+	character.blockstun = hitbox.blockstun
+	state_machine.current_state.Transitioned.emit(state_machine.current_state, "block")
+	hitbox.queue_free()
+
+func hit(hitbox: Hitbox3D):
+	owner.take_damage(hitbox.damage)
+	character.hitstun = hitbox.hitstun
+	character.height_hit = hitbox.height
+	
+	state_machine.current_state.Transitioned.emit(state_machine.current_state, "hitstun")
+	hitbox.queue_free() #if hitboxes are grouped, delete the others in the group

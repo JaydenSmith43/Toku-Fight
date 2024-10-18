@@ -2,14 +2,20 @@ extends State
 class_name S_Block
 
 var current_frame := 0
-var blockstun_frames := 10
+var blockstun_frames := 0
 var I_left : String
 var I_right : String
+var I_down : String
 
 var otherPlayer : CharacterBody3D
 
 func Enter():
 	current_frame = 0
+	blockstun_frames = character.blockstun
+	
+	if anim_player.is_playing():
+		anim_player.stop()
+	
 	if !character.crouch:
 		anim_player.play("StandBlock")
 	else:
@@ -18,10 +24,12 @@ func Enter():
 	if (get_parent().get_parent().is_in_group("player1")):
 		I_left = "P1_Left"
 		I_right = "P1_Right"
+		I_down = "P1_Down"
 		otherPlayer = get_tree().get_nodes_in_group("player2")[0]
 	else:
 		I_left = "P2_Left"
 		I_right = "P2_Right"
+		I_down = "P2_Down"
 		otherPlayer = get_tree().get_nodes_in_group("player1")[0]
 
 func Exit():
@@ -31,13 +39,22 @@ func State_Physics_Update(_delta: float):
 	current_frame += 1
 	
 	#region Input
-	if Input.is_action_pressed(I_left) and character.leftside == true:
-		character.blocking = true
+	if Input.is_action_pressed(I_left) and Input.is_action_pressed(I_down) and character.leftside == true:
+		character.low_blocking = true
+	elif Input.is_action_pressed(I_right) and Input.is_action_pressed(I_down) and character.leftside == false:
+		character.low_blocking = true
+	elif Input.is_action_pressed(I_left) and character.leftside == true:
+		character.high_blocking = true
 	elif Input.is_action_pressed(I_right) and character.leftside == false:
-		character.blocking = true
+		character.high_blocking = true
 	else:
-		character.blocking = false
+		character.low_blocking = false
+		character.high_blocking = false
 	
+	if Input.is_action_pressed(I_left) and Input.is_action_pressed(I_right):
+		character.low_blocking = false
+		character.high_blocking = false
 	
 	if current_frame == blockstun_frames:
+		character.blockstun = 0
 		Transitioned.emit(self, "idle")

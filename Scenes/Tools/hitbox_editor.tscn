@@ -33,7 +33,8 @@ default_font_size = 30
 [sub_resource type="Theme" id="Theme_m2wye"]
 default_font_size = 28
 
-[node name="Node3D" type="Node3D" node_paths=PackedStringArray("animation_option_button", "character_option_button", "hitbox_option_button", "current_frame_edit", "end_frame_edit", "total_frame_label", "var_frame_edit", "var_end_frame_edit", "var_position_x_edit", "var_position_y_edit", "var_scale_x_edit", "var_scale_y_edit", "var_damage_edit", "var_blockstun_edit", "var_hitstun_edit", "var_hitstop_edit")]
+[node name="Node3D" type="Node3D" node_paths=PackedStringArray("animation_option_button", "character_option_button", "hitbox_option_button", "current_frame_edit", "end_frame_edit", "total_frame_label", "var_frame_edit", "var_end_frame_edit", "var_position_x_edit", "var_position_y_edit", "var_scale_x_edit", "var_scale_y_edit", "var_damage_edit", "var_blockstun_edit", "var_hitstun_edit", "var_hitstop_edit", "var_pushback_edit", "var_pushtime_edit", "var_height_edit")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.985718, 0, 0)
 script = ExtResource("1_1srkk")
 animation_option_button = NodePath("AnimationOptionButton")
 character_option_button = NodePath("CharacterOptionButton")
@@ -51,6 +52,9 @@ var_damage_edit = NodePath("Variables/VarDamageEdit")
 var_blockstun_edit = NodePath("Variables/VarBlockstunEdit")
 var_hitstun_edit = NodePath("Variables/VarHitstunEdit")
 var_hitstop_edit = NodePath("Variables/VarHitstopEdit")
+var_pushback_edit = NodePath("Variables/VarPushbackEdit")
+var_pushtime_edit = NodePath("Variables/VarPushTimeEdit")
+var_height_edit = NodePath("Variables/VarHeightEdit")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 4)
@@ -152,17 +156,6 @@ offset_right = 1920.0
 offset_bottom = 100.0
 theme = SubResource("Theme_65p1k")
 
-[node name="TypeOptionButton" type="OptionButton" parent="."]
-offset_left = 1674.0
-offset_top = 223.0
-offset_right = 1920.0
-offset_bottom = 273.0
-theme = SubResource("Theme_65p1k")
-item_count = 2
-popup/item_0/text = "hitbox"
-popup/item_1/text = "hurtbox"
-popup/item_1/id = 1
-
 [node name="AnimationOptionButton" type="OptionButton" parent="."]
 offset_top = 120.0
 offset_right = 450.0
@@ -239,7 +232,40 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "Hitstun:"
 
-[node name="VarTypeLabel" type="Label" parent="Variables"]
+[node name="VarPushbackLabel" type="Label" parent="Variables"]
+offset_left = 43.0
+offset_top = 526.0
+offset_right = 181.0
+offset_bottom = 565.0
+theme = SubResource("Theme_m2wye")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "Pushback:"
+
+[node name="VarPushTimeLabel" type="Label" parent="Variables"]
+offset_left = 43.0
+offset_top = 584.0
+offset_right = 181.0
+offset_bottom = 623.0
+theme = SubResource("Theme_m2wye")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "Push Time:"
+
+[node name="VarHeightLabel" type="Label" parent="Variables"]
+offset_left = 43.0
+offset_top = 642.0
+offset_right = 191.0
+offset_bottom = 681.0
+theme = SubResource("Theme_m2wye")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "Height:"
+
+[node name="VarBoxLabel" type="Label" parent="Variables"]
 offset_left = 43.0
 offset_top = 120.0
 offset_right = 151.0
@@ -248,7 +274,7 @@ theme = SubResource("Theme_m2wye")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-text = "Type:"
+text = "Box:"
 
 [node name="VarDamageLabel" type="Label" parent="Variables"]
 offset_left = 43.0
@@ -313,32 +339,25 @@ theme = SubResource("Theme_auj21")
 text = "1"
 placeholder_text = "1"
 
-[node name="VarBlockstunEdit" type="LineEdit" parent="Variables"]
+[node name="VarEndFrameEdit" type="LineEdit" parent="Variables"]
 offset_left = 206.0
-offset_top = 410.0
+offset_top = 58.0
 offset_right = 326.0
-offset_bottom = 460.0
+offset_bottom = 108.0
 theme = SubResource("Theme_auj21")
 text = "1"
 placeholder_text = "1"
 
-[node name="VarHitstunEdit" type="LineEdit" parent="Variables"]
+[node name="BoxOptionButton" type="OptionButton" parent="Variables"]
 offset_left = 206.0
-offset_top = 468.0
-offset_right = 326.0
-offset_bottom = 518.0
-theme = SubResource("Theme_auj21")
-text = "1"
-placeholder_text = "1"
-
-[node name="VarDamageEdit" type="LineEdit" parent="Variables"]
-offset_left = 206.0
-offset_top = 294.0
-offset_right = 326.0
-offset_bottom = 344.0
-theme = SubResource("Theme_auj21")
-text = "1"
-placeholder_text = "1"
+offset_top = 115.0
+offset_right = 452.0
+offset_bottom = 165.0
+theme = SubResource("Theme_65p1k")
+item_count = 2
+popup/item_0/text = "hitbox"
+popup/item_1/text = "hurtbox"
+popup/item_1/id = 1
 
 [node name="VarPositionXEdit" type="LineEdit" parent="Variables"]
 offset_left = 206.0
@@ -376,11 +395,11 @@ theme = SubResource("Theme_auj21")
 text = "1"
 placeholder_text = "1"
 
-[node name="VarEndFrameEdit" type="LineEdit" parent="Variables"]
+[node name="VarDamageEdit" type="LineEdit" parent="Variables"]
 offset_left = 206.0
-offset_top = 58.0
+offset_top = 294.0
 offset_right = 326.0
-offset_bottom = 108.0
+offset_bottom = 344.0
 theme = SubResource("Theme_auj21")
 text = "1"
 placeholder_text = "1"
@@ -390,6 +409,51 @@ offset_left = 206.0
 offset_top = 352.0
 offset_right = 326.0
 offset_bottom = 402.0
+theme = SubResource("Theme_auj21")
+text = "1"
+placeholder_text = "1"
+
+[node name="VarBlockstunEdit" type="LineEdit" parent="Variables"]
+offset_left = 206.0
+offset_top = 410.0
+offset_right = 326.0
+offset_bottom = 460.0
+theme = SubResource("Theme_auj21")
+text = "1"
+placeholder_text = "1"
+
+[node name="VarHitstunEdit" type="LineEdit" parent="Variables"]
+offset_left = 206.0
+offset_top = 468.0
+offset_right = 326.0
+offset_bottom = 518.0
+theme = SubResource("Theme_auj21")
+text = "1"
+placeholder_text = "1"
+
+[node name="VarPushbackEdit" type="LineEdit" parent="Variables"]
+offset_left = 206.0
+offset_top = 526.0
+offset_right = 326.0
+offset_bottom = 576.0
+theme = SubResource("Theme_auj21")
+text = "1"
+placeholder_text = "1"
+
+[node name="VarPushTimeEdit" type="LineEdit" parent="Variables"]
+offset_left = 206.0
+offset_top = 584.0
+offset_right = 326.0
+offset_bottom = 634.0
+theme = SubResource("Theme_auj21")
+text = "1"
+placeholder_text = "1"
+
+[node name="VarHeightEdit" type="LineEdit" parent="Variables"]
+offset_left = 206.0
+offset_top = 642.0
+offset_right = 326.0
+offset_bottom = 692.0
 theme = SubResource("Theme_auj21")
 text = "1"
 placeholder_text = "1"
@@ -405,12 +469,15 @@ placeholder_text = "1"
 [connection signal="text_changed" from="CurrentFrameEdit" to="." method="_on_current_frame_edit_text_changed"]
 [connection signal="text_changed" from="EndFrameEdit" to="." method="_on_end_frame_edit_text_changed"]
 [connection signal="text_submitted" from="Variables/VarFrameEdit" to="." method="_on_var_frame_edit_text_submitted"]
-[connection signal="text_submitted" from="Variables/VarBlockstunEdit" to="." method="_on_var_blockstun_edit_text_submitted"]
-[connection signal="text_submitted" from="Variables/VarHitstunEdit" to="." method="_on_var_hitstun_edit_text_submitted"]
-[connection signal="text_submitted" from="Variables/VarDamageEdit" to="." method="_on_var_damage_edit_text_submitted"]
+[connection signal="text_submitted" from="Variables/VarEndFrameEdit" to="." method="_on_var_end_frame_edit_text_submitted"]
 [connection signal="text_submitted" from="Variables/VarPositionXEdit" to="." method="_on_var_position_x_edit_text_submitted"]
 [connection signal="text_submitted" from="Variables/VarPositionYEdit" to="." method="_on_var_position_y_edit_text_submitted"]
 [connection signal="text_submitted" from="Variables/VarScaleXEdit" to="." method="_on_var_scale_x_edit_text_submitted"]
 [connection signal="text_submitted" from="Variables/VarScaleYEdit" to="." method="_on_var_scale_y_edit_text_submitted"]
-[connection signal="text_submitted" from="Variables/VarEndFrameEdit" to="." method="_on_var_end_frame_edit_text_submitted"]
+[connection signal="text_submitted" from="Variables/VarDamageEdit" to="." method="_on_var_damage_edit_text_submitted"]
 [connection signal="text_submitted" from="Variables/VarHitstopEdit" to="." method="_on_var_hitstop_edit_text_submitted"]
+[connection signal="text_submitted" from="Variables/VarBlockstunEdit" to="." method="_on_var_blockstun_edit_text_submitted"]
+[connection signal="text_submitted" from="Variables/VarHitstunEdit" to="." method="_on_var_hitstun_edit_text_submitted"]
+[connection signal="text_submitted" from="Variables/VarPushbackEdit" to="." method="_on_var_pushback_edit_text_submitted"]
+[connection signal="text_submitted" from="Variables/VarPushTimeEdit" to="." method="_on_var_push_time_edit_text_submitted"]
+[connection signal="text_submitted" from="Variables/VarHeightEdit" to="." method="_on_var_height_edit_text_submitted"]

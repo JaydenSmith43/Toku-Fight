@@ -1,7 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://c7bhntxlkcl7b"]
+[gd_scene load_steps=19 format=3 uid="uid://c7bhntxlkcl7b"]
 
 [ext_resource type="Script" path="res://Scripts/character_data.gd" id="1_kxq2e"]
 [ext_resource type="Script" path="res://Scripts/Data/hurtbox3D.gd" id="2_nkben"]
+[ext_resource type="Script" path="res://Scenes/Characters/grappler/pushout.gd" id="2_qmc12"]
 [ext_resource type="PackedScene" uid="uid://1h0q2rqr7tyo" path="res://Scenes/Characters/grappler/grappler_model.tscn" id="3_hvpd6"]
 [ext_resource type="Script" path="res://Scripts/input.gd" id="4_vqsk8"]
 [ext_resource type="PackedScene" uid="uid://ook7dmepmfw5" path="res://Scenes/UI/ui.tscn" id="5_7e86r"]
@@ -12,20 +13,34 @@
 [ext_resource type="Script" path="res://Scripts/States/S_Fireball.gd" id="10_3aeij"]
 [ext_resource type="Script" path="res://Scripts/States/S_Jump.gd" id="11_py8x3"]
 [ext_resource type="Script" path="res://Scripts/States/S_Block.gd" id="13_irytk"]
+[ext_resource type="Script" path="res://Scripts/States/S_Hitstun.gd" id="14_1bgx0"]
 [ext_resource type="Script" path="res://Scripts/States/S_Prejump.gd" id="14_hm7jx"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rp0qx"]
-size = Vector3(1, 1, 2.19164)
+size = Vector3(1.3, 1.5, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_02sw2"]
+size = Vector3(2, 5, 0.1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_l04hr"]
-size = Vector3(1, 5.64746, 2.93799)
+size = Vector3(1, 5, 2.9)
 
 [node name="Grappler" type="CharacterBody3D"]
 script = ExtResource("1_kxq2e")
 
 [node name="collision" type="CollisionShape3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.5, 0.126579)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0.127)
 shape = SubResource("BoxShape3D_rp0qx")
+
+[node name="Pushout" type="Area3D" parent="." node_paths=PackedStringArray("character")]
+collision_layer = 512
+collision_mask = 512
+script = ExtResource("2_qmc12")
+character = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pushout"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+shape = SubResource("BoxShape3D_02sw2")
 
 [node name="Hurtbox" type="Area3D" parent="." node_paths=PackedStringArray("character", "state_machine")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
@@ -36,7 +51,7 @@ character = NodePath("..")
 state_machine = NodePath("../StateMachine")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
 shape = SubResource("BoxShape3D_l04hr")
 
 [node name="model" parent="." instance=ExtResource("3_hvpd6")]
@@ -99,3 +114,11 @@ model = NodePath("../../model")
 script = ExtResource("14_hm7jx")
 character = NodePath("../..")
 model = NodePath("../../model")
+
+[node name="Hitstun" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+script = ExtResource("14_1bgx0")
+character = NodePath("../..")
+model = NodePath("../../model")
+
+[connection signal="area_entered" from="Pushout" to="Pushout" method="_on_area_entered"]
+[connection signal="area_exited" from="Pushout" to="Pushout" method="_on_area_exited"]

@@ -7,7 +7,7 @@
 			"blockstun":20,
 			"hitstun":40,
 			"hitbox1": 
-				{"damage":5, "pos_x":2, "pos_y":4, "scale_x":1.8, "scale_y":1.5,  "end_frame": 20},
+				{"damage":5, "height":"mid", "pos_x":2, "pos_y":4, "scale_x":1.8, "scale_y":1.5,  "end_frame": 20},
 		},
 		
 	],

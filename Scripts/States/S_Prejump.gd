@@ -8,6 +8,9 @@ var played : bool = false
 func Enter():
 	current_frame = 0
 	played = false
+	character.low_blocking = false
+	character.high_blocking = false
+	character.jump = true
 	anim_player.play("Jump")
 
 func State_Physics_Update(_delta: float):

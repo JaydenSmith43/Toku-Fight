@@ -5,6 +5,7 @@ signal tell_script(facing, pos_x, pos_y, scale_x, scale_y, scale_z)
 
 var shape : BoxShape3D
 var damage := 10
+var height = "mid"
 var leftside := true
 var player := ""
 var scale_x := 0.0
@@ -13,6 +14,8 @@ var pos_x := 0.0
 var pos_y := 0.0
 var end_frame := 0
 var current_frame := 0
+var hitstun := 0
+var blockstun := 0
 
 func _ready() -> void:
 	if player == "player2":

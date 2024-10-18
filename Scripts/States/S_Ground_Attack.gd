@@ -6,6 +6,10 @@ var current_frame = 0
 var move_end_frame = 10
 var hitbox = preload("res://Scenes/Characters/hitbox3d.tscn")
 var anim_name := ""
+var player_group := ""
+
+var hitstun : int = 0
+var blockstun : int = 0
 
 #@export var animation_player : AnimationPlayer
 #TODO SEND IN JSON DATA INTO THIS ATTACK STATE TO BE READ
@@ -44,6 +48,9 @@ func check_frame():
 	if character.get_groups()[0] == "player1":
 		for data in StaticData.P1_move_data["frames"]:
 			if current_frame == data["frame"]:
+				hitstun = data["hitstun"]
+				blockstun = data["blockstun"]
+				
 				var hitbox_string = "hitbox"
 				var hitbox_index = 1
 				var hitbox_input = hitbox_string + str(hitbox_index)
@@ -55,6 +62,9 @@ func check_frame():
 	else:
 		for data in StaticData.P2_move_data["frames"]:
 			if current_frame == data["frame"]:
+				hitstun = data["hitstun"]
+				blockstun = data["blockstun"]
+				
 				var hitbox_string = "hitbox"
 				var hitbox_index = 1
 				var hitbox_input = hitbox_string + str(hitbox_index)
@@ -72,6 +82,9 @@ func create_hitbox(data):
 	new_hitbox.pos_x = data["pos_x"]
 	new_hitbox.scale_x = data["scale_x"]
 	new_hitbox.scale_y = data["scale_y"]
+	new_hitbox.height = data["height"]
+	new_hitbox.hitstun = hitstun
+	new_hitbox.blockstun = blockstun
 	
 	new_hitbox.leftside = character.leftside
 		
