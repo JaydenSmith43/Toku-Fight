@@ -94,7 +94,10 @@ func checkInputs():
 			character.velocity.x -= move_speed
 		anim_player.play("ForwardWalk")
 	if Input.is_action_pressed(I_right) and character.crouch == false: #TODO BackWalk animation
-		character.velocity.x += move_speed
+		if character.leftside == true:
+			character.velocity.x += move_speed + 2
+		else:
+			character.velocity.x += move_speed
 		anim_player.play("ForwardWalk")
 
 	if Input.is_action_pressed(I_up):
@@ -109,7 +112,9 @@ func checkInputs():
 		anim_player.play("Idle2")
 		character.crouch = false
 
-	if Input.is_action_just_pressed(I_heavy) and character.crouch == false:
+	if Input.is_action_just_pressed(I_light) and Input.is_action_just_pressed(I_medium) and character.crouch == false:
+		do_throw()
+	elif Input.is_action_just_pressed(I_heavy) and character.crouch == false:
 		if check_fireball_left():
 			do_fireball()
 		else:
@@ -135,12 +140,12 @@ func checkInputs():
 	character.move_and_slide()
 
 func do_throw():
-	pass
+	Transitioned.emit(self, "thrower")
 
 func do_fireball():
 	character.blocking = false
 	Transitioned.emit(self, "hadou")
-	
+
 func do_5A():
 	character.low_blocking = false
 	character.high_blocking = false
