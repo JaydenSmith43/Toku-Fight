@@ -36,9 +36,9 @@ func take_damage(damage : int):
 	health -= damage
 	healthbar._set_health(health)
 
-func _physics_process(delta: float) -> void:
-	frame_loop += 1
-	if frame_loop > 60:
-		frame_loop = 1
-	
-	print(str(frame_loop) + ": " + str(velocity.x))
+#func _physics_process(delta: float) -> void:
+	#frame_loop += 1
+	#if frame_loop > 60:
+		#frame_loop = 1
+	#
+	#print(str(frame_loop) + ": " + str(velocity.x))

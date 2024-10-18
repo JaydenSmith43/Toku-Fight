@@ -3,7 +3,7 @@ class_name S_Idle
 
 @onready var inputArray = $"../../Input"
 var gravity : float = 60
-var move_speed : float = 12.0
+var move_speed : float = 10.0
 var pushout_distance = 2
 
 var I_left : String
@@ -88,8 +88,10 @@ func checkInputs():
 		character.high_blocking = false
 	
 	if Input.is_action_pressed(I_left) and character.crouch == false:
-		#if character.leftside
-		character.velocity.x -= move_speed
+		if character.leftside == true:
+			character.velocity.x -= move_speed - 2
+		else:
+			character.velocity.x -= move_speed
 		anim_player.play("ForwardWalk")
 	if Input.is_action_pressed(I_right) and character.crouch == false: #TODO BackWalk animation
 		character.velocity.x += move_speed

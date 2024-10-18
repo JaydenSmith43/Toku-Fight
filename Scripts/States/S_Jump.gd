@@ -18,8 +18,11 @@ func State_Physics_Update(delta: float): #ADD a check for facing left without ch
 	
 	if !character.is_on_floor():
 		character.velocity.y -= gravity * 1/60
-		character.velocity.x = character.jump_velocity
-		pass
+		if character.jump_velocity > 0:
+			character.velocity.x = character.jump_velocity + 2
+		elif character.jump_velocity < 0:
+			character.velocity.x = character.jump_velocity - 2
+			pass
 	elif character.is_on_floor() and current_frame > 20:
 		character.jump = false
 		character.jump_velocity = 0
