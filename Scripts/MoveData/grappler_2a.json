@@ -1,1 +1,1 @@
-{"anim_name":"2a","frames":[{"blockstun":20,"frame":5,"hitbox1":{"damage":3,"end_frame":20,"height":"mid","pos_x":2,"pos_y":1,"scale_x":1.8,"scale_y":1.5},"hitstop":2,"hitstun":20,"pushback":2}],"move_end_frame":30}
+{"anim_name":"2a","frames":[{"blockstun":20,"frame":6,"hitbox1":{"damage":3,"end_frame":2,"height":"mid","pos_x":2,"pos_y":1,"scale_x":1.8,"scale_y":1.5},"hitstop":2,"hitstun":20,"pushback":2}],"move_end_frame":30}

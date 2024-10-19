@@ -18,12 +18,11 @@ func _physics_process(_delta: float) -> void:
 			if !character.jump:
 				character.velocity.x -= 3
 				character.move_and_slide()
-
 		else:
 			if !character.jump:
 				character.velocity.x += 3
 				character.move_and_slide()
-	
+	print("velocity: " + str(character.velocity.x))
 
 func _on_area_entered(_area: Area3D) -> void:
 	colliding = true

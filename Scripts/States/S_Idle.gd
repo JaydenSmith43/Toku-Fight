@@ -16,8 +16,7 @@ var I_heavy : String
 
 var otherPlayer : CharacterBody3D
 
-func Enter():
-	
+func _ready() -> void:
 	if (get_parent().get_parent().is_in_group("player1")):
 		I_left = "P1_Left"
 		I_right = "P1_Right"
@@ -39,9 +38,11 @@ func Enter():
 		
 		otherPlayer = get_tree().get_nodes_in_group("player1")[0]
 
+func Enter():
+	pass
+
 func Exit():
 	pass
-	#print("left idle")
 
 func State_Physics_Update(_delta: float):
 	if character.colliding:
@@ -89,13 +90,13 @@ func checkInputs():
 	
 	if Input.is_action_pressed(I_left) and character.crouch == false:
 		if character.leftside == true:
-			character.velocity.x -= move_speed - 2
+			character.velocity.x -= (move_speed - 2)
 		else:
 			character.velocity.x -= move_speed
 		anim_player.play("ForwardWalk")
 	if Input.is_action_pressed(I_right) and character.crouch == false: #TODO BackWalk animation
-		if character.leftside == true:
-			character.velocity.x += move_speed + 2
+		if character.leftside == false:
+			character.velocity.x += (move_speed - 2)
 		else:
 			character.velocity.x += move_speed
 		anim_player.play("ForwardWalk")

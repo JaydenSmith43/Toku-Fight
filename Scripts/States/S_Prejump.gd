@@ -17,9 +17,4 @@ func State_Physics_Update(_delta: float):
 	current_frame += 1
 	
 	if current_frame == 3:
-		character.velocity.y = +jump_force
-		if character.velocity.x > 0:
-			character.velocity.x = 10
-		elif character.velocity.x < 0:
-			character.velocity.x = -10
 		Transitioned.emit(self, "jump")
