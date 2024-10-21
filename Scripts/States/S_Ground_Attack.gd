@@ -86,7 +86,7 @@ func create_hitbox(data):
 	new_hitbox.hitstun = hitstun
 	new_hitbox.blockstun = blockstun
 	
-	new_hitbox.leftside = character.leftside
+	new_hitbox.left_side = character.left_side
 		
 	if character.is_in_group("player1"):
 		new_hitbox.player = "player1"

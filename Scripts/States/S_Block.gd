@@ -17,9 +17,9 @@ func Enter():
 		anim_player.stop()
 	
 	if !character.crouch:
-		anim_player.play("StandBlock")
+		anim_player.play("stand_block")
 	else:
-		anim_player.play("CrouchBlock")
+		anim_player.play("crouch_block")
 	
 	if (get_parent().get_parent().is_in_group("player1")):
 		I_left = "P1_Left"
@@ -39,13 +39,13 @@ func State_Physics_Update(_delta: float):
 	current_frame += 1
 	
 	#region Input
-	if Input.is_action_pressed(I_left) and Input.is_action_pressed(I_down) and character.leftside == true:
+	if Input.is_action_pressed(I_left) and Input.is_action_pressed(I_down) and character.left_side == true:
 		character.low_blocking = true
-	elif Input.is_action_pressed(I_right) and Input.is_action_pressed(I_down) and character.leftside == false:
+	elif Input.is_action_pressed(I_right) and Input.is_action_pressed(I_down) and character.left_side == false:
 		character.low_blocking = true
-	elif Input.is_action_pressed(I_left) and character.leftside == true:
+	elif Input.is_action_pressed(I_left) and character.left_side == true:
 		character.high_blocking = true
-	elif Input.is_action_pressed(I_right) and character.leftside == false:
+	elif Input.is_action_pressed(I_right) and character.left_side == false:
 		character.high_blocking = true
 	else:
 		character.low_blocking = false

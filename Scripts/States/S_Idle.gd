@@ -17,7 +17,7 @@ var I_heavy : String
 var otherPlayer : CharacterBody3D
 
 func _ready() -> void:
-	if (get_parent().get_parent().is_in_group("player1")):
+	if (character.is_in_group("player1")):
 		I_left = "P1_Left"
 		I_right = "P1_Right"
 		I_up = "P1_Up"
@@ -57,27 +57,27 @@ func State_Physics_Update(_delta: float):
 	if (character.position.x - otherPlayer.position.x < 0):
 		model.rotation_degrees.z = 0
 		model.scale = Vector3(1,1,1)
-		character.leftside = true
+		character.left_side = true
 	else:
 		model.rotation_degrees.z = 180
 		model.scale = Vector3(-1,-1,-1)
-		character.leftside = false
+		character.left_side = false
 	
 	character.velocity.x = 0
 	
 	checkInputs()
 
 func checkInputs():
-	if Input.is_action_pressed(I_left) and Input.is_action_pressed(I_down) and character.leftside == true:
+	if Input.is_action_pressed(I_left) and Input.is_action_pressed(I_down) and character.left_side == true:
 		character.low_blocking = true
 		character.high_blocking = false
-	elif Input.is_action_pressed(I_right) and Input.is_action_pressed(I_down) and character.leftside == false:
+	elif Input.is_action_pressed(I_right) and Input.is_action_pressed(I_down) and character.left_side == false:
 		character.low_blocking = true
 		character.high_blocking = false
-	elif Input.is_action_pressed(I_left) and character.leftside == true:
+	elif Input.is_action_pressed(I_left) and character.left_side == true:
 		character.high_blocking = true
 		character.low_blocking = false
-	elif Input.is_action_pressed(I_right) and character.leftside == false:
+	elif Input.is_action_pressed(I_right) and character.left_side == false:
 		character.high_blocking = true
 		character.low_blocking = false
 	else:
@@ -89,17 +89,17 @@ func checkInputs():
 		character.high_blocking = false
 	
 	if Input.is_action_pressed(I_left) and character.crouch == false:
-		if character.leftside == true:
+		if character.left_side == true:
 			character.velocity.x -= (move_speed - 2)
 		else:
 			character.velocity.x -= move_speed
-		anim_player.play("ForwardWalk")
+		anim_player.play("forward_walk")
 	if Input.is_action_pressed(I_right) and character.crouch == false: #TODO BackWalk animation
-		if character.leftside == false:
+		if character.left_side == false:
 			character.velocity.x += (move_speed - 2)
 		else:
 			character.velocity.x += move_speed
-		anim_player.play("ForwardWalk")
+		anim_player.play("forward_walk")
 
 	if Input.is_action_pressed(I_up):
 		character.jump_velocity = character.velocity.x
@@ -107,10 +107,10 @@ func checkInputs():
 		pass
 	elif Input.is_action_pressed(I_down):
 		character.velocity.x = 0
-		anim_player.play("Crouch")
+		anim_player.play("crouch")
 		character.crouch = true
 	elif character.velocity.x == 0:
-		anim_player.play("Idle2")
+		anim_player.play("idle")
 		character.crouch = false
 
 	if Input.is_action_just_pressed(I_light) and Input.is_action_just_pressed(I_medium) and character.crouch == false:
@@ -184,7 +184,7 @@ func do_2C():
 	Transitioned.emit(self, "attack")
 
 func check_fireball_left():
-	if character.leftside == false:
+	if character.left_side == false:
 		return check_fireball_right()
 	
 	var motionD : bool = false

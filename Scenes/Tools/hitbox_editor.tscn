@@ -118,6 +118,14 @@ offset_bottom = 1033.0
 theme = SubResource("Theme_im8cm")
 text = "Save"
 
+[node name="DeleteButton" type="Button" parent="."]
+offset_left = 461.0
+offset_top = 920.0
+offset_right = 673.0
+offset_bottom = 1020.0
+theme = SubResource("Theme_im8cm")
+text = "Delete"
+
 [node name="HurtboxButton" type="Button" parent="."]
 offset_top = 692.0
 offset_right = 450.0
@@ -460,6 +468,7 @@ placeholder_text = "1"
 
 [connection signal="button_down" from="HitboxButton" to="." method="_on_hitbox_button_button_down"]
 [connection signal="button_down" from="SaveButton" to="." method="_on_save_button_button_down"]
+[connection signal="button_down" from="DeleteButton" to="." method="_on_delete_button_button_down"]
 [connection signal="button_down" from="HurtboxButton" to="." method="_on_hurtbox_button_button_down"]
 [connection signal="item_selected" from="CharacterOptionButton" to="." method="_on_option_button_item_selected"]
 [connection signal="item_selected" from="HitboxOptionButton" to="." method="_on_hitbox_option_button_item_selected"]

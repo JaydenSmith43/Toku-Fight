@@ -6,7 +6,7 @@ signal tell_script(facing, pos_x, pos_y, scale_x, scale_y, scale_z)
 var shape : BoxShape3D
 var damage := 10
 var height = "mid"
-var leftside := true
+var left_side := true
 var player := ""
 var scale_x := 0.0
 var scale_y := 0.0
@@ -23,7 +23,7 @@ func _ready() -> void:
 		set_collision_mask_value(3, false)
 		set_collision_layer_value(5, true)
 		set_collision_mask_value(2, true)
-	tell_script.emit(leftside, pos_x, pos_y, scale_x, scale_y, 1)
+	tell_script.emit(left_side, pos_x, pos_y, scale_x, scale_y, 1)
 
 func _physics_process(_delta):
 	current_frame += 1

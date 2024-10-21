@@ -4,9 +4,10 @@ extends CharacterBody3D
 @onready var label = $UI/HealthBar/StateLabel
 @onready var hurtbox = $Hurtbox
 @onready var collision = $collision
+@export var state_machine : Node
 
 var health := 100
-var leftside := false
+var left_side := false
 var low_blocking := false
 var high_blocking := false
 var crouch := false
@@ -17,6 +18,7 @@ var blockstun := 0
 var height_hit := ""
 var colliding := false
 var jump_velocity = 0
+var being_thrown := false
 
 var frame_loop = 0
 

@@ -2,7 +2,6 @@ class_name Hurtbox
 extends Area3D
 
 @export var character : CharacterBody3D
-@export var state_machine : Node
 
 func _init() -> void:
 	pass
@@ -31,7 +30,7 @@ func _on_area_entered(hitbox : Hitbox3D) -> void:
 
 func block(hitbox: Hitbox3D):
 	character.blockstun = hitbox.blockstun
-	state_machine.current_state.Transitioned.emit(state_machine.current_state, "block")
+	character.state_machine.current_state.Transitioned.emit(character.state_machine.current_state, "block")
 	hitbox.queue_free()
 
 func hit(hitbox: Hitbox3D):
@@ -39,5 +38,5 @@ func hit(hitbox: Hitbox3D):
 	character.hitstun = hitbox.hitstun
 	character.height_hit = hitbox.height
 	
-	state_machine.current_state.Transitioned.emit(state_machine.current_state, "hitstun")
+	character.state_machine.current_state.Transitioned.emit(character.state_machine.current_state, "hitstun")
 	hitbox.queue_free() #if hitboxes are grouped, delete the others in the group

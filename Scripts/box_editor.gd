@@ -154,6 +154,25 @@ func load_frame_data():
 		for data in move_data["frames"]:
 			if current_frame == data["frame"]:
 				load_hitbox_data(data)
+		if move_data["frames"].size() == 0:
+			no_data()
+
+func no_data():
+	var_frame_edit.text = ""
+	var_blockstun_edit.text = ""
+	var_hitstun_edit.text = ""
+	var_hitstop_edit.text = ""
+	var_pushback_edit.text = ""
+	var_pushtime_edit.text = ""
+	var_damage_edit.text = ""
+	var_position_x_edit.text = ""
+	var_position_y_edit.text = ""
+	var_scale_x_edit.text = ""
+	var_scale_y_edit.text = ""
+	var_end_frame_edit.text = ""
+	var_height_edit.text = ""
+	
+	hitbox_option_button.remove_item(0)
 
 func load_array_data():
 	move_data.clear()
@@ -214,7 +233,8 @@ func create_new_hitbox(name : String):
 		pos_y = 0,
 		scale_x = 1,
 		scale_y = 1,
-		end_frame = 1
+		end_frame = 1,
+		height = "mid"
 	}
 	
 	for data in move_data["frames"]:
@@ -274,6 +294,27 @@ func _on_hitbox_button_button_down() -> void:
 
 func _on_hurtbox_button_button_down() -> void:
 	pass # Replace with function body.
+
+func _on_save_button_button_down() -> void:
+	var name = character_option_button.get_item_text(character_option_button.get_selected_id())
+	var move = animation_option_button.get_item_text(animation_option_button.get_selected_id())
+	var path = "res://Scripts/MoveData/" + name + "_" + move + ".json"
+	
+	var json_string = JSON.stringify(move_data)
+	var file = FileAccess.open(path, FileAccess.WRITE)
+	
+	file.store_string(json_string)
+
+func _on_delete_button_button_down() -> void:
+	var index = hitbox_option_button.get_selected_id()
+	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
+	hitbox_string[1] = hitbox_string[1].strip_edges()
+	
+	for data in move_data["frames"]:
+		if data["frame"] == float(hitbox_string[0]):
+			move_data["frames"].erase(data)
+			#data.erase(hitbox_string[1])
+			load_frame_data()
 
 #region variables
 func _on_var_frame_edit_text_submitted(new_text: String) -> void:
@@ -419,13 +460,3 @@ func _on_var_height_edit_text_submitted(new_text: String) -> void:
 			data[hitbox_string[1]]["height"] = new_text
 			load_frame_data()
 #endregion
-
-func _on_save_button_button_down() -> void:
-	var name = character_option_button.get_item_text(character_option_button.get_selected_id())
-	var move = animation_option_button.get_item_text(animation_option_button.get_selected_id())
-	var path = "res://Scripts/MoveData/" + name + "_" + move + ".json"
-	
-	var json_string = JSON.stringify(move_data)
-	var file = FileAccess.open(path, FileAccess.WRITE)
-	
-	file.store_string(json_string)

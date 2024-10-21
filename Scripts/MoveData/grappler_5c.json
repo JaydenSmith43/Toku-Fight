@@ -1,15 +1,1 @@
-{
-	"anim_name": "5c",
-	"move_end_frame": 60,
-	"frames": [
-		{
-			"frame":25,
-			"blockstun":30,
-			"hitstun":40,
-			"hitbox1": 
-				{"damage":10, "height":"high", "pos_x":1.2, "pos_y":4, "scale_x":2, "scale_y":2,  "end_frame": 30}
-		},
-		
-	],
-	
-}
+{"anim_name":"5c","frames":[{"blockstun":30,"frame":14,"hitbox1":{"damage":10,"end_frame":5,"height":"high","pos_x":1.2,"pos_y":4,"scale_x":2,"scale_y":2},"hitstun":40}],"move_end_frame":34}

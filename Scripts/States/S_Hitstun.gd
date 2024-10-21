@@ -12,13 +12,13 @@ func Enter():
 		anim_player.stop()
 	
 	if character.crouch:
-		anim_player.play("HitCrouch")
+		anim_player.play("hit_crouch")
 	elif character.height_hit == "high":
-		anim_player.play("HitHigh")
+		anim_player.play("hit_high")
 	elif character.height_hit == "mid":
-		anim_player.play("HitMid")
+		anim_player.play("hit_mid")
 	elif character.height_hit == "low":
-		anim_player.play("HitLow")
+		anim_player.play("hit_low")
 
 func Exit():
 	pass

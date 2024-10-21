@@ -14,7 +14,7 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	if colliding:
-		if character.leftside:
+		if character.left_side:
 			if !character.jump:
 				character.velocity.x -= 3
 				character.move_and_slide()
