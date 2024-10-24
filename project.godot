@@ -11,19 +11,29 @@ config_version=5
 [application]
 
 config/name="TokuFight"
-run/main_scene="res://Scenes/Main/main.tscn"
+run/main_scene="res://Scenes/Main/vs_mode.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://Sprites/icon.svg"
 
 [autoload]
 
 StaticData="*res://Scripts/static_data.gd"
+SyncDebugger="*res://addons/godot-rollback-netcode/SyncDebugger.gd"
+SyncManager="*res://addons/godot-rollback-netcode/SyncManager.gd"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/stretch/mode="viewport"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot-rollback-netcode/plugin.cfg")
+
+[global_group]
+
+network_sync=""
 
 [input]
 
@@ -97,6 +107,11 @@ P2_Heavy={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":92,"key_label":0,"unicode":92,"location":0,"echo":false,"script":null)
 ]
 }
+sync_debug={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":4194342,"physical_keycode":0,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
 
 [layer_names]
 
@@ -113,6 +128,12 @@ P2_Heavy={
 3d_physics/layer_7="ThrowboxP2"
 3d_physics/layer_8="ThrowP1"
 3d_physics/layer_9="ThrowP2"
+
+[network]
+
+rollback/classes/message_serializer="res://Scripts/Networking/custom_message_serialization.gd"
+rollback/debug/rollback_ticks=2
+rollback/debug/random_rollback_ticks=3
 
 [rendering]
 

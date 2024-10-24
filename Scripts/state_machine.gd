@@ -18,14 +18,14 @@ func _ready():
 		state_label.text = "State: \n" + current_state.name
 		print(state_label.text)
 
-func _process(delta):
-	if current_state:
-		current_state.State_Update(delta)
-		state_label.text = "State: \n" + current_state.name
+#func _process(delta):
+#	if current_state:
+#		current_state.State_Update(delta)
+#		state_label.text = "State: \n" + current_state.name
 
-func _physics_process(delta):
+func tick_physics_process(input: Dictionary):
 	if current_state:
-		current_state.State_Physics_Update(delta)
+		current_state.State_Physics_Update(input)
 
 func on_child_transition(state, new_state_name):
 	if state != current_state:

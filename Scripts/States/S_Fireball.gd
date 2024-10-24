@@ -14,7 +14,7 @@ func Exit():
 func State_Update(_delta: float):
 	pass
 
-func State_Physics_Update(_delta: float):
+func State_Physics_Update(input: Dictionary):
 	if (!played):
 		#sprite.play("fireball")
 		#TODO

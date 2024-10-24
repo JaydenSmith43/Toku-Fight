@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bmkea3roxko18"]
+[gd_scene load_steps=8 format=3 uid="uid://bmkea3roxko18"]
 
-[ext_resource type="PackedScene" uid="uid://c7bhntxlkcl7b" path="res://Scenes/Characters/grappler/test_grappler.tscn" id="1_vxacs"]
-[ext_resource type="Script" path="res://Scenes/Main/2D-Demo/main_camera.gd" id="2_1aito"]
-[ext_resource type="Environment" uid="uid://jsqpfw82fbi" path="res://world_environment.tres" id="3_g4hjm"]
-[ext_resource type="PackedScene" uid="uid://b2ax3p2ss2g8q" path="res://Scenes/Main/3d_boundaries.tscn" id="4_vryft"]
+[ext_resource type="PackedScene" uid="uid://c7bhntxlkcl7b" path="res://Scenes/Characters/grappler/test_grappler.tscn" id="1_14pf6"]
+[ext_resource type="Script" path="res://Scenes/Main/2D-Demo/main_camera.gd" id="2_ndysc"]
+[ext_resource type="Environment" uid="uid://jsqpfw82fbi" path="res://world_environment.tres" id="3_k4mgk"]
+[ext_resource type="PackedScene" uid="uid://b2ax3p2ss2g8q" path="res://Scenes/Main/3d_boundaries.tscn" id="4_fckii"]
+[ext_resource type="PackedScene" uid="uid://30mde2a3la3" path="res://Scenes/Main/test_menu.tscn" id="5_706ux"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_das85"]
 size = Vector3(100, 1, 11.989)
@@ -12,10 +13,10 @@ size = Vector3(100, 1, 11.989)
 
 [node name="Node3D" type="Node3D"]
 
-[node name="test1" parent="." groups=["player1"] instance=ExtResource("1_vxacs")]
+[node name="test1" parent="." groups=["player1"] instance=ExtResource("1_14pf6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.477, 0)
 
-[node name="test2" parent="." groups=["player2"] instance=ExtResource("1_vxacs")]
+[node name="test2" parent="." groups=["player2"] instance=ExtResource("1_14pf6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.477, 0)
 
 [node name="Floor" type="StaticBody3D" parent="."]
@@ -55,7 +56,7 @@ skeleton = NodePath("../../../Wall2")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 18)
 fov = 40.0
 size = 13.5631
-script = ExtResource("2_1aito")
+script = ExtResource("2_ndysc")
 character1 = NodePath("../test1")
 character2 = NodePath("../test2")
 
@@ -63,8 +64,10 @@ character2 = NodePath("../test2")
 transform = Transform3D(1, 0, 0, 0, 0.642788, 0.766044, 0, -0.766044, 0.642788, 0, 12, 10)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = ExtResource("3_g4hjm")
+environment = ExtResource("3_k4mgk")
 
-[node name="ScreenBoundaries" parent="." node_paths=PackedStringArray("character1", "character2") instance=ExtResource("4_vryft")]
+[node name="ScreenBoundaries" parent="." node_paths=PackedStringArray("character1", "character2") instance=ExtResource("4_fckii")]
 character1 = NodePath("../test1")
 character2 = NodePath("../test2")
+
+[node name="TestMenu" parent="." instance=ExtResource("5_706ux")]

@@ -13,7 +13,7 @@ func Enter():
 	current_frame = 0
 	current_position = character.position
 
-func State_Physics_Update(_delta: float):
+func State_Physics_Update(input: Dictionary):
 	current_frame += 1
 	
 	if current_frame == animation_end:

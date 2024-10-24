@@ -24,11 +24,11 @@ func Exit():
 	character.collision.position.y -= 1
 	character.set_collision_mask_value(16, true)
 
-func State_Physics_Update(delta: float): #ADD a check for facing left without changing model
+func State_Physics_Update(input: Dictionary): #ADD a check for facing left without changing model
 	current_frame += 1
 	
 	if !character.is_on_floor():
-		character.velocity.y += get_gravity() * delta
+		character.velocity.y += get_gravity() * 1/60
 		
 		if character.jump_velocity > 0:
 			character.velocity.x = character.jump_velocity + 2

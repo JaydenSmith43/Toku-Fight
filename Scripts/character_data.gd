@@ -19,9 +19,10 @@ var height_hit := ""
 var colliding := false
 var jump_velocity = 0
 var being_thrown := false
+var input_vector : Vector2
 
 var frame_loop = 0
-
+#custom_physics_process
 func _ready():
 	healthbar.init_health(health)
 	
@@ -37,6 +38,46 @@ func _ready():
 func take_damage(damage : int):
 	health -= damage
 	healthbar._set_health(health)
+
+func _get_local_input() -> Dictionary:
+	var input_vector
+	var a_button
+	var b_button
+	var c_button
+	
+	if is_in_group("player1"):
+		input_vector = Input.get_vector("P1_Left", "P1_Right", "P1_Up", "P1_Down")
+	else:
+		input_vector = Input.get_vector("P2_Left", "P2_Right", "P2_Up", "P2_Down")
+	
+	a_button = Input.is_action_just_pressed("P1_Light")
+	b_button = Input.is_action_just_pressed("P1_Medium")
+	c_button = Input.is_action_just_pressed("P1_Heavy")
+	
+	var input := {}
+	if input_vector != Vector2.ZERO:
+		input["input_vector"] = input_vector
+	if a_button == true:
+		input["a_button"] = a_button
+	if b_button == true:
+		input["b_button"] = b_button
+	if c_button == true:
+		input["c_button"] = c_button
+	
+	return input
+
+func _network_process(input: Dictionary) -> void:
+	state_machine.tick_physics_process(input)
+	
+	pass
+
+func _save_state() -> Dictionary:
+	return {
+		velocity = velocity
+	}
+
+func _load_state(state: Dictionary) -> void:
+	velocity = state['velocity']
 
 #func _physics_process(delta: float) -> void:
 	#frame_loop += 1

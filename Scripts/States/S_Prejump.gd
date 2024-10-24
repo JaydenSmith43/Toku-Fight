@@ -13,8 +13,9 @@ func Enter():
 	character.jump = true
 	anim_player.play("jump")
 
-func State_Physics_Update(_delta: float):
+func State_Physics_Update(input: Dictionary):
 	current_frame += 1
+	print(current_frame)
 	
 	if current_frame == 3:
 		Transitioned.emit(self, "jump")

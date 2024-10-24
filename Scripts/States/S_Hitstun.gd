@@ -23,7 +23,7 @@ func Enter():
 func Exit():
 	pass
 
-func State_Physics_Update(_delta: float):
+func State_Physics_Update(input: Dictionary):
 	current_frame += 1
 	
 	if current_frame == hitstun_frames:

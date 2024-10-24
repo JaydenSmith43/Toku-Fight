@@ -44,15 +44,13 @@ func Enter():
 func Exit():
 	pass
 
-func State_Physics_Update(_delta: float):
+func State_Physics_Update(input: Dictionary):
 	if character.colliding:
 		pushout_distance = 2
 	else:
 		pushout_distance = 0
 	
 	#print("Distance: " + str(character.position.x - otherPlayer.position.x))
-	if !character.is_on_floor():
-		character.velocity.y -= gravity * 1/60
 	
 	if (character.position.x - otherPlayer.position.x < 0):
 		model.rotation_degrees.z = 0
@@ -65,7 +63,81 @@ func State_Physics_Update(_delta: float):
 	
 	character.velocity.x = 0
 	
-	checkInputs()
+	network_checkInputs(input)
+	
+
+func network_checkInputs(input: Dictionary) -> void:
+	if Input.is_action_pressed(I_left) and Input.is_action_pressed(I_down) and character.left_side == true:
+		character.low_blocking = true
+		character.high_blocking = false
+	elif Input.is_action_pressed(I_right) and Input.is_action_pressed(I_down) and character.left_side == false:
+		character.low_blocking = true
+		character.high_blocking = false
+	elif Input.is_action_pressed(I_left) and character.left_side == true:
+		character.high_blocking = true
+		character.low_blocking = false
+	elif Input.is_action_pressed(I_right) and character.left_side == false:
+		character.high_blocking = true
+		character.low_blocking = false
+	else:
+		character.low_blocking = false
+		character.high_blocking = false
+#
+	if input.get("input_vector", Vector2.ZERO).x == 0: #neutral
+		character.low_blocking = false
+		character.high_blocking = false
+	
+	elif input.get("input_vector", Vector2.ZERO).x == -1 and character.crouch == false:
+		if character.left_side == true:
+			character.velocity.x -= (move_speed - 2)
+		else:
+			character.velocity.x -= move_speed
+		anim_player.play("forward_walk")
+	elif input.get("input_vector", Vector2.ZERO).x == 1 and character.crouch == false: #TODO BackWalk animation
+		if character.left_side == false:
+			character.velocity.x += (move_speed - 2)
+		else:
+			character.velocity.x += move_speed
+		anim_player.play("forward_walk")
+
+	if input.get("input_vector", Vector2.ZERO).y < 0:
+		character.jump_velocity = character.velocity.x
+		Transitioned.emit(self, "prejump")
+		return
+	elif input.get("input_vector", Vector2.ZERO).y > 0:
+		character.velocity.x = 0
+		anim_player.play("crouch")
+		character.crouch = true
+	elif character.velocity.x == 0:
+		anim_player.play("idle")
+		character.crouch = false
+
+	if Input.is_action_just_pressed(I_light) and Input.is_action_just_pressed(I_medium) and character.crouch == false:
+		do_throw()
+	#elif Input.is_action_just_pressed(I_heavy) and character.crouch == false:
+		#if check_fireball_left():
+			#do_fireball()
+		#else:
+			#do_5C()
+	#elif Input.is_action_just_pressed(I_medium) and character.crouch == false:
+		#if check_fireball_left():
+			#do_fireball()
+		#else:
+			#do_5B()
+	#elif Input.is_action_just_pressed(I_light) and character.crouch == false:
+		#if check_fireball_left():
+			#do_fireball()
+		#else:
+			#do_5A()
+#
+	#if Input.is_action_just_pressed(I_heavy) and character.crouch == true:
+		#do_2C()
+	#elif Input.is_action_just_pressed(I_medium) and character.crouch == true:
+		#do_2B()
+	#elif Input.is_action_just_pressed(I_light) and character.crouch == true:
+		#do_2A()
+	
+	character.move_and_slide()
 
 func checkInputs():
 	if Input.is_action_pressed(I_left) and Input.is_action_pressed(I_down) and character.left_side == true:
@@ -90,13 +162,15 @@ func checkInputs():
 	
 	if Input.is_action_pressed(I_left) and character.crouch == false:
 		if character.left_side == true:
-			character.velocity.x -= (move_speed - 2)
+			#character.velocity.x -= (move_speed - 2)
+			return
 		else:
 			character.velocity.x -= move_speed
 		anim_player.play("forward_walk")
 	if Input.is_action_pressed(I_right) and character.crouch == false: #TODO BackWalk animation
 		if character.left_side == false:
-			character.velocity.x += (move_speed - 2)
+			#character.velocity.x += (move_speed - 2)
+			return
 		else:
 			character.velocity.x += move_speed
 		anim_player.play("forward_walk")

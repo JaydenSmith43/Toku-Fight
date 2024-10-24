@@ -23,9 +23,7 @@ func Enter():
 	current_frame = 0
 	throw_current_frame = 0
 
-func State_Physics_Update(_delta: float):
-	
-	
+func State_Physics_Update(input: Dictionary):
 	if !throwing:
 		current_frame += 1
 		if other_player.being_thrown == true:

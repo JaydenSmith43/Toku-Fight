@@ -39,7 +39,7 @@ func Enter():
 func Exit():
 	character.being_thrown = false
 
-func State_Physics_Update(_delta: float):
+func State_Physics_Update(input: Dictionary):
 	current_frame += 1
 	if teching:
 		tech_throw_frame += 1
