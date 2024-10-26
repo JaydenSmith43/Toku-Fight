@@ -6,6 +6,10 @@ extends Node
 @onready var message_label = $CanvasLayer/MessageLabel
 @onready var sync_lost_label = $CanvasLayer/SyncLostLabel
 
+#const LOG_FILE_DIRECTORY = 'user://detailed_logs'
+
+var logging_enabled := true
+
 func _ready() -> void:
 	multiplayer.peer_connected.connect(_on_peer_connected)
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
@@ -61,6 +65,22 @@ func _on_reset_button_pressed() -> void:
 
 func _on_SyncManager_sync_started() -> void:
 	message_label.text = "Started!"
+	
+	if logging_enabled:
+		DirAccess.make_dir_absolute("res://detailed_logs")
+		
+		var datetime = Time.get_datetime_dict_from_system(true)
+		var log_file_name = "%04d%02d%02d-%02d%02d%02d-peer-%d.log" % [
+			datetime['year'],
+			datetime['month'],
+			datetime['day'],
+			datetime['hour'],
+			datetime['minute'],
+			datetime['second'],
+			multiplayer.get_unique_id()
+		]
+		
+		SyncManager.start_logging("res://detailed_logs" + '/' + log_file_name)
 
 func _on_SyncManager_sync_stopped() -> void:
 	pass

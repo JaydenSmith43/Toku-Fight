@@ -8,8 +8,8 @@ const input_path_mapping := {
 enum HeaderFlags {
 	HAS_INPUT_VECTOR = 0x01,
 	HAS_A_BUTTON = 0x02,
-	HAS_B_BUTTON = 0x03,
-	HAS_C_BUTTON = 0x04
+	HAS_B_BUTTON = 0x02,
+	HAS_C_BUTTON = 0x02
 }
 
 var input_path_mapping_reverse := {}
@@ -20,7 +20,7 @@ func _init() -> void:
 
 func serialize_input(all_input: Dictionary) -> PackedByteArray:
 	var buffer := StreamPeerBuffer.new()
-	buffer.resize(16)
+	buffer.resize(128)
 	
 	buffer.put_u32(all_input['$']) #4 bytes
 	buffer.put_u8(all_input.size() - 1) #1 byte
@@ -37,9 +37,9 @@ func serialize_input(all_input: Dictionary) -> PackedByteArray:
 			header |= HeaderFlags.HAS_INPUT_VECTOR #1 byte
 		if input.has('a_button'):
 			header |= HeaderFlags.HAS_A_BUTTON #1 byte
-		if input.has('b_button'):
+		if input.has('b'):
 			header |= HeaderFlags.HAS_B_BUTTON #1 byte
-		if input.has('c_button'):
+		if input.has('c'):
 			header |= HeaderFlags.HAS_C_BUTTON #1 byte
 		
 		buffer.put_u8(header)
@@ -49,12 +49,15 @@ func serialize_input(all_input: Dictionary) -> PackedByteArray:
 			buffer.put_float(input_vector.x) #4 bytes
 			buffer.put_float(input_vector.y) #4 bytes
 		
-		if input.has('a_button'):
-			buffer.put_u8(input['a_button'])
-		if input.has('b_button'):
-			buffer.put_u8(input['b_button'])
-		if input.has('c_button'):
-			buffer.put_u8(input['c_button'])
+		if input.has('a'):
+			var a_button: bool = input['a']
+			buffer.put_8(a_button) #1 byte
+		if input.has('b'):
+			var b_button: bool = input['b']
+			buffer.put_8(b_button) #1 byte
+		if input.has('c'):
+			var c_button: bool = input['c']
+			buffer.put_8(c_button) #1 byte
 	
 	buffer.resize(buffer.get_position())
 	return buffer.data_array
@@ -78,6 +81,12 @@ func unserialize_input(serialized: PackedByteArray) -> Dictionary:
 	var header = buffer.get_u8()
 	if header & HeaderFlags.HAS_INPUT_VECTOR:
 		input['input_vector'] = Vector2(buffer.get_float(), buffer.get_float())
+	if header & HeaderFlags.HAS_A_BUTTON:
+		input['a'] = bool(buffer.get_8())
+	if header & HeaderFlags.HAS_B_BUTTON:
+		input['b'] = buffer.get_8()
+	if header & HeaderFlags.HAS_C_BUTTON:
+		input['c'] = bool(buffer.get_8())
 	
 	all_input[path] = input
 	return all_input

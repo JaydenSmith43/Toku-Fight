@@ -41,35 +41,36 @@ func take_damage(damage : int):
 
 func _get_local_input() -> Dictionary:
 	var input_vector
-	var a_button
-	var b_button
-	var c_button
+	var a_button := false
+	var b_button := false
+	var c_button := false
 	
 	if is_in_group("player1"):
 		input_vector = Input.get_vector("P1_Left", "P1_Right", "P1_Up", "P1_Down")
 	else:
 		input_vector = Input.get_vector("P2_Left", "P2_Right", "P2_Up", "P2_Down")
 	
-	a_button = Input.is_action_just_pressed("P1_Light")
-	b_button = Input.is_action_just_pressed("P1_Medium")
-	c_button = Input.is_action_just_pressed("P1_Heavy")
+	if Input.is_action_just_pressed("P1_Light"):
+		a_button = true
+	if Input.is_action_just_pressed("P1_Medium"):
+		b_button = true
+	if Input.is_action_just_pressed("P1_Heavy"):
+		c_button = true
 	
 	var input := {}
 	if input_vector != Vector2.ZERO:
 		input["input_vector"] = input_vector
 	if a_button == true:
-		input["a_button"] = a_button
+		input["a"] = a_button
 	if b_button == true:
-		input["b_button"] = b_button
+		input["b"] = b_button
 	if c_button == true:
-		input["c_button"] = c_button
+		input["c"] = c_button
 	
 	return input
 
 func _network_process(input: Dictionary) -> void:
 	state_machine.tick_physics_process(input)
-	
-	pass
 
 func _save_state() -> Dictionary:
 	return {

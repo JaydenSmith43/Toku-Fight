@@ -11,7 +11,7 @@ func Enter():
 	character.low_blocking = false
 	character.high_blocking = false
 	character.jump = true
-	anim_player.play("jump")
+	#anim_player.play("jump")
 
 func State_Physics_Update(input: Dictionary):
 	current_frame += 1
