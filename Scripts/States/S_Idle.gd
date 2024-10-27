@@ -67,6 +67,7 @@ func State_Physics_Update(input: Dictionary):
 	
 
 func network_checkInputs(input: Dictionary) -> void:
+	print(input.get("input_vector", Vector2.ZERO))
 	#if Input.is_action_pressed(I_left) and Input.is_action_pressed(I_down) and character.left_side == true:
 		#character.low_blocking = true
 		#character.high_blocking = false
@@ -88,17 +89,16 @@ func network_checkInputs(input: Dictionary) -> void:
 		character.high_blocking = false
 	
 	elif input.get("input_vector", Vector2.ZERO).x < 0 and character.crouch == false:
-		print(input.get("input_vector", Vector2.ZERO).x)
 		if character.left_side == true:
-			character.velocity.x -= (move_speed - 2)
+			character.velocity.x = -(move_speed - 2)
 		else:
-			character.velocity.x -= move_speed
+			character.velocity.x = -move_speed
 		anim_player.play("forward_walk")
 	elif input.get("input_vector", Vector2.ZERO).x > 0 and character.crouch == false: 
 		if character.left_side == false:
-			character.velocity.x += (move_speed - 2)
+			character.velocity.x = (move_speed - 2)
 		else:
-			character.velocity.x += move_speed
+			character.velocity.x = move_speed
 		anim_player.play("forward_walk") #TODO BackWalk animation
 
 	if input.get("input_vector", Vector2.ZERO).y < 0:

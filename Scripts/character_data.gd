@@ -45,10 +45,8 @@ func _get_local_input() -> Dictionary:
 	var b_button := false
 	var c_button := false
 	
-	if is_in_group("player1"):
-		input_vector = Input.get_vector("P1_Left", "P1_Right", "P1_Up", "P1_Down")
-	else:
-		input_vector = Input.get_vector("P2_Left", "P2_Right", "P2_Up", "P2_Down")
+	input_vector = Input.get_vector("P1_Left", "P1_Right", "P1_Up", "P1_Down")
+	#input_vector = Input.get_vector("P2_Left", "P2_Right", "P2_Up", "P2_Down")
 	
 	if Input.is_action_just_pressed("P1_Light"):
 		a_button = true
@@ -69,11 +67,21 @@ func _get_local_input() -> Dictionary:
 	
 	return input
 
+func _predict_remote_input(previous_input: Dictionary, ticks_since_real_input: int) -> Dictionary:
+	var input = previous_input.duplicate()
+	input.erase("a")
+	input.erase("b")
+	input.erase("c")
+	#if ticks_since_real_input > 2:
+	#	input.erase("input_vector")
+	return input
+
 func _network_process(input: Dictionary) -> void:
 	state_machine.tick_physics_process(input)
 
 func _save_state() -> Dictionary:
 	return {
+		#current_state = state_machine.states.get(state_machine.new_state_name.to_lower()),
 		velocity = velocity
 	}
 

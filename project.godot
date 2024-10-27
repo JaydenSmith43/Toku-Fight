@@ -20,6 +20,7 @@ config/icon="res://Sprites/icon.svg"
 StaticData="*res://Scripts/static_data.gd"
 SyncDebugger="*res://addons/godot-rollback-netcode/SyncDebugger.gd"
 SyncManager="*res://addons/godot-rollback-netcode/SyncManager.gd"
+SyncReplay="*res://addons/godot-rollback-netcode/SyncReplay.gd"
 
 [display]
 
@@ -132,8 +133,9 @@ sync_debug={
 [network]
 
 rollback/classes/message_serializer="res://Scripts/Networking/custom_message_serialization.gd"
-rollback/debug/rollback_ticks=2
-rollback/debug/random_rollback_ticks=3
+rollback/debug/rollback_ticks=4
+rollback/debug/random_rollback_ticks=10
+rollback/log_inspector/replay_match_scene_path="res://Scenes/Main/vs_mode.tscn"
 
 [rendering]
 

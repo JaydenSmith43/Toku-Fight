@@ -7,9 +7,9 @@ const input_path_mapping := {
 
 enum HeaderFlags {
 	HAS_INPUT_VECTOR = 0x01,
-	HAS_A_BUTTON = 0x02,
-	HAS_B_BUTTON = 0x02,
-	HAS_C_BUTTON = 0x02
+	PRESS_A = 0x02,
+	PRESS_B = 0x02,
+	PRESS_C = 0x02
 }
 
 var input_path_mapping_reverse := {}
@@ -35,12 +35,12 @@ func serialize_input(all_input: Dictionary) -> PackedByteArray:
 		var input = all_input[path]
 		if input.has('input_vector'):
 			header |= HeaderFlags.HAS_INPUT_VECTOR #1 byte
-		if input.has('a_button'):
-			header |= HeaderFlags.HAS_A_BUTTON #1 byte
-		if input.has('b'):
-			header |= HeaderFlags.HAS_B_BUTTON #1 byte
-		if input.has('c'):
-			header |= HeaderFlags.HAS_C_BUTTON #1 byte
+		if input.get('a', false):
+			header |= HeaderFlags.PRESS_A #1 byte
+		if input.get('b', false):
+			header |= HeaderFlags.PRESS_B #1 byte
+		if input.get('c', false):
+			header |= HeaderFlags.PRESS_C #1 byte
 		
 		buffer.put_u8(header)
 		
@@ -48,16 +48,6 @@ func serialize_input(all_input: Dictionary) -> PackedByteArray:
 			var input_vector: Vector2 = input['input_vector']
 			buffer.put_float(input_vector.x) #4 bytes
 			buffer.put_float(input_vector.y) #4 bytes
-		
-		if input.has('a'):
-			var a_button: bool = input['a']
-			buffer.put_8(a_button) #1 byte
-		if input.has('b'):
-			var b_button: bool = input['b']
-			buffer.put_8(b_button) #1 byte
-		if input.has('c'):
-			var c_button: bool = input['c']
-			buffer.put_8(c_button) #1 byte
 	
 	buffer.resize(buffer.get_position())
 	return buffer.data_array
@@ -81,12 +71,12 @@ func unserialize_input(serialized: PackedByteArray) -> Dictionary:
 	var header = buffer.get_u8()
 	if header & HeaderFlags.HAS_INPUT_VECTOR:
 		input['input_vector'] = Vector2(buffer.get_float(), buffer.get_float())
-	if header & HeaderFlags.HAS_A_BUTTON:
-		input['a'] = bool(buffer.get_8())
-	if header & HeaderFlags.HAS_B_BUTTON:
-		input['b'] = buffer.get_8()
-	if header & HeaderFlags.HAS_C_BUTTON:
-		input['c'] = bool(buffer.get_8())
+	if header & HeaderFlags.PRESS_A:
+		input['a'] = true
+	if header & HeaderFlags.PRESS_B:
+		input['b'] = true
+	if header & HeaderFlags.PRESS_C:
+		input['c'] = true
 	
 	all_input[path] = input
 	return all_input

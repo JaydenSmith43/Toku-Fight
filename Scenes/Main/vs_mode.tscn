@@ -1,5 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://bmkea3roxko18"]
+[gd_scene load_steps=9 format=3 uid="uid://bmkea3roxko18"]
 
+[ext_resource type="Script" path="res://Scenes/Main/test_vs_mode.gd" id="1_5ed8j"]
 [ext_resource type="PackedScene" uid="uid://c7bhntxlkcl7b" path="res://Scenes/Characters/grappler/test_grappler.tscn" id="1_14pf6"]
 [ext_resource type="Script" path="res://Scenes/Main/2D-Demo/main_camera.gd" id="2_ndysc"]
 [ext_resource type="Environment" uid="uid://jsqpfw82fbi" path="res://world_environment.tres" id="3_k4mgk"]
@@ -12,6 +13,7 @@ size = Vector3(100, 1, 11.989)
 [sub_resource type="BoxMesh" id="BoxMesh_5kyyc"]
 
 [node name="Node3D" type="Node3D"]
+script = ExtResource("1_5ed8j")
 
 [node name="test1" parent="." groups=["player1"] instance=ExtResource("1_14pf6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.477, 0)
@@ -52,6 +54,8 @@ transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 11.989, 0, 0, 0)
 mesh = SubResource("BoxMesh_5kyyc")
 skeleton = NodePath("../../../Wall2")
 
+[node name="TestMenu" parent="." instance=ExtResource("5_706ux")]
+
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("character1", "character2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 18)
 fov = 40.0
@@ -69,5 +73,3 @@ environment = ExtResource("3_k4mgk")
 [node name="ScreenBoundaries" parent="." node_paths=PackedStringArray("character1", "character2") instance=ExtResource("4_fckii")]
 character1 = NodePath("../test1")
 character2 = NodePath("../test2")
-
-[node name="TestMenu" parent="." instance=ExtResource("5_706ux")]
