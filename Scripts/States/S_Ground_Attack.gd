@@ -3,7 +3,7 @@ class_name S_Attack
 
 var played : bool = false
 var current_frame = 0
-var move_end_frame = 10
+var move_end_frame = 30
 var hitbox = preload("res://Scenes/Characters/hitbox3d.tscn")
 var anim_name := ""
 var player_group := ""

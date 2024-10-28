@@ -3,7 +3,7 @@ class_name S_Idle
 
 @onready var inputArray = $"../../Input"
 var gravity : float = 60
-var move_speed : float = 8.0
+var move_speed : float = 16.0
 var pushout_distance = 2
 
 var I_left : String
@@ -113,8 +113,8 @@ func network_checkInputs(input: Dictionary) -> void:
 		anim_player.play("idle")
 		character.crouch = false
 
-	if input.get("a") and input.get("b") and character.crouch == false:
-		do_throw()
+	#if input.get("a") and input.get("b") and character.crouch == false:
+	#	do_throw()
 	#elif Input.is_action_just_pressed(I_heavy) and character.crouch == false:
 		#if check_fireball_left():
 			#do_fireball()

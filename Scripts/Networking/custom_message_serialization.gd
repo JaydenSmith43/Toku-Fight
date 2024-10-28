@@ -8,8 +8,8 @@ const input_path_mapping := {
 enum HeaderFlags {
 	HAS_INPUT_VECTOR = 0x01,
 	PRESS_A = 0x02,
-	PRESS_B = 0x02,
-	PRESS_C = 0x02
+	PRESS_B = 0x04,
+	PRESS_C = 0x08
 }
 
 var input_path_mapping_reverse := {}

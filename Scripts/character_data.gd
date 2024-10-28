@@ -48,6 +48,9 @@ func _get_local_input() -> Dictionary:
 	input_vector = Input.get_vector("P1_Left", "P1_Right", "P1_Up", "P1_Down")
 	#input_vector = Input.get_vector("P2_Left", "P2_Right", "P2_Up", "P2_Down")
 	
+	#if Input.is_action_pressed("P2_Left"):
+		
+	
 	if Input.is_action_just_pressed("P1_Light"):
 		a_button = true
 	if Input.is_action_just_pressed("P1_Medium"):
@@ -82,11 +85,13 @@ func _network_process(input: Dictionary) -> void:
 func _save_state() -> Dictionary:
 	return {
 		#current_state = state_machine.states.get(state_machine.new_state_name.to_lower()),
-		velocity = velocity
+		position = position,
+		#velocity = velocity
 	}
 
 func _load_state(state: Dictionary) -> void:
-	velocity = state['velocity']
+	#velocity = state['velocity']
+	position = state['position']
 
 #func _physics_process(delta: float) -> void:
 	#frame_loop += 1
