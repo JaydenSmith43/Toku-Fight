@@ -1,5 +1,8 @@
 extends Node
 
+const DummyNetworkAdapter = preload("res://addons/godot-rollback-netcode/DummyNetworkAdaptor.gd")
+
+@onready var main_menu = $CanvasLayer/MainMenu
 @onready var connection_panel = $CanvasLayer/ConnectionPanel
 @onready var host_field = $CanvasLayer/ConnectionPanel/GridContainer/HostField
 @onready var port_field = $CanvasLayer/ConnectionPanel/GridContainer/PortField
@@ -24,6 +27,7 @@ func _on_server_button_pressed() -> void:
 	peer.create_server(int(port_field.text), 1)
 	multiplayer.multiplayer_peer = peer
 	connection_panel.visible = false
+	main_menu.visible = false
 	message_label.text = "Listening..."
 
 func _on_client_button_pressed() -> void:
@@ -31,6 +35,7 @@ func _on_client_button_pressed() -> void:
 	peer.create_client(host_field.text, int(port_field.text))
 	multiplayer.multiplayer_peer = peer
 	connection_panel.visible = false
+	main_menu.visible = false
 	message_label.text = "Connecting..."
 
 func _on_peer_connected(peer_id: int):
@@ -105,11 +110,15 @@ func _on_SyncManager_sync_error(msg: String) -> void:
 
 func setup_match_for_replay(my_peer_id: int, peer_ids: Array, match_info: Dictionary) -> void:
 	connection_panel.visible = false
-	#main_menu.visible = false
+	main_menu.visible = false
 	reset_button.visible = false
 
-#func _on_local_button_pressed() -> void:
-	#main_menu.visible = false
-	#$T.input_prefix = "p2_"
-	#SyncManager.network_adaptor = DummyNetworkAdapter.new()
-	#SyncManager.start()
+func _on_online_button_pressed() -> void:
+	connection_panel.popup_centered()
+	SyncManager.reset_network_adaptor()
+
+func _on_local_button_pressed() -> void:
+	main_menu.visible = false
+	get_parent().get_node("test2").input_prefix = "P2_"
+	SyncManager.network_adaptor = DummyNetworkAdapter.new()
+	SyncManager.start()

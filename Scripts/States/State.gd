@@ -3,7 +3,7 @@ class_name State
 
 signal Transitioned
 
-@export var character : CharacterBody3D
+@export var character : Node3D
 @export var model : Node3D
 @onready var attack_timer : Timer = $"../../AttackTimer" #TODO get rid of this
 @onready var anim_player : NetworkAnimationPlayer = $"../../model/AnimationPlayer"

@@ -1,6 +1,7 @@
-[gd_scene load_steps=24 format=3 uid="uid://c7bhntxlkcl7b"]
+[gd_scene load_steps=25 format=3 uid="uid://c7bhntxlkcl7b"]
 
 [ext_resource type="Script" path="res://Scripts/character_data.gd" id="1_kxq2e"]
+[ext_resource type="Texture2D" uid="uid://cgbjhrh37tx7c" path="res://DemoContent/tank_blue.png" id="2_4pwgy"]
 [ext_resource type="Script" path="res://Scenes/Characters/throwbox.gd" id="2_50jbh"]
 [ext_resource type="Script" path="res://Scripts/Data/hurtbox3D.gd" id="2_nkben"]
 [ext_resource type="Script" path="res://Scenes/Characters/pushout.gd" id="2_qmc12"]
@@ -32,12 +33,31 @@ size = Vector3(1.36, 5, 0.1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_l04hr"]
 size = Vector3(1, 5, 2.9)
 
-[node name="Grappler" type="CharacterBody3D" node_paths=PackedStringArray("state_machine") groups=["network_sync"]]
+[node name="Grappler" type="CharacterBody3D" node_paths=PackedStringArray("state_machine", "sg_physics") groups=["network_sync"]]
 collision_layer = 32768
 collision_mask = 32769
 axis_lock_linear_z = true
 script = ExtResource("1_kxq2e")
 state_machine = NodePath("StateMachine")
+sg_physics = NodePath("SGCharacter")
+
+[node name="SGCharacter" type="SGCharacterBody2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+fixed_rotation = -102943
+rotation = -1.57079
+
+[node name="Sprite2D" type="Sprite2D" parent="SGCharacter"]
+rotation = -1.5708
+texture = ExtResource("2_4pwgy")
+
+[node name="SGCollisionPolygon2D" type="SGCollisionPolygon2D" parent="SGCharacter"]
+fixed_polygon_pairs = [[786416, -1376264], [1245176, -655372], [1245190, 720884], [786446, 1376248], [-1179634, 1376268], [-1507318, 983056], [-1507340, -983024], [-1179664, -1376244]]
+
+[node name="SGRayCast2D" type="SGRayCast2D" parent="SGCharacter"]
+cast_to_x = 3276800
+cast_to_y = 0
+collide_with_areas = true
 
 [node name="collision" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0.127)

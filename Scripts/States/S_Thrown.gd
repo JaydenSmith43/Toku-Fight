@@ -12,7 +12,7 @@ var current_position : Vector3
 var I_light : String
 var I_medium : String
 
-var other_player : CharacterBody3D
+var other_player : Node3D
 
 func _ready() -> void:
 	if (character.is_in_group("player1")):

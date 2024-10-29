@@ -6,6 +6,8 @@ var gravity : float = 60
 var move_speed : float = 16.0
 var pushout_distance = 2
 
+#var sg_vector : SGFixedVector2
+
 var I_left : String
 var I_right : String
 var I_up : String
@@ -14,7 +16,7 @@ var I_light : String
 var I_medium : String
 var I_heavy : String
 
-var otherPlayer : CharacterBody3D
+var otherPlayer : Node3D
 
 func _ready() -> void:
 	if (character.is_in_group("player1")):
@@ -45,13 +47,13 @@ func Exit():
 	pass
 
 func State_Physics_Update(input: Dictionary):
-	if character.colliding:
-		pushout_distance = 2
-	else:
-		pushout_distance = 0
-	
-	#print("Distance: " + str(character.position.x - otherPlayer.position.x))
-	
+	#if character.colliding:
+		#pushout_distance = 2
+	#else:
+		#pushout_distance = 0
+	#
+	##print("Distance: " + str(character.position.x - otherPlayer.position.x))
+	#
 	if (character.position.x - otherPlayer.position.x < 0):
 		model.rotation_degrees.z = 0
 		model.scale = Vector3(1,1,1)
@@ -60,14 +62,14 @@ func State_Physics_Update(input: Dictionary):
 		model.rotation_degrees.z = 180
 		model.scale = Vector3(-1,-1,-1)
 		character.left_side = false
-	
-	character.velocity.x = 0
+	character.character_velocity.x = 0
+	character.character_velocity.y = 0
+	#character.velocity.x = 0
 	
 	network_checkInputs(input)
 	
 
 func network_checkInputs(input: Dictionary) -> void:
-	print(input.get("input_vector", Vector2.ZERO))
 	#if Input.is_action_pressed(I_left) and Input.is_action_pressed(I_down) and character.left_side == true:
 		#character.low_blocking = true
 		#character.high_blocking = false
@@ -90,16 +92,30 @@ func network_checkInputs(input: Dictionary) -> void:
 	
 	elif input.get("input_vector", Vector2.ZERO).x < 0 and character.crouch == false:
 		if character.left_side == true:
-			character.velocity.x = -(move_speed - 2)
+			character.character_velocity.x = SGFixed.NEG_ONE
+			character.sg_physics.move_and_collide(character.character_velocity)
+			#character.velocity.x = -(move_speed - 2)
+			#sg_vector = SGFixedVector2(-move_speed - 2, 0)
+			
+			#character.sg_physics.move_and_collide(SGFixedVector2(-move_speed - 2, 0))
 		else:
-			character.velocity.x = -move_speed
+			character.character_velocity.x = SGFixed.NEG_ONE
+			character.sg_physics.move_and_collide(character.character_velocity)
+			#character.velocity.x = -move_speed
+			#character.sg_physics.move_and_collide(SGFixedVector2(-move_speed, 0))
 		anim_player.play("forward_walk")
 	elif input.get("input_vector", Vector2.ZERO).x > 0 and character.crouch == false: 
 		if character.left_side == false:
-			character.velocity.x = (move_speed - 2)
+			character.character_velocity.x = SGFixed.ONE
+			character.sg_physics.move_and_collide(character.character_velocity)
+			#character.velocity.x = (move_speed - 2)
 		else:
-			character.velocity.x = move_speed
+			character.character_velocity.x = SGFixed.ONE
+			character.sg_physics.move_and_collide(character.character_velocity)
+			#character.velocity.x = move_speed
 		anim_player.play("forward_walk") #TODO BackWalk animation
+	character.position = Vector3(character.sg_physics.position.x, -character.sg_physics.position.y, 0) / 10
+	print(character.sg_physics.velocity)
 
 	if input.get("input_vector", Vector2.ZERO).y < 0:
 		character.jump_velocity = character.velocity.x
@@ -109,7 +125,7 @@ func network_checkInputs(input: Dictionary) -> void:
 		character.velocity.x = 0
 		anim_player.play("crouch")
 		character.crouch = true
-	elif character.velocity.x == 0:
+	elif character.sg_physics.velocity.x == 0:
 		anim_player.play("idle")
 		character.crouch = false
 
@@ -138,7 +154,7 @@ func network_checkInputs(input: Dictionary) -> void:
 	elif input.get("a") and character.crouch == true:
 		do_2A()
 	
-	character.move_and_slide()
+	#character.move_and_slide()
 
 #func checkInputs():
 	#if Input.is_action_pressed(I_left) and Input.is_action_pressed(I_down) and character.left_side == true:

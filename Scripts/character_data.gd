@@ -1,10 +1,12 @@
 extends CharacterBody3D
 
+var input_prefix : String = "P1_"
 @onready var healthbar = $UI/HealthBar
 @onready var label = $UI/HealthBar/StateLabel
 @onready var hurtbox = $Hurtbox
 @onready var collision = $collision
 @export var state_machine : Node
+@export var sg_physics : SGCharacterBody2D
 
 var health := 100
 var left_side := false
@@ -19,7 +21,8 @@ var height_hit := ""
 var colliding := false
 var jump_velocity = 0
 var being_thrown := false
-var input_vector : Vector2
+
+var character_velocity = SGFixed.vector2(0, 0)
 
 var frame_loop = 0
 #custom_physics_process
@@ -45,13 +48,13 @@ func _get_local_input() -> Dictionary:
 	var b_button := false
 	var c_button := false
 	
-	input_vector = Input.get_vector("P1_Left", "P1_Right", "P1_Up", "P1_Down")
+	input_vector = Input.get_vector(input_prefix + "Left", input_prefix + "Right", input_prefix + "Up", input_prefix + "Down")
 	#input_vector = Input.get_vector("P2_Left", "P2_Right", "P2_Up", "P2_Down")
 	
-	#if Input.is_action_pressed("P2_Left"):
+	#if Input.is_action_pressed("P1_Left"):
 		
 	
-	if Input.is_action_just_pressed("P1_Light"):
+	if Input.is_action_just_pressed(input_prefix + "Light"):
 		a_button = true
 	if Input.is_action_just_pressed("P1_Medium"):
 		b_button = true
@@ -92,6 +95,7 @@ func _save_state() -> Dictionary:
 func _load_state(state: Dictionary) -> void:
 	#velocity = state['velocity']
 	position = state['position']
+	sg_physics.sync_to_physics_engine()
 
 #func _physics_process(delta: float) -> void:
 	#frame_loop += 1
