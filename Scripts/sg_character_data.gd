@@ -22,7 +22,7 @@ var colliding := false
 var jump_velocity = 0
 var being_thrown := false
 
-var character_velocity = SGFixed.vector2(0, 0)
+var character_velocity = SGFixedVector2.new()
 
 var frame_loop = 0
 #custom_physics_process

@@ -4,9 +4,10 @@ class_name S_Idle
 @onready var inputArray = $"../../Input"
 var gravity : float = 60
 var move_speed : float = 16.0
+const move_speed_2 := 65535
 var pushout_distance = 2
 
-#var sg_vector : SGFixedVector2
+var sg_vector : SGFixedVector2
 
 var I_left : String
 var I_right : String
@@ -93,6 +94,7 @@ func network_checkInputs(input: Dictionary) -> void:
 	elif input.get("input_vector", Vector2.ZERO).x < 0 and character.crouch == false:
 		if character.left_side == true:
 			character.character_velocity.x = SGFixed.NEG_ONE
+			character.character_velocity.imul(move_speed_2)
 			character.sg_physics.move_and_collide(character.character_velocity)
 			#character.velocity.x = -(move_speed - 2)
 			#sg_vector = SGFixedVector2(-move_speed - 2, 0)
@@ -100,6 +102,7 @@ func network_checkInputs(input: Dictionary) -> void:
 			#character.sg_physics.move_and_collide(SGFixedVector2(-move_speed - 2, 0))
 		else:
 			character.character_velocity.x = SGFixed.NEG_ONE
+			character.character_velocity.imul(move_speed_2)
 			character.sg_physics.move_and_collide(character.character_velocity)
 			#character.velocity.x = -move_speed
 			#character.sg_physics.move_and_collide(SGFixedVector2(-move_speed, 0))
@@ -107,10 +110,12 @@ func network_checkInputs(input: Dictionary) -> void:
 	elif input.get("input_vector", Vector2.ZERO).x > 0 and character.crouch == false: 
 		if character.left_side == false:
 			character.character_velocity.x = SGFixed.ONE
+			character.character_velocity.imul(move_speed_2)
 			character.sg_physics.move_and_collide(character.character_velocity)
 			#character.velocity.x = (move_speed - 2)
 		else:
 			character.character_velocity.x = SGFixed.ONE
+			character.character_velocity.imul(move_speed_2)
 			character.sg_physics.move_and_collide(character.character_velocity)
 			#character.velocity.x = move_speed
 		anim_player.play("forward_walk") #TODO BackWalk animation
@@ -122,7 +127,7 @@ func network_checkInputs(input: Dictionary) -> void:
 		Transitioned.emit(self, "prejump")
 		return
 	elif input.get("input_vector", Vector2.ZERO).y > 0:
-		character.velocity.x = 0
+		character.sg_physics.velocity.x = 0
 		anim_player.play("crouch")
 		character.crouch = true
 	elif character.sg_physics.velocity.x == 0:

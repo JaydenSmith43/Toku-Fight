@@ -49,23 +49,21 @@ cast_to_x = 3276800
 cast_to_y = 0
 collide_with_areas = true
 
-[node name="Throwbox" type="Area3D" parent="." node_paths=PackedStringArray("character", "state_machine")]
+[node name="Throwbox" type="Area3D" parent="." node_paths=PackedStringArray("state_machine")]
 collision_layer = 32
 collision_mask = 256
 script = ExtResource("3_g6y1p")
-character = NodePath("")
 state_machine = NodePath("../StateMachine")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Throwbox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 shape = SubResource("BoxShape3D_1vvvq")
 
-[node name="Hurtbox" type="Area3D" parent="." node_paths=PackedStringArray("character")]
+[node name="Hurtbox" type="Area3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 collision_layer = 2
 collision_mask = 16
 script = ExtResource("5_1jp12")
-character = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)

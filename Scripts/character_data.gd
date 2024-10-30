@@ -22,7 +22,7 @@ var colliding := false
 var jump_velocity = 0
 var being_thrown := false
 
-var character_velocity = SGFixed.vector2(0, 0)
+var character_velocity = SGFixedVector2.new()
 
 var frame_loop = 0
 #custom_physics_process
@@ -56,9 +56,9 @@ func _get_local_input() -> Dictionary:
 	
 	if Input.is_action_just_pressed(input_prefix + "Light"):
 		a_button = true
-	if Input.is_action_just_pressed("P1_Medium"):
+	if Input.is_action_just_pressed(input_prefix + "Medium"):
 		b_button = true
-	if Input.is_action_just_pressed("P1_Heavy"):
+	if Input.is_action_just_pressed(input_prefix + "Heavy"):
 		c_button = true
 	
 	var input := {}
@@ -88,13 +88,13 @@ func _network_process(input: Dictionary) -> void:
 func _save_state() -> Dictionary:
 	return {
 		#current_state = state_machine.states.get(state_machine.new_state_name.to_lower()),
-		position = position,
+		#position = sg_physics.fixed_position,
 		#velocity = velocity
 	}
 
 func _load_state(state: Dictionary) -> void:
 	#velocity = state['velocity']
-	position = state['position']
+	#sg_physics.fixed_position = state['position']
 	sg_physics.sync_to_physics_engine()
 
 #func _physics_process(delta: float) -> void:
