@@ -82,7 +82,22 @@ func _predict_remote_input(previous_input: Dictionary, ticks_since_real_input: i
 	return input
 
 func _network_process(input: Dictionary) -> void:
-	state_machine.tick_physics_process(input)
+	#state_machine.tick_physics_process(input)
+	var input_vector = input.get("input_vector", Vector2.ZERO)
+	character_velocity = SGFixed.vector2(0, 0)
+	if input_vector != Vector2.ZERO:
+		#position += input_vector
+		if input_vector.x > 0:
+			character_velocity.x = SGFixed.ONE
+		elif input_vector.x < 0:
+			character_velocity.x = SGFixed.NEG_ONE
+		if input_vector.y > 0:
+			character_velocity.y = SGFixed.ONE
+		elif input_vector.y < 0:
+			character_velocity.y = SGFixed.NEG_ONE
+
+		character_velocity.imul(SGFixed.ONE*10)
+		move_and_collide(character_velocity)
 
 func _save_state() -> Dictionary:
 	return {

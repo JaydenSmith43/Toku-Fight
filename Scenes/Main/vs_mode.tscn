@@ -16,11 +16,11 @@ size = Vector3(100, 1, 11.989)
 script = ExtResource("1_5ed8j")
 
 [node name="test1" parent="." groups=["player1"] instance=ExtResource("2_c13du")]
-position = Vector2(-8, 0.477)
+fixed_rotation = 0
 rotation = 0.0
 
 [node name="test2" parent="." groups=["player2"] instance=ExtResource("2_c13du")]
-position = Vector2(8, 0.477)
+fixed_rotation = 0
 rotation = 0.0
 
 [node name="Floor" type="StaticBody3D" parent="."]
@@ -32,7 +32,7 @@ shape = SubResource("BoxShape3D_das85")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor/CollisionShape3D"]
 transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 11.989, 0, 0, 0)
 mesh = SubResource("BoxMesh_5kyyc")
-skeleton = NodePath("../../..")
+skeleton = NodePath("")
 
 [node name="Wall" type="StaticBody3D" parent="."]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -50, 48, 0)
@@ -54,12 +54,13 @@ shape = SubResource("BoxShape3D_das85")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Wall2/CollisionShape3D"]
 transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 11.989, 0, 0, 0)
 mesh = SubResource("BoxMesh_5kyyc")
-skeleton = NodePath("../../../Wall2")
+skeleton = NodePath("../..")
 
 [node name="TestMenu" parent="." instance=ExtResource("5_706ux")]
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("character1", "character2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 18)
+current = true
 fov = 40.0
 size = 13.5631
 script = ExtResource("2_ndysc")

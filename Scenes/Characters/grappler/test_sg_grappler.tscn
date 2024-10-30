@@ -19,9 +19,9 @@
 [ext_resource type="Script" path="res://Scripts/States/S_Thrown.gd" id="19_3jq6r"]
 [ext_resource type="Script" path="res://Scripts/States/S_Teched.gd" id="20_g2jt5"]
 
-[sub_resource type="SGCapsuleShape2D" id="SGCapsuleShape2D_mlgfm"]
-radius = 5068440
-height = 8111561
+[sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_dosgu"]
+extents_x = 4716037
+extents_y = 3905618
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1vvvq"]
 size = Vector3(1.59, 4, 1)
@@ -31,18 +31,17 @@ size = Vector3(1, 5, 2.9)
 
 [node name="SGCharacter" type="SGCharacterBody2D" node_paths=PackedStringArray("state_machine") groups=["network_sync"]]
 collision_layer = 2
-collision_mask = 0
+collision_mask = 2
 fixed_rotation = -102943
 rotation = -1.57079
 script = ExtResource("1_fjl6n")
 state_machine = NodePath("StateMachine")
 
 [node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="."]
-shape = SubResource("SGCapsuleShape2D_mlgfm")
-fixed_rotation = 102942
-rotation = 1.57077
+shape = SubResource("SGRectangleShape2D_dosgu")
 
 [node name="Throwbox" type="Area3D" parent="." node_paths=PackedStringArray("state_machine")]
+visible = false
 collision_layer = 32
 collision_mask = 256
 script = ExtResource("3_g6y1p")
@@ -54,6 +53,7 @@ shape = SubResource("BoxShape3D_1vvvq")
 
 [node name="Hurtbox" type="Area3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+visible = false
 collision_layer = 2
 collision_mask = 16
 script = ExtResource("5_1jp12")
@@ -71,6 +71,7 @@ one_shot = true
 script = ExtResource("7_pp3wx")
 
 [node name="UI" parent="." instance=ExtResource("8_rphqq")]
+visible = false
 
 [node name="HealthBar" parent="UI" instance=ExtResource("9_risx0")]
 offset_left = 20.0
