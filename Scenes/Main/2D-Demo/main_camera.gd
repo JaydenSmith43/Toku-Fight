@@ -1,7 +1,7 @@
 extends Camera3D
 
-@export var character1 : Node3D
-@export var character2 : Node3D
+@export var character1 : SGCharacterBody2D
+@export var character2 : SGCharacterBody2D
 
 func _physics_process(delta):
 	var distance = character1.position.x - character2.position.x

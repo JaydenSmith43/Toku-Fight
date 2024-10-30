@@ -16,10 +16,12 @@ size = Vector3(100, 1, 11.989)
 script = ExtResource("1_5ed8j")
 
 [node name="test1" parent="." groups=["player1"] instance=ExtResource("2_c13du")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.477, 0)
+position = Vector2(-8, 0.477)
+rotation = 0.0
 
 [node name="test2" parent="." groups=["player2"] instance=ExtResource("2_c13du")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.477, 0)
+position = Vector2(8, 0.477)
+rotation = 0.0
 
 [node name="Floor" type="StaticBody3D" parent="."]
 

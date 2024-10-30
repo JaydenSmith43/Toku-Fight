@@ -9,7 +9,7 @@ var throwing := false
 var throw_current_frame := 0
 var throw_end_frame := 60
 
-var other_player : Node3D
+var other_player : SGCharacterBody2D
 
 func _ready() -> void:
 	if character.is_in_group("player1"):

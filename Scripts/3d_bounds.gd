@@ -1,7 +1,7 @@
 extends StaticBody3D
 
-@export var character1 : Node3D
-@export var character2 : Node3D
+@export var character1 : SGCharacterBody2D
+@export var character2 : SGCharacterBody2D
 
 #Get characters after stage load
 

@@ -1,4 +1,4 @@
-extends Node3D
+extends SGCharacterBody2D
 
 var input_prefix : String = "P1_"
 @onready var healthbar = $UI/HealthBar
@@ -6,7 +6,6 @@ var input_prefix : String = "P1_"
 @onready var hurtbox = $Hurtbox
 @onready var collision = $collision
 @export var state_machine : Node
-@export var sg_physics : SGCharacterBody2D
 
 var health := 100
 var left_side := false
@@ -22,7 +21,7 @@ var colliding := false
 var jump_velocity = 0
 var being_thrown := false
 
-var character_velocity = SGFixedVector2.new()
+var character_velocity = SGFixed.vector2(0, 0)
 
 var frame_loop = 0
 #custom_physics_process
@@ -56,9 +55,9 @@ func _get_local_input() -> Dictionary:
 	
 	if Input.is_action_just_pressed(input_prefix + "Light"):
 		a_button = true
-	if Input.is_action_just_pressed("P1_Medium"):
+	if Input.is_action_just_pressed(input_prefix + "Medium"):
 		b_button = true
-	if Input.is_action_just_pressed("P1_Heavy"):
+	if Input.is_action_just_pressed(input_prefix + "Heavy"):
 		c_button = true
 	
 	var input := {}
@@ -73,29 +72,31 @@ func _get_local_input() -> Dictionary:
 	
 	return input
 
-#func _predict_remote_input(previous_input: Dictionary, ticks_since_real_input: int) -> Dictionary:
-#	var input = previous_input.duplicate()
-#	input.erase("a")
-#	input.erase("b")
-#	input.erase("c")
-	#if ticks_since_real_input > 2:
-	#	input.erase("input_vector")
-#	return input
+func _predict_remote_input(previous_input: Dictionary, ticks_since_real_input: int) -> Dictionary:
+	var input = previous_input.duplicate()
+	input.erase("a")
+	input.erase("b")
+	input.erase("c")
+	if ticks_since_real_input > 2:
+		input.erase("input_vector")
+	return input
 
 func _network_process(input: Dictionary) -> void:
 	state_machine.tick_physics_process(input)
 
 func _save_state() -> Dictionary:
 	return {
-		#current_state = state_machine.states.get(state_machine.new_state_name.to_lower()),
-		position = position,
+		fixed_position_x = fixed_position_x,
+		fixed_position_y = fixed_position_y,
 		#velocity = velocity
 	}
 
 func _load_state(state: Dictionary) -> void:
 	#velocity = state['velocity']
-	position = state['position']
-	sg_physics.sync_to_physics_engine()
+	#sg_physics.fixed_position = state['fixed_position']
+	fixed_position_x = state['fixed_position_x']
+	fixed_position_y = state['fixed_position_y']
+	sync_to_physics_engine()
 
 #func _physics_process(delta: float) -> void:
 	#frame_loop += 1

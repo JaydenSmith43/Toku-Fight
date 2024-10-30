@@ -11,7 +11,7 @@ func _ready() -> void:
 func Enter():
 	anim_player.play("throw_teched")
 	current_frame = 0
-	current_position = character.position
+	current_position = Vector3(character.position.x, character.position.y, 0.477)
 
 func State_Physics_Update(input: Dictionary):
 	current_frame += 1

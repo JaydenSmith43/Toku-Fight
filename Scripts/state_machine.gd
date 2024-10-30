@@ -23,10 +23,6 @@ func _ready():
 #		current_state.State_Update(delta)
 #		state_label.text = "State: \n" + current_state.name
 
-func change_state_no_transition(input: Dictionary):
-	
-	pass
-
 func tick_physics_process(input: Dictionary):
 	if current_state:
 		current_state.State_Physics_Update(input)

@@ -12,7 +12,7 @@ var current_position : Vector3
 var I_light : String
 var I_medium : String
 
-var other_player : Node3D
+var other_player : SGCharacterBody2D
 
 func _ready() -> void:
 	if (character.is_in_group("player1")):
@@ -70,7 +70,7 @@ func State_Physics_Update(input: Dictionary):
 func tech_throw():
 	anim_player.play("throw_tech")
 	teching = true
-	current_position = character.position
+	current_position = Vector3(character.position.x, character.position.y, 0.477)
 	
 	if character.left_side:
 		character.rotate_y(-90)
