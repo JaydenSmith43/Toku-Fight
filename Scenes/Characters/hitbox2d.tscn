@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://qm62xjtsr7be"]
+
+[ext_resource type="Script" path="res://Scripts/Data/hitbox2D.gd" id="1_1p8x2"]
+[ext_resource type="Script" path="res://Scripts/Data/hitbox2D_collision.gd" id="2_iqxa5"]
+[ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="3_lgyfn"]
+
+[sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_cgwjc"]
+
+[node name="Hitbox" type="SGArea2D" node_paths=PackedStringArray("timer")]
+collision_layer = 8
+collision_mask = 4
+script = ExtResource("1_1p8x2")
+timer = NodePath("NetworkTimer")
+
+[node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="."]
+shape = SubResource("SGRectangleShape2D_cgwjc")
+disabled = true
+modulate = Color(0, 0, 0, 0.301961)
+script = ExtResource("2_iqxa5")
+
+[node name="NetworkTimer" type="Node" parent="."]
+script = ExtResource("3_lgyfn")
+one_shot = true
+
+[connection signal="tell_script" from="." to="SGCollisionShape2D" method="_on_hitbox_tell_script"]
+[connection signal="timeout" from="NetworkTimer" to="." method="_on_network_timer_timeout"]

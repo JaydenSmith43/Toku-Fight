@@ -1,11 +1,19 @@
-[gd_scene load_steps=9 format=3 uid="uid://bmkea3roxko18"]
+[gd_scene load_steps=11 format=3 uid="uid://bmkea3roxko18"]
 
 [ext_resource type="Script" path="res://Scenes/Main/test_vs_mode.gd" id="1_5ed8j"]
 [ext_resource type="PackedScene" uid="uid://c110s1snwl2cq" path="res://Scenes/Characters/grappler/test_sg_grappler.tscn" id="2_c13du"]
 [ext_resource type="Script" path="res://Scenes/Main/2D-Demo/main_camera.gd" id="2_ndysc"]
 [ext_resource type="Environment" uid="uid://jsqpfw82fbi" path="res://world_environment.tres" id="3_k4mgk"]
-[ext_resource type="PackedScene" uid="uid://b2ax3p2ss2g8q" path="res://Scenes/Main/3d_boundaries.tscn" id="4_fckii"]
+[ext_resource type="PackedScene" uid="uid://b2ax3p2ss2g8q" path="res://Scenes/Main/sg_boundaries.tscn" id="4_fckii"]
 [ext_resource type="PackedScene" uid="uid://30mde2a3la3" path="res://Scenes/Main/test_menu.tscn" id="5_706ux"]
+
+[sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_3na81"]
+extents_x = 3276800
+extents_y = 196608
+
+[sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_gvhyg"]
+extents_x = 3276800
+extents_y = 65536
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_das85"]
 size = Vector3(100, 1, 11.989)
@@ -16,42 +24,73 @@ size = Vector3(100, 1, 11.989)
 script = ExtResource("1_5ed8j")
 
 [node name="test1" parent="." groups=["player1"] instance=ExtResource("2_c13du")]
-fixed_rotation = 0
-rotation = 0.0
+fixed_position_x = -524288
+position = Vector2(-8, 0)
 
 [node name="test2" parent="." groups=["player2"] instance=ExtResource("2_c13du")]
-fixed_rotation = 0
-rotation = 0.0
+fixed_position_x = 524288
+position = Vector2(8, 0)
 
-[node name="Floor" type="StaticBody3D" parent="."]
+[node name="Floor" type="SGStaticBody2D" parent="."]
+fixed_position_y = 196650
+position = Vector2(0, 3.00064)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+[node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="Floor"]
+shape = SubResource("SGRectangleShape2D_3na81")
+
+[node name="LeftWall" type="SGStaticBody2D" parent="."]
+fixed_position_x = -3233380
+fixed_position_y = -3276800
+fixed_rotation = 102944
+position = Vector2(-49.3375, -50)
+rotation = 1.5708
+
+[node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="LeftWall"]
+shape = SubResource("SGRectangleShape2D_gvhyg")
+
+[node name="RightWall" type="SGStaticBody2D" parent="."]
+fixed_position_x = 3233380
+fixed_position_y = -3276800
+fixed_rotation = 102944
+position = Vector2(49.3375, -50)
+rotation = 1.5708
+
+[node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="RightWall"]
+shape = SubResource("SGRectangleShape2D_gvhyg")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(0, -21.985)
+zoom = Vector2(15.21, 15.21)
+
+[node name="Floor3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 shape = SubResource("BoxShape3D_das85")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor/CollisionShape3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor3D/CollisionShape3D"]
 transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 11.989, 0, 0, 0)
 mesh = SubResource("BoxMesh_5kyyc")
 skeleton = NodePath("")
 
-[node name="Wall" type="StaticBody3D" parent="."]
+[node name="Wall3D" type="StaticBody3D" parent="."]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -50, 48, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall3D"]
 shape = SubResource("BoxShape3D_das85")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall/CollisionShape3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall3D/CollisionShape3D"]
 transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 11.989, 0, 0, 0)
 mesh = SubResource("BoxMesh_5kyyc")
 skeleton = NodePath("../..")
 
-[node name="Wall2" type="StaticBody3D" parent="."]
+[node name="Wall2-3D" type="StaticBody3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 50, 48, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall2-3D"]
 shape = SubResource("BoxShape3D_das85")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall2/CollisionShape3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall2-3D/CollisionShape3D"]
 transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 11.989, 0, 0, 0)
 mesh = SubResource("BoxMesh_5kyyc")
 skeleton = NodePath("../..")

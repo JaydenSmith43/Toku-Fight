@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/character_data.gd" id="1_kxq2e"]
 [ext_resource type="Texture2D" uid="uid://cgbjhrh37tx7c" path="res://DemoContent/tank_blue.png" id="2_4pwgy"]
-[ext_resource type="Script" path="res://Scenes/Characters/throwbox.gd" id="2_50jbh"]
+[ext_resource type="Script" path="res://Scripts/Data/throwbox.gd" id="2_50jbh"]
 [ext_resource type="Script" path="res://Scripts/Data/hurtbox3D.gd" id="2_nkben"]
 [ext_resource type="Script" path="res://Scenes/Characters/pushout.gd" id="2_qmc12"]
 [ext_resource type="PackedScene" uid="uid://1h0q2rqr7tyo" path="res://Scenes/Characters/grappler/grappler_model.tscn" id="3_hvpd6"]
@@ -143,9 +143,7 @@ model = NodePath("../../model")
 
 [node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
 script = ExtResource("11_py8x3")
-jump_height = 6.0
 jump_time_to_peak = 0.35
-jump_time_to_descent = 0.35
 character = NodePath("../..")
 model = NodePath("../../model")
 

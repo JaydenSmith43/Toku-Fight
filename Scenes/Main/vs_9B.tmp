@@ -1,0 +1,135 @@
+[gd_scene load_steps=13 format=3 uid="uid://bmkea3roxko18"]
+
+[ext_resource type="Script" path="res://Scenes/Main/test_vs_mode.gd" id="1_5ed8j"]
+[ext_resource type="PackedScene" uid="uid://c110s1snwl2cq" path="res://Scenes/Characters/grappler/test_sg_grappler.tscn" id="2_c13du"]
+[ext_resource type="Script" path="res://Scripts/Data/hitbox2D.gd" id="2_dxsya"]
+[ext_resource type="Script" path="res://Scenes/Main/2D-Demo/main_camera.gd" id="2_ndysc"]
+[ext_resource type="Environment" uid="uid://jsqpfw82fbi" path="res://world_environment.tres" id="3_k4mgk"]
+[ext_resource type="PackedScene" uid="uid://b2ax3p2ss2g8q" path="res://Scenes/Main/sg_boundaries.tscn" id="4_fckii"]
+[ext_resource type="PackedScene" uid="uid://30mde2a3la3" path="res://Scenes/Main/test_menu.tscn" id="5_706ux"]
+
+[sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_31ibl"]
+extents_x = 293610
+extents_y = 228220
+
+[sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_3na81"]
+extents_x = 3276800
+extents_y = 196608
+
+[sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_gvhyg"]
+extents_x = 3276800
+extents_y = 65536
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_das85"]
+size = Vector3(100, 1, 11.989)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5kyyc"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_5ed8j")
+
+[node name="test_hitbox" type="SGArea2D" parent="." groups=["network_sync"]]
+collision_layer = 16
+collision_mask = 6
+fixed_position_x = 3555
+fixed_position_y = -294215
+position = Vector2(0.054245, -4.48936)
+script = ExtResource("2_dxsya")
+
+[node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="test_hitbox"]
+shape = SubResource("SGRectangleShape2D_31ibl")
+
+[node name="test1" parent="." groups=["player1"] instance=ExtResource("2_c13du")]
+fixed_position_x = -524288
+position = Vector2(-8, 0)
+
+[node name="test2" parent="." groups=["player2"] instance=ExtResource("2_c13du")]
+fixed_position_x = 524288
+position = Vector2(8, 0)
+
+[node name="Floor" type="SGStaticBody2D" parent="."]
+fixed_position_y = 196650
+position = Vector2(0, 3.00064)
+
+[node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="Floor"]
+shape = SubResource("SGRectangleShape2D_3na81")
+
+[node name="LeftWall" type="SGStaticBody2D" parent="."]
+fixed_position_x = -3233380
+fixed_position_y = -3276800
+fixed_rotation = 102944
+position = Vector2(-49.3375, -50)
+rotation = 1.5708
+
+[node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="LeftWall"]
+shape = SubResource("SGRectangleShape2D_gvhyg")
+
+[node name="RightWall" type="SGStaticBody2D" parent="."]
+fixed_position_x = 3233380
+fixed_position_y = -3276800
+fixed_rotation = 102944
+position = Vector2(49.3375, -50)
+rotation = 1.5708
+
+[node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="RightWall"]
+shape = SubResource("SGRectangleShape2D_gvhyg")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(0, -21.985)
+zoom = Vector2(15.21, 15.21)
+
+[node name="Floor3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_das85")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor3D/CollisionShape3D"]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 11.989, 0, 0, 0)
+mesh = SubResource("BoxMesh_5kyyc")
+skeleton = NodePath("")
+
+[node name="Wall3D" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -50, 48, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall3D"]
+shape = SubResource("BoxShape3D_das85")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall3D/CollisionShape3D"]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 11.989, 0, 0, 0)
+mesh = SubResource("BoxMesh_5kyyc")
+skeleton = NodePath("../..")
+
+[node name="Wall2-3D" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 50, 48, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall2-3D"]
+shape = SubResource("BoxShape3D_das85")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall2-3D/CollisionShape3D"]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 11.989, 0, 0, 0)
+mesh = SubResource("BoxMesh_5kyyc")
+skeleton = NodePath("../..")
+
+[node name="TestMenu" parent="." instance=ExtResource("5_706ux")]
+
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("character1", "character2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 18)
+current = true
+fov = 40.0
+size = 13.5631
+script = ExtResource("2_ndysc")
+character1 = NodePath("../test1")
+character2 = NodePath("../test2")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.642788, 0.766044, 0, -0.766044, 0.642788, 0, 12, 10)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("3_k4mgk")
+
+[node name="ScreenBoundaries" parent="." node_paths=PackedStringArray("character1", "character2") instance=ExtResource("4_fckii")]
+character1 = NodePath("../test1")
+character2 = NodePath("../test2")
+
+[connection signal="tell_script" from="test_hitbox" to="test_hitbox/SGCollisionShape2D" method="_on_hitbox_tell_script"]

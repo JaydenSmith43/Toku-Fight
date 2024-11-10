@@ -1,8 +1,10 @@
-[gd_scene load_steps=22 format=3 uid="uid://c110s1snwl2cq"]
+[gd_scene load_steps=23 format=3 uid="uid://c110s1snwl2cq"]
 
 [ext_resource type="Script" path="res://Scripts/sg_character_data.gd" id="1_fjl6n"]
-[ext_resource type="Script" path="res://Scenes/Characters/throwbox.gd" id="3_g6y1p"]
-[ext_resource type="Script" path="res://Scripts/Data/hurtbox3D.gd" id="5_1jp12"]
+[ext_resource type="Texture2D" uid="uid://bmxre7rw1js2a" path="res://Sprites/grappler_ref.png" id="2_1migp"]
+[ext_resource type="Script" path="res://Scripts/Data/throwbox2D.gd" id="3_3j7rt"]
+[ext_resource type="Script" path="res://Scripts/Data/hurtbox2D.gd" id="4_74vm4"]
+[ext_resource type="Script" path="res://Scripts/Data/hitbox2D_collision.gd" id="5_1dpco"]
 [ext_resource type="PackedScene" uid="uid://1h0q2rqr7tyo" path="res://Scenes/Characters/grappler/grappler_model.tscn" id="6_sd7cd"]
 [ext_resource type="Script" path="res://Scripts/input.gd" id="7_pp3wx"]
 [ext_resource type="PackedScene" uid="uid://ook7dmepmfw5" path="res://Scenes/UI/ui.tscn" id="8_rphqq"]
@@ -19,48 +21,53 @@
 [ext_resource type="Script" path="res://Scripts/States/S_Thrown.gd" id="19_3jq6r"]
 [ext_resource type="Script" path="res://Scripts/States/S_Teched.gd" id="20_g2jt5"]
 
-[sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_dosgu"]
-extents_x = 4716037
-extents_y = 3905618
+[sub_resource type="SGCapsuleShape2D" id="SGCapsuleShape2D_yoyix"]
+radius = 59030
+height = 160159
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_1vvvq"]
-size = Vector3(1.59, 4, 1)
+[sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_vhtgr"]
+extents_x = 95027
+extents_y = 163840
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_l04hr"]
-size = Vector3(1, 5, 2.9)
-
-[node name="SGCharacter" type="SGCharacterBody2D" node_paths=PackedStringArray("state_machine") groups=["network_sync"]]
-collision_layer = 2
-collision_mask = 2
-fixed_rotation = -102943
-rotation = -1.57079
+[node name="SGCharacter" type="SGCharacterBody2D" node_paths=PackedStringArray("hurtbox", "state_machine") groups=["network_sync"]]
+collision_layer = 32768
+collision_mask = 32769
 script = ExtResource("1_fjl6n")
+hurtbox = NodePath("Hurtbox")
 state_machine = NodePath("StateMachine")
 
-[node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="."]
-shape = SubResource("SGRectangleShape2D_dosgu")
-
-[node name="Throwbox" type="Area3D" parent="." node_paths=PackedStringArray("state_machine")]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 visible = false
+position = Vector2(-0.00781274, -2.5065)
+scale = Vector2(0.00787602, 0.00829784)
+texture = ExtResource("2_1migp")
+
+[node name="collision" type="SGCollisionShape2D" parent="."]
+shape = SubResource("SGCapsuleShape2D_yoyix")
+fixed_position_y = -139898
+position = Vector2(0, -2.13467)
+
+[node name="Throwbox" type="SGArea2D" parent="." node_paths=PackedStringArray("character", "state_machine")]
 collision_layer = 32
 collision_mask = 256
-script = ExtResource("3_g6y1p")
+script = ExtResource("3_3j7rt")
+character = NodePath("..")
 state_machine = NodePath("../StateMachine")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Throwbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-shape = SubResource("BoxShape3D_1vvvq")
+[node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="Throwbox"]
 
-[node name="Hurtbox" type="Area3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
-visible = false
+[node name="Hurtbox" type="SGArea2D" parent="." node_paths=PackedStringArray("character")]
 collision_layer = 2
 collision_mask = 16
-script = ExtResource("5_1jp12")
+fixed_position_y = -165095
+position = Vector2(0, -2.51915)
+script = ExtResource("4_74vm4")
+character = NodePath("..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
-shape = SubResource("BoxShape3D_l04hr")
+[node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="Hurtbox"]
+shape = SubResource("SGRectangleShape2D_vhtgr")
+modulate = Color(0.443137, 0.443137, 0.443137, 0.109804)
+script = ExtResource("5_1dpco")
 
 [node name="model" parent="." instance=ExtResource("6_sd7cd")]
 
@@ -71,7 +78,6 @@ one_shot = true
 script = ExtResource("7_pp3wx")
 
 [node name="UI" parent="." instance=ExtResource("8_rphqq")]
-visible = false
 
 [node name="HealthBar" parent="UI" instance=ExtResource("9_risx0")]
 offset_left = 20.0
@@ -98,51 +104,60 @@ initial_state = NodePath("Idle")
 script = ExtResource("11_s2jcs")
 character = NodePath("../..")
 model = NodePath("../../model")
+state_name = "idle"
 
 [node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
 script = ExtResource("12_qkye0")
 character = NodePath("../..")
 model = NodePath("../../model")
+state_name = "attack"
 
 [node name="Hadou" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
 script = ExtResource("13_0jsj3")
 character = NodePath("../..")
 model = NodePath("../../model")
+state_name = "hadou"
 
 [node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
 script = ExtResource("14_k2vgv")
-jump_height = 6.0
-jump_time_to_peak = 0.35
-jump_time_to_descent = 0.35
+jump_height = 1.0
+jump_time_to_peak = 0.7
 character = NodePath("../..")
 model = NodePath("../../model")
+state_name = "jump"
 
 [node name="Block" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
 script = ExtResource("15_kiua0")
 character = NodePath("../..")
 model = NodePath("../../model")
+state_name = "block"
 
 [node name="Prejump" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
 script = ExtResource("16_5qm8e")
 character = NodePath("../..")
 model = NodePath("../../model")
+state_name = "prejump"
 
 [node name="Hitstun" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
 script = ExtResource("17_d3vqd")
 character = NodePath("../..")
 model = NodePath("../../model")
+state_name = "hitstun"
 
 [node name="Thrower" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
 script = ExtResource("18_qhqye")
 character = NodePath("../..")
 model = NodePath("../../model")
+state_name = "thrower"
 
 [node name="Thrown" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
 script = ExtResource("19_3jq6r")
 character = NodePath("../..")
 model = NodePath("../../model")
+state_name = "thrown"
 
 [node name="Teched" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
 script = ExtResource("20_g2jt5")
 character = NodePath("../..")
 model = NodePath("../../model")
+state_name = "teched"

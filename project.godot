@@ -118,20 +118,26 @@ sync_debug={
 
 2d_physics/layer_1="Environment"
 3d_physics/layer_1="Environment"
-2d_physics/layer_2="Hurtbox"
+2d_physics/layer_2="HurtboxP1"
 3d_physics/layer_2="HurtboxP1"
-2d_physics/layer_3="Hitbox"
+2d_physics/layer_3="HurtboxP2"
 3d_physics/layer_3="HurtboxP2"
-2d_physics/layer_4="Throwbox"
+2d_physics/layer_4="HitboxP1"
 3d_physics/layer_4="HitboxP1"
+2d_physics/layer_5="HitboxP2"
 3d_physics/layer_5="HitboxP2"
+2d_physics/layer_6="ThrowboxP1"
 3d_physics/layer_6="ThrowboxP1"
+2d_physics/layer_7="ThrowboxP2"
 3d_physics/layer_7="ThrowboxP2"
+2d_physics/layer_8="ThrowP1"
 3d_physics/layer_8="ThrowP1"
+2d_physics/layer_9="ThrowP2"
 3d_physics/layer_9="ThrowP2"
 
 [network]
 
+rollback/sound_manager/default_sound_bus="Sound"
 rollback/classes/message_serializer="res://Scripts/Networking/custom_message_serialization.gd"
 rollback/debug/rollback_ticks=4
 rollback/debug/random_rollback_ticks=10

@@ -1,16 +1,15 @@
 extends State
 class_name S_Block
 
-var current_frame := 0
 var blockstun_frames := 0
 var I_left : String
 var I_right : String
 var I_down : String
 
-var otherPlayer : CharacterBody3D
+var otherPlayer : SGCharacterBody2D
 
 func Enter():
-	current_frame = 0
+	character.current_frame = 0
 	blockstun_frames = character.blockstun
 	
 	if anim_player.is_playing():
@@ -36,7 +35,7 @@ func Exit():
 	pass
 
 func State_Physics_Update(input: Dictionary):
-	current_frame += 1
+	character.current_frame += 1
 	
 	#region Input
 	if Input.is_action_pressed(I_left) and Input.is_action_pressed(I_down) and character.left_side == true:
@@ -55,6 +54,6 @@ func State_Physics_Update(input: Dictionary):
 		character.low_blocking = false
 		character.high_blocking = false
 	
-	if current_frame == blockstun_frames:
+	if character.current_frame == blockstun_frames:
 		character.blockstun = 0
 		Transitioned.emit(self, "idle")

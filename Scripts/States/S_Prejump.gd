@@ -1,21 +1,22 @@
 extends State
 class_name S_Prejump
 
-var current_frame = 0
-var played : bool = false
-@export var jump_force : float = 40.0
-
 func Enter():
-	current_frame = 0
-	played = false
+	if character.entered:
+		return
+	character.entered = true
+	character.current_frame = 0
 	character.low_blocking = false
 	character.high_blocking = false
 	character.jump = true
-	#anim_player.play("jump")
+	#print("enter prejump")
+	anim_player.play("jump")
 
 func State_Physics_Update(input: Dictionary):
-	current_frame += 1
-	print(current_frame)
+	character.current_frame += 1
+	#print("PREJUMP UPDATE: " + str(character.current_frame))
 	
-	if current_frame == 3:
+	if character.current_frame == 3:
+		character.entered = false
+		character.current_frame = 0
 		Transitioned.emit(self, "jump")

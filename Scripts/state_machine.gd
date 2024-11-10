@@ -16,16 +16,15 @@ func _ready():
 		initial_state.Enter()
 		current_state = initial_state
 		state_label.text = "State: \n" + current_state.name
-		print(state_label.text)
-
-#func _process(delta):
-#	if current_state:
-#		current_state.State_Update(delta)
-#		state_label.text = "State: \n" + current_state.name
+		#print(state_label.text)
 
 func tick_physics_process(input: Dictionary):
-	if current_state:
-		current_state.State_Physics_Update(input)
+	current_state.State_Physics_Update(input)
+
+func load_state_network(network_state_data: Dictionary):
+	if states.get(network_state_data['current_state_name']):
+		current_state = states.get(network_state_data['current_state_name'])
+		#print("Current State: " + current_state.name.to_lower())
 
 func on_child_transition(state, new_state_name):
 	if state != current_state:
@@ -41,3 +40,4 @@ func on_child_transition(state, new_state_name):
 	new_state.Enter()
 	
 	current_state = new_state
+	print(state_label.text)

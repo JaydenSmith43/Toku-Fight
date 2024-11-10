@@ -1,10 +1,9 @@
 extends State
 class_name S_Attack
 
-var played : bool = false
-var current_frame = 0
+#var played : bool = false
 var move_end_frame = 30
-var hitbox = preload("res://Scenes/Characters/hitbox3d.tscn")
+var hitbox = preload("res://Scenes/Characters/hitbox2d.tscn")
 var anim_name := ""
 var player_group := ""
 
@@ -15,9 +14,13 @@ var blockstun : int = 0
 #TODO SEND IN JSON DATA INTO THIS ATTACK STATE TO BE READ
 
 func Enter():
-	current_frame = 0
-	played = false
-
+	if character.entered:
+		return
+	
+	character.entered = true
+	character.current_frame = 0
+	#played = false
+	
 	if character.get_groups()[0] == "player1":
 		StaticData.load_json_file(character.movename, character.get_groups()[0]) #send in current character button from idle state
 		anim_name = StaticData.P1_move_data["anim_name"]
@@ -27,27 +30,30 @@ func Enter():
 		anim_name = StaticData.P2_move_data["anim_name"]
 		move_end_frame = StaticData.P2_move_data["move_end_frame"]
 	
+	anim_player.play(anim_name)
 	#load cancel properties
 
 func Exit():
+	character.current_frame = 0
 	pass
 
 func State_Physics_Update(input: Dictionary):
-	current_frame += 1
+	character.current_frame += 1
+	#print("ATTACK UPDATE: " + str(character.current_frame))
 	check_frame()
 	
-	if (!played):
-		anim_player.play(anim_name)
-		played = true
+	#if (!played):
+		#played = true
 	
-	if current_frame >= move_end_frame:
+	if character.current_frame >= move_end_frame:
 		character.movename = "idle"
+		character.hit = false
 		Transitioned.emit(self, "idle")
 
 func check_frame():
 	if character.get_groups()[0] == "player1":
 		for data in StaticData.P1_move_data["frames"]:
-			if current_frame == data["frame"]:
+			if character.current_frame == data["frame"]:
 				hitstun = data["hitstun"]
 				blockstun = data["blockstun"]
 				
@@ -61,7 +67,7 @@ func check_frame():
 					hitbox_input = hitbox_string + str(hitbox_index)
 	else:
 		for data in StaticData.P2_move_data["frames"]:
-			if current_frame == data["frame"]:
+			if character.current_frame == data["frame"]:
 				hitstun = data["hitstun"]
 				blockstun = data["blockstun"]
 				
@@ -75,23 +81,23 @@ func check_frame():
 					hitbox_input = hitbox_string + str(hitbox_index)
 
 func create_hitbox(data):
-	var new_hitbox = hitbox.instantiate()
-	new_hitbox.damage = data["damage"]
-	new_hitbox.end_frame = data["end_frame"]
-	new_hitbox.pos_y = data["pos_y"]
-	new_hitbox.pos_x = data["pos_x"]
-	new_hitbox.scale_x = data["scale_x"]
-	new_hitbox.scale_y = data["scale_y"]
-	new_hitbox.height = data["height"]
-	new_hitbox.hitstun = hitstun
-	new_hitbox.blockstun = blockstun
-	
-	new_hitbox.left_side = character.left_side
-		
+	var player : String
 	if character.is_in_group("player1"):
-		new_hitbox.player = "player1"
+		player = "player1"
 	else:
-		new_hitbox.player = "player2"
-		
-	get_parent().get_parent().add_child(new_hitbox)
-	pass
+		player = "player2"
+	
+	SyncManager.spawn("Hitbox", get_parent().get_parent(), hitbox, { 
+		damage = data["damage"],
+		end_frame = data["end_frame"],
+		fixed_pos_x = SGFixed.from_float(data["pos_x"]),
+		fixed_pos_y = -SGFixed.from_float(data["pos_y"]),
+		extents_x = SGFixed.div(SGFixed.from_float(data["scale_x"]), 131072),
+		extents_y = SGFixed.div(SGFixed.from_float(data["scale_y"]), 131072),
+		height = data['height'],
+		hitstun = hitstun,
+		blockstun = blockstun,
+		player = player,
+		character = character,
+		left_side = character.left_side
+	})

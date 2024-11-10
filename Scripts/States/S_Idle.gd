@@ -3,7 +3,7 @@ class_name S_Idle
 
 @onready var inputArray = $"../../Input"
 var gravity : float = 60
-var move_speed : int = 16
+var move_speed : int = 17476
 var pushout_distance = 2
 
 var I_left : String
@@ -39,20 +39,29 @@ func _ready() -> void:
 		otherPlayer = get_tree().get_nodes_in_group("player1")[0]
 
 func Enter():
+	character.current_frame = 0
+	character.jump = false
+	character.jump_velocity_x = 0
+	character.velocity.y = 0
+	character.velocity.x = 0
+	#character.collision.fixed_position.y += SGFixed.ONE
+	character.set_collision_mask_bit(15, true)
+	character.entered = false
 	pass
-
 func Exit():
 	pass
 
 func State_Physics_Update(input: Dictionary):
+	#print("IDLE UPDATE")
+	character.current_frame += 1
 	#if character.colliding:
 		#pushout_distance = 2
 	#else:
 		#pushout_distance = 0
-	#
-	##print("Distance: " + str(character.position.x - otherPlayer.position.x))
-	#
-	if (character.position.x - otherPlayer.position.x < 0):
+	
+	#print("Distance: " + str(character.position.x - otherPlayer.position.x))
+	
+	if (character.fixed_position.x - otherPlayer.fixed_position.x < 0):
 		model.rotation_degrees.z = 0
 		model.scale = Vector3(1,1,1)
 		character.left_side = true
@@ -60,104 +69,96 @@ func State_Physics_Update(input: Dictionary):
 		model.rotation_degrees.z = 180
 		model.scale = Vector3(-1,-1,-1)
 		character.left_side = false
-	character.character_velocity.x = 0
-	character.character_velocity.y = 0
-	#character.velocity.x = 0
+	character.velocity.x = 0
+	character.velocity.y = 0
 	
 	network_checkInputs(input)
 	
 
 func network_checkInputs(input: Dictionary) -> void:
-	#if Input.is_action_pressed(I_left) and Input.is_action_pressed(I_down) and character.left_side == true:
-		#character.low_blocking = true
-		#character.high_blocking = false
-	#elif Input.is_action_pressed(I_right) and Input.is_action_pressed(I_down) and character.left_side == false:
-		#character.low_blocking = true
-		#character.high_blocking = false
-	#elif Input.is_action_pressed(I_left) and character.left_side == true:
-		#character.high_blocking = true
-		#character.low_blocking = false
-	#elif Input.is_action_pressed(I_right) and character.left_side == false:
-		#character.high_blocking = true
-		#character.low_blocking = false
-	#else:
-		#character.low_blocking = false
-		#character.high_blocking = false
-
-	if input.get("input_vector", Vector2.ZERO).x == 0: #neutral
+	if input.get("input_vector", Vector2.ZERO).x < 0 and input.get( # leftside downback
+		"input_vector", Vector2.ZERO).y < 0 and character.left_side == true:
+		character.low_blocking = true
+		character.high_blocking = false
+	elif input.get("input_vector", Vector2.ZERO).x > 0 and input.get( #rightside downback
+		"input_vector", Vector2.ZERO).y < 0 and character.left_side == false:
+		character.low_blocking = true
+		character.high_blocking = false
+	elif input.get("input_vector", Vector2.ZERO).x < 0 and character.left_side == true: #left back
+		character.high_blocking = true
+		character.low_blocking = false
+	elif input.get("input_vector", Vector2.ZERO).x > 0 and character.left_side == false: # right back
+		character.high_blocking = true
+		character.low_blocking = false
+	else: 
 		character.low_blocking = false
 		character.high_blocking = false
-	
-	elif input.get("input_vector", Vector2.ZERO).x < 0 and character.crouch == false:
-		if character.left_side == true:
-			character.character_velocity.x = SGFixed.NEG_ONE
-			character.character_velocity.imul(SGFixed.ONE*3)
-			character.move_and_collide(character.character_velocity)
-			#character.velocity.x = -(move_speed - 2)
-			#sg_vector = SGFixedVector2(-move_speed - 2, 0)
-			
-			#character.sg_physics.move_and_collide(SGFixedVector2(-move_speed - 2, 0))
-		else:
-			character.character_velocity.x = SGFixed.NEG_ONE
-			character.character_velocity.imul(SGFixed.ONE*3)
-			character.move_and_collide(character.character_velocity)
-			#character.velocity.x = -move_speed
-			#character.sg_physics.move_and_collide(SGFixedVector2(-move_speed, 0))
-		anim_player.play("forward_walk")
-	elif input.get("input_vector", Vector2.ZERO).x > 0 and character.crouch == false: 
-		#if character.left_side == false:
-		character.character_velocity.x = SGFixed.ONE
-		character.character_velocity.imul(SGFixed.ONE*3)
-		character.move_and_collide(character.character_velocity)
-			#character.velocity.x = (move_speed - 2)
-		#else:
-			##character.character_velocity.x = SGFixed.ONE
-			##character.character_velocity.imul(move_speed_2)
-			##character.sg_physics.move_and_collide(character.character_velocity)
-			#character.velocity.x = move_speed
-		anim_player.play("forward_walk") #TODO BackWalk animation
-	
-	#character.position = Vector3(character.sg_physics.position.x, -character.sg_physics.position.y, 0) / 10
-	##print(character.sg_physics.velocity)
 
-	if input.get("input_vector", Vector2.ZERO).y < 0:
-		character.jump_velocity = character.velocity.x
-		Transitioned.emit(self, "prejump")
-		return
-	elif input.get("input_vector", Vector2.ZERO).y > 0:
+	if input.get("input_vector", Vector2.ZERO).y < 0: #crouch
 		character.velocity.x = 0
-		anim_player.play("crouch")
+		anim_player.play("crouch") 
 		character.crouch = true
-	elif character.velocity.x == 0:
+	
+	if input.get("input_vector", Vector2.ZERO).y == 0: #y neutral
+		character.crouch = false
+	if input.get("input_vector", Vector2.ZERO).x == 0: #x neutral
+		character.low_blocking = false
+		character.high_blocking = false
+		character.velocity.x = 0
+	
+	elif input.get("input_vector", Vector2.ZERO).x < 0 and character.crouch == false: #left
+		if character.left_side == true:
+			character.velocity.x = -15291 #-14/60*65536
+			anim_player.play("forward_walk")
+		else:
+			character.velocity.x = -17476 
+			anim_player.play("forward_walk")
+	elif input.get("input_vector", Vector2.ZERO).x > 0 and character.crouch == false: #right
+		if character.left_side == false:
+			character.velocity.x = 15291
+			anim_player.play("forward_walk")
+		else:
+			character.velocity.x = 17476
+			anim_player.play("forward_walk")
+		 #TODO BackWalk animation
+
+	if character.velocity.x == 0 and character.crouch == false: #idle check
 		anim_player.play("idle")
 		character.crouch = false
-
-	#if input.get("a") and input.get("b") and character.crouch == false:
-	#	do_throw()
-	#elif Input.is_action_just_pressed(I_heavy) and character.crouch == false:
-		#if check_fireball_left():
-			#do_fireball()
-		#else:
-			#do_5C()
-	#elif Input.is_action_just_pressed(I_medium) and character.crouch == false:
-		#if check_fireball_left():
-			#do_fireball()
-		#else:
-			#do_5B()
-	#elif Input.is_action_just_pressed(I_light) and character.crouch == false:
-		#if check_fireball_left():
-			#do_fireball()
-		#else:
-			#do_5A()
-#
-	#if input.get("c") and character.crouch == true:
-	#	do_2C()
-	#elif input.get("b") and character.crouch == true:
-	#	do_2B()
-	#elif input.get("a") and character.crouch == true:
-	#	do_2A()
 	
-	#character.move_and_slide()
+	character.move_and_slide()
+	model.position.x = SGFixed.to_float(character.fixed_position_x)
+	model.position.y = -SGFixed.to_float(character.fixed_position_y)
+	
+	if input.get("input_vector", Vector2.ZERO).y > 0: #jump check
+		character.jump_velocity_x = character.velocity.x
+		Transitioned.emit(self, "prejump")
+		return
+
+	if input.get("a") and input.get("b") and character.crouch == false:
+		do_throw()
+	elif input.get("c") and character.crouch == false:
+		if check_fireball_left():
+			do_fireball()
+		else:
+			do_5C()
+	elif input.get("b") and character.crouch == false:
+		if check_fireball_left():
+			do_fireball()
+		else:
+			do_5B()
+	elif input.get("a") and character.crouch == false:
+		if check_fireball_left():
+			do_fireball()
+		else:
+			do_5A()
+#
+	if input.get("c") and character.crouch == true:
+		do_2C()
+	elif input.get("b") and character.crouch == true:
+		do_2B()
+	elif input.get("a") and character.crouch == true:
+		do_2A()
 
 #func checkInputs():
 	#if Input.is_action_pressed(I_left) and Input.is_action_pressed(I_down) and character.left_side == true:
