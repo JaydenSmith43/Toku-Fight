@@ -459,4 +459,16 @@ func _on_var_height_edit_text_submitted(new_text: String) -> void:
 		if data["frame"] == float(hitbox_string[0]):
 			data[hitbox_string[1]]["height"] = new_text
 			load_frame_data()
+
+func _on_var_sfx_edit_text_submitted(new_text: String) -> void:
+	var index = hitbox_option_button.get_selected_id()
+	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
+	hitbox_string[1] = hitbox_string[1].strip_edges()
+	
+	if new_text.is_valid_float():
+		for data in move_data["frames"]:
+			if data["frame"] == float(hitbox_string[0]):
+				data["sfx"] = float(new_text)
+				load_frame_data()
+
 #endregion

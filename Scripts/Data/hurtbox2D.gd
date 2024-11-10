@@ -3,7 +3,15 @@ extends SGArea2D
 
 @export var character : SGCharacterBody2D
 
-#const sfx_light = preload("res://SFX/HitFX/light_hit.wav")
+const SFX_LIGHT_1 = preload("res://SFX/Combat/hit_light/hit_light_1.mp3")
+const SFX_LIGHT_2 = preload("res://SFX/Combat/hit_light/hit_light_2.mp3")
+const SFX_LIGHT_3 = preload("res://SFX/Combat/hit_light/hit_light_3.mp3")
+const SFX_MEDIUM_1 = preload("res://SFX/Combat/hit_medium/hit_medium_1.mp3")
+const SFX_MEDIUM_2 = preload("res://SFX/Combat/hit_medium/hit_medium_2.mp3")
+const SFX_MEDIUM_3 = preload("res://SFX/Combat/hit_medium/hit_medium_3.mp3")
+const SFX_HEAVY_1 = preload("res://SFX/Combat/hit_heavy/hit_heavy_1.mp3")
+const SFX_HEAVY_2 = preload("res://SFX/Combat/hit_heavy/hit_heavy_2.mp3")
+const SFX_HEAVY_3 = preload("res://SFX/Combat/hit_heavy/hit_heavy_3.mp3")
 
 func _ready():
 	connect("area_entered", self._on_area_entered)
@@ -59,9 +67,36 @@ func hit(hitbox: Hitbox2D):
 	
 	character.state_machine.current_state.Transitioned.emit(character.state_machine.current_state, "hitstun")
 	SyncManager.despawn(hitbox) #if hitboxes are grouped, delete the others in the group
-	choose_random_sound()
+	choose_sound("light")
 	
 
-func choose_random_sound():
-	
-	SyncManager.play_sound(str(get_path()) + ":light_hit", sfx_light)
+func choose_sound(effect : String):
+	match effect:
+		"light":
+			var random = randi_range(0, 2)
+			match random:
+				0:
+					SyncManager.play_sound(str(get_path()) + ":light_hit_1", SFX_LIGHT_1)
+				1:
+					SyncManager.play_sound(str(get_path()) + ":light_hit_2", SFX_LIGHT_2)
+				3:
+					SyncManager.play_sound(str(get_path()) + ":light_hit_3", SFX_LIGHT_3)
+		"medium":
+			var random = randi_range(0, 2)
+			match random:
+				0:
+					SyncManager.play_sound(str(get_path()) + ":medium_hit_1", SFX_MEDIUM_1)
+				1:
+					SyncManager.play_sound(str(get_path()) + ":medium_hit_2", SFX_MEDIUM_2)
+				3:
+					SyncManager.play_sound(str(get_path()) + ":medium_hit_3", SFX_MEDIUM_3)
+		"heavy":
+			var random = randi_range(0, 2)
+			match random:
+				0:
+					SyncManager.play_sound(str(get_path()) + ":heavy_hit_1", SFX_HEAVY_1)
+				1:
+					SyncManager.play_sound(str(get_path()) + ":heavy_hit_2", SFX_HEAVY_2)
+				3:
+					SyncManager.play_sound(str(get_path()) + ":heavy_hit_3", SFX_HEAVY_3)
+		

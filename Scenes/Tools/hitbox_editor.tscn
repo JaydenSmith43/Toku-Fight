@@ -339,6 +339,17 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "Hitstop:"
 
+[node name="VarSFXLabel" type="Label" parent="Variables"]
+offset_left = 43.0
+offset_top = 700.0
+offset_right = 191.0
+offset_bottom = 739.0
+theme = SubResource("Theme_m2wye")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "SFX:"
+
 [node name="VarFrameEdit" type="LineEdit" parent="Variables"]
 offset_left = 206.0
 offset_right = 326.0
@@ -466,6 +477,15 @@ theme = SubResource("Theme_auj21")
 text = "1"
 placeholder_text = "1"
 
+[node name="VarSFXEdit" type="LineEdit" parent="Variables"]
+offset_left = 206.0
+offset_top = 700.0
+offset_right = 326.0
+offset_bottom = 750.0
+theme = SubResource("Theme_auj21")
+text = "light"
+placeholder_text = "light"
+
 [connection signal="button_down" from="HitboxButton" to="." method="_on_hitbox_button_button_down"]
 [connection signal="button_down" from="SaveButton" to="." method="_on_save_button_button_down"]
 [connection signal="button_down" from="DeleteButton" to="." method="_on_delete_button_button_down"]
@@ -490,3 +510,4 @@ placeholder_text = "1"
 [connection signal="text_submitted" from="Variables/VarPushbackEdit" to="." method="_on_var_pushback_edit_text_submitted"]
 [connection signal="text_submitted" from="Variables/VarPushTimeEdit" to="." method="_on_var_push_time_edit_text_submitted"]
 [connection signal="text_submitted" from="Variables/VarHeightEdit" to="." method="_on_var_height_edit_text_submitted"]
+[connection signal="text_submitted" from="Variables/VarSFXEdit" to="." method="_on_var_sfx_edit_text_submitted"]
