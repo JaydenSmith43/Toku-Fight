@@ -23,7 +23,7 @@ func Exit():
 	pass
 
 func State_Physics_Update(input: Dictionary):
-	print("HITSTUN UPDATE")
+	#print("HITSTUN UPDATE")
 	character.current_frame += 1
 	
 	if character.current_frame == hitstun_frames:

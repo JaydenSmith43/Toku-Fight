@@ -18,7 +18,6 @@ var fixed_pos_y := 0
 var end_frame := 6000
 var hitstun := 0
 var blockstun := 0
-var character
 
 func net_ready() -> void:
 	print("ready hitbox")
@@ -45,7 +44,6 @@ func _network_spawn(data: Dictionary) -> void:
 	blockstun = data['blockstun']
 	player = data['player']
 	left_side = data['left_side']
-	character = data['character']
 	net_ready()
 
 func _on_network_timer_timeout() -> void:

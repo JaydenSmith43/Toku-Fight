@@ -12,6 +12,7 @@ func _ready() -> void:
 	sync_to_physics_engine()
 
 func tick_physics_process() -> void:
+	sync_to_physics_engine()
 	var overlapping_areas = get_overlapping_areas()
 	
 	if overlapping_areas.size() > 0:
