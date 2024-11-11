@@ -4,9 +4,6 @@ class_name S_Hitstun
 var hitstun_frames := 0
 
 func Enter():
-	#if character.entered:
-	#	return
-	#character.entered = true
 	character.current_frame = 0
 	hitstun_frames = character.hitstun
 	
@@ -24,7 +21,6 @@ func Enter():
 
 func Exit():
 	pass
-	character.entered = false
 
 func State_Physics_Update(input: Dictionary):
 	print("HITSTUN UPDATE")

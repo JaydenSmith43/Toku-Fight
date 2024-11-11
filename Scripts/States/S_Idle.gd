@@ -46,14 +46,16 @@ func Enter():
 	character.velocity.x = 0
 	#character.collision.fixed_position.y += SGFixed.ONE
 	character.set_collision_mask_bit(15, true)
-	character.entered = false
 	pass
 func Exit():
 	pass
 
 func State_Physics_Update(input: Dictionary):
-	#print("IDLE UPDATE")
 	character.current_frame += 1
+	#if character.current_frame == 1:
+	#	charcter.entered = true
+	#else:
+	#	character.entered = false
 	#if character.colliding:
 		#pushout_distance = 2
 	#else:
@@ -142,104 +144,36 @@ func network_checkInputs(input: Dictionary) -> void:
 			do_fireball()
 		else:
 			do_5C()
+			return
 	elif input.get("b") and character.crouch == false:
 		if check_fireball_left():
 			do_fireball()
 		else:
 			do_5B()
+			return
 	elif input.get("a") and character.crouch == false:
 		if check_fireball_left():
 			do_fireball()
 		else:
 			do_5A()
+			return
 #
 	if input.get("c") and character.crouch == true:
 		do_2C()
+		return
 	elif input.get("b") and character.crouch == true:
 		do_2B()
+		return
 	elif input.get("a") and character.crouch == true:
 		do_2A()
-
-#func checkInputs():
-	#if Input.is_action_pressed(I_left) and Input.is_action_pressed(I_down) and character.left_side == true:
-		#character.low_blocking = true
-		#character.high_blocking = false
-	#elif Input.is_action_pressed(I_right) and Input.is_action_pressed(I_down) and character.left_side == false:
-		#character.low_blocking = true
-		#character.high_blocking = false
-	#elif Input.is_action_pressed(I_left) and character.left_side == true:
-		#character.high_blocking = true
-		#character.low_blocking = false
-	#elif Input.is_action_pressed(I_right) and character.left_side == false:
-		#character.high_blocking = true
-		#character.low_blocking = false
-	#else:
-		#character.low_blocking = false
-		#character.high_blocking = false
-#
-	#if Input.is_action_pressed(I_left) and Input.is_action_pressed(I_right):
-		#character.low_blocking = false
-		#character.high_blocking = false
-	#
-	#if Input.is_action_pressed(I_left) and character.crouch == false:
-		#if character.left_side == true:
-			##character.velocity.x -= (move_speed - 2)
-			#return
-		#else:
-			#character.velocity.x -= move_speed
-		#anim_player.play("forward_walk")
-	#if Input.is_action_pressed(I_right) and character.crouch == false: #TODO BackWalk animation
-		#if character.left_side == false:
-			##character.velocity.x += (move_speed - 2)
-			#return
-		#else:
-			#character.velocity.x += move_speed
-		#anim_player.play("forward_walk")
-#
-	#if Input.is_action_pressed(I_up):
-		#character.jump_velocity = character.velocity.x
-		#Transitioned.emit(self, "prejump")
-		#pass
-	#elif Input.is_action_pressed(I_down):
-		#character.velocity.x = 0
-		#anim_player.play("crouch")
-		#character.crouch = true
-	#elif character.velocity.x == 0:
-		#anim_player.play("idle")
-		#character.crouch = false
-#
-	#if Input.is_action_just_pressed(I_light) and Input.is_action_just_pressed(I_medium) and character.crouch == false:
-		#do_throw()
-	#elif Input.is_action_just_pressed(I_heavy) and character.crouch == false:
-		#if check_fireball_left():
-			#do_fireball()
-		#else:
-			#do_5C()
-	#elif Input.is_action_just_pressed(I_medium) and character.crouch == false:
-		#if check_fireball_left():
-			#do_fireball()
-		#else:
-			#do_5B()
-	#elif Input.is_action_just_pressed(I_light) and character.crouch == false:
-		#if check_fireball_left():
-			#do_fireball()
-		#else:
-			#do_5A()
-#
-	#if Input.is_action_just_pressed(I_heavy) and character.crouch == true:
-		#do_2C()
-	#elif Input.is_action_just_pressed(I_medium) and character.crouch == true:
-		#do_2B()
-	#elif Input.is_action_just_pressed(I_light) and character.crouch == true:
-		#do_2A()
-#
-	#character.move_and_slide()
+		return
 
 func do_throw():
 	Transitioned.emit(self, "thrower")
 
 func do_fireball():
-	character.blocking = false
+	character.low_blocking = false
+	character.high_blocking = false
 	Transitioned.emit(self, "hadou")
 
 func do_5A():
@@ -259,6 +193,7 @@ func do_5C():
 	character.high_blocking = false
 	character.movename = "grappler_5c"
 	Transitioned.emit(self, "attack")
+	print("DO 5C")
 
 func do_2A():
 	character.low_blocking = false

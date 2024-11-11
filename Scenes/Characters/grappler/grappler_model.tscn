@@ -1,6 +1,6 @@
 [gd_scene load_steps=33 format=4 uid="uid://1h0q2rqr7tyo"]
 
-[ext_resource type="Material" uid="uid://ranexxjs65mb" path="res://Materials/grappler_mat.tres" id="1_byyii"]
+[ext_resource type="Material" uid="uid://ranexxjs65mb" path="res://Materials/grappler_1_mat.tres" id="1_byyii"]
 [ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkAnimationPlayer.gd" id="2_668wb"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_w7xdc"]
@@ -44768,7 +44768,7 @@ bones/222/rotation = Quaternion(-0.0176067, 1.19208e-09, -0.214477, 0.97657)
 bones/222/scale = Vector3(1, 1, 1)
 
 [node name="belt" type="BoneAttachment3D" parent="rig/Skeleton3D"]
-transform = Transform3D(-0.124461, 9.40636e-08, -0.10972, 1.50874e-07, 0.165919, -2.41535e-08, 0.10972, -1.17347e-07, -0.124461, -0.0878206, 2.73776, -0.0396542)
+transform = Transform3D(-0.124461, 1.06171e-07, -0.10972, 1.86265e-07, 0.165919, -3.22932e-08, 0.10972, -1.49012e-07, -0.124461, -0.0878206, 2.73776, -0.0396542)
 bone_name = "belt"
 bone_idx = 94
 

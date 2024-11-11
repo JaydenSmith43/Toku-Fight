@@ -9,28 +9,10 @@ var player_group := ""
 
 var hitstun : int = 0
 var blockstun : int = 0
-
-#@export var animation_player : AnimationPlayer
-#TODO SEND IN JSON DATA INTO THIS ATTACK STATE TO BE READ
+var sfx : String = ""
 
 func Enter():
-	if character.entered:
-		return
-	
-	character.entered = true
 	character.current_frame = 0
-	#played = false
-	
-	if character.get_groups()[0] == "player1":
-		StaticData.load_json_file(character.movename, character.get_groups()[0]) #send in current character button from idle state
-		anim_name = StaticData.P1_move_data["anim_name"]
-		move_end_frame = StaticData.P1_move_data["move_end_frame"]
-	else:
-		StaticData.load_json_file(character.movename, character.get_groups()[0]) #send in current character button from idle state
-		anim_name = StaticData.P2_move_data["anim_name"]
-		move_end_frame = StaticData.P2_move_data["move_end_frame"]
-	
-	anim_player.play(anim_name)
 	#load cancel properties
 
 func Exit():
@@ -39,15 +21,23 @@ func Exit():
 
 func State_Physics_Update(input: Dictionary):
 	character.current_frame += 1
+	if character.current_frame == 1:
+		if character.get_groups()[0] == "player1":
+			StaticData.load_json_file(character.movename, character.get_groups()[0]) #send in current character button from idle state
+			anim_name = StaticData.P1_move_data["anim_name"]
+			move_end_frame = StaticData.P1_move_data["move_end_frame"]
+		else:
+			StaticData.load_json_file(character.movename, character.get_groups()[0]) #send in current character button from idle state
+			anim_name = StaticData.P2_move_data["anim_name"]
+			move_end_frame = StaticData.P2_move_data["move_end_frame"]
+		anim_player.play(anim_name)
+	
 	#print("ATTACK UPDATE: " + str(character.current_frame))
 	check_frame()
 	
-	#if (!played):
-		#played = true
-	
 	if character.current_frame >= move_end_frame:
+		character.current_frame = 0
 		character.movename = "idle"
-		character.hit = false
 		Transitioned.emit(self, "idle")
 
 func check_frame():
@@ -70,6 +60,7 @@ func check_frame():
 			if character.current_frame == data["frame"]:
 				hitstun = data["hitstun"]
 				blockstun = data["blockstun"]
+				sfx = data['sfx']
 				
 				var hitbox_string = "hitbox"
 				var hitbox_index = 1
@@ -95,6 +86,7 @@ func create_hitbox(data):
 		extents_x = SGFixed.div(SGFixed.from_float(data["scale_x"]), 131072),
 		extents_y = SGFixed.div(SGFixed.from_float(data["scale_y"]), 131072),
 		height = data['height'],
+		sfx = sfx,
 		hitstun = hitstun,
 		blockstun = blockstun,
 		player = player,

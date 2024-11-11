@@ -1,7 +1,7 @@
 extends State
 class_name S_Teched
 
-var current_frame = 0
+#var current_frame = 0
 var animation_end = 27
 var current_position : Vector3
 
@@ -10,13 +10,13 @@ func _ready() -> void:
 
 func Enter():
 	anim_player.play("throw_teched")
-	current_frame = 0
+	character.current_frame = 0
 	current_position = Vector3(character.position.x, character.position.y, 0.477)
 
 func State_Physics_Update(input: Dictionary):
-	current_frame += 1
+	character.current_frame += 1
 	
-	if current_frame == animation_end:
+	if character.current_frame == animation_end:
 		character.movename = "idle"
 		Transitioned.emit(self, "idle")
 	

@@ -20,6 +20,7 @@ extends Node3D
 @export var var_pushback_edit : LineEdit
 @export var var_pushtime_edit : LineEdit
 @export var var_height_edit : LineEdit
+@export var var_sfx_edit : LineEdit
 
 var grappler_model = preload("res://Scenes/Characters/grappler/grappler_model.tscn")
 var hitbox = preload("res://Scenes/Characters/hitbox3d_editor.tscn")
@@ -114,6 +115,8 @@ func load_box_variables(index : int):
 					var_pushback_edit.text = str(data["pushback"])
 				if data.has("pushtime"):
 					var_pushtime_edit.text = str(data["pushtime"])
+				if data.has("sfx"):
+					var_sfx_edit.text = str(data["sfx"])
 				if data.has(str(hitbox_string[1])):
 					load_hitbox_variables(data[hitbox_string[1]])
 
@@ -171,6 +174,8 @@ func no_data():
 	var_scale_y_edit.text = ""
 	var_end_frame_edit.text = ""
 	var_height_edit.text = ""
+	var_sfx_edit.text = ""
+	
 	
 	hitbox_option_button.remove_item(0)
 
@@ -234,7 +239,8 @@ func create_new_hitbox(name : String):
 		scale_x = 1,
 		scale_y = 1,
 		end_frame = 1,
-		height = "mid"
+		height = "mid",
+		sfx = "light"
 	}
 	
 	for data in move_data["frames"]:
@@ -465,10 +471,9 @@ func _on_var_sfx_edit_text_submitted(new_text: String) -> void:
 	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
 	hitbox_string[1] = hitbox_string[1].strip_edges()
 	
-	if new_text.is_valid_float():
-		for data in move_data["frames"]:
-			if data["frame"] == float(hitbox_string[0]):
-				data["sfx"] = float(new_text)
-				load_frame_data()
+	for data in move_data["frames"]:
+		if data["frame"] == float(hitbox_string[0]):
+			data["sfx"] = new_text
+			load_frame_data()
 
 #endregion

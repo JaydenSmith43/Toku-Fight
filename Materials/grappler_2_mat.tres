@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://b8vplcaqirjpt"]
+
+[ext_resource type="Texture2D" uid="uid://cppj6fsjjuwer" path="res://Models/grappler_grappler-texture-2.png" id="1_fr27n"]
+
+[resource]
+resource_name = "Material"
+albedo_texture = ExtResource("1_fr27n")
+roughness = 0.5

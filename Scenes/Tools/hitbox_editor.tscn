@@ -28,12 +28,12 @@ default_font_size = 35
 default_font_size = 30
 
 [sub_resource type="Theme" id="Theme_auj21"]
-default_font_size = 30
+default_font_size = 20
 
 [sub_resource type="Theme" id="Theme_m2wye"]
 default_font_size = 28
 
-[node name="Node3D" type="Node3D" node_paths=PackedStringArray("animation_option_button", "character_option_button", "hitbox_option_button", "current_frame_edit", "end_frame_edit", "total_frame_label", "var_frame_edit", "var_end_frame_edit", "var_position_x_edit", "var_position_y_edit", "var_scale_x_edit", "var_scale_y_edit", "var_damage_edit", "var_blockstun_edit", "var_hitstun_edit", "var_hitstop_edit", "var_pushback_edit", "var_pushtime_edit", "var_height_edit")]
+[node name="Node3D" type="Node3D" node_paths=PackedStringArray("animation_option_button", "character_option_button", "hitbox_option_button", "current_frame_edit", "end_frame_edit", "total_frame_label", "var_frame_edit", "var_end_frame_edit", "var_position_x_edit", "var_position_y_edit", "var_scale_x_edit", "var_scale_y_edit", "var_damage_edit", "var_blockstun_edit", "var_hitstun_edit", "var_hitstop_edit", "var_pushback_edit", "var_pushtime_edit", "var_height_edit", "var_sfx_edit")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.985718, 0, 0)
 script = ExtResource("1_1srkk")
 animation_option_button = NodePath("AnimationOptionButton")
@@ -55,6 +55,7 @@ var_hitstop_edit = NodePath("Variables/VarHitstopEdit")
 var_pushback_edit = NodePath("Variables/VarPushbackEdit")
 var_pushtime_edit = NodePath("Variables/VarPushTimeEdit")
 var_height_edit = NodePath("Variables/VarHeightEdit")
+var_sfx_edit = NodePath("Variables/VarSFXEdit")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 4)
@@ -483,8 +484,8 @@ offset_top = 700.0
 offset_right = 326.0
 offset_bottom = 750.0
 theme = SubResource("Theme_auj21")
-text = "light"
-placeholder_text = "light"
+text = "1"
+placeholder_text = "1"
 
 [connection signal="button_down" from="HitboxButton" to="." method="_on_hitbox_button_button_down"]
 [connection signal="button_down" from="SaveButton" to="." method="_on_save_button_button_down"]

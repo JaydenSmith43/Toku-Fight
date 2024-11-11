@@ -1,0 +1,163 @@
+[gd_scene load_steps=23 format=3 uid="uid://c110s1snwl2cq"]
+
+[ext_resource type="Script" path="res://Scripts/sg_character_data.gd" id="1_fjl6n"]
+[ext_resource type="Texture2D" uid="uid://bmxre7rw1js2a" path="res://Sprites/grappler_ref.png" id="2_1migp"]
+[ext_resource type="Script" path="res://Scripts/Data/throwbox2D.gd" id="3_3j7rt"]
+[ext_resource type="Script" path="res://Scripts/Data/hurtbox2D.gd" id="4_74vm4"]
+[ext_resource type="Script" path="res://Scripts/Data/hitbox2D_collision.gd" id="5_1dpco"]
+[ext_resource type="PackedScene" uid="uid://1h0q2rqr7tyo" path="res://Scenes/Characters/grappler/grappler_model.tscn" id="6_sd7cd"]
+[ext_resource type="Script" path="res://Scripts/input.gd" id="7_pp3wx"]
+[ext_resource type="PackedScene" uid="uid://ook7dmepmfw5" path="res://Scenes/UI/ui.tscn" id="8_rphqq"]
+[ext_resource type="PackedScene" uid="uid://bh6x5sy31wviu" path="res://Scenes/UI/health_bar.tscn" id="9_risx0"]
+[ext_resource type="Script" path="res://Scripts/state_machine.gd" id="10_t1wsc"]
+[ext_resource type="Script" path="res://Scripts/States/S_Idle.gd" id="11_s2jcs"]
+[ext_resource type="Script" path="res://Scripts/States/S_Ground_Attack.gd" id="12_qkye0"]
+[ext_resource type="Script" path="res://Scripts/States/S_Fireball.gd" id="13_0jsj3"]
+[ext_resource type="Script" path="res://Scripts/States/S_Jump.gd" id="14_k2vgv"]
+[ext_resource type="Script" path="res://Scripts/States/S_Block.gd" id="15_kiua0"]
+[ext_resource type="Script" path="res://Scripts/States/S_Prejump.gd" id="16_5qm8e"]
+[ext_resource type="Script" path="res://Scripts/States/S_Hitstun.gd" id="17_d3vqd"]
+[ext_resource type="Script" path="res://Scripts/States/S_Thrower.gd" id="18_qhqye"]
+[ext_resource type="Script" path="res://Scripts/States/S_Thrown.gd" id="19_3jq6r"]
+[ext_resource type="Script" path="res://Scripts/States/S_Teched.gd" id="20_g2jt5"]
+
+[sub_resource type="SGCapsuleShape2D" id="SGCapsuleShape2D_yoyix"]
+radius = 59030
+height = 160159
+
+[sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_vhtgr"]
+extents_x = 95027
+extents_y = 163840
+
+[node name="SGCharacter" type="SGCharacterBody2D" node_paths=PackedStringArray("hurtbox", "state_machine") groups=["network_sync"]]
+collision_layer = 32768
+collision_mask = 32769
+script = ExtResource("1_fjl6n")
+hurtbox = NodePath("Hurtbox")
+state_machine = NodePath("StateMachine")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-0.00781274, -2.5065)
+scale = Vector2(0.00787602, 0.00829784)
+texture = ExtResource("2_1migp")
+
+[node name="collision" type="SGCollisionShape2D" parent="."]
+shape = SubResource("SGCapsuleShape2D_yoyix")
+fixed_position_y = -139898
+position = Vector2(0, -2.13467)
+
+[node name="Throwbox" type="SGArea2D" parent="." node_paths=PackedStringArray("character", "state_machine")]
+collision_layer = 32
+collision_mask = 256
+script = ExtResource("3_3j7rt")
+character = NodePath("..")
+state_machine = NodePath("../StateMachine")
+
+[node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="Throwbox"]
+
+[node name="Hurtbox" type="SGArea2D" parent="." node_paths=PackedStringArray("character")]
+collision_layer = 2
+collision_mask = 16
+fixed_position_y = -165095
+position = Vector2(0, -2.51915)
+script = ExtResource("4_74vm4")
+character = NodePath("..")
+
+[node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="Hurtbox"]
+shape = SubResource("SGRectangleShape2D_vhtgr")
+modulate = Color(0.443137, 0.443137, 0.443137, 0.109804)
+script = ExtResource("5_1dpco")
+
+[node name="model" parent="." instance=ExtResource("6_sd7cd")]
+
+[node name="AttackTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Input" type="Node" parent="."]
+script = ExtResource("7_pp3wx")
+
+[node name="UI" parent="." instance=ExtResource("8_rphqq")]
+
+[node name="HealthBar" parent="UI" instance=ExtResource("9_risx0")]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 820.0
+offset_bottom = 70.0
+
+[node name="StateLabel" type="Label" parent="UI/HealthBar"]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 73.0
+offset_right = 251.0
+offset_bottom = 214.0
+theme_override_font_sizes/font_size = 50
+text = "State:
+id"
+horizontal_alignment = 1
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("10_t1wsc")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+script = ExtResource("11_s2jcs")
+character = NodePath("../..")
+model = NodePath("../../model")
+state_name = "idle"
+
+[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+script = ExtResource("12_qkye0")
+character = NodePath("../..")
+model = NodePath("../../model")
+state_name = "attack"
+
+[node name="Hadou" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+script = ExtResource("13_0jsj3")
+character = NodePath("../..")
+model = NodePath("../../model")
+state_name = "hadou"
+
+[node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+script = ExtResource("14_k2vgv")
+jump_height = 1.0
+jump_time_to_peak = 0.7
+character = NodePath("../..")
+model = NodePath("../../model")
+state_name = "jump"
+
+[node name="Block" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+script = ExtResource("15_kiua0")
+character = NodePath("../..")
+model = NodePath("../../model")
+state_name = "block"
+
+[node name="Prejump" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+script = ExtResource("16_5qm8e")
+character = NodePath("../..")
+model = NodePath("../../model")
+state_name = "prejump"
+
+[node name="Hitstun" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+script = ExtResource("17_d3vqd")
+character = NodePath("../..")
+model = NodePath("../../model")
+state_name = "hitstun"
+
+[node name="Thrower" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+script = ExtResource("18_qhqye")
+character = NodePath("../..")
+model = NodePath("../../model")
+state_name = "thrower"
+
+[node name="Thrown" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+script = ExtResource("19_3jq6r")
+character = NodePath("../..")
+model = NodePath("../../model")
+state_name = "thrown"
+
+[node name="Teched" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+script = ExtResource("20_g2jt5")
+character = NodePath("../..")
+model = NodePath("../../model")
+state_name = "teched"

@@ -1,13 +1,13 @@
 extends State
 class_name S_Thrown
 
-var current_frame = 0
+#var current_frame = 0
 var throw_window_end = 15
 
 var tech_throw_frame = 0
 var tech_throw_end = 25
-var teching : bool = false
-var current_position : Vector3
+#var teching : bool = false
+var current_position : SGFixedVector2
 
 var I_light : String
 var I_medium : String
@@ -27,26 +27,29 @@ func _ready() -> void:
 func Enter():
 	character.being_thrown = true
 	anim_player.play("grappler_throw_taker")
-	current_frame = 0
+	character.current_frame = 0
 	tech_throw_frame = 0
-	teching = false
+	character.teching = false
 	
 	if character.left_side:
-		character.rotate_y(90)
+		model.rotate_y(deg_to_rad(90))
 	else:
-		character.rotate_y(-90)
+		model.rotate_y(deg_to_rad(-90))
+		print("enter rotation!")
+		
 
 func Exit():
 	character.being_thrown = false
+	character.teching = false
 
 func State_Physics_Update(input: Dictionary):
-	current_frame += 1
-	if teching:
+	character.current_frame += 1
+	if character.teching:
 		tech_throw_frame += 1
 		if character.left_side:
-			character.position = lerp(character.position, current_position - Vector3(2,0,0), 0.1)
+			character.fixed_position_x = lerp(character.fixed_position_x, current_position.x - 2, 0.1)
 		else:
-			character.position = lerp(character.position, current_position + Vector3(2,0,0), 0.1)
+			character.fixed_position_x = lerp(character.fixed_position_x, current_position.x + 2, 0.1)
 		
 
 		character.move_and_slide()
@@ -55,26 +58,26 @@ func State_Physics_Update(input: Dictionary):
 			Transitioned.emit(self, "idle")
 			return
 	else:
-		if Input.is_action_just_pressed(I_light) and Input.is_action_just_pressed(I_medium) and current_frame < throw_window_end:
+		if input.get("a") and input.get("b") and character.current_frame < throw_window_end:
 			tech_throw()
 	
-		if current_frame == 40: #TODO SEND THEM TO KNOCKDOWN STATE FOR CERTAIN AMOUNT OF FRAMES
+		if character.current_frame == 40: #TODO SEND THEM TO KNOCKDOWN STATE FOR CERTAIN AMOUNT OF FRAMES
 			character.take_damage(10)
-		if current_frame == 60:
+		if character.current_frame == 60:
 			if character.left_side:
-				character.rotate_y(-90)
+				model.rotate_y(deg_to_rad(-90))
 			else:
-				character.rotate_y(90)
+				model.rotate_y(deg_to_rad(90))
 			Transitioned.emit(self, "idle")
 
 func tech_throw():
 	anim_player.play("throw_tech")
-	teching = true
-	current_position = Vector3(character.position.x, character.position.y, 0.477)
+	character.teching = true
+	current_position = SGFixed.vector2(character.fixed_position_x, character.fixed_position_y)
 	
 	if character.left_side:
-		character.rotate_y(-90)
+		model.rotate_y(deg_to_rad(-90))
 	else:
-		character.rotate_y(90)
+		model.rotate_y(deg_to_rad(90))
 	
 	other_player.state_machine.current_state.Transitioned.emit(other_player.state_machine.current_state, "teched")

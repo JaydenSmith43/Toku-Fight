@@ -14,8 +14,6 @@ const SFX_HEAVY_2 = preload("res://SFX/Combat/hit_heavy/hit_heavy_2.mp3")
 const SFX_HEAVY_3 = preload("res://SFX/Combat/hit_heavy/hit_heavy_3.mp3")
 
 func _ready():
-	connect("area_entered", self._on_area_entered)
-	
 	if character.is_in_group("player2"):
 		set_collision_layer_bit(1, false)
 		set_collision_mask_bit(4, false)
@@ -27,14 +25,7 @@ func tick_physics_process() -> void:
 	var overlapping_areas = get_overlapping_areas()
 	
 	if overlapping_areas.size() > 0:
-		overlapping_areas[0].timer.wait_ticks = 0
 		_on_area_entered(overlapping_areas[0])
-		#SyncManager.despawn(overlapping_areas[0])
-		
-		#overlapping_areas[0].queue_free()
-		#SyncManager.despawn(overlapping_areas[0])
-		#overlapping_areas[0]._on_network_timer_timeout()
-	#sync_to_physics_engine()
 
 func _on_area_entered(hitbox : Hitbox2D) -> void:
 	if hitbox == null:
@@ -67,7 +58,7 @@ func hit(hitbox: Hitbox2D):
 	
 	character.state_machine.current_state.Transitioned.emit(character.state_machine.current_state, "hitstun")
 	SyncManager.despawn(hitbox) #if hitboxes are grouped, delete the others in the group
-	choose_sound("light")
+	choose_sound(hitbox.sfx)
 	
 
 func choose_sound(effect : String):
@@ -76,20 +67,20 @@ func choose_sound(effect : String):
 			var random = randi_range(0, 2)
 			match random:
 				0:
-					SyncManager.play_sound(str(get_path()) + ":light_hit_1", SFX_LIGHT_1)
+					SyncManager.play_sound(str(get_path()) + ":light_hit", SFX_LIGHT_1)
 				1:
-					SyncManager.play_sound(str(get_path()) + ":light_hit_2", SFX_LIGHT_2)
-				3:
-					SyncManager.play_sound(str(get_path()) + ":light_hit_3", SFX_LIGHT_3)
+					SyncManager.play_sound(str(get_path()) + ":light_hit", SFX_LIGHT_2)
+				2:
+					SyncManager.play_sound(str(get_path()) + ":light_hit", SFX_LIGHT_3)
 		"medium":
 			var random = randi_range(0, 2)
 			match random:
 				0:
-					SyncManager.play_sound(str(get_path()) + ":medium_hit_1", SFX_MEDIUM_1)
+					SyncManager.play_sound(str(get_path()) + ":medium_hit", SFX_MEDIUM_1)
 				1:
-					SyncManager.play_sound(str(get_path()) + ":medium_hit_2", SFX_MEDIUM_2)
-				3:
-					SyncManager.play_sound(str(get_path()) + ":medium_hit_3", SFX_MEDIUM_3)
+					SyncManager.play_sound(str(get_path()) + ":medium_hit", SFX_MEDIUM_2)
+				2:
+					SyncManager.play_sound(str(get_path()) + ":medium_hit", SFX_MEDIUM_3)
 		"heavy":
 			var random = randi_range(0, 2)
 			match random:
@@ -97,6 +88,6 @@ func choose_sound(effect : String):
 					SyncManager.play_sound(str(get_path()) + ":heavy_hit_1", SFX_HEAVY_1)
 				1:
 					SyncManager.play_sound(str(get_path()) + ":heavy_hit_2", SFX_HEAVY_2)
-				3:
+				2:
 					SyncManager.play_sound(str(get_path()) + ":heavy_hit_3", SFX_HEAVY_3)
 		

@@ -6,9 +6,9 @@ signal tell_script(left_side, fixed_pos_x, fixed_pos_y, extents_x, extents_y)
 @export var timer : NetworkTimer
 @onready var collision_shape = $SGCollisionShape2D
 
-var shape : SGRectangleShape2D
 var damage := 10
 var height = "mid"
+var sfx = ""
 var left_side := true
 var player := ""
 var extents_x := 293610
@@ -40,6 +40,7 @@ func _network_spawn(data: Dictionary) -> void:
 	extents_x = data['extents_x']
 	extents_y = data['extents_y']
 	height = data['height']
+	sfx = data['sfx']
 	hitstun = data['hitstun']
 	blockstun = data['blockstun']
 	player = data['player']

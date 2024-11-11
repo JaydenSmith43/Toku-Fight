@@ -4,8 +4,10 @@ var input_prefix : String = "P1_"
 @onready var healthbar = $UI/HealthBar
 @onready var label = $UI/HealthBar/StateLabel
 @export var hurtbox : SGArea2D
+@export var throwbox : SGArea2D
 @onready var collision = $collision
 @export var state_machine : Node
+@export var model : Node3D
 
 var health := 100
 var left_side := false
@@ -20,12 +22,11 @@ var height_hit := ""
 var colliding := false
 var jump_velocity_x : int = 0
 var being_thrown := false
-var entered := false
+var throwing := false
+var teching := false
+var throw_current_frame := 0
 var current_frame := 0
-var hit := false
 
-#var frame_loop = 0
-#custom_physics_process
 func _ready():
 	healthbar.init_health(health)
 	up_direction = SGFixed.vector2(0, -65536)
@@ -86,13 +87,13 @@ func _predict_remote_input(previous_input: Dictionary, ticks_since_real_input: i
 func _network_process(input: Dictionary) -> void:
 	state_machine.tick_physics_process(input)
 	hurtbox.tick_physics_process()
-	#move_and_collide(SGFixed.vector2(0,0))
+	throwbox.tick_physics_process()
+	
 	###TODO try calling screenbounds in here our below. maybe save its position
 
 func _save_state() -> Dictionary:
 	return {
 		current_state_name = state_machine.current_state.state_name,
-		entered = entered,
 		current_frame = current_frame,
 		fixed_position_x = fixed_position_x,
 		fixed_position_y = fixed_position_y,
@@ -102,13 +103,17 @@ func _save_state() -> Dictionary:
 		movename = movename,
 		hitstun = hitstun,
 		blockstun = blockstun,
-		health = health
+		health = health,
+		being_thrown = being_thrown,
+		throwing = throwing,
+		teching = teching,
+		throw_current_frame = throw_current_frame,
+		model_rotation_y = model.rotation.y
 		#collision_y = collision.fixed_position_y
 	}
 
 func _load_state(state: Dictionary) -> void:
 	state_machine.load_state_network(state)
-	entered = state['entered']
 	current_frame = state['current_frame']
 	fixed_position_x = state['fixed_position_x']
 	fixed_position_y = state['fixed_position_y']
@@ -119,6 +124,11 @@ func _load_state(state: Dictionary) -> void:
 	hitstun = state['hitstun']
 	blockstun = state['blockstun']
 	health = state['health']
+	being_thrown = state['being_thrown']
+	throwing = state['throwing']
+	teching = state['teching']
+	throw_current_frame = state['throw_current_frame']
+	model.rotation.y = state['model_rotation_y']
 	#collision.fixed_position_y = state['collision_y']
 	
 	sync_to_physics_engine()
@@ -126,5 +136,4 @@ func _load_state(state: Dictionary) -> void:
 	#print_rich("[color=CORNFLOWER_BLUE]L_pos_y: " + str(fixed_position_y))
 	#print_rich("[color=CORNFLOWER_BLUE]L_velocity_x: " + str(velocity.x))
 	#print_rich("[color=CORNFLOWER_BLUE]L_velocity_y: " + str(velocity.y))
-	#print_rich("[color=CORNFLOWER_BLUE]L_hit: " + str(hit))
-	#print_rich("[color=CORNFLOWER_BLUE]L_current_state: [color=RED]" + state_machine.current_state.state_name)
+	print_rich("[color=CORNFLOWER_BLUE]L_current_state: [color=RED]" + state_machine.current_state.state_name)
