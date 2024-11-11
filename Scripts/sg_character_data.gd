@@ -35,6 +35,7 @@ func _ready():
 	if is_in_group("player2"):
 		healthbar.position.x = 1100
 		healthbar.rotation_degrees = 180
+		model.swap_color(2)
 
 func take_damage(damage : int):
 	health -= damage
