@@ -131,6 +131,5 @@ transform = Transform3D(1, 0, 0, 0, 0.642788, 0.766044, 0, -0.766044, 0.642788, 
 environment = ExtResource("3_k4mgk")
 
 [node name="ScreenBoundaries" parent="." node_paths=PackedStringArray("character1", "character2") instance=ExtResource("4_fckii")]
-visible = false
 character1 = NodePath("../test1")
 character2 = NodePath("../test2")

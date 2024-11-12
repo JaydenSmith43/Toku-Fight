@@ -14,17 +14,17 @@ var left_side := false
 var low_blocking := false
 var high_blocking := false
 var crouch := false
-var jump := false
+#var jump := false
 var movename := "null"
 var hitstun := 0
 var blockstun := 0
-var height_hit := ""
-var colliding := false
+#var height_hit := ""
+#var colliding := false
 var jump_velocity_x : int = 0
 var being_thrown := false
 var throwing := false
 var teching := false
-var cancel_available := false
+var cancel := false
 var throw_state_frame := 0
 var current_frame := 0
 
@@ -111,7 +111,7 @@ func _save_state() -> Dictionary:
 		teching = teching,
 		throw_state_frame = throw_state_frame,
 		model_rotation_y = model.rotation.y,
-		cancel_available = cancel_available
+		cancel = cancel
 		#collision_y = collision.fixed_position_y
 	}
 
@@ -132,7 +132,7 @@ func _load_state(state: Dictionary) -> void:
 	teching = state['teching']
 	throw_state_frame = state['throw_state_frame']
 	model.rotation.y = state['model_rotation_y']
-	cancel_available = state['cancel_available']
+	cancel = state['cancel']
 	#collision.fixed_position_y = state['collision_y']
 	
 	sync_to_physics_engine()

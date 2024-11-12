@@ -12,6 +12,9 @@ const SFX_MEDIUM_3 = preload("res://SFX/Combat/hit_medium/hit_medium_3.mp3")
 const SFX_HEAVY_1 = preload("res://SFX/Combat/hit_heavy/hit_heavy_1.mp3")
 const SFX_HEAVY_2 = preload("res://SFX/Combat/hit_heavy/hit_heavy_2.mp3")
 const SFX_HEAVY_3 = preload("res://SFX/Combat/hit_heavy/hit_heavy_3.mp3")
+const SFX_BLOCK_1 = preload("res://SFX/Combat/block/block_1.mp3")
+const SFX_BLOCK_2 = preload("res://SFX/Combat/block/block_2.mp3")
+const SFX_BLOCK_3 = preload("res://SFX/Combat/block/block_3.mp3")
 
 func _ready():
 	if character.is_in_group("player2"):
@@ -34,15 +37,19 @@ func _on_area_entered(hitbox : Hitbox2D) -> void:
 	
 	if hitbox.height == "low" and character.low_blocking == true:
 		block(hitbox)
+		choose_block_sound()
 		pass
 	elif hitbox.height == "high" and character.high_blocking == true:
 		block(hitbox)
+		choose_block_sound()
 		pass
 	elif hitbox.height == "mid" and character.high_blocking == true:
 		block(hitbox)
+		choose_block_sound()
 		pass
 	elif hitbox.height == "mid" and character.low_blocking == true:
 		block(hitbox)
+		choose_block_sound()
 		pass
 	elif owner.has_method("take_damage"):
 		hit(hitbox)
@@ -53,16 +60,22 @@ func block(hitbox: Hitbox2D):
 	SyncManager.despawn(hitbox)
 
 func hit(hitbox: Hitbox2D):
+	if character.is_in_group("player1"):
+		get_tree().get_nodes_in_group("player2")[0].cancel = true
+	else:
+		get_tree().get_nodes_in_group("player1")[0].cancel = true
+	
 	owner.take_damage(hitbox.damage)
+	
 	character.hitstun = hitbox.hitstun
 	character.height_hit = hitbox.height
 	
 	character.state_machine.current_state.Transitioned.emit(character.state_machine.current_state, "hitstun")
 	SyncManager.despawn(hitbox) #if hitboxes are grouped, delete the others in the group
-	choose_sound(hitbox.sfx)
+	choose_hit_sound(hitbox.sfx)
 	
 
-func choose_sound(effect : String):
+func choose_hit_sound(effect : String):
 	match effect:
 		"light":
 			var random = randi_range(0, 2)
@@ -91,4 +104,13 @@ func choose_sound(effect : String):
 					SyncManager.play_sound(str(get_path()) + ":heavy_hit_2", SFX_HEAVY_2)
 				2:
 					SyncManager.play_sound(str(get_path()) + ":heavy_hit_3", SFX_HEAVY_3)
-		
+
+func choose_block_sound():
+	var random = randi_range(0, 2)
+	match random:
+		0:
+			SyncManager.play_sound(str(get_path()) + ":block", SFX_BLOCK_1)
+		1:
+			SyncManager.play_sound(str(get_path()) + ":block", SFX_BLOCK_2)
+		2:
+			SyncManager.play_sound(str(get_path()) + ":block", SFX_BLOCK_3)

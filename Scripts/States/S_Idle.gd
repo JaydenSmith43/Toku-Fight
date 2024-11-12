@@ -17,7 +17,7 @@ var I_heavy : String
 var otherPlayer : SGCharacterBody2D
 
 func _ready() -> void:
-	if (character.is_in_group("player1")):
+	if character.is_in_group("player1"):
 		I_left = "P1_Left"
 		I_right = "P1_Right"
 		I_up = "P1_Up"
@@ -52,10 +52,6 @@ func Exit():
 
 func State_Physics_Update(input: Dictionary):
 	character.current_frame += 1
-	#if character.current_frame == 1:
-	#	charcter.entered = true
-	#else:
-	#	character.entered = false
 	#if character.colliding:
 		#pushout_distance = 2
 	#else:
