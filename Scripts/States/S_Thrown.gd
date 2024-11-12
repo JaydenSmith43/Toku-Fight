@@ -1,12 +1,9 @@
 extends State
 class_name S_Thrown
 
-#var current_frame = 0
 var throw_window_end = 15
 
-var tech_throw_frame = 0
 var tech_throw_end = 25
-#var teching : bool = false
 var current_position : SGFixedVector2
 
 var I_light : String
@@ -28,15 +25,13 @@ func Enter():
 	character.being_thrown = true
 	anim_player.play("grappler_throw_taker")
 	character.current_frame = 0
-	tech_throw_frame = 0
+	character.throw_state_frame = 0
 	character.teching = false
 	
 	if character.left_side:
 		model.rotate_y(deg_to_rad(90))
 	else:
 		model.rotate_y(deg_to_rad(-90))
-		print("enter rotation!")
-		
 
 func Exit():
 	character.being_thrown = false
@@ -45,15 +40,15 @@ func Exit():
 func State_Physics_Update(input: Dictionary):
 	character.current_frame += 1
 	if character.teching:
-		tech_throw_frame += 1
+		character.throw_state_frame += 1
 		if character.left_side:
-			character.fixed_position_x = lerp(character.fixed_position_x, current_position.x - 2, 0.1)
+			character.fixed_position_x = lerp(character.fixed_position_x, current_position.x - (2 * SGFixed.ONE), 0.1)
 		else:
-			character.fixed_position_x = lerp(character.fixed_position_x, current_position.x + 2, 0.1)
+			character.fixed_position_x = lerp(character.fixed_position_x, current_position.x + (2 * SGFixed.ONE), 0.1)
+		model.position.x = SGFixed.to_float(character.fixed_position_x)
+		model.position.y = -SGFixed.to_float(character.fixed_position_y)
 		
-
-		character.move_and_slide()
-		if tech_throw_frame == tech_throw_end:
+		if character.throw_state_frame == tech_throw_end:
 			character.being_thrown = false
 			Transitioned.emit(self, "idle")
 			return
@@ -69,6 +64,7 @@ func State_Physics_Update(input: Dictionary):
 			else:
 				model.rotate_y(deg_to_rad(90))
 			Transitioned.emit(self, "idle")
+	
 
 func tech_throw():
 	anim_player.play("throw_tech")

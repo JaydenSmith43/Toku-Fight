@@ -9,7 +9,7 @@ extends Node3D
 @onready var player1 = $test1
 @onready var player2 = $test2
 
-var visible_2D := true
+var visible_2D := false
 
 func setup_match_for_replay(my_peer_id: int, peer_ids: Array, match_info: Dictionary) -> void:
 	test_menu.setup_match_for_replay(my_peer_id, peer_ids, match_info)

@@ -193,7 +193,6 @@ func do_5C():
 	character.high_blocking = false
 	character.movename = "grappler_5c"
 	Transitioned.emit(self, "attack")
-	print("DO 5C")
 
 func do_2A():
 	character.low_blocking = false

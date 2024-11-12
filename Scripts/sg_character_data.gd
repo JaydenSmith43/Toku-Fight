@@ -25,7 +25,7 @@ var being_thrown := false
 var throwing := false
 var teching := false
 var cancel_available := false
-var throw_current_frame := 0
+var throw_state_frame := 0
 var current_frame := 0
 
 func _ready():
@@ -109,7 +109,7 @@ func _save_state() -> Dictionary:
 		being_thrown = being_thrown,
 		throwing = throwing,
 		teching = teching,
-		throw_current_frame = throw_current_frame,
+		throw_state_frame = throw_state_frame,
 		model_rotation_y = model.rotation.y,
 		cancel_available = cancel_available
 		#collision_y = collision.fixed_position_y
@@ -130,7 +130,7 @@ func _load_state(state: Dictionary) -> void:
 	being_thrown = state['being_thrown']
 	throwing = state['throwing']
 	teching = state['teching']
-	throw_current_frame = state['throw_current_frame']
+	throw_state_frame = state['throw_state_frame']
 	model.rotation.y = state['model_rotation_y']
 	cancel_available = state['cancel_available']
 	#collision.fixed_position_y = state['collision_y']
@@ -140,4 +140,4 @@ func _load_state(state: Dictionary) -> void:
 	#print_rich("[color=CORNFLOWER_BLUE]L_pos_y: " + str(fixed_position_y))
 	#print_rich("[color=CORNFLOWER_BLUE]L_velocity_x: " + str(velocity.x))
 	#print_rich("[color=CORNFLOWER_BLUE]L_velocity_y: " + str(velocity.y))
-	print_rich("[color=CORNFLOWER_BLUE]L_current_state: [color=RED]" + state_machine.current_state.state_name)
+	#print_rich("[color=CORNFLOWER_BLUE]L_current_state: [color=RED]" + state_machine.current_state.state_name)

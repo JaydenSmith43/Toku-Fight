@@ -18,16 +18,17 @@ func Enter():
 	anim_player.play("throw")
 	character.throwing = false
 	character.current_frame = 0
-	character.throw_current_frame = 0
+	character.throw_state_frame = 0
 
 func Exit():
 	character.throwing = false
 	character.current_frame = 0
-	character.throw_current_frame = 0
+	character.throw_state_frame = 0
 
 func State_Physics_Update(input: Dictionary):
 	if !character.throwing:
 		character.current_frame += 1
+		
 		if other_player.being_thrown == true:
 			anim_player.play("grappler_thrower")
 			character.throwing = true
@@ -40,9 +41,9 @@ func State_Physics_Update(input: Dictionary):
 			character.movename = "idle"
 			Transitioned.emit(self, "idle")
 	else:
-		character.throw_current_frame += 1
+		character.throw_state_frame += 1
 			
-		if character.throw_current_frame == throw_end_frame:
+		if character.throw_state_frame == throw_end_frame:
 			character.movename = "idle"
 			Transitioned.emit(self, "idle")
 
