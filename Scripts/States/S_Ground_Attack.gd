@@ -21,21 +21,30 @@ func Exit():
 
 func State_Physics_Update(input: Dictionary):
 	character.current_frame += 1
-	if character.current_frame == 1:
-		if character.get_groups()[0] == "player1":
-			StaticData.load_json_file(character.movename, character.get_groups()[0]) #send in current character button from idle state
-			anim_name = StaticData.P1_move_data["anim_name"]
-			move_end_frame = StaticData.P1_move_data["move_end_frame"]
-		else:
-			StaticData.load_json_file(character.movename, character.get_groups()[0]) #send in current character button from idle state
-			anim_name = StaticData.P2_move_data["anim_name"]
-			move_end_frame = StaticData.P2_move_data["move_end_frame"]
-		anim_player.play(anim_name)
+	if character.current_frame > move_end_frame:
+		character.current_frame = 1
+	print("ATTACK: " + str(character.current_frame))
+	print(character.movename)
+	
+	#if character.current_frame == 1:
+	if character.get_groups()[0] == "player1":
+		StaticData.load_json_file(character.movename, character.get_groups()[0])
+		anim_name = StaticData.P1_move_data["anim_name"]
+		move_end_frame = StaticData.P1_move_data["move_end_frame"]
+	else:
+		StaticData.load_json_file(character.movename, character.get_groups()[0])
+		anim_name = StaticData.P2_move_data["anim_name"]
+		move_end_frame = StaticData.P2_move_data["move_end_frame"]
+	anim_player.play(anim_name)
 	
 	#print("ATTACK UPDATE: " + str(character.current_frame))
 	check_frame()
 	
 	if character.current_frame >= move_end_frame:
+		if character.get_groups()[0] == "player1":
+			StaticData.current_move_p1 = ""
+		else:
+			StaticData.current_move_p2 = ""
 		character.current_frame = 0
 		character.movename = "idle"
 		Transitioned.emit(self, "idle")

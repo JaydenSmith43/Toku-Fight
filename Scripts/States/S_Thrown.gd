@@ -41,10 +41,9 @@ func State_Physics_Update(input: Dictionary):
 	character.current_frame += 1
 	if character.teching:
 		character.throw_state_frame += 1
-		if character.left_side:
-			character.fixed_position_x = lerp(character.fixed_position_x, current_position.x - (2 * SGFixed.ONE), 0.1)
-		else:
-			character.fixed_position_x = lerp(character.fixed_position_x, current_position.x + (2 * SGFixed.ONE), 0.1)
+		character.velocity.x = lerp(character.velocity.x, 0, 0.1)
+		
+		character.move_and_slide()
 		model.position.x = SGFixed.to_float(character.fixed_position_x)
 		model.position.y = -SGFixed.to_float(character.fixed_position_y)
 		
@@ -73,7 +72,9 @@ func tech_throw():
 	
 	if character.left_side:
 		model.rotate_y(deg_to_rad(-90))
+		character.velocity.x = -13106
 	else:
 		model.rotate_y(deg_to_rad(90))
+		character.velocity.x = 13106
 	
 	other_player.state_machine.current_state.Transitioned.emit(other_player.state_machine.current_state, "teched")
