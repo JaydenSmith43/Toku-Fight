@@ -42,40 +42,40 @@ func _physics_process(delta):
 func input_handler(event):
 	#region 8-way directions
 	if Input.is_action_pressed(I_left) and Input.is_action_pressed(I_right):
-		print("neutral")
+		pass
 	elif Input.is_action_pressed(I_up) and Input.is_action_pressed(I_down):
-		print("neutral")
+		pass
 	if Input.is_action_pressed(I_left) and Input.is_action_pressed(I_up):
 		var instance = inputValue.instantiate()
-		instance.type = "up-l"
+		instance.type = "7"
 		inputs.push_back(instance)
 	elif Input.is_action_pressed(I_left) and Input.is_action_pressed(I_down):
 		var instance = inputValue.instantiate()
-		instance.type = "down-l"
+		instance.type = "1"
 		inputs.push_back(instance)
 	elif Input.is_action_pressed(I_left) and !Input.is_action_pressed(I_right):
 		var instance = inputValue.instantiate()
-		instance.type = "left"
+		instance.type = "4"
 		inputs.push_back(instance)
 	elif Input.is_action_pressed(I_right) and Input.is_action_pressed(I_up):
 		var instance = inputValue.instantiate()
-		instance.type = "up-r"
+		instance.type = "9"
 		inputs.push_back(instance)
 	elif Input.is_action_pressed(I_right) and Input.is_action_pressed(I_down):
 		var instance = inputValue.instantiate()
-		instance.type = "down-r"
+		instance.type = "3"
 		inputs.push_back(instance)
 	elif Input.is_action_pressed(I_right) and !Input.is_action_pressed(I_left):
 		var instance = inputValue.instantiate()
-		instance.type = "right"
+		instance.type = "6"
 		inputs.push_back(instance)
 	elif Input.is_action_pressed(I_up):
 		var instance = inputValue.instantiate()
-		instance.type = "up"
+		instance.type = "8"
 		inputs.push_back(instance)
 	elif Input.is_action_pressed(I_down):
 		var instance = inputValue.instantiate()
-		instance.type = "down"
+		instance.type = "2"
 		inputs.push_back(instance)
 	#endregion
 	

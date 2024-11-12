@@ -5,7 +5,6 @@ func Enter():
 	character.current_frame = 0
 	character.low_blocking = false
 	character.high_blocking = false
-	character.jump = true
 	anim_player.play("jump")
 
 func State_Physics_Update(input: Dictionary):

@@ -7,7 +7,7 @@ var data_file_path = ""
 var current_move_p1
 var current_move_p2
 
-func load_json_file(fileName : String, player : String):
+func load_json_file(fileName: String, player: String):
 	data_file_path = "res://Scripts/MoveData/" + fileName + ".json"
 	
 	if FileAccess.file_exists(data_file_path):
@@ -24,7 +24,7 @@ func load_json_file(fileName : String, player : String):
 	else:
 		print("File doesn't exist!")
 
-func check_new_move(fileName : String, player : String):
+func check_new_move(fileName: String, player: String):
 	var move_already_loaded = false
 	
 	if player == "player1" and fileName != current_move_p1:

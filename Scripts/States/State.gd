@@ -8,6 +8,7 @@ signal Transitioned
 @export var state_name : String
 @onready var attack_timer : Timer = $"../../AttackTimer" #TODO get rid of this
 @onready var anim_player : NetworkAnimationPlayer = $"../../model/AnimationPlayer"
+@onready var input_array = $"../../Input"
 
 func Enter():
 	pass

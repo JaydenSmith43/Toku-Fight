@@ -37,19 +37,19 @@ func _on_area_entered(hitbox : Hitbox2D) -> void:
 	
 	if hitbox.height == "low" and character.low_blocking == true:
 		block(hitbox)
-		choose_block_sound()
+		block_sound()
 		pass
 	elif hitbox.height == "high" and character.high_blocking == true:
 		block(hitbox)
-		choose_block_sound()
+		block_sound()
 		pass
 	elif hitbox.height == "mid" and character.high_blocking == true:
 		block(hitbox)
-		choose_block_sound()
+		block_sound()
 		pass
 	elif hitbox.height == "mid" and character.low_blocking == true:
 		block(hitbox)
-		choose_block_sound()
+		block_sound()
 		pass
 	elif owner.has_method("take_damage"):
 		hit(hitbox)
@@ -105,7 +105,7 @@ func choose_hit_sound(effect : String):
 				2:
 					SyncManager.play_sound(str(get_path()) + ":heavy_hit_3", SFX_HEAVY_3)
 
-func choose_block_sound():
+func block_sound():
 	var random = randi_range(0, 2)
 	match random:
 		0:

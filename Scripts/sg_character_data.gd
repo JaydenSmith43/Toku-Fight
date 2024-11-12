@@ -9,17 +9,29 @@ var input_prefix : String = "P1_"
 @export var state_machine : Node
 @export var model : Node3D
 
+var character_name = "grappler"
+var motion22 := false
+var motion236 := true
+var motion214 := false
+var motion41236 := false
+var motion63214 := false
+var motion360 := false
+var charge_back_forward := false
+var charge_forward_back := false
+var charge_down_up := false
+var charge_up_down := false
+
 var health := 100
+
 var left_side := false
 var low_blocking := false
 var high_blocking := false
 var crouch := false
-#var jump := false
 var movename := "null"
 var hitstun := 0
 var blockstun := 0
-#var height_hit := ""
-#var colliding := false
+var height_hit := ""
+var colliding := false
 var jump_velocity_x : int = 0
 var being_thrown := false
 var throwing := false

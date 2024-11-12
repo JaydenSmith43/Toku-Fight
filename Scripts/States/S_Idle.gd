@@ -1,7 +1,6 @@
 extends State
 class_name S_Idle
 
-@onready var inputArray = $"../../Input"
 var gravity : float = 60
 var move_speed : int = 17476
 var pushout_distance = 2
@@ -40,7 +39,6 @@ func _ready() -> void:
 
 func Enter():
 	character.current_frame = 0
-	character.jump = false
 	character.jump_velocity_x = 0
 	character.velocity.y = 0
 	character.velocity.x = 0
@@ -134,117 +132,23 @@ func network_checkInputs(input: Dictionary) -> void:
 		return
 
 	if input.get("a") and input.get("b") and character.crouch == false:
-		do_throw()
+		AttackData.do_throw(character)
+		return
 	elif input.get("c") and character.crouch == false:
-		if check_fireball_left():
-			do_fireball()
-		else:
-			do_5C()
-			return
+		AttackData.check_motions_available(character, input_array, "5c")
+		return
 	elif input.get("b") and character.crouch == false:
-		if check_fireball_left():
-			do_fireball()
-		else:
-			do_5B()
-			return
+		AttackData.check_motions_available(character, input_array, "5b")
+		return
 	elif input.get("a") and character.crouch == false:
-		if check_fireball_left():
-			do_fireball()
-		else:
-			do_5A()
-			return
+		AttackData.check_motions_available(character, input_array, "5a")
 #
 	if input.get("c") and character.crouch == true:
-		do_2C()
+		AttackData.do_attack_normal(character, "2c")
 		return
 	elif input.get("b") and character.crouch == true:
-		do_2B()
+		AttackData.do_attack_normal(character, "2b")
 		return
 	elif input.get("a") and character.crouch == true:
-		do_2A()
+		AttackData.do_attack_normal(character, "2a")
 		return
-
-func do_throw():
-	Transitioned.emit(self, "thrower")
-
-func do_fireball():
-	character.low_blocking = false
-	character.high_blocking = false
-	Transitioned.emit(self, "hadou")
-
-func do_5A():
-	character.low_blocking = false
-	character.high_blocking = false
-	character.movename = "grappler_5a"
-	Transitioned.emit(self, "attack")
-
-func do_5B():
-	character.low_blocking = false
-	character.high_blocking = false
-	character.movename = "grappler_5b"
-	Transitioned.emit(self, "attack")
-
-func do_5C():
-	character.low_blocking = false
-	character.high_blocking = false
-	character.movename = "grappler_5c"
-	Transitioned.emit(self, "attack")
-
-func do_2A():
-	character.low_blocking = false
-	character.high_blocking = false
-	character.movename = "grappler_2a"
-	Transitioned.emit(self, "attack")
-
-func do_2B():
-	character.low_blocking = false
-	character.high_blocking = false
-	character.movename = "grappler_2b"
-	Transitioned.emit(self, "attack")
-
-func do_2C():
-	character.low_blocking = false
-	character.high_blocking = false
-	character.movename = "grappler_2c"
-	Transitioned.emit(self, "attack")
-
-func check_fireball_left():
-	if character.left_side == false:
-		return check_fireball_right()
-	
-	var motionD : bool = false
-	var motionDR : bool = false
-	
-	var n : int = 0
-	while n < inputArray.inputs.size():
-		if inputArray.inputs[n].type == "down":
-			motionD = true
-			n += 1
-			continue
-		elif inputArray.inputs[n].type == "down-r" and motionD == true:
-			motionDR = true
-			n += 1
-			continue
-		elif inputArray.inputs[n].type == "right" and motionDR == true:
-			return true
-		n += 1
-	return false
-
-func check_fireball_right():
-	var motionD : bool = false
-	var motionDL : bool = false
-	
-	var n : int = 0
-	while n < inputArray.inputs.size():
-		if inputArray.inputs[n].type == "down":
-			motionD = true
-			n += 1
-			continue
-		elif inputArray.inputs[n].type == "down-l" and motionD == true:
-			motionDL = true
-			n += 1
-			continue
-		elif inputArray.inputs[n].type == "left" and motionDL == true:
-			return true
-		n += 1
-	return false

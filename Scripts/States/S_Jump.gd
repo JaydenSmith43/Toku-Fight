@@ -31,7 +31,6 @@ func Enter():
 	#print("fall_gravity: " + str(fall_gravity))
 
 func Exit():
-	character.jump = false
 	character.jump_velocity_x = 0
 	character.velocity.y = 0
 	#character.velocity.x = 0

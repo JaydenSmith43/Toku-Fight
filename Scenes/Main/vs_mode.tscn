@@ -116,7 +116,7 @@ skeleton = NodePath("../..")
 [node name="TestMenu" parent="." instance=ExtResource("5_706ux")]
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("character1", "character2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 18)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 16)
 current = true
 fov = 40.0
 size = 13.5631
@@ -131,5 +131,6 @@ transform = Transform3D(1, 0, 0, 0, 0.642788, 0.766044, 0, -0.766044, 0.642788, 
 environment = ExtResource("3_k4mgk")
 
 [node name="ScreenBoundaries" parent="." node_paths=PackedStringArray("character1", "character2") instance=ExtResource("4_fckii")]
+visible = false
 character1 = NodePath("../test1")
 character2 = NodePath("../test2")
