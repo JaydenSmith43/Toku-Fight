@@ -21,12 +21,7 @@ func Exit():
 
 func State_Physics_Update(input: Dictionary):
 	character.current_frame += 1
-	if character.current_frame > move_end_frame:
-		character.current_frame = 1
-	print("ATTACK: " + str(character.current_frame))
-	print(character.movename)
-	
-	#if character.current_frame == 1:
+
 	if character.get_groups()[0] == "player1":
 		StaticData.load_json_file(character.movename, character.get_groups()[0])
 		anim_name = StaticData.P1_move_data["anim_name"]
@@ -37,7 +32,6 @@ func State_Physics_Update(input: Dictionary):
 		move_end_frame = StaticData.P2_move_data["move_end_frame"]
 	anim_player.play(anim_name)
 	
-	#print("ATTACK UPDATE: " + str(character.current_frame))
 	check_frame()
 	
 	if character.current_frame >= move_end_frame:
