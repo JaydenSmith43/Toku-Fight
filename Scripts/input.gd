@@ -31,13 +31,13 @@ func _ready():
 		I_medium = "P2_Medium"
 		I_heavy = "P2_Heavy"
 
-func _input(event):
-	if event is InputEventKey:
-		input_handler(event)
+#func _input(event):
+	#if event is InputEventKey:
+		#input_handler(event)
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	current_frame += 1
-	add_time(delta)
+	add_time(1/60)
 
 func input_handler(event):
 	#region 8-way directions

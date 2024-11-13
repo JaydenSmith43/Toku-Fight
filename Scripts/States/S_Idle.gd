@@ -132,23 +132,24 @@ func network_checkInputs(input: Dictionary) -> void:
 		return
 
 	if input.get("a") and input.get("b") and character.crouch == false:
-		AttackData.do_throw(character)
+		Attack.do_throw(character)
 		return
 	elif input.get("c") and character.crouch == false:
-		AttackData.check_motions_available(character, input_array, "5c")
+		Attack.check_motions_available(character, input_array, "5c")
 		return
 	elif input.get("b") and character.crouch == false:
-		AttackData.check_motions_available(character, input_array, "5b")
+		Attack.check_motions_available(character, input_array, "5b")
 		return
 	elif input.get("a") and character.crouch == false:
-		AttackData.check_motions_available(character, input_array, "5a")
-#
+		Attack.check_motions_available(character, input_array, "5a")
+		return
+
 	if input.get("c") and character.crouch == true:
-		AttackData.do_attack_normal(character, "2c")
+		Attack.do_attack_normal(character, "2c")
 		return
 	elif input.get("b") and character.crouch == true:
-		AttackData.do_attack_normal(character, "2b")
+		Attack.do_attack_normal(character, "2b")
 		return
 	elif input.get("a") and character.crouch == true:
-		AttackData.do_attack_normal(character, "2a")
+		Attack.do_attack_normal(character, "2a")
 		return
