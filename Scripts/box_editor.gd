@@ -21,6 +21,8 @@ extends Node3D
 @export var var_pushtime_edit : LineEdit
 @export var var_height_edit : LineEdit
 @export var var_sfx_edit : LineEdit
+@export var var_cancel_edit : LineEdit
+@export var var_cancel_frame_edit: LineEdit
 
 var grappler_model = preload("res://Scenes/Characters/grappler/grappler_model.tscn")
 var hitbox = preload("res://Scenes/Characters/hitbox3d_editor.tscn")
@@ -474,6 +476,16 @@ func _on_var_sfx_edit_text_submitted(new_text: String) -> void:
 	for data in move_data["frames"]:
 		if data["frame"] == float(hitbox_string[0]):
 			data["sfx"] = new_text
+			load_frame_data()
+
+func _on_var_cancel_edit_text_submitted(new_text: String) -> void:
+	var index = hitbox_option_button.get_selected_id()
+	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
+	hitbox_string[1] = hitbox_string[1].strip_edges()
+	
+	for data in move_data["frames"]:
+		if data["frame"] == float(hitbox_string[0]):
+			data["cancel"] = new_text
 			load_frame_data()
 
 #endregion

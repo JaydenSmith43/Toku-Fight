@@ -23,15 +23,16 @@ func State_Physics_Update(input: Dictionary):
 	character.current_frame += 1
 
 	if character.get_groups()[0] == "player1":
-		StaticData.load_json_file(character.movename, character.get_groups()[0])
+		StaticData.load_json_file(character.move_name, character.get_groups()[0])
 		anim_name = StaticData.P1_move_data["anim_name"]
 		move_end_frame = StaticData.P1_move_data["move_end_frame"]
 	else:
-		StaticData.load_json_file(character.movename, character.get_groups()[0])
+		StaticData.load_json_file(character.move_name, character.get_groups()[0])
 		anim_name = StaticData.P2_move_data["anim_name"]
 		move_end_frame = StaticData.P2_move_data["move_end_frame"]
 	anim_player.play(anim_name)
 	
+	check_cancel(input)
 	check_frame()
 	
 	if character.current_frame >= move_end_frame:
@@ -39,8 +40,10 @@ func State_Physics_Update(input: Dictionary):
 			StaticData.current_move_p1 = ""
 		else:
 			StaticData.current_move_p2 = ""
+		character.cancel = false
 		character.current_frame = 0
-		character.movename = "idle"
+		
+		character.move_name = "idle"
 		Transitioned.emit(self, "idle")
 
 func check_frame():
@@ -96,3 +99,8 @@ func create_hitbox(data):
 		character = character,
 		left_side = character.left_side
 	})
+
+func check_cancel(input: Dictionary): ###future check through list of cancel options
+	if character.cancel:
+		if character.move_name == character.character_name + "_" + "5a" and input.get("a"):
+			Attack.do_attack_normal(character, "5a")

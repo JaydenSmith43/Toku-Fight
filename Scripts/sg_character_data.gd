@@ -2,7 +2,9 @@ extends SGCharacterBody2D
 
 var input_prefix : String = "P1_"
 @onready var healthbar = $UI/HealthBar
+@onready var input_display = $UI
 @onready var label = $UI/HealthBar/StateLabel
+@onready var input_array = $Input
 @export var hurtbox : SGArea2D
 @export var throwbox : SGArea2D
 @onready var collision = $collision
@@ -27,7 +29,7 @@ var left_side := false
 var low_blocking := false
 var high_blocking := false
 var crouch := false
-var movename := "null"
+var move_name := "null"
 var hitstun := 0
 var blockstun := 0
 var height_hit := ""
@@ -43,7 +45,6 @@ var current_frame := 0
 func _ready():
 	healthbar.init_health(health)
 	up_direction = SGFixed.vector2(0, -65536)
-	floor_max_angle = SGFixed.deg_to_rad(0.001)
 	
 	if is_in_group("player2"):
 		healthbar.position.x = 1100
@@ -55,7 +56,8 @@ func take_damage(damage : int):
 	healthbar._set_health(health)
 
 func _get_local_input() -> Dictionary:
-	var input_vector : Vector2
+	var input_vector : Vector2i
+	
 	var a_button := false
 	var b_button := false
 	var c_button := false
@@ -78,7 +80,7 @@ func _get_local_input() -> Dictionary:
 		c_button = true
 	
 	var input := {}
-	if input_vector != Vector2.ZERO:
+	if input_vector != Vector2i.ZERO:
 		input["input_vector"] = input_vector
 	if a_button == true:
 		input["a"] = a_button
@@ -99,6 +101,8 @@ func _predict_remote_input(previous_input: Dictionary, ticks_since_real_input: i
 	return input
 
 func _network_process(input: Dictionary) -> void:
+	input_array.input_handler(input)
+	input_display.update_input_display()
 	state_machine.tick_physics_process(input)
 	hurtbox.tick_physics_process()
 	throwbox.tick_physics_process()
@@ -114,7 +118,7 @@ func _save_state() -> Dictionary:
 		jump_velocity_x = jump_velocity_x,
 		velocity_x = velocity.x,
 		velocity_y = velocity.y,
-		movename = movename,
+		move_name = move_name,
 		hitstun = hitstun,
 		blockstun = blockstun,
 		health = health,
@@ -135,7 +139,7 @@ func _load_state(state: Dictionary) -> void:
 	jump_velocity_x = state['jump_velocity_x']
 	velocity.x = state['velocity_x']
 	velocity.y = state['velocity_y']
-	movename = state['movename']
+	move_name = state['move_name']
 	hitstun = state['hitstun']
 	blockstun = state['blockstun']
 	health = state['health']

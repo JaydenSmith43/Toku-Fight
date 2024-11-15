@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://ook7dmepmfw5"]
+[gd_scene load_steps=4 format=3 uid="uid://ook7dmepmfw5"]
 
 [ext_resource type="Script" path="res://Scripts/ui.gd" id="1_gpq0r"]
+[ext_resource type="FontFile" uid="uid://bk4os2yyrjyde" path="res://Fonts/Bebas Neue Pro Expanded Regular.otf" id="3_307je"]
+
+[sub_resource type="Theme" id="Theme_4rc5n"]
+default_font = ExtResource("3_307je")
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_gpq0r")
@@ -10,18 +14,14 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 86.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="Control"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 80.0
-offset_bottom = 80.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 65.0
+offset_bottom = 167.0
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 32
 theme_override_constants/margin_right = 32
@@ -30,77 +30,418 @@ theme_override_constants/margin_bottom = 32
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer/HBoxContainer"]
+[node name="P1ImageContainer" type="VBoxContainer" parent="Control/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Score" type="Label" parent="Control/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="inputDisplay1" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/P1ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="inputDisplay1" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="inputDisplay2" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/P1ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="inputDisplay2" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="inputDisplay3" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/P1ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="inputDisplay3" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="inputDisplay4" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/P1ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="inputDisplay4" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="inputDisplay5" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/P1ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="inputDisplay5" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="inputDisplay6" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/P1ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="inputDisplay6" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="inputDisplay7" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/P1ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="inputDisplay7" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="inputDisplay8" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/P1ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="inputDisplay8" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="inputDisplay9" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/P1ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="inputDisplay9" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="inputDisplay10" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/P1ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="inputDisplay10" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="inputDisplay11" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/P1ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="Control/MarginContainer/HBoxContainer"]
+[node name="inputDisplay12" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/P1ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="inputDisplay13" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/P1ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="inputDisplay14" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/P1ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="inputDisplay15" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/P1ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="inputDisplay16" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/P1ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="inputDisplay17" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/P1ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="inputDisplay18" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/P1ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="inputDisplay19" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/P1ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="inputDisplay20" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/P1ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="P1FrameContainer" type="VBoxContainer" parent="Control/MarginContainer/HBoxContainer"]
 visible = false
 layout_mode = 2
 size_flags_vertical = 0
+theme = SubResource("Theme_4rc5n")
 
-[node name="Frame" type="Label" parent="Control/MarginContainer/HBoxContainer/VBoxContainer2"]
+[node name="FrameDisplay1" type="Label" parent="Control/MarginContainer/HBoxContainer/P1FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0"
+
+[node name="FrameDisplay2" type="Label" parent="Control/MarginContainer/HBoxContainer/P1FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0
+"
+
+[node name="FrameDisplay3" type="Label" parent="Control/MarginContainer/HBoxContainer/P1FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0"
+
+[node name="FrameDisplay4" type="Label" parent="Control/MarginContainer/HBoxContainer/P1FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0
+"
+
+[node name="FrameDisplay5" type="Label" parent="Control/MarginContainer/HBoxContainer/P1FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0"
+
+[node name="FrameDisplay6" type="Label" parent="Control/MarginContainer/HBoxContainer/P1FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0
+"
+
+[node name="FrameDisplay7" type="Label" parent="Control/MarginContainer/HBoxContainer/P1FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0"
+
+[node name="FrameDisplay8" type="Label" parent="Control/MarginContainer/HBoxContainer/P1FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0
+"
+
+[node name="FrameDisplay9" type="Label" parent="Control/MarginContainer/HBoxContainer/P1FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0"
+
+[node name="FrameDisplay10" type="Label" parent="Control/MarginContainer/HBoxContainer/P1FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0
+"
+
+[node name="FrameDisplay11" type="Label" parent="Control/MarginContainer/HBoxContainer/P1FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0"
+
+[node name="FrameDisplay12" type="Label" parent="Control/MarginContainer/HBoxContainer/P1FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0
+"
+
+[node name="FrameDisplay13" type="Label" parent="Control/MarginContainer/HBoxContainer/P1FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0"
+
+[node name="FrameDisplay14" type="Label" parent="Control/MarginContainer/HBoxContainer/P1FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0
+"
+
+[node name="FrameDisplay15" type="Label" parent="Control/MarginContainer/HBoxContainer/P1FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0"
+
+[node name="FrameDisplay16" type="Label" parent="Control/MarginContainer/HBoxContainer/P1FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0
+"
+
+[node name="FrameDisplay17" type="Label" parent="Control/MarginContainer/HBoxContainer/P1FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0"
+
+[node name="FrameDisplay18" type="Label" parent="Control/MarginContainer/HBoxContainer/P1FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0
+"
+
+[node name="FrameDisplay19" type="Label" parent="Control/MarginContainer/HBoxContainer/P1FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0"
+
+[node name="FrameDisplay20" type="Label" parent="Control/MarginContainer/HBoxContainer/P1FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0
+"
+
+[node name="MarginContainer2" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -70.0
+offset_bottom = 167.0
+grow_horizontal = 0
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer2"]
 layout_mode = 2
 
-[node name="inputDisplay1" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/VBoxContainer2"]
+[node name="P2ImageContainer" type="VBoxContainer" parent="Control/MarginContainer2/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="inputDisplay1" type="TextureRect" parent="Control/MarginContainer2/HBoxContainer/P2ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="inputDisplay2" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/VBoxContainer2"]
+[node name="inputDisplay2" type="TextureRect" parent="Control/MarginContainer2/HBoxContainer/P2ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="inputDisplay3" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/VBoxContainer2"]
+[node name="inputDisplay3" type="TextureRect" parent="Control/MarginContainer2/HBoxContainer/P2ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="inputDisplay4" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/VBoxContainer2"]
+[node name="inputDisplay4" type="TextureRect" parent="Control/MarginContainer2/HBoxContainer/P2ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="inputDisplay5" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/VBoxContainer2"]
+[node name="inputDisplay5" type="TextureRect" parent="Control/MarginContainer2/HBoxContainer/P2ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="inputDisplay6" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/VBoxContainer2"]
+[node name="inputDisplay6" type="TextureRect" parent="Control/MarginContainer2/HBoxContainer/P2ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="inputDisplay7" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/VBoxContainer2"]
+[node name="inputDisplay7" type="TextureRect" parent="Control/MarginContainer2/HBoxContainer/P2ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="inputDisplay8" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/VBoxContainer2"]
+[node name="inputDisplay8" type="TextureRect" parent="Control/MarginContainer2/HBoxContainer/P2ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="inputDisplay9" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/VBoxContainer2"]
+[node name="inputDisplay9" type="TextureRect" parent="Control/MarginContainer2/HBoxContainer/P2ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="inputDisplay10" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/VBoxContainer2"]
+[node name="inputDisplay10" type="TextureRect" parent="Control/MarginContainer2/HBoxContainer/P2ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
+
+[node name="inputDisplay11" type="TextureRect" parent="Control/MarginContainer2/HBoxContainer/P2ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="inputDisplay12" type="TextureRect" parent="Control/MarginContainer2/HBoxContainer/P2ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="inputDisplay13" type="TextureRect" parent="Control/MarginContainer2/HBoxContainer/P2ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="inputDisplay14" type="TextureRect" parent="Control/MarginContainer2/HBoxContainer/P2ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="inputDisplay15" type="TextureRect" parent="Control/MarginContainer2/HBoxContainer/P2ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="inputDisplay16" type="TextureRect" parent="Control/MarginContainer2/HBoxContainer/P2ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="inputDisplay17" type="TextureRect" parent="Control/MarginContainer2/HBoxContainer/P2ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="inputDisplay18" type="TextureRect" parent="Control/MarginContainer2/HBoxContainer/P2ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="inputDisplay19" type="TextureRect" parent="Control/MarginContainer2/HBoxContainer/P2ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="inputDisplay20" type="TextureRect" parent="Control/MarginContainer2/HBoxContainer/P2ImageContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="P2FrameContainer" type="VBoxContainer" parent="Control/MarginContainer2/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 0
+theme = SubResource("Theme_4rc5n")
+
+[node name="FrameDisplay1" type="Label" parent="Control/MarginContainer2/HBoxContainer/P2FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0"
+
+[node name="FrameDisplay2" type="Label" parent="Control/MarginContainer2/HBoxContainer/P2FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0
+"
+
+[node name="FrameDisplay3" type="Label" parent="Control/MarginContainer2/HBoxContainer/P2FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0"
+
+[node name="FrameDisplay4" type="Label" parent="Control/MarginContainer2/HBoxContainer/P2FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0
+"
+
+[node name="FrameDisplay5" type="Label" parent="Control/MarginContainer2/HBoxContainer/P2FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0"
+
+[node name="FrameDisplay6" type="Label" parent="Control/MarginContainer2/HBoxContainer/P2FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0
+"
+
+[node name="FrameDisplay7" type="Label" parent="Control/MarginContainer2/HBoxContainer/P2FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0"
+
+[node name="FrameDisplay8" type="Label" parent="Control/MarginContainer2/HBoxContainer/P2FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0
+"
+
+[node name="FrameDisplay9" type="Label" parent="Control/MarginContainer2/HBoxContainer/P2FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0"
+
+[node name="FrameDisplay10" type="Label" parent="Control/MarginContainer2/HBoxContainer/P2FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0
+"
+
+[node name="FrameDisplay11" type="Label" parent="Control/MarginContainer2/HBoxContainer/P2FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0"
+
+[node name="FrameDisplay12" type="Label" parent="Control/MarginContainer2/HBoxContainer/P2FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0
+"
+
+[node name="FrameDisplay13" type="Label" parent="Control/MarginContainer2/HBoxContainer/P2FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0"
+
+[node name="FrameDisplay14" type="Label" parent="Control/MarginContainer2/HBoxContainer/P2FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0
+"
+
+[node name="FrameDisplay15" type="Label" parent="Control/MarginContainer2/HBoxContainer/P2FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0"
+
+[node name="FrameDisplay16" type="Label" parent="Control/MarginContainer2/HBoxContainer/P2FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0
+"
+
+[node name="FrameDisplay17" type="Label" parent="Control/MarginContainer2/HBoxContainer/P2FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0"
+
+[node name="FrameDisplay18" type="Label" parent="Control/MarginContainer2/HBoxContainer/P2FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0
+"
+
+[node name="FrameDisplay19" type="Label" parent="Control/MarginContainer2/HBoxContainer/P2FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0"
+
+[node name="FrameDisplay20" type="Label" parent="Control/MarginContainer2/HBoxContainer/P2FrameContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "0
+"

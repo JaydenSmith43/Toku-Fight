@@ -11,7 +11,7 @@ func do_fireball(character: SGCharacterBody2D, move_button: String):
 func do_attack_normal(character: SGCharacterBody2D, move_button: String):
 	character.low_blocking = false
 	character.high_blocking = false
-	character.movename = character.character_name + "_" + move_button
+	character.move_name = character.character_name + "_" + move_button
 	character.state_machine.current_state.Transitioned.emit(character.state_machine.current_state, "attack")
 
 func check_motions_available(character: SGCharacterBody2D, input_array: Node, move_button: String):
@@ -48,14 +48,20 @@ func flip_motion(motion_array: Array[int]):
 		match n:
 			1:
 				new_motion_array.append(3)
+			2:
+				new_motion_array.append(2)
 			3:
 				new_motion_array.append(1)
 			4:
 				new_motion_array.append(6)
+			5:
+				new_motion_array.append(5)
 			6:
 				new_motion_array.append(4)
 			7:
 				new_motion_array.append(9)
+			8:
+				new_motion_array.append(8)
 			9:
 				new_motion_array.append(7)
 	return new_motion_array

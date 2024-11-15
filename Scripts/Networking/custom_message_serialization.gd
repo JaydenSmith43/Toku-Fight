@@ -45,7 +45,7 @@ func serialize_input(all_input: Dictionary) -> PackedByteArray:
 		buffer.put_u8(header)
 		
 		if input.has('input_vector'):
-			var input_vector: Vector2 = input['input_vector']
+			var input_vector: Vector2i = input['input_vector']
 			buffer.put_float(input_vector.x) #4 bytes
 			buffer.put_float(input_vector.y) #4 bytes
 	
@@ -70,7 +70,7 @@ func unserialize_input(serialized: PackedByteArray) -> Dictionary:
 	
 	var header = buffer.get_u8()
 	if header & HeaderFlags.HAS_INPUT_VECTOR:
-		input['input_vector'] = Vector2(buffer.get_float(), buffer.get_float())
+		input['input_vector'] = Vector2i(buffer.get_float(), buffer.get_float())
 	if header & HeaderFlags.PRESS_A:
 		input['a'] = true
 	if header & HeaderFlags.PRESS_B:

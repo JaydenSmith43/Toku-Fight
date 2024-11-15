@@ -22,7 +22,7 @@
 [ext_resource type="Script" path="res://Scripts/States/S_Teched.gd" id="20_g2jt5"]
 
 [sub_resource type="SGCapsuleShape2D" id="SGCapsuleShape2D_yoyix"]
-radius = 59030
+radius = 40262
 height = 160159
 
 [sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_kha3f"]
@@ -34,6 +34,7 @@ extents_x = 95027
 extents_y = 163840
 
 [node name="SGCharacter" type="SGCharacterBody2D" node_paths=PackedStringArray("hurtbox", "throwbox", "state_machine", "model") groups=["network_sync"]]
+floor_max_angle = 1
 collision_layer = 32768
 collision_mask = 32769
 script = ExtResource("1_fjl6n")
@@ -43,15 +44,14 @@ state_machine = NodePath("StateMachine")
 model = NodePath("model")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false
 position = Vector2(-0.00781274, -2.5065)
 scale = Vector2(0.00787602, 0.00829784)
 texture = ExtResource("2_1migp")
 
 [node name="collision" type="SGCollisionShape2D" parent="."]
 shape = SubResource("SGCapsuleShape2D_yoyix")
-fixed_position_y = -139898
-position = Vector2(0, -2.13467)
+fixed_position_y = -121658
+position = Vector2(0, -1.85635)
 
 [node name="Throwbox" type="SGArea2D" parent="." node_paths=PackedStringArray("character", "state_machine")]
 collision_layer = 32
@@ -96,6 +96,7 @@ offset_right = 820.0
 offset_bottom = 70.0
 
 [node name="StateLabel" type="Label" parent="UI/HealthBar"]
+visible = false
 layout_mode = 0
 offset_left = 112.0
 offset_top = 73.0
