@@ -30,6 +30,7 @@ var low_blocking := false
 var high_blocking := false
 var crouch := false
 var move_name := "null"
+var buffered_move := ""
 var hitstun := 0
 var blockstun := 0
 var height_hit := ""
@@ -127,7 +128,8 @@ func _save_state() -> Dictionary:
 		teching = teching,
 		throw_state_frame = throw_state_frame,
 		model_rotation_y = model.rotation.y,
-		cancel = cancel
+		cancel = cancel,
+		buffered_move = buffered_move
 		#collision_y = collision.fixed_position_y
 	}
 
@@ -149,6 +151,7 @@ func _load_state(state: Dictionary) -> void:
 	throw_state_frame = state['throw_state_frame']
 	model.rotation.y = state['model_rotation_y']
 	cancel = state['cancel']
+	buffered_move = state['buffered_move']
 	#collision.fixed_position_y = state['collision_y']
 	
 	sync_to_physics_engine()
@@ -156,4 +159,5 @@ func _load_state(state: Dictionary) -> void:
 	#print_rich("[color=CORNFLOWER_BLUE]L_pos_y: " + str(fixed_position_y))
 	#print_rich("[color=CORNFLOWER_BLUE]L_velocity_x: " + str(velocity.x))
 	#print_rich("[color=CORNFLOWER_BLUE]L_velocity_y: " + str(velocity.y))
+	#print_rich("[color=CORNFLOWER_BLUE]L_cancel: " + str(cancel))
 	#print_rich("[color=CORNFLOWER_BLUE]L_current_state: [color=RED]" + state_machine.current_state.state_name)

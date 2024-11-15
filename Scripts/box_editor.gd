@@ -76,8 +76,19 @@ func load_animation():
 	total_frame_label.text = "Total Anim Frames: " + str(int(current_anim_player.current_animation_length * 60))
 	check_for_file()
 	
-	if (move_data.has("move_end_frame")):
+	if move_data.has("move_end_frame"):
 		end_frame_edit.text = str(move_data["move_end_frame"])
+	
+	if move_data.has("cancel"):
+		var_cancel_edit.text = str(move_data["cancel"])
+	else:
+		var_cancel_edit.text = ""
+	
+	if move_data.has("cancel_frame"):
+		var_cancel_frame_edit.text = str(move_data["cancel_frame"])
+	else:
+		var_cancel_frame_edit.text = ""
+	
 	load_box_items()
 	load_box_variables(0)
 
@@ -109,16 +120,28 @@ func load_box_variables(index : int):
 				var_frame_edit.text = str(data["frame"])
 				if data.has("blockstun"):
 					var_blockstun_edit.text = str(data["blockstun"])
+				else:
+					var_blockstun_edit.text = ""
 				if data.has("hitstun"):
 					var_hitstun_edit.text = str(data["hitstun"])
+				else:
+					var_hitstun_edit.text = ""
 				if data.has("hitstop"):
 					var_hitstop_edit.text = str(data["hitstop"])
+				else:
+					var_hitstop_edit.text = ""
 				if data.has("pushback"):
 					var_pushback_edit.text = str(data["pushback"])
+				else:
+					var_pushback_edit.text = ""
 				if data.has("pushtime"):
 					var_pushtime_edit.text = str(data["pushtime"])
+				else:
+					var_pushtime_edit.text = ""
 				if data.has("sfx"):
 					var_sfx_edit.text = str(data["sfx"])
+				else:
+					var_sfx_edit.text = ""
 				if data.has(str(hitbox_string[1])):
 					load_hitbox_variables(data[hitbox_string[1]])
 
@@ -177,7 +200,8 @@ func no_data():
 	var_end_frame_edit.text = ""
 	var_height_edit.text = ""
 	var_sfx_edit.text = ""
-	
+	var_cancel_edit.text = ""
+	var_cancel_frame_edit.text = ""
 	
 	hitbox_option_button.remove_item(0)
 
@@ -242,7 +266,7 @@ func create_new_hitbox(name : String):
 		scale_y = 1,
 		end_frame = 1,
 		height = "mid",
-		sfx = "light"
+		sfx = "light",
 	}
 	
 	for data in move_data["frames"]:
@@ -483,9 +507,17 @@ func _on_var_cancel_edit_text_submitted(new_text: String) -> void:
 	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
 	hitbox_string[1] = hitbox_string[1].strip_edges()
 	
-	for data in move_data["frames"]:
-		if data["frame"] == float(hitbox_string[0]):
-			data["cancel"] = new_text
-			load_frame_data()
+	move_data["cancel"] = new_text
+	load_frame_data()
+
+func _on_var_cancel_frame_edit_text_submitted(new_text: String) -> void:
+	var index = hitbox_option_button.get_selected_id()
+	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
+	hitbox_string[1] = hitbox_string[1].strip_edges()
+	
+	
+	if new_text.is_valid_float():
+		move_data["cancel_frame"] = float(new_text)
+		load_frame_data()
 
 #endregion

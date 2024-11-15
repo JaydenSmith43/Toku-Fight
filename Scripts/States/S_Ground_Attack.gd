@@ -32,8 +32,17 @@ func State_Physics_Update(input: Dictionary):
 		move_end_frame = StaticData.P2_move_data["move_end_frame"]
 	anim_player.play(anim_name)
 	
-	check_cancel(input)
+	Attack.check_cancel(character, input)
+	
+	if character.get_groups()[0] == "player1":
+		if character.current_frame >= StaticData.P1_move_data["cancel_frame"] and character.buffered_move != "":
+			Attack.do_attack_normal(character, character.buffered_move)
+	else:
+		if character.current_frame >= StaticData.P2_move_data["cancel_frame"] and character.buffered_move != "":
+			Attack.do_attack_normal(character, character.buffered_move)
+	
 	check_frame()
+	
 	
 	if character.current_frame >= move_end_frame:
 		if character.get_groups()[0] == "player1":
@@ -99,8 +108,3 @@ func create_hitbox(data):
 		character = character,
 		left_side = character.left_side
 	})
-
-func check_cancel(input: Dictionary): ###future check through list of cancel options
-	if character.cancel:
-		if character.move_name == character.character_name + "_" + "5a" and input.get("a"):
-			Attack.do_attack_normal(character, "5a")

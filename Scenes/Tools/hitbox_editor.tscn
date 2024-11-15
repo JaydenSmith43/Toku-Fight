@@ -31,9 +31,9 @@ default_font_size = 30
 default_font_size = 20
 
 [sub_resource type="Theme" id="Theme_m2wye"]
-default_font_size = 30
+default_font_size = 28
 
-[node name="Node3D" type="Node3D" node_paths=PackedStringArray("animation_option_button", "character_option_button", "hitbox_option_button", "current_frame_edit", "end_frame_edit", "total_frame_label", "var_frame_edit", "var_end_frame_edit", "var_position_x_edit", "var_position_y_edit", "var_scale_x_edit", "var_scale_y_edit", "var_damage_edit", "var_blockstun_edit", "var_hitstun_edit", "var_hitstop_edit", "var_pushback_edit", "var_pushtime_edit", "var_height_edit", "var_sfx_edit", "var_cancel_edit")]
+[node name="Node3D" type="Node3D" node_paths=PackedStringArray("animation_option_button", "character_option_button", "hitbox_option_button", "current_frame_edit", "end_frame_edit", "total_frame_label", "var_frame_edit", "var_end_frame_edit", "var_position_x_edit", "var_position_y_edit", "var_scale_x_edit", "var_scale_y_edit", "var_damage_edit", "var_blockstun_edit", "var_hitstun_edit", "var_hitstop_edit", "var_pushback_edit", "var_pushtime_edit", "var_height_edit", "var_sfx_edit", "var_cancel_edit", "var_cancel_frame_edit")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.985718, 0, 0)
 script = ExtResource("1_1srkk")
 animation_option_button = NodePath("AnimationOptionButton")
@@ -42,21 +42,22 @@ hitbox_option_button = NodePath("HitboxOptionButton")
 current_frame_edit = NodePath("CurrentFrameEdit")
 end_frame_edit = NodePath("EndFrameEdit")
 total_frame_label = NodePath("TotalFrameLabel")
-var_frame_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/TextureRect/VarFrameEdit")
-var_end_frame_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/TextureRect8/VarEndFrameEdit")
-var_position_x_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/TextureRect5/VarPositionXEdit")
-var_position_y_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/TextureRect5/VarPositionYEdit")
-var_scale_x_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/TextureRect6/VarScaleXEdit")
-var_scale_y_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/TextureRect6/VarScaleYEdit")
-var_damage_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/TextureRect4/VarDamageEdit")
-var_blockstun_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/TextureRect2/VarBlockstunEdit")
-var_hitstun_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/TextureRect3/VarHitstunEdit")
-var_hitstop_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/TextureRect15/VarHitstopEdit")
-var_pushback_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/TextureRect13/VarPushbackEdit")
-var_pushtime_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/TextureRect14/VarPushTimeEdit")
-var_height_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/TextureRect12/VarHeightEdit")
-var_sfx_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/TextureRect16/VarSFXEdit")
-var_cancel_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/TextureRect9/VarCancelEdit")
+var_frame_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Frame/VarFrameEdit")
+var_end_frame_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/EndFrame/VarEndFrameEdit")
+var_position_x_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Position/VarPositionXEdit")
+var_position_y_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Position/VarPositionYEdit")
+var_scale_x_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Scale/VarScaleXEdit")
+var_scale_y_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Scale/VarScaleYEdit")
+var_damage_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Damage/VarDamageEdit")
+var_blockstun_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Blockstun/VarBlockstunEdit")
+var_hitstun_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Hitstun/VarHitstunEdit")
+var_hitstop_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Hitstop/VarHitstopEdit")
+var_pushback_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Pushback/VarPushbackEdit")
+var_pushtime_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/PushTime/VarPushTimeEdit")
+var_height_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Height/VarHeightEdit")
+var_sfx_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/SFX/VarSFXEdit")
+var_cancel_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/Cancel/VarCancelEdit")
+var_cancel_frame_edit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/CancelFrame/VarCancelFrameEdit")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 4)
@@ -224,11 +225,11 @@ size_flags_vertical = 3
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="Frame" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="VarFrameLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect"]
+[node name="VarFrameLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Frame"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -243,7 +244,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "Frame:"
 
-[node name="VarFrameEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect"]
+[node name="VarFrameEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/Frame"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -257,11 +258,11 @@ theme = SubResource("Theme_auj21")
 text = "1"
 placeholder_text = "1"
 
-[node name="TextureRect2" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="Blockstun" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="VarBlockstunLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect2"]
+[node name="VarBlockstunLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Blockstun"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -276,7 +277,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "Blockstun:"
 
-[node name="VarBlockstunEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect2"]
+[node name="VarBlockstunEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/Blockstun"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -290,11 +291,11 @@ theme = SubResource("Theme_auj21")
 text = "1"
 placeholder_text = "1"
 
-[node name="TextureRect3" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="Hitstun" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="VarHitstunLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect3"]
+[node name="VarHitstunLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Hitstun"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -309,7 +310,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "Hitstun:"
 
-[node name="VarHitstunEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect3"]
+[node name="VarHitstunEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/Hitstun"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -323,11 +324,11 @@ theme = SubResource("Theme_auj21")
 text = "1"
 placeholder_text = "1"
 
-[node name="TextureRect4" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="Damage" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="VarDamageLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect4"]
+[node name="VarDamageLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Damage"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -342,7 +343,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "Damage:"
 
-[node name="VarDamageEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect4"]
+[node name="VarDamageEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/Damage"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -356,11 +357,11 @@ theme = SubResource("Theme_auj21")
 text = "1"
 placeholder_text = "1"
 
-[node name="TextureRect5" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="Position" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="VarPositionLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect5"]
+[node name="VarPositionLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Position"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -375,7 +376,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "Position:"
 
-[node name="VarPositionXEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect5"]
+[node name="VarPositionXEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/Position"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -389,7 +390,7 @@ theme = SubResource("Theme_auj21")
 text = "1"
 placeholder_text = "1"
 
-[node name="VarPositionYEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect5"]
+[node name="VarPositionYEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/Position"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -403,11 +404,11 @@ theme = SubResource("Theme_auj21")
 text = "1"
 placeholder_text = "1"
 
-[node name="TextureRect6" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="Scale" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="VarScaleLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect6"]
+[node name="VarScaleLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Scale"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -422,7 +423,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "Scale:"
 
-[node name="VarScaleXEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect6"]
+[node name="VarScaleXEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/Scale"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -436,7 +437,7 @@ theme = SubResource("Theme_auj21")
 text = "1"
 placeholder_text = "1"
 
-[node name="VarScaleYEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect6"]
+[node name="VarScaleYEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/Scale"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -450,11 +451,11 @@ theme = SubResource("Theme_auj21")
 text = "1"
 placeholder_text = "1"
 
-[node name="TextureRect8" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="EndFrame" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="VarEndFrameEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect8"]
+[node name="VarEndFrameEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/EndFrame"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -468,7 +469,7 @@ theme = SubResource("Theme_auj21")
 text = "1"
 placeholder_text = "1"
 
-[node name="VarEndFrameLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect8"]
+[node name="VarEndFrameLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/EndFrame"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -483,11 +484,11 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "End Frame:"
 
-[node name="TextureRect7" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="Box" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 
-[node name="VarBoxLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect7"]
+[node name="VarBoxLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Box"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -502,7 +503,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "Box:"
 
-[node name="BoxOptionButton" type="OptionButton" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect7"]
+[node name="BoxOptionButton" type="OptionButton" parent="ScrollContainer/MarginContainer/VBoxContainer/Box"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -518,11 +519,11 @@ popup/item_0/text = "hitbox"
 popup/item_1/text = "hurtbox"
 popup/item_1/id = 1
 
-[node name="TextureRect12" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="Height" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="VarHeightLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect12"]
+[node name="VarHeightLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Height"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -537,7 +538,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "Height:"
 
-[node name="VarHeightEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect12"]
+[node name="VarHeightEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/Height"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -551,11 +552,11 @@ theme = SubResource("Theme_auj21")
 text = "1"
 placeholder_text = "1"
 
-[node name="TextureRect13" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="Pushback" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="VarPushbackLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect13"]
+[node name="VarPushbackLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Pushback"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -570,7 +571,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "Pushback:"
 
-[node name="VarPushbackEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect13"]
+[node name="VarPushbackEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/Pushback"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -584,11 +585,11 @@ theme = SubResource("Theme_auj21")
 text = "1"
 placeholder_text = "1"
 
-[node name="TextureRect14" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="PushTime" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="VarPushTimeLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect14"]
+[node name="VarPushTimeLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/PushTime"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -603,7 +604,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "Push Time:"
 
-[node name="VarPushTimeEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect14"]
+[node name="VarPushTimeEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/PushTime"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -617,11 +618,11 @@ theme = SubResource("Theme_auj21")
 text = "1"
 placeholder_text = "1"
 
-[node name="TextureRect15" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="Hitstop" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="VarHitstopLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect15"]
+[node name="VarHitstopLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Hitstop"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -636,25 +637,25 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "Hitstop:"
 
-[node name="VarHitstopEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect15"]
+[node name="VarHitstopEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/Hitstop"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_left = 170.0
 offset_top = -18.0
-offset_right = 251.813
+offset_right = 252.0
 offset_bottom = 18.0
 grow_vertical = 2
 theme = SubResource("Theme_auj21")
 text = "1"
 placeholder_text = "1"
 
-[node name="TextureRect16" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="SFX" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="VarSFXLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect16"]
+[node name="VarSFXLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/SFX"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -669,25 +670,25 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "SFX:"
 
-[node name="VarSFXEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect16"]
+[node name="VarSFXEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/SFX"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_left = 170.0
 offset_top = -18.0
-offset_right = 251.813
+offset_right = 252.0
 offset_bottom = 18.0
 grow_vertical = 2
 theme = SubResource("Theme_auj21")
 text = "1"
 placeholder_text = "1"
 
-[node name="TextureRect9" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="Cancel" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="VarCancelLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect9"]
+[node name="VarCancelLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Cancel"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -702,7 +703,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "Cancel:"
 
-[node name="VarCancelEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/TextureRect9"]
+[node name="VarCancelEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/Cancel"]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -713,6 +714,39 @@ offset_top = -18.0
 offset_right = -7.0
 offset_bottom = 18.0
 grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_auj21")
+text = "1"
+placeholder_text = "1"
+
+[node name="CancelFrame" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="VarCancelFrameLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/CancelFrame"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 97.0
+offset_bottom = 19.0
+grow_vertical = 2
+theme = SubResource("Theme_m2wye")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "Cancel Frame:"
+
+[node name="VarCancelFrameEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/CancelFrame"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 200.0
+offset_top = -18.0
+offset_right = 282.0
+offset_bottom = 18.0
 grow_vertical = 2
 theme = SubResource("Theme_auj21")
 text = "1"
@@ -729,18 +763,19 @@ placeholder_text = "1"
 [connection signal="pressed" from="RightButton" to="." method="_on_right_button_pressed"]
 [connection signal="text_changed" from="CurrentFrameEdit" to="." method="_on_current_frame_edit_text_changed"]
 [connection signal="text_changed" from="EndFrameEdit" to="." method="_on_end_frame_edit_text_changed"]
-[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/TextureRect/VarFrameEdit" to="." method="_on_var_frame_edit_text_submitted"]
-[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/TextureRect2/VarBlockstunEdit" to="." method="_on_var_blockstun_edit_text_submitted"]
-[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/TextureRect3/VarHitstunEdit" to="." method="_on_var_hitstun_edit_text_submitted"]
-[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/TextureRect4/VarDamageEdit" to="." method="_on_var_damage_edit_text_submitted"]
-[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/TextureRect5/VarPositionXEdit" to="." method="_on_var_position_x_edit_text_submitted"]
-[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/TextureRect5/VarPositionYEdit" to="." method="_on_var_position_y_edit_text_submitted"]
-[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/TextureRect6/VarScaleXEdit" to="." method="_on_var_scale_x_edit_text_submitted"]
-[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/TextureRect6/VarScaleYEdit" to="." method="_on_var_scale_y_edit_text_submitted"]
-[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/TextureRect8/VarEndFrameEdit" to="." method="_on_var_end_frame_edit_text_submitted"]
-[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/TextureRect12/VarHeightEdit" to="." method="_on_var_height_edit_text_submitted"]
-[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/TextureRect13/VarPushbackEdit" to="." method="_on_var_pushback_edit_text_submitted"]
-[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/TextureRect14/VarPushTimeEdit" to="." method="_on_var_push_time_edit_text_submitted"]
-[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/TextureRect15/VarHitstopEdit" to="." method="_on_var_hitstop_edit_text_submitted"]
-[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/TextureRect16/VarSFXEdit" to="." method="_on_var_sfx_edit_text_submitted"]
-[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/TextureRect9/VarCancelEdit" to="." method="_on_var_cancel_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/Frame/VarFrameEdit" to="." method="_on_var_frame_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/Blockstun/VarBlockstunEdit" to="." method="_on_var_blockstun_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/Hitstun/VarHitstunEdit" to="." method="_on_var_hitstun_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/Damage/VarDamageEdit" to="." method="_on_var_damage_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/Position/VarPositionXEdit" to="." method="_on_var_position_x_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/Position/VarPositionYEdit" to="." method="_on_var_position_y_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/Scale/VarScaleXEdit" to="." method="_on_var_scale_x_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/Scale/VarScaleYEdit" to="." method="_on_var_scale_y_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/EndFrame/VarEndFrameEdit" to="." method="_on_var_end_frame_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/Height/VarHeightEdit" to="." method="_on_var_height_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/Pushback/VarPushbackEdit" to="." method="_on_var_pushback_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/PushTime/VarPushTimeEdit" to="." method="_on_var_push_time_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/Hitstop/VarHitstopEdit" to="." method="_on_var_hitstop_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/SFX/VarSFXEdit" to="." method="_on_var_sfx_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/Cancel/VarCancelEdit" to="." method="_on_var_cancel_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/CancelFrame/VarCancelFrameEdit" to="." method="_on_var_cancel_frame_edit_text_submitted"]

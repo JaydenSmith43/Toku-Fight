@@ -12,6 +12,7 @@ func do_attack_normal(character: SGCharacterBody2D, move_button: String):
 	character.low_blocking = false
 	character.high_blocking = false
 	character.move_name = character.character_name + "_" + move_button
+	character.buffered_move = ""
 	character.state_machine.current_state.Transitioned.emit(character.state_machine.current_state, "attack")
 
 func check_motions_available(character: SGCharacterBody2D, input_array: Node, move_button: String):
@@ -25,6 +26,49 @@ func check_motions_available(character: SGCharacterBody2D, input_array: Node, mo
 			return
 	
 	do_attack_normal(character, move_button)
+
+func check_cancel(character: SGCharacterBody2D, input: Dictionary):
+	if character.buffered_move != "":
+		return
+	
+	var cancel_array
+	
+	if character.get_groups()[0] == "player1":
+		cancel_array = StaticData.P1_move_data["cancel"].split(",", false)
+	else:
+		cancel_array = StaticData.P2_move_data["cancel"].split(",", false)
+	
+	if character.cancel:
+		if input.get("a") and input.get("input_vector", Vector2.ZERO).y == 0:
+			for cancels in cancel_array:
+				if cancels == "5a":
+					character.buffered_move = "5a"
+					return
+		if input.get("a") and input.get("input_vector", Vector2.ZERO).y == -1:
+			for cancels in cancel_array:
+				if cancels == "2a":
+					character.buffered_move = "2a"
+					return
+		if input.get("b") and input.get("input_vector", Vector2.ZERO).y == 0:
+			for cancels in cancel_array:
+				if cancels == "5b":
+					character.buffered_move = "5b"
+					return
+		if input.get("b") and input.get("input_vector", Vector2.ZERO).y == -1:
+			for cancels in cancel_array:
+				if cancels == "2b":
+					character.buffered_move = "2b"
+					return
+		if input.get("c") and input.get("input_vector", Vector2.ZERO).y == 0:
+			for cancels in cancel_array:
+				if cancels == "5c":
+					character.buffered_move = "5c"
+					return
+		if input.get("c") and input.get("input_vector", Vector2.ZERO).y == -1:
+			for cancels in cancel_array:
+				if cancels == "2c":
+					character.buffered_move = "2c"
+					return
 
 func check_motion(character: SGCharacterBody2D, input_array: Node, motion_array: Array[int], move_button: String):
 	if !character.left_side:
