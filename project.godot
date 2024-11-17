@@ -21,7 +21,8 @@ StaticData="*res://Scripts/static_data.gd"
 SyncDebugger="*res://addons/godot-rollback-netcode/SyncDebugger.gd"
 SyncManager="*res://addons/godot-rollback-netcode/SyncManager.gd"
 SyncReplay="*res://addons/godot-rollback-netcode/SyncReplay.gd"
-Attack="*res://Scripts/Data/attack.gd"
+Attack="*res://Scripts/attack.gd"
+GameManager="*res://Scripts/game_manager.gd"
 
 [display]
 

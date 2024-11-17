@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bmkea3roxko18"]
+[gd_scene load_steps=13 format=3 uid="uid://bmkea3roxko18"]
 
 [ext_resource type="Script" path="res://Scenes/Main/test_vs_mode.gd" id="1_5ed8j"]
 [ext_resource type="PackedScene" uid="uid://c110s1snwl2cq" path="res://Scenes/Characters/grappler/grappler.tscn" id="2_c13du"]
@@ -6,6 +6,7 @@
 [ext_resource type="Environment" uid="uid://jsqpfw82fbi" path="res://world_environment.tres" id="3_k4mgk"]
 [ext_resource type="Material" uid="uid://boov5m5w86nyq" path="res://Materials/grid_mat.tres" id="3_pokt6"]
 [ext_resource type="PackedScene" uid="uid://b2ax3p2ss2g8q" path="res://Scenes/Main/sg_boundaries.tscn" id="4_fckii"]
+[ext_resource type="Texture2D" uid="uid://dxmln5laa5hjw" path="res://Sprites/icon.svg" id="4_ve5p3"]
 [ext_resource type="PackedScene" uid="uid://30mde2a3la3" path="res://Scenes/Main/test_menu.tscn" id="5_706ux"]
 
 [sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_3na81"]
@@ -112,6 +113,15 @@ shape = SubResource("BoxShape3D_das85")
 transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 11.989, 0, 0, 0)
 mesh = SubResource("BoxMesh_5kyyc")
 skeleton = NodePath("../..")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="modulate" type="Sprite2D" parent="CanvasLayer"]
+modulate = Color(1, 0, 0, 1)
+position = Vector2(1047.03, 580.088)
+scale = Vector2(20.0538, 11.1863)
+texture = ExtResource("4_ve5p3")
 
 [node name="TestMenu" parent="." instance=ExtResource("5_706ux")]
 

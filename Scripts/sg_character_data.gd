@@ -5,9 +5,10 @@ var input_prefix : String = "P1_"
 @onready var input_display = $UI
 @onready var label = $UI/HealthBar/StateLabel
 @onready var input_array = $Input
+@onready var anim_player = $model/AnimationPlayer
+@onready var collision = $collision
 @export var hurtbox : SGArea2D
 @export var throwbox : SGArea2D
-@onready var collision = $collision
 @export var state_machine : Node
 @export var model : Node3D
 
@@ -48,12 +49,16 @@ var teching := false
 var cancel := false
 var throw_state_frame := 0
 var current_frame := 0
+var pause = false
 
 func _ready():
 	healthbar.init_health(health)
 	up_direction = SGFixed.vector2(0, -65536)
 	
-	if is_in_group("player2"):
+	if is_in_group("player1"):
+		GameManager.player1 = self
+	else:
+		GameManager.player2 = self
 		healthbar.position.x = 1100
 		healthbar.rotation_degrees = 180
 		model.swap_color(2)
@@ -108,11 +113,16 @@ func _predict_remote_input(previous_input: Dictionary, ticks_since_real_input: i
 	return input
 
 func _network_process(input: Dictionary) -> void:
-	input_array.input_handler(input)
-	input_display.update_input_display()
-	state_machine.tick_physics_process(input)
-	hurtbox.tick_physics_process()
-	throwbox.tick_physics_process()
+	if input.get("a"):
+		GameManager.pause_game()
+	if pause:
+		pass
+	else:
+		input_array.input_handler(input)
+		input_display.update_input_display()
+		state_machine.tick_physics_process(input)
+		hurtbox.tick_physics_process()
+		throwbox.tick_physics_process()
 	
 	###TODO try calling screenbounds in here our below. maybe save its position
 
@@ -135,7 +145,8 @@ func _save_state() -> Dictionary:
 		throw_state_frame = throw_state_frame,
 		model_rotation_y = model.rotation.y,
 		cancel = cancel,
-		buffered_move = buffered_move
+		buffered_move = buffered_move,
+		pause = pause
 		#collision_y = collision.fixed_position_y
 	}
 
@@ -158,6 +169,7 @@ func _load_state(state: Dictionary) -> void:
 	model.rotation.y = state['model_rotation_y']
 	cancel = state['cancel']
 	buffered_move = state['buffered_move']
+	pause = state['pause']
 	#collision.fixed_position_y = state['collision_y']
 	
 	sync_to_physics_engine()
