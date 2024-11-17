@@ -21,7 +21,7 @@ func Exit():
 
 func State_Physics_Update(input: Dictionary):
 	character.current_frame += 1
-
+	
 	if character.get_groups()[0] == "player1":
 		StaticData.load_json_file(character.move_name, character.get_groups()[0])
 		anim_name = StaticData.P1_move_data["anim_name"]
@@ -32,14 +32,16 @@ func State_Physics_Update(input: Dictionary):
 		move_end_frame = StaticData.P2_move_data["move_end_frame"]
 	anim_player.play(anim_name)
 	
-	Attack.check_cancel(character, input)
+	Attack.check_cancel(character, input, "ground")
 	
 	if character.get_groups()[0] == "player1":
 		if character.current_frame >= StaticData.P1_move_data["cancel_frame"] and character.buffered_move != "":
-			Attack.do_attack_normal(character, character.buffered_move)
+			character.cancel = false
+			Attack.do_ground_attack(character, character.buffered_move)
 	else:
 		if character.current_frame >= StaticData.P2_move_data["cancel_frame"] and character.buffered_move != "":
-			Attack.do_attack_normal(character, character.buffered_move)
+			character.cancel = false
+			Attack.do_ground_attack(character, character.buffered_move)
 	
 	check_frame()
 	

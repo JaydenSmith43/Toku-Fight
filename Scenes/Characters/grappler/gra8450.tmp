@@ -45,7 +45,6 @@ state_machine = NodePath("StateMachine")
 model = NodePath("model")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false
 position = Vector2(-0.00781274, -2.5065)
 scale = Vector2(0.00787602, 0.00829784)
 texture = ExtResource("2_1migp")

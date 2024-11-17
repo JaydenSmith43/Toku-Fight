@@ -12,12 +12,18 @@ var input_prefix : String = "P1_"
 @export var model : Node3D
 
 var character_name = "grappler"
-var motion22 := false
+var motion22 := false ###TODO turn this into an array or array of enums something like that
+var motionj22 := false
 var motion236 := true
+var motionj236 := false
 var motion214 := false
+var motionj214 := false
 var motion41236 := false
+var motionj41236 := false
 var motion63214 := false
+var motionj63214 := false
 var motion360 := false
+var motionj360 := false
 var charge_back_forward := false
 var charge_forward_back := false
 var charge_down_up := false

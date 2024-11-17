@@ -31,8 +31,8 @@ func Enter():
 	#print("fall_gravity: " + str(fall_gravity))
 
 func Exit():
-	character.jump_velocity_x = 0
-	character.velocity.y = 0
+	#character.jump_velocity_x = 0
+	#character.velocity.y = 0
 	#character.velocity.x = 0
 	#character.collision.fixed_position.y += SGFixed.ONE
 	character.set_collision_mask_bit(15, true)
@@ -52,6 +52,8 @@ func State_Physics_Update(input: Dictionary): #ADD a check for facing left witho
 	character.move_and_slide()
 	model.position.x = SGFixed.to_float(character.fixed_position_x)
 	model.position.y = -SGFixed.to_float(character.fixed_position_y)
+	
+	check_jump_attack(input)
 	
 	if character.is_on_floor() : #and current_frame > 20
 		#if input.get("input_vector", Vector2.ZERO).y > 0:
@@ -82,9 +84,20 @@ func State_Physics_Update(input: Dictionary): #ADD a check for facing left witho
 		
 		Transitioned.emit(self, "idle")
 		return
-	
-	#print("position_x:" + str(model.position.x))
-	#print("position_y:" + str(model.position.y))
 
 #func get_gravity() -> float:
 	#return jump_gravity if character.character_velocity.y < 0.0 else fall_gravity
+
+func check_jump_attack(input: Dictionary):
+	if input.get("a") and input.get("b") and character.crouch == false:
+		#Attack.do_throw(character)
+		return
+	elif input.get("c") and character.crouch == false:
+		Attack.check_motions_available(character, input_array, "jump_c", "jump")
+		return
+	elif input.get("b") and character.crouch == false:
+		Attack.check_motions_available(character, input_array, "jump_b", "jump")
+		return
+	elif input.get("a") and character.crouch == false:
+		Attack.check_motions_available(character, input_array, "jump_a", "jump")
+		return

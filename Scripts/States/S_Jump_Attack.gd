@@ -21,6 +21,21 @@ func Exit():
 
 func State_Physics_Update(input: Dictionary):
 	character.current_frame += 1
+	character.velocity.y += 2229
+	
+	if character.jump_velocity_x > 0:
+		character.velocity.x = character.jump_velocity_x + (2184)
+	elif character.jump_velocity_x < 0:
+		character.velocity.x = character.jump_velocity_x - (2184)
+		pass
+	
+	character.move_and_slide()
+	model.position.x = SGFixed.to_float(character.fixed_position_x)
+	model.position.y = -SGFixed.to_float(character.fixed_position_y)
+	
+	if character.is_on_floor():
+		Transitioned.emit(self, "idle")
+		return
 
 	if character.get_groups()[0] == "player1":
 		StaticData.load_json_file(character.move_name, character.get_groups()[0])
@@ -32,14 +47,16 @@ func State_Physics_Update(input: Dictionary):
 		move_end_frame = StaticData.P2_move_data["move_end_frame"]
 	anim_player.play(anim_name)
 	
-	Attack.check_cancel(character, input)
+	Attack.check_cancel(character, input, "jump")
 	
 	if character.get_groups()[0] == "player1":
 		if character.current_frame >= StaticData.P1_move_data["cancel_frame"] and character.buffered_move != "":
-			Attack.do_attack_normal(character, character.buffered_move)
+			character.cancel = false
+			Attack.do_jump_attack(character, character.buffered_move)
 	else:
 		if character.current_frame >= StaticData.P2_move_data["cancel_frame"] and character.buffered_move != "":
-			Attack.do_attack_normal(character, character.buffered_move)
+			character.cancel = false
+			Attack.do_jump_attack(character, character.buffered_move)
 	
 	check_frame()
 	

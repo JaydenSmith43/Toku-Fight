@@ -31,6 +31,9 @@ func net_ready() -> void:
 	timer.start()
 	sync_to_physics_engine()
 
+func _physics_process(delta: float) -> void:
+	sync_to_physics_engine()
+
 func _network_spawn(data: Dictionary) -> void:
 	damage = data['damage']
 	end_frame = data['end_frame']
