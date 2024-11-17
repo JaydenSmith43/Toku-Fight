@@ -99,11 +99,11 @@ func choose_hit_sound(effect : String):
 			var random = randi_range(0, 2)
 			match random:
 				0:
-					SyncManager.play_sound(str(get_path()) + ":heavy_hit_1", SFX_HEAVY_1)
+					SyncManager.play_sound(str(get_path()) + ":heavy_hit", SFX_HEAVY_1)
 				1:
-					SyncManager.play_sound(str(get_path()) + ":heavy_hit_2", SFX_HEAVY_2)
+					SyncManager.play_sound(str(get_path()) + ":heavy_hit", SFX_HEAVY_2)
 				2:
-					SyncManager.play_sound(str(get_path()) + ":heavy_hit_3", SFX_HEAVY_3)
+					SyncManager.play_sound(str(get_path()) + ":heavy_hit", SFX_HEAVY_3)
 
 func block_sound():
 	var random = randi_range(0, 2)

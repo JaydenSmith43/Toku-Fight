@@ -1,6 +1,8 @@
 extends Node
 
 func do_throw(character: SGCharacterBody2D):
+	character.low_blocking = false
+	character.high_blocking = false
 	character.state_machine.current_state.Transitioned.emit(character.state_machine.current_state, "thrower")
 
 func do_fireball(character: SGCharacterBody2D, move_button: String):
@@ -13,7 +15,7 @@ func do_attack_normal(character: SGCharacterBody2D, move_button: String):
 	character.high_blocking = false
 	character.move_name = character.character_name + "_" + move_button
 	character.buffered_move = ""
-	character.state_machine.current_state.Transitioned.emit(character.state_machine.current_state, "attack")
+	character.state_machine.current_state.Transitioned.emit(character.state_machine.current_state, "groundattack")
 
 func check_motions_available(character: SGCharacterBody2D, input_array: Node, move_button: String):
 	if character.motion41236:

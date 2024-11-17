@@ -1,5 +1,5 @@
 extends State
-class_name S_Attack
+class_name S_GroundAttack
 
 #var played : bool = false
 var move_end_frame = 30

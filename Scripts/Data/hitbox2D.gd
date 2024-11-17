@@ -20,7 +20,7 @@ var hitstun := 0
 var blockstun := 0
 
 func net_ready() -> void:
-	print("ready hitbox")
+	#print("ready hitbox")
 	if player == "player2":
 		set_collision_layer_bit(3, false)
 		set_collision_mask_bit(2, false)

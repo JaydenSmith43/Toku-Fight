@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://c110s1snwl2cq"]
+[gd_scene load_steps=25 format=3 uid="uid://c110s1snwl2cq"]
 
 [ext_resource type="Script" path="res://Scripts/sg_character_data.gd" id="1_fjl6n"]
 [ext_resource type="Texture2D" uid="uid://bmxre7rw1js2a" path="res://Sprites/grappler_ref.png" id="2_1migp"]
@@ -20,6 +20,7 @@
 [ext_resource type="Script" path="res://Scripts/States/S_Thrower.gd" id="18_qhqye"]
 [ext_resource type="Script" path="res://Scripts/States/S_Thrown.gd" id="19_3jq6r"]
 [ext_resource type="Script" path="res://Scripts/States/S_Teched.gd" id="20_g2jt5"]
+[ext_resource type="Script" path="res://Scripts/States/S_Jump_Attack.gd" id="21_4fove"]
 
 [sub_resource type="SGCapsuleShape2D" id="SGCapsuleShape2D_yoyix"]
 radius = 40262
@@ -117,11 +118,11 @@ character = NodePath("../..")
 model = NodePath("../../model")
 state_name = "idle"
 
-[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+[node name="GroundAttack" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
 script = ExtResource("12_qkye0")
 character = NodePath("../..")
 model = NodePath("../../model")
-state_name = "attack"
+state_name = "groundattack"
 
 [node name="Hadou" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
 script = ExtResource("13_0jsj3")
@@ -172,3 +173,9 @@ script = ExtResource("20_g2jt5")
 character = NodePath("../..")
 model = NodePath("../../model")
 state_name = "teched"
+
+[node name="JumpAttack" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+script = ExtResource("21_4fove")
+character = NodePath("../..")
+model = NodePath("../../model")
+state_name = "jumpattack"

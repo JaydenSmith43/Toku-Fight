@@ -316,6 +316,8 @@ func _on_hitbox_button_button_down() -> void:
 	var hitbox_index = 1
 	var hitbox_input = hitbox_string + str(hitbox_index)
 	
+	if !move_data.has("frames"):
+		move_data["frames"] = []
 	for data in move_data["frames"]:
 		if data["frame"] == current_frame:
 			while data.has(hitbox_input):

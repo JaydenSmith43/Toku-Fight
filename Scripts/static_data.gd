@@ -9,20 +9,23 @@ var current_move_p2
 
 func load_json_file(fileName: String, player: String):
 	data_file_path = "res://Scripts/MoveData/" + fileName + ".json"
+	var parsedResult
 	
-	if FileAccess.file_exists(data_file_path):
-		var dataFile = FileAccess.open(data_file_path, FileAccess.READ)
-		var parsedResult = JSON.parse_string(dataFile.get_as_text())
-		
-		if parsedResult is Dictionary:
-			if player == "player1":
-				P1_move_data = parsedResult
-			else:
-				P2_move_data = parsedResult
-		else:
-			print("Error reading file!")
+	var dataFile = FileAccess.open(data_file_path, FileAccess.READ)
+	if !FileAccess.file_exists(data_file_path):
+		print("Creating new file: " + data_file_path)
 	else:
-		print("File doesn't exist!")
+		parsedResult = JSON.parse_string(dataFile.get_as_text())
+	
+	if parsedResult is Dictionary:
+		if player == "player1":
+			P1_move_data = parsedResult
+		else:
+			P2_move_data = parsedResult
+	else:
+			print("Error reading file!")
+	#else:
+		#print("File doesn't exist!")
 
 func check_new_move(fileName: String, player: String):
 	var move_already_loaded = false

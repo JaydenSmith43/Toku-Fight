@@ -44,7 +44,7 @@ func State_Physics_Update(input: Dictionary):
 		character.throw_state_frame += 1
 			
 		if character.throw_state_frame == throw_end_frame:
-			character.movename = "idle"
+			character.move_name = "idle"
 			Transitioned.emit(self, "idle")
 
 #5 frame startup
