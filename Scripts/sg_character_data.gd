@@ -13,25 +13,12 @@ var input_prefix : String = "P1_"
 @export var model : Node3D
 
 var character_name = "grappler"
-var motion22 := false ###TODO turn this into an array or array of enums something like that
-var motionj22 := false
-var motion236 := true
-var motionj236 := false
-var motion214 := false
-var motionj214 := false
-var motion41236 := false
-var motionj41236 := false
-var motion63214 := false
-var motionj63214 := false
-var motion360 := false
-var motionj360 := false
-var charge_back_forward := false
-var charge_forward_back := false
-var charge_down_up := false
-var charge_up_down := false
+var motions = ["j214", "63214"]
+var charge = ["28"]
 
 var health := 100
 
+var input_current_frame := 0
 var left_side := false
 var low_blocking := false
 var high_blocking := false
@@ -113,12 +100,12 @@ func _predict_remote_input(previous_input: Dictionary, ticks_since_real_input: i
 	return input
 
 func _network_process(input: Dictionary) -> void:
-	if input.get("a"):
-		GameManager.pause_game()
+	#if input.get("a"):
+		#GameManager.pause_game()
 	if pause:
 		pass
 	else:
-		input_array.input_handler(input)
+		input_array.input_handler(self, input)
 		input_display.update_input_display()
 		state_machine.tick_physics_process(input)
 		hurtbox.tick_physics_process()
@@ -146,8 +133,8 @@ func _save_state() -> Dictionary:
 		model_rotation_y = model.rotation.y,
 		cancel = cancel,
 		buffered_move = buffered_move,
-		pause = pause
-		#collision_y = collision.fixed_position_y
+		pause = pause,
+		input_current_frame = input_current_frame
 	}
 
 func _load_state(state: Dictionary) -> void:
@@ -170,7 +157,7 @@ func _load_state(state: Dictionary) -> void:
 	cancel = state['cancel']
 	buffered_move = state['buffered_move']
 	pause = state['pause']
-	#collision.fixed_position_y = state['collision_y']
+	input_current_frame = state['input_current_frame']
 	
 	sync_to_physics_engine()
 	#print_rich("[color=CORNFLOWER_BLUE]L_pos_x: " + str(fixed_position_x))

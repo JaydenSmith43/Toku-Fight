@@ -11,7 +11,7 @@
 [ext_resource type="Script" path="res://Scripts/States/S_Idle.gd" id="6_vvwnm"]
 [ext_resource type="Script" path="res://Scripts/States/S_Ground_Attack.gd" id="7_suixc"]
 [ext_resource type="PackedScene" uid="uid://bh6x5sy31wviu" path="res://Scenes/UI/health_bar.tscn" id="7_xdp0n"]
-[ext_resource type="Script" path="res://Scripts/States/S_Fireball.gd" id="8_t17ag"]
+[ext_resource type="Script" path="res://Scripts/States/S_Grappler63214.gd" id="8_t17ag"]
 [ext_resource type="Script" path="res://Scripts/States/S_Jump.gd" id="9_lhso1"]
 
 [sub_resource type="Animation" id="Animation_xifwo"]

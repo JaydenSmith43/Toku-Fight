@@ -5,10 +5,11 @@ func do_throw(character: SGCharacterBody2D):
 	character.high_blocking = false
 	character.state_machine.current_state.Transitioned.emit(character.state_machine.current_state, "thrower")
 
-func do_fireball(character: SGCharacterBody2D, move_button: String):
+func do_special(character: SGCharacterBody2D, move_button: String, motion_string: String):
 	character.low_blocking = false
 	character.high_blocking = false
-	character.state_machine.current_state.Transitioned.emit(character.state_machine.current_state, "hadou")
+	var state_name = character.character_name + motion_string
+	character.state_machine.current_state.Transitioned.emit(character.state_machine.current_state, state_name)
 
 func do_ground_attack(character: SGCharacterBody2D, move_button: String):
 	character.low_blocking = false
@@ -25,13 +26,13 @@ func do_jump_attack(character: SGCharacterBody2D, move_button: String):
 	character.state_machine.current_state.Transitioned.emit(character.state_machine.current_state, "jumpattack")
 
 func check_motions_available(character: SGCharacterBody2D, input_array: Node, move_button: String, state: String):
-	if character.motion41236 and state == "ground":
-		if check_motion(character, input_array, [4,1,2,3,6], move_button):
-			do_fireball(character, move_button)
+	if character.motions.has("63214") and state == "ground":
+		if check_motion(character, input_array, [6,3,2,1,4], move_button):
+			do_special(character, move_button, "63214")
 			return
-	if character.motion236 and state == "ground":
+	if character.motions.has("j236") and state == "jump":
 		if check_motion(character, input_array, [2,3,6], move_button):
-			do_fireball(character, move_button)
+			do_special(character, move_button, "j236")
 			return
 	
 	if state == "ground":
@@ -46,13 +47,10 @@ func check_cancel(character: SGCharacterBody2D, input: Dictionary, state: String
 		return
 	
 	var cancel_array
-	
 	if character.get_groups()[0] == "player1" and StaticData.P1_move_data.has("cancel"):
 		cancel_array = StaticData.P1_move_data["cancel"].split(",", false)
 	elif StaticData.P2_move_data.has("cancel"):
 		cancel_array = StaticData.P2_move_data["cancel"].split(",", false)
-	
-	
 	
 	if character.cancel and cancel_array != null:
 		if state == "ground":
@@ -118,7 +116,7 @@ func check_motion(character: SGCharacterBody2D, input_array: Node, motion_array:
 	var current_motion_direction : int = 0
 	
 	while n < input_array.inputs.size():
-		if input_array.inputs[n].type == str(motion_array[current_motion_direction]):
+		if input_array.inputs[n] == str(motion_array[current_motion_direction]):
 			if current_motion_direction == motion_array.size() - 1:
 				return true
 			current_motion_direction += 1

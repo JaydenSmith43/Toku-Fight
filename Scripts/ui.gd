@@ -31,7 +31,7 @@ func update_input_display():
 	
 	if input_array.inputs.size() != 0:
 		for n in input_array.inputs.size():
-			input_ui(input_array.inputs[n].type)
+			input_ui(input_array.inputs[n])
 
 func input_ui(type : String):
 	if choose_ui() != null:

@@ -12,7 +12,7 @@
 [ext_resource type="Script" path="res://Scripts/state_machine.gd" id="10_t1wsc"]
 [ext_resource type="Script" path="res://Scripts/States/S_Idle.gd" id="11_s2jcs"]
 [ext_resource type="Script" path="res://Scripts/States/S_Ground_Attack.gd" id="12_qkye0"]
-[ext_resource type="Script" path="res://Scripts/States/S_Fireball.gd" id="13_0jsj3"]
+[ext_resource type="Script" path="res://Scripts/States/S_Grappler63214.gd" id="13_0jsj3"]
 [ext_resource type="Script" path="res://Scripts/States/S_Jump.gd" id="14_k2vgv"]
 [ext_resource type="Script" path="res://Scripts/States/S_Block.gd" id="15_kiua0"]
 [ext_resource type="Script" path="res://Scripts/States/S_Prejump.gd" id="16_5qm8e"]
@@ -125,11 +125,11 @@ character = NodePath("../..")
 model = NodePath("../../model")
 state_name = "groundattack"
 
-[node name="Hadou" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+[node name="Grappler63214" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
 script = ExtResource("13_0jsj3")
 character = NodePath("../..")
 model = NodePath("../../model")
-state_name = "hadou"
+state_name = "grappler63214"
 
 [node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
 script = ExtResource("14_k2vgv")

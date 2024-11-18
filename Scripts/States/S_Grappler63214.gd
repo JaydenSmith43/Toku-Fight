@@ -1,5 +1,5 @@
 extends State
-class_name S_Fireball
+class_name S_Grappler63214
 
 func Enter():
 	anim_player.play("Idle")
