@@ -15,6 +15,7 @@ var input_prefix : String = "P1_"
 var character_name = "grappler"
 var motions = ["j214", "63214"]
 var charge = ["28"]
+var camera_state = "normal"
 
 var health := 100
 

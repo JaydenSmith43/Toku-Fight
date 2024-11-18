@@ -38,7 +38,7 @@ func State_Physics_Update(input: Dictionary):
 	
 		if character.current_frame == move_end_frame:
 			character.current_frame = 0
-			character.movename = "idle"
+			character.move_name = "idle"
 			Transitioned.emit(self, "idle")
 	else:
 		character.throw_state_frame += 1
@@ -64,5 +64,6 @@ func create_throw():
 		extents_x = SGFixed.div(SGFixed.from_float(2), 131072),
 		extents_y = SGFixed.div(SGFixed.from_float(2), 131072),
 		player = player,
-		left_side = character.left_side
+		left_side = character.left_side,
+		techable = true
 	})

@@ -44,7 +44,6 @@ func Enter():
 	character.velocity.x = 0
 	#character.collision.fixed_position.y += SGFixed.ONE
 	character.set_collision_mask_bit(15, true)
-	pass
 func Exit():
 	pass
 

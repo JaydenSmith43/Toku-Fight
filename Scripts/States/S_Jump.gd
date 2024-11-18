@@ -33,7 +33,7 @@ func Enter():
 func Exit():
 	#character.jump_velocity_x = 0
 	#character.velocity.y = 0
-	#character.velocity.x = 0
+	character.velocity.x = 0
 	#character.collision.fixed_position.y += SGFixed.ONE
 	character.set_collision_mask_bit(15, true)
 	#print("exit jump")

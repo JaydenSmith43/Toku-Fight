@@ -12,6 +12,7 @@ var extents_y := 0.0
 var fixed_pos_x := 0.0
 var fixed_pos_y := 0.0
 var end_frame := 5
+var techable := false
 
 func net_ready() -> void:
 	if player == "player2":
@@ -33,6 +34,7 @@ func _network_spawn(data: Dictionary) -> void:
 	extents_y = data['extents_y']
 	player = data['player']
 	left_side = data['left_side']
+	techable = data['techable']
 	net_ready()
 
 func _on_network_timer_timeout() -> void:
