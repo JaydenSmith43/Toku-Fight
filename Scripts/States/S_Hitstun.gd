@@ -7,6 +7,7 @@ func Enter():
 	character.current_frame = 0
 	hitstun_frames = character.hitstun
 	character.velocity.x = 0
+	character.velocity.y = 0
 	
 	if anim_player.is_playing():
 		anim_player.stop()

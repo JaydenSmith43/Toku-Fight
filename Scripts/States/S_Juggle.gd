@@ -9,7 +9,10 @@ func Enter():
 	#anim_player.play("buster_thrown_pose")
 	
 	model.position.x = SGFixed.to_float(character.fixed_position_x)
-	model.position.y = -SGFixed.to_float(character.fixed_position_y) - 4
+	if anim_player.current_animation == "buster_taker":
+		model.position.y = -SGFixed.to_float(character.fixed_position_y) - 4
+	else:
+		model.position.y = -SGFixed.to_float(character.fixed_position_y)
 	
 	if character.left_side:
 		x_velocity = -13000
@@ -31,14 +34,17 @@ func State_Physics_Update(input: Dictionary):
 	
 	character.move_and_slide()
 	model.position.x = SGFixed.to_float(character.fixed_position_x)
-	model.position.y = -SGFixed.to_float(character.fixed_position_y) - 4
+	
+	if anim_player.current_animation == "buster_taker":
+		model.position.y = -SGFixed.to_float(character.fixed_position_y) - 4
+	else:
+		model.position.y = -SGFixed.to_float(character.fixed_position_y)
 	
 	if character.is_on_floor():
-		if character.left_side and model.global_rotation_degrees.y == -180:
+		if character.left_side and model.global_rotation_degrees.y == -180 and anim_player.current_animation == "buster_taker":
 			model.rotate_y(deg_to_rad(-90))
-		elif model.global_rotation_degrees.y <= 180:
+		elif model.global_rotation_degrees.y <= 180 and anim_player.current_animation == "buster_taker":
 			model.rotate_y(deg_to_rad(90))
-		#print(model.global_rotation_degrees.y)
 	
 		Transitioned.emit(self, "idle")
 		return
