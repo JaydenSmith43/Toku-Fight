@@ -20,34 +20,22 @@ func Enter():
 	character.velocity.x = character.jump_velocity_x
 	character.velocity.y = -46811
 	
-	#print(SGFixed.from_float(jump_velocity))
-	
 	character.set_collision_mask_bit(15, false)
 	#character.collision.fixed_position.y -= SGFixed.ONE
-	
-	#print("starting jump_velocity_x: " + str(character.jump_velocity_x))
-	#print("jump_velocity: " + str(jump_velocity))
-	#print("jump_gravity: " + str(jump_gravity))
-	#print("fall_gravity: " + str(fall_gravity))
 
 func Exit():
-	#character.jump_velocity_x = 0
-	#character.velocity.y = 0
 	character.velocity.x = 0
 	#character.collision.fixed_position.y += SGFixed.ONE
 	character.set_collision_mask_bit(15, true)
-	#print("exit jump")
 
 func State_Physics_Update(input: Dictionary): #ADD a check for facing left without changing model
 	character.current_frame += 1
-	#print("JUMP UPDATE: " + str(character.current_frame))
 	character.velocity.y += 2229 #(-15 * 65536) / ((0.35 * 60) * (0.35 * 60))
 	
 	if character.jump_velocity_x > 0:
 		character.velocity.x = character.jump_velocity_x + (2184)
 	elif character.jump_velocity_x < 0:
 		character.velocity.x = character.jump_velocity_x - (2184)
-		pass
 	
 	character.move_and_slide()
 	model.position.x = SGFixed.to_float(character.fixed_position_x)
@@ -56,32 +44,6 @@ func State_Physics_Update(input: Dictionary): #ADD a check for facing left witho
 	check_jump_attack(input)
 	
 	if character.is_on_floor(): #and current_frame > 20
-		#if input.get("input_vector", Vector2.ZERO).y > 0:
-			#if (character.fixed_position.x - otherPlayer.fixed_position.x < 0):
-				#model.rotation_degrees.z = 0
-				#model.scale = Vector3(1,1,1)
-				#character.left_side = true
-			#else:
-				#model.rotation_degrees.z = 180
-				#model.scale = Vector3(-1,-1,-1)
-				#character.left_side = false
-			#character.velocity.x = 0
-			#character.velocity.y = 0
-			#
-			#if input.get("input_vector", Vector2.ZERO).x < 0 and character.crouch == false:
-				#if character.left_side == true:
-					#character.velocity.x = -15291
-				#else:
-					#character.velocity.x = -17476 
-			#if input.get("input_vector", Vector2.ZERO).x > 0 and character.crouch == false: 
-				#if character.left_side == false:
-					#character.velocity.x = 15291
-				#else:
-					#character.velocity.x = 17476
-			#character.jump_velocity_x = character.velocity.x
-			#Transitioned.emit(self, "prejump")
-			#return
-		
 		Transitioned.emit(self, "idle")
 		return
 

@@ -17,7 +17,6 @@ func Enter():
 
 func Exit():
 	character.current_frame = 0
-	pass
 
 func State_Physics_Update(input: Dictionary):
 	character.current_frame += 1

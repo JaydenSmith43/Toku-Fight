@@ -46,5 +46,5 @@ func State_Physics_Update(input: Dictionary):
 		elif model.global_rotation_degrees.y <= 180 and anim_player.current_animation == "buster_taker":
 			model.rotate_y(deg_to_rad(90))
 	
-		Transitioned.emit(self, "idle")
+		Transitioned.emit(self, "knockdown")
 		return

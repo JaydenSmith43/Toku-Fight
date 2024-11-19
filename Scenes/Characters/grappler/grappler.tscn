@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://c110s1snwl2cq"]
+[gd_scene load_steps=28 format=3 uid="uid://c110s1snwl2cq"]
 
 [ext_resource type="Script" path="res://Scripts/sg_character_data.gd" id="1_fjl6n"]
 [ext_resource type="Texture2D" uid="uid://bmxre7rw1js2a" path="res://Sprites/grappler_ref.png" id="2_1migp"]
@@ -23,6 +23,7 @@
 [ext_resource type="Script" path="res://Scripts/States/S_Jump_Attack.gd" id="21_4fove"]
 [ext_resource type="Script" path="res://Scripts/States/S_CommandThrown.gd" id="22_y72th"]
 [ext_resource type="Script" path="res://Scripts/States/S_Juggle.gd" id="23_sbkx2"]
+[ext_resource type="Script" path="res://Scripts/States/S_Knockdown.gd" id="24_r24n8"]
 
 [sub_resource type="SGCapsuleShape2D" id="SGCapsuleShape2D_yoyix"]
 radius = 40262
@@ -33,7 +34,7 @@ extents_x = 52101
 extents_y = 163840
 
 [sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_vhtgr"]
-extents_x = 80896
+extents_x = 87750
 extents_y = 163840
 
 [node name="SGCharacter" type="SGCharacterBody2D" node_paths=PackedStringArray("hurtbox", "throwbox", "state_machine", "model") groups=["network_sync"]]
@@ -194,3 +195,9 @@ script = ExtResource("23_sbkx2")
 character = NodePath("../..")
 model = NodePath("../../model")
 state_name = "juggle"
+
+[node name="Knockdown" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+script = ExtResource("24_r24n8")
+character = NodePath("../..")
+model = NodePath("../../model")
+state_name = "knockdown"
