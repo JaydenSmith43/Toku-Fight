@@ -7,13 +7,9 @@ var y_gravity : int = 568
 
 func Enter():
 	#anim_player.play("buster_thrown_pose")
-	character.camera_state = "normal"
-	character.velocity.y = -65536 * 3
-	character.move_and_slide()
-	
 	
 	model.position.x = SGFixed.to_float(character.fixed_position_x)
-	model.position.y = -SGFixed.to_float(character.fixed_position_y) - 3
+	model.position.y = -SGFixed.to_float(character.fixed_position_y) - 4
 	
 	if character.left_side:
 		x_velocity = -13000
@@ -35,7 +31,7 @@ func State_Physics_Update(input: Dictionary):
 	
 	character.move_and_slide()
 	model.position.x = SGFixed.to_float(character.fixed_position_x)
-	model.position.y = -SGFixed.to_float(character.fixed_position_y) - 3
+	model.position.y = -SGFixed.to_float(character.fixed_position_y) - 4
 	
 	if character.is_on_floor():
 		if character.left_side and model.global_rotation_degrees.y == -180:

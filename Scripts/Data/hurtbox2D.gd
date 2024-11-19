@@ -70,7 +70,7 @@ func hit(hitbox: Hitbox2D):
 	character.hitstun = hitbox.hitstun
 	character.height_hit = hitbox.height
 	
-	if character.state_machine.current_state == S_Juggle:
+	if character.state_machine.current_state.state_name == "juggle":
 		character.state_machine.current_state.Transitioned.emit(character.state_machine.current_state, "juggle")
 	else:
 		character.state_machine.current_state.Transitioned.emit(character.state_machine.current_state, "hitstun")

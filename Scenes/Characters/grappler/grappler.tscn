@@ -33,7 +33,7 @@ extents_x = 52101
 extents_y = 163840
 
 [sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_vhtgr"]
-extents_x = 95027
+extents_x = 80896
 extents_y = 163840
 
 [node name="SGCharacter" type="SGCharacterBody2D" node_paths=PackedStringArray("hurtbox", "throwbox", "state_machine", "model") groups=["network_sync"]]

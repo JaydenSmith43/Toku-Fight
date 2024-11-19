@@ -61,6 +61,9 @@ func State_Physics_Update(input: Dictionary):
 		character.take_damage(18)
 		SyncManager.play_sound(str(get_path()) + ":explosion", SFX_EXPLOSION)
 	if character.current_frame == 200:
+		character.camera_state = "normal"
+		character.velocity.y = -65536 * 3
+		character.move_and_slide()
 		Transitioned.emit(self, "juggle")
 
 func get_gravity() -> float:
