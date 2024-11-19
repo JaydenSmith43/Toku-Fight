@@ -11,6 +11,7 @@ var otherPlayer : SGCharacterBody2D
 func Enter():
 	character.current_frame = 0
 	blockstun_frames = character.blockstun
+	character.velocity.x = 0
 	
 	if anim_player.is_playing():
 		anim_player.stop()
@@ -30,12 +31,22 @@ func Enter():
 		I_right = "P2_Right"
 		I_down = "P2_Down"
 		otherPlayer = get_tree().get_nodes_in_group("player1")[0]
+	
+	if character.left_side:
+		character.velocity.x = -10660 #stun_velocity
+	else:
+		character.velocity.x = 10660
 
 func Exit():
 	pass
 
 func State_Physics_Update(input: Dictionary):
 	character.current_frame += 1
+	character.velocity.x = lerp(character.velocity.x, 0, 0.1)
+	
+	character.move_and_slide()
+	model.position.x = SGFixed.to_float(character.fixed_position_x)
+	model.position.y = -SGFixed.to_float(character.fixed_position_y)
 	
 	#region Input
 	if Input.is_action_pressed(I_left) and Input.is_action_pressed(I_down) and character.left_side == true:

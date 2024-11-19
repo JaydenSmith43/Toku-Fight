@@ -27,12 +27,10 @@ script = ExtResource("1_5ed8j")
 
 [node name="test1" parent="." groups=["player1"] instance=ExtResource("2_c13du")]
 fixed_position_x = -524288
-visible = false
 position = Vector2(-8, 0)
 
 [node name="test2" parent="." groups=["player2"] instance=ExtResource("2_c13du")]
 fixed_position_x = 524288
-visible = false
 position = Vector2(8, 0)
 
 [node name="Floor" type="SGStaticBody2D" parent="."]

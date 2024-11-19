@@ -38,6 +38,7 @@ var cancel := false
 var throw_state_frame := 0
 var current_frame := 0
 var pause = false
+var hittable = true
 
 func _ready():
 	healthbar.init_health(health)
@@ -136,7 +137,8 @@ func _save_state() -> Dictionary:
 		buffered_move = buffered_move,
 		pause = pause,
 		input_current_frame = input_current_frame,
-		camera_state = camera_state
+		camera_state = camera_state,
+		hittable = hittable,
 	}
 
 func _load_state(state: Dictionary) -> void:
@@ -161,11 +163,12 @@ func _load_state(state: Dictionary) -> void:
 	pause = state['pause']
 	input_current_frame = state['input_current_frame']
 	camera_state = state['camera_state']
+	hittable = state['hittable']
 	
 	sync_to_physics_engine()
 	#print_rich("[color=CORNFLOWER_BLUE]L_pos_x: " + str(fixed_position_x))
 	#print_rich("[color=CORNFLOWER_BLUE]L_pos_y: " + str(fixed_position_y))
 	#print_rich("[color=CORNFLOWER_BLUE]L_velocity_x: " + str(velocity.x))
 	#print_rich("[color=CORNFLOWER_BLUE]L_velocity_y: " + str(velocity.y))
-	#print_rich("[color=CORNFLOWER_BLUE]L_cancel: " + str(cancel))
+	#print_rich("[color=CORNFLOWER_BLUE]L_hittable: " + str(hittable))
 	#print_rich("[color=CORNFLOWER_BLUE]L_current_state: [color=RED]" + state_machine.current_state.state_name)

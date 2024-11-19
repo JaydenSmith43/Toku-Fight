@@ -63,7 +63,6 @@ func State_Physics_Update(input: Dictionary):
 			else:
 				model.rotate_y(deg_to_rad(90))
 			Transitioned.emit(self, "idle")
-	
 
 func tech_throw():
 	anim_player.play("throw_tech")

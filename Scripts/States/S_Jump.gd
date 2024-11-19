@@ -55,7 +55,7 @@ func State_Physics_Update(input: Dictionary): #ADD a check for facing left witho
 	
 	check_jump_attack(input)
 	
-	if character.is_on_floor() : #and current_frame > 20
+	if character.is_on_floor(): #and current_frame > 20
 		#if input.get("input_vector", Vector2.ZERO).y > 0:
 			#if (character.fixed_position.x - otherPlayer.fixed_position.x < 0):
 				#model.rotation_degrees.z = 0

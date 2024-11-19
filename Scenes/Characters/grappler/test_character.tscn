@@ -7,7 +7,7 @@
 [ext_resource type="Shape2D" path="res://Scenes/Characters/testCh1/JumpCol.tres" id="3_cmowc"]
 [ext_resource type="Script" path="res://Scripts/Data/hurtbox3D.gd" id="4_1oxew"]
 [ext_resource type="PackedScene" uid="uid://ook7dmepmfw5" path="res://Scenes/UI/ui.tscn" id="4_qrdf1"]
-[ext_resource type="Script" path="res://Scripts/state_machine.gd" id="5_2ikf7"]
+[ext_resource type="Script" path="res://Scripts/States/state_machine.gd" id="5_2ikf7"]
 [ext_resource type="Script" path="res://Scripts/States/S_Idle.gd" id="6_vvwnm"]
 [ext_resource type="Script" path="res://Scripts/States/S_Ground_Attack.gd" id="7_suixc"]
 [ext_resource type="PackedScene" uid="uid://bh6x5sy31wviu" path="res://Scenes/UI/health_bar.tscn" id="7_xdp0n"]

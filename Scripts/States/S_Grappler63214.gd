@@ -28,6 +28,7 @@ func Exit():
 	character.throwing = false
 	character.current_frame = 0
 	character.throw_state_frame = 0
+	character.velocity.x = 0
 
 func State_Physics_Update(input: Dictionary):
 	if !character.throwing:
@@ -57,7 +58,10 @@ func State_Physics_Update(input: Dictionary):
 		character.move_and_slide()
 		model.position.x = SGFixed.to_float(character.fixed_position_x)
 		model.position.y = -SGFixed.to_float(character.fixed_position_y)
-			
+		
+		if character.throw_state_frame >= 150:
+			character.camera_state = "normal"
+		
 		if character.throw_state_frame == throw_end_frame:
 			character.camera_state = "normal"
 			character.move_name = "idle"

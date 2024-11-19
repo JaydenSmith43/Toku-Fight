@@ -9,7 +9,7 @@
 [ext_resource type="Script" path="res://Scripts/input.gd" id="4_vqsk8"]
 [ext_resource type="PackedScene" uid="uid://ook7dmepmfw5" path="res://Scenes/UI/ui.tscn" id="5_7e86r"]
 [ext_resource type="PackedScene" uid="uid://bh6x5sy31wviu" path="res://Scenes/UI/health_bar.tscn" id="6_3344m"]
-[ext_resource type="Script" path="res://Scripts/state_machine.gd" id="7_0d10p"]
+[ext_resource type="Script" path="res://Scripts/States/state_machine.gd" id="7_0d10p"]
 [ext_resource type="Script" path="res://Scripts/States/S_Idle.gd" id="8_5jqhv"]
 [ext_resource type="Script" path="res://Scripts/States/S_Ground_Attack.gd" id="9_alnoo"]
 [ext_resource type="Script" path="res://Scripts/States/S_Grappler63214.gd" id="10_3aeij"]

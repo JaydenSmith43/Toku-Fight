@@ -32,7 +32,7 @@ func tick_physics_process() -> void:
 		_on_area_entered(overlapping_areas[0])
 
 func _on_area_entered(hitbox : Hitbox2D) -> void:
-	if hitbox == null:
+	if hitbox == null or !character.hittable:
 		return
 	
 	if hitbox.height == "low" and character.low_blocking == true:
@@ -70,7 +70,10 @@ func hit(hitbox: Hitbox2D):
 	character.hitstun = hitbox.hitstun
 	character.height_hit = hitbox.height
 	
-	character.state_machine.current_state.Transitioned.emit(character.state_machine.current_state, "hitstun")
+	if character.state_machine.current_state == S_Juggle:
+		character.state_machine.current_state.Transitioned.emit(character.state_machine.current_state, "juggle")
+	else:
+		character.state_machine.current_state.Transitioned.emit(character.state_machine.current_state, "hitstun")
 	SyncManager.despawn(hitbox) #if hitboxes are grouped, delete the others in the group
 	choose_hit_sound(hitbox.sfx)
 	
