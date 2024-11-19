@@ -18,11 +18,11 @@ func _physics_process(delta):
 		#position.x = lerp(position.x, midpoint, delta * 10)
 		position.x = midpoint
 	
-	if camera_state == "normal":
-		normal_y_tracking()
-		return
-	elif camera_state == "buster":
+	if character1.camera_state == "buster" or character2.camera_state == "buster":
 		buster_y_tracking()
+		return
+	elif camera_state == "normal":
+		normal_y_tracking()
 
 func normal_y_tracking():
 	if character1.fixed_position_y < character2.fixed_position_y:

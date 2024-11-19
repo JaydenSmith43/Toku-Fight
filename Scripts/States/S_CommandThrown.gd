@@ -12,6 +12,8 @@ var jump_velocity = 46811
 var jump_gravity = 1000
 var fall_gravity = 674
 
+const SFX_EXPLOSION = preload("res://SFX/Combat/explosion.mp3")
+
 func Enter():
 	character.being_thrown = true
 	anim_player.play("buster_taker")
@@ -42,8 +44,9 @@ func State_Physics_Update(input: Dictionary):
 	model.position.x = SGFixed.to_float(character.fixed_position_x)
 	model.position.y = -SGFixed.to_float(character.fixed_position_y)
 	
-	if character.current_frame == 170: #TODO SEND THEM TO KNOCKDOWN STATE FOR CERTAIN AMOUNT OF FRAMES
+	if character.current_frame == 165: #TODO SEND THEM TO KNOCKDOWN STATE FOR CERTAIN AMOUNT OF FRAMES
 		character.take_damage(18)
+		SyncManager.play_sound(str(get_path()) + ":explosion", SFX_EXPLOSION)
 	if character.current_frame == 280:
 		if character.left_side:
 			model.rotate_y(deg_to_rad(-90))

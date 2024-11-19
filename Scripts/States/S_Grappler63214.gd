@@ -46,6 +46,7 @@ func State_Physics_Update(input: Dictionary):
 			Transitioned.emit(self, "idle")
 	else:
 		character.throw_state_frame += 1
+		character.camera_state = "buster"
 		
 		if character.throw_state_frame == 60:
 			character.velocity.y = -46811
@@ -58,6 +59,7 @@ func State_Physics_Update(input: Dictionary):
 		model.position.y = -SGFixed.to_float(character.fixed_position_y)
 			
 		if character.throw_state_frame == throw_end_frame:
+			character.camera_state = "normal"
 			character.move_name = "idle"
 			Transitioned.emit(self, "idle")
 

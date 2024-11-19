@@ -135,7 +135,8 @@ func _save_state() -> Dictionary:
 		cancel = cancel,
 		buffered_move = buffered_move,
 		pause = pause,
-		input_current_frame = input_current_frame
+		input_current_frame = input_current_frame,
+		camera_state = camera_state
 	}
 
 func _load_state(state: Dictionary) -> void:
@@ -159,6 +160,7 @@ func _load_state(state: Dictionary) -> void:
 	buffered_move = state['buffered_move']
 	pause = state['pause']
 	input_current_frame = state['input_current_frame']
+	camera_state = state['camera_state']
 	
 	sync_to_physics_engine()
 	#print_rich("[color=CORNFLOWER_BLUE]L_pos_x: " + str(fixed_position_x))
