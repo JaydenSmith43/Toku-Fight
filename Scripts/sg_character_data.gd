@@ -3,7 +3,10 @@ extends SGCharacterBody2D
 var input_prefix : String = "P1_"
 @onready var healthbar = $UI/HealthBar
 @onready var input_display = $UI
-@onready var label = $UI/HealthBar/StateLabel
+@onready var name_label = $UI/NameLabel
+@onready var round_count_1 = $UI/RoundCount1
+@onready var round_count_2 = $UI/RoundCount2
+#@onready var label = $UI/HealthBar/StateLabel
 @onready var input_array = $Input
 @onready var anim_player = $model/AnimationPlayer
 @onready var collision = $collision
@@ -11,6 +14,7 @@ var input_prefix : String = "P1_"
 @export var throwbox : SGArea2D
 @export var state_machine : Node
 @export var model : Node3D
+@export var game_manager : Node
 
 var character_name = "grappler"
 var motions = ["j214", "63214"]
@@ -37,20 +41,25 @@ var teching := false
 var cancel := false
 var throw_state_frame := 0
 var current_frame := 0
-var pause = false
 var hittable = true
+var combo = 0
 
 func _ready():
 	healthbar.init_health(health)
 	up_direction = SGFixed.vector2(0, -65536)
 	
 	if is_in_group("player1"):
-		GameManager.player1 = self
+		game_manager.player1 = self
 	else:
-		GameManager.player2 = self
+		game_manager.player2 = self
 		healthbar.position.x = 1100
 		healthbar.rotation_degrees = 180
+		name_label.position.x = 1908 - 202
+		name_label.horizontal_alignment = 1
+		round_count_1.position.x = 1123
+		round_count_2.position.x = 1159
 		model.swap_color(2)
+	game_manager.game_start()
 
 func take_damage(damage : int):
 	health -= damage
@@ -102,9 +111,14 @@ func _predict_remote_input(previous_input: Dictionary, ticks_since_real_input: i
 	return input
 
 func _network_process(input: Dictionary) -> void:
-	#if input.get("a"):
-		#GameManager.pause_game()
-	if pause:
+	#GameManager.game_state_update()
+	if input.get("a"):
+		game_manager.pause_game()
+	
+	if game_manager.disable_input:
+		input.clear()
+	
+	if game_manager.pause:
 		pass
 	else:
 		input_array.input_handler(self, input)
@@ -135,10 +149,16 @@ func _save_state() -> Dictionary:
 		model_rotation_y = model.rotation.y,
 		cancel = cancel,
 		buffered_move = buffered_move,
-		pause = pause,
 		input_current_frame = input_current_frame,
 		camera_state = camera_state,
 		hittable = hittable,
+		combo = combo,
+		
+		pause = game_manager.pause,
+		p1_rounds = game_manager.p1_rounds,
+		p2_rounds = game_manager.p2_rounds,
+		current_round = game_manager.current_round,
+		current_game_state = game_manager.current_game_state,
 	}
 
 func _load_state(state: Dictionary) -> void:
@@ -160,10 +180,16 @@ func _load_state(state: Dictionary) -> void:
 	model.rotation.y = state['model_rotation_y']
 	cancel = state['cancel']
 	buffered_move = state['buffered_move']
-	pause = state['pause']
 	input_current_frame = state['input_current_frame']
 	camera_state = state['camera_state']
 	hittable = state['hittable']
+	combo = state['combo']
+	
+	game_manager.pause = state['pause']
+	game_manager.p1_rounds = state['p1_rounds']
+	game_manager.p2_rounds = state['p2_rounds']
+	game_manager.current_round = state['current_round']
+	game_manager.current_game_state = state['current_game_state']
 	
 	sync_to_physics_engine()
 	#print_rich("[color=CORNFLOWER_BLUE]L_pos_x: " + str(fixed_position_x))

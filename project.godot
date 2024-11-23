@@ -22,7 +22,6 @@ SyncDebugger="*res://addons/godot-rollback-netcode/SyncDebugger.gd"
 SyncManager="*res://addons/godot-rollback-netcode/SyncManager.gd"
 SyncReplay="*res://addons/godot-rollback-netcode/SyncReplay.gd"
 Attack="*res://Scripts/Global/attack.gd"
-GameManager="*res://Scripts/Global/game_manager.gd"
 
 [display]
 
