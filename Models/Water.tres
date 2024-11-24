@@ -1,7 +1,0 @@
-[gd_resource type="StandardMaterial3D" format=3 uid="uid://b8r8suxlsyk5a"]
-
-[resource]
-resource_name = "Water"
-cull_mode = 2
-albedo_color = Color(0.301439, 0.526276, 0.906548, 1)
-roughness = 0.5

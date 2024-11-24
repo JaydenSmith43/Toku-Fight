@@ -9,10 +9,10 @@
 [ext_resource type="PackedScene" uid="uid://b2ax3p2ss2g8q" path="res://Scenes/Main/sg_boundaries.tscn" id="4_fckii"]
 [ext_resource type="PackedScene" uid="uid://30mde2a3la3" path="res://Scenes/Main/test_menu.tscn" id="5_706ux"]
 [ext_resource type="Texture2D" uid="uid://b40oslxvafonh" path="res://Sprites/ui/round_count.png" id="6_uidtj"]
-[ext_resource type="Material" uid="uid://55bnlh6hdplk" path="res://Models/shiny.tres" id="11_5udsy"]
-[ext_resource type="Material" uid="uid://b25fnqenlhknj" path="res://Models/Rock.tres" id="12_36gv5"]
-[ext_resource type="Material" uid="uid://bbmtvjlr3d431" path="res://Models/wood.tres" id="13_8mt1d"]
-[ext_resource type="Material" uid="uid://brrm3bwvedoer" path="res://Models/shader_material_thing.tres" id="14_c08op"]
+[ext_resource type="Material" uid="uid://55bnlh6hdplk" path="res://Materials/shiny.tres" id="11_5udsy"]
+[ext_resource type="Material" uid="uid://b25fnqenlhknj" path="res://Materials/Rock.tres" id="12_36gv5"]
+[ext_resource type="Material" uid="uid://bbmtvjlr3d431" path="res://Materials/wood.tres" id="13_8mt1d"]
+[ext_resource type="Material" uid="uid://brrm3bwvedoer" path="res://Materials/shader_material_thing.tres" id="14_c08op"]
 
 [sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_3na81"]
 extents_x = 3276800
