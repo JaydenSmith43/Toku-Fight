@@ -8,8 +8,8 @@
 [ext_resource type="Material" uid="uid://boov5m5w86nyq" path="res://Materials/grid_mat.tres" id="3_pokt6"]
 [ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="3_t4hs0"]
 [ext_resource type="PackedScene" uid="uid://b2ax3p2ss2g8q" path="res://Scenes/Main/sg_boundaries.tscn" id="4_fckii"]
-[ext_resource type="Texture2D" uid="uid://dxmln5laa5hjw" path="res://Sprites/icon.svg" id="4_ve5p3"]
 [ext_resource type="PackedScene" uid="uid://30mde2a3la3" path="res://Scenes/Main/test_menu.tscn" id="5_706ux"]
+[ext_resource type="Texture2D" uid="uid://b40oslxvafonh" path="res://Sprites/ui/round_count.png" id="6_uidtj"]
 
 [sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_3na81"]
 extents_x = 3276800
@@ -27,22 +27,37 @@ size = Vector3(100, 1, 11.989)
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_5ed8j")
 
-[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("network_timer")]
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("match_timer", "countdown_timer", "round_end_timer", "fade_texture")]
 script = ExtResource("2_g8ds5")
-network_timer = NodePath("NetworkTimer")
+match_timer = NodePath("MatchTimer")
+countdown_timer = NodePath("CountdownTimer")
+round_end_timer = NodePath("RoundEndTimer")
+fade_texture = NodePath("../CanvasLayer/fade_texture")
 
-[node name="NetworkTimer" type="Node" parent="GameManager"]
+[node name="MatchTimer" type="Node" parent="GameManager"]
 script = ExtResource("3_t4hs0")
 one_shot = true
-wait_ticks = 5940
+wait_ticks = 3600
+
+[node name="CountdownTimer" type="Node" parent="GameManager"]
+script = ExtResource("3_t4hs0")
+one_shot = true
+wait_ticks = 180
+
+[node name="RoundEndTimer" type="Node" parent="GameManager"]
+script = ExtResource("3_t4hs0")
+one_shot = true
+wait_ticks = 180
 
 [node name="test1" parent="." node_paths=PackedStringArray("game_manager") groups=["player1"] instance=ExtResource("2_c13du")]
 fixed_position_x = -524288
+visible = false
 position = Vector2(-8, 0)
 game_manager = NodePath("../GameManager")
 
 [node name="test2" parent="." node_paths=PackedStringArray("game_manager") groups=["player2"] instance=ExtResource("2_c13du")]
 fixed_position_x = 524288
+visible = false
 position = Vector2(8, 0)
 game_manager = NodePath("../GameManager")
 
@@ -125,16 +140,15 @@ transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 11.989, 0, 0, 0)
 mesh = SubResource("BoxMesh_5kyyc")
 skeleton = NodePath("../..")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-visible = false
-
-[node name="modulate" type="Sprite2D" parent="CanvasLayer"]
-modulate = Color(1, 0, 0, 1)
-position = Vector2(1047.03, 580.088)
-scale = Vector2(20.0538, 11.1863)
-texture = ExtResource("4_ve5p3")
-
 [node name="TestMenu" parent="." instance=ExtResource("5_706ux")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="fade_texture" type="Sprite2D" parent="CanvasLayer"]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(963.43, 510.888)
+scale = Vector2(21.3601, 12.2676)
+texture = ExtResource("6_uidtj")
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("character1", "character2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 16)
@@ -155,3 +169,7 @@ environment = ExtResource("3_k4mgk")
 visible = false
 character1 = NodePath("../test1")
 character2 = NodePath("../test2")
+
+[connection signal="timeout" from="GameManager/MatchTimer" to="GameManager" method="_on_match_timer_timeout"]
+[connection signal="timeout" from="GameManager/CountdownTimer" to="GameManager" method="_on_countdown_timer_timeout"]
+[connection signal="timeout" from="GameManager/RoundEndTimer" to="GameManager" method="_on_round_end_timer_timeout"]

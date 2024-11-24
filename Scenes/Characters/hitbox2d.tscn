@@ -6,7 +6,7 @@
 
 [sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_cgwjc"]
 
-[node name="Hitbox" type="SGArea2D" node_paths=PackedStringArray("timer")]
+[node name="Hitbox" type="SGArea2D" node_paths=PackedStringArray("timer") groups=["p1_hitbox"]]
 collision_layer = 8
 collision_mask = 4
 script = ExtResource("1_1p8x2")

@@ -36,6 +36,8 @@ enabled=PackedStringArray("res://addons/godot-rollback-netcode/plugin.cfg")
 [global_group]
 
 network_sync=""
+p1_hitbox=""
+p2_hitbox=""
 
 [input]
 
@@ -145,6 +147,8 @@ Visible_Toggle={
 
 rollback/sound_manager/default_sound_bus="Sound"
 rollback/classes/message_serializer="res://Scripts/Networking/custom_message_serialization.gd"
+rollback/debug/rollback_ticks=1
+rollback/debug/random_rollback_ticks=3
 rollback/log_inspector/replay_match_scene_path="res://Scenes/Main/vs_mode.tscn"
 
 [rendering]

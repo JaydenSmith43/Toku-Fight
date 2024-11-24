@@ -4,6 +4,8 @@ var input_prefix : String = "P1_"
 @onready var healthbar = $UI/HealthBar
 @onready var input_display = $UI
 @onready var name_label = $UI/NameLabel
+@onready var round_label = $UI/RoundLabel
+@onready var time_label = $UI/TimeLabel
 @onready var round_count_1 = $UI/RoundCount1
 @onready var round_count_2 = $UI/RoundCount2
 #@onready var label = $UI/HealthBar/StateLabel
@@ -22,6 +24,7 @@ var charge = ["28"]
 var camera_state = "normal"
 
 var health := 100
+var list_of_hitboxes = []
 
 var input_current_frame := 0
 var left_side := false
@@ -64,7 +67,34 @@ func _ready():
 func take_damage(damage : int):
 	health -= damage
 	healthbar._set_health(health)
+	
+	if health <= 0:
+		game_manager.round_end()
 
+func reset_self():
+	if is_in_group("player1"):
+		fixed_position.x = -8 * 65536
+		model.rotation_degrees.z = 0
+		model.scale = Vector3(1,1,1)
+		left_side = true
+	else:
+		fixed_position.x = 8 * 65536
+		model.rotation_degrees.z = 180
+		model.scale = Vector3(-1,-1,-1)
+		left_side = false
+	sync_to_physics_engine()
+	health = 100
+	model.position.x = SGFixed.to_float(fixed_position_x)
+	model.position.y = -SGFixed.to_float(fixed_position_y)
+
+func update_hitboxes():
+	var hitboxes
+	if is_in_group("player1"):
+		hitboxes = get_tree().get_nodes_in_group("p1_hitbox")
+	else:
+		hitboxes = get_tree().get_nodes_in_group("p2_hitbox")
+	for hitbox in hitboxes:
+		hitbox.tick_physics_process()
 func _get_local_input() -> Dictionary:
 	var input_vector : Vector2i
 	
@@ -112,8 +142,8 @@ func _predict_remote_input(previous_input: Dictionary, ticks_since_real_input: i
 
 func _network_process(input: Dictionary) -> void:
 	#GameManager.game_state_update()
-	if input.get("a"):
-		game_manager.pause_game()
+	#if input.get("a"):
+	#	game_manager.pause_game()
 	
 	if game_manager.disable_input:
 		input.clear()
@@ -124,6 +154,7 @@ func _network_process(input: Dictionary) -> void:
 		input_array.input_handler(self, input)
 		input_display.update_input_display()
 		state_machine.tick_physics_process(input)
+		update_hitboxes()
 		hurtbox.tick_physics_process()
 		throwbox.tick_physics_process()
 	

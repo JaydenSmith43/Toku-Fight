@@ -3,10 +3,16 @@ extends Node
 enum Game_State {
 	ROUND_INTRO,
 	ROUND,
-	ROUND_END
+	ROUND_END,
+	FADE_IN,
+	FADE_OUT,
+	FINAL_HIT_PAUSE,
 }
 
-@export var network_timer : NetworkTimer
+@export var match_timer : NetworkTimer
+@export var countdown_timer : NetworkTimer
+@export var round_end_timer : NetworkTimer
+@export var fade_texture : Sprite2D
 
 var player1
 var player2
@@ -15,20 +21,46 @@ var current_round := 0
 var p1_rounds := 0
 var p2_rounds := 0
 var pause = false
-var disable_input = true
-var current_game_state = Game_State
+var disable_input = false
+var current_game_state = Game_State.ROUND_INTRO
 
 func game_state_update():
 	if pause:
 		return
 	match current_game_state:
 		Game_State.ROUND_INTRO:
-			pass
+			round_intro()
 		Game_State.ROUND:
 			pass
+		Game_State.FADE_IN:
+			fade_in()
+		Game_State.FADE_OUT:
+			fade_out()
 		Game_State.ROUND_END:
 			pass
+		Game_State.FINAL_HIT_PAUSE:
+			pass
+
+
+func fade_in():
+	fade_texture.modulate.a -= 0.05
 	
+	if fade_texture.modulate.a <= 0:
+		fade_texture.modulate.a = 0
+		current_game_state = Game_State.ROUND
+
+func fade_out():
+	fade_texture.modulate.a += 0.05
+	
+	
+	if fade_texture.modulate.a >= 1:
+		fade_texture.modulate.a = 1
+		current_game_state = Game_State.ROUND
+
+func _physics_process(_delta: float) -> void:
+	player1.time_label.text = str(match_timer.ticks_left / 60)
+	player2.time_label.text = str(match_timer.ticks_left / 60)
+	game_state_update()
 
 func pause_game():
 	pause = !pause
@@ -40,56 +72,52 @@ func pause_game():
 		player1.anim_player.play()
 		player2.anim_player.play()
 
+#func game_reset():
+	#player1.reset_self()
+	#player2.reset_self()
+	#
+	#if player1 == null or player2 == null:
+		#return
+	#
+	#current_round = 0
+	#p1_rounds = 0
+	#p2_rounds = 0
+
 func game_start():
 	if player1 == null or player2 == null:
 		return
 	
-	current_round = 1
+	current_round = 0
 	p1_rounds = 0
 	p2_rounds = 0
-	
-	if (player1.fixed_position.x - player2.fixed_position.x < 0):
-		player1.model.rotation_degrees.z = 0
-		player1.model.scale = Vector3(1,1,1)
-		player1.left_side = true
-		player2.model.rotation_degrees.z = 180
-		player2.model.scale = Vector3(-1,-1,-1)
-		player2.left_side = false
-	else:
-		player2.model.rotation_degrees.z = 0
-		player2.model.scale = Vector3(1,1,1)
-		player2.left_side = true
-		player1.model.rotation_degrees.z = 180
-		player1.model.scale = Vector3(-1,-1,-1)
-		player1.left_side = false
-	
-	player1.model.position.x = SGFixed.to_float(player1.fixed_position_x)
-	player1.model.position.y = -SGFixed.to_float(player1.fixed_position_y)
-	player2.model.position.x = SGFixed.to_float(player2.fixed_position_x)
-	player2.model.position.y = -SGFixed.to_float(player2.fixed_position_y)
-	
-	
 
-func round_start():
-	player1.health = 100
-	player2.health = 100
-	player1.fixed_position.x = -8
-	player2.fixed_position.x = 8
-	
+func final_hit_pause():
+	pass
+
+func round_intro():
+	current_game_state = Game_State.FADE_IN
+	disable_input = false
 	current_round += 1
-	network_timer.start()
+	player1.round_label.text = "Round " + str(current_round)
+	player2.round_label.text = "Round " + str(current_round)
+	
 	#Do countdown animation
 	
 	
 	#Start time after countdown is over
+	countdown_timer.start()
 	
-	
-	#give input back to player (this can be done with a start state)
-	
-	pass
+
+func round_start():
+	match_timer.start()
 
 func round_end():
-	#remove input from players but keep them in their states 
+	#turn off final hit effect
+	
+	disable_input = true
+	fade_texture.modulate.a = -5
+	current_game_state = Game_State.FADE_OUT
+	round_end_timer.start()
 	#pause the screen on that final hit, do this through?:
 		#modulate canvas node to #ff0000
 		#setting a boolean in the player that when true doesn't run physics process
@@ -97,11 +125,22 @@ func round_end():
 		#then after resume
 	#fade from red to no alpha
 	#make all objects black/very dark
-	#increase round point
+	
+	#determine winner an give them point
 	#check for if that resulted in a win
 	
-	pass
 
 func win_game():
-	
+	#go to win screen
 	pass
+
+func _on_countdown_timer_timeout() -> void:
+	round_start()
+
+func _on_match_timer_timeout() -> void:
+	round_end()
+
+func _on_round_end_timer_timeout() -> void:
+	player1.state_machine.current_state.Transitioned.emit(player1.state_machine.current_state, "intro")
+	player2.state_machine.current_state.Transitioned.emit(player2.state_machine.current_state, "intro")
+	round_intro()

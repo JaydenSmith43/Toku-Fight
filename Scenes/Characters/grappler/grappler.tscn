@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://c110s1snwl2cq"]
+[gd_scene load_steps=35 format=3 uid="uid://c110s1snwl2cq"]
 
 [ext_resource type="Script" path="res://Scripts/sg_character_data.gd" id="1_fjl6n"]
 [ext_resource type="Texture2D" uid="uid://bmxre7rw1js2a" path="res://Sprites/grappler_ref.png" id="2_1migp"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://Scripts/States/S_Ground_Attack.gd" id="12_qkye0"]
 [ext_resource type="FontFile" uid="uid://blv6ltia655ri" path="res://Fonts/Bebas Neue Pro Expanded Bold.otf" id="12_xgqsd"]
 [ext_resource type="Script" path="res://Scripts/States/S_Grappler63214.gd" id="13_0jsj3"]
+[ext_resource type="Script" path="res://Scripts/States/S_Intro.gd" id="14_b7ffk"]
 [ext_resource type="Script" path="res://Scripts/States/S_Jump.gd" id="14_k2vgv"]
 [ext_resource type="Script" path="res://Scripts/States/S_Block.gd" id="15_kiua0"]
 [ext_resource type="Script" path="res://Scripts/States/S_Prejump.gd" id="16_5qm8e"]
@@ -196,7 +197,13 @@ horizontal_alignment = 1
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("10_t1wsc")
-initial_state = NodePath("Idle")
+initial_state = NodePath("Intro")
+
+[node name="Intro" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+script = ExtResource("14_b7ffk")
+character = NodePath("../..")
+model = NodePath("../../model")
+state_name = "intro"
 
 [node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
 script = ExtResource("11_s2jcs")

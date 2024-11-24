@@ -26,12 +26,14 @@ func net_ready() -> void:
 		set_collision_mask_bit(2, false)
 		set_collision_layer_bit(4, true)
 		set_collision_mask_bit(1, true)
+		remove_from_group("p1_hitbox")
+		add_to_group("p2_hitbox")
 	tell_script.emit(left_side, fixed_pos_x, fixed_pos_y, extents_x, extents_y)
 	timer.wait_ticks = end_frame
 	timer.start()
 	sync_to_physics_engine()
 
-func _physics_process(delta: float) -> void:
+func tick_physics_process() -> void:
 	sync_to_physics_engine()
 
 func _network_spawn(data: Dictionary) -> void:

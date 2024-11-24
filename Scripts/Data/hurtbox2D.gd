@@ -60,6 +60,7 @@ func block(hitbox: Hitbox2D):
 	SyncManager.despawn(hitbox)
 
 func hit(hitbox: Hitbox2D):
+	print(str(multiplayer.multiplayer_peer.get_unique_id()) + ":current_frame: " + str(character.current_frame) + ": hit")
 	if character.is_in_group("player1"):
 		get_tree().get_nodes_in_group("player2")[0].cancel = true
 	else:
