@@ -11,6 +11,6 @@ shader_parameter/WaveIntensity = 0.2
 shader_parameter/WaveColor = Color(0, 1, 0.986607, 1)
 shader_parameter/WaterColor = Color(0, 0.169643, 1, 1)
 shader_parameter/FoamSize = 2.47
-shader_parameter/WaterOpacity = 1.0
+shader_parameter/WaterOpacity = 2.0
 shader_parameter/tex_frg_19 = ExtResource("2_yp7kl")
 shader_parameter/tex_frg_11 = ExtResource("2_yp7kl")
