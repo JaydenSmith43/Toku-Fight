@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://brrm3bwvedoer"]
+
+[ext_resource type="Shader" path="res://Models/water.gdshader" id="1_oeig6"]
+[ext_resource type="Texture2D" uid="uid://dxmln5laa5hjw" path="res://Sprites/icon.svg" id="2_yp7kl"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_oeig6")
+shader_parameter/WaveSpeed = 0.01
+shader_parameter/WaveIntensity = 0.2
+shader_parameter/WaveColor = Color(0, 1, 0.986607, 1)
+shader_parameter/WaterColor = Color(0, 0.169643, 1, 1)
+shader_parameter/FoamSize = 2.47
+shader_parameter/WaterOpacity = 1.0
+shader_parameter/tex_frg_19 = ExtResource("2_yp7kl")
+shader_parameter/tex_frg_11 = ExtResource("2_yp7kl")
