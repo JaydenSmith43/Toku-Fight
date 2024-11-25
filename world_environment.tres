@@ -1,13 +1,13 @@
 [gd_resource type="Environment" load_steps=5 format=3 uid="uid://jsqpfw82fbi"]
 
 [sub_resource type="Gradient" id="Gradient_y7los"]
-offsets = PackedFloat32Array(0.40249, 0.568465)
-colors = PackedColorArray(0.976398, 0.730242, 1.54018e-06, 1, 0.91, 0.106167, 0, 1)
+offsets = PackedFloat32Array(0.46888, 0.572614, 0.66805)
+colors = PackedColorArray(0.976398, 0.730242, 1.54018e-06, 1, 0.91, 0.106167, 0, 1, 0.456591, 0.0310078, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_fk1hi"]
 gradient = SubResource("Gradient_y7los")
-fill_from = Vector2(0, 0.00512821)
-fill_to = Vector2(0, 1)
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0.00512821)
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_pv6oa"]
 panorama = SubResource("GradientTexture2D_fk1hi")

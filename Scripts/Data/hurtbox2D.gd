@@ -16,6 +16,8 @@ const SFX_BLOCK_1 = preload("res://SFX/Combat/block/block_1.mp3")
 const SFX_BLOCK_2 = preload("res://SFX/Combat/block/block_2.mp3")
 const SFX_BLOCK_3 = preload("res://SFX/Combat/block/block_3.mp3")
 
+const hit_particle = preload("res://Scenes/effects/hit_particle.tscn")
+
 func _ready():
 	if character.is_in_group("player2"):
 		set_collision_layer_bit(1, false)
@@ -78,6 +80,7 @@ func hit(hitbox: Hitbox2D):
 		character.state_machine.current_state.Transitioned.emit(character.state_machine.current_state, "hitstun")
 	
 	SyncManager.despawn(hitbox) #if hitboxes are grouped, delete the others in the group
+	SyncManager.spawn("hit_particle", get_parent().get_parent(), hit_particle)
 	choose_hit_sound(hitbox.sfx)
 	
 
