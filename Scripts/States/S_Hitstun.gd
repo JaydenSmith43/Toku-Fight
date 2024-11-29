@@ -3,7 +3,14 @@ class_name S_Hitstun
 
 var hitstun_frames := 0
 
+var otherPlayer : SGCharacterBody2D
+
 func Enter():
+	if character.is_in_group("player1"):
+		otherPlayer = get_tree().get_nodes_in_group("player2")[0]
+	else:
+		otherPlayer = get_tree().get_nodes_in_group("player1")[0]
+	
 	character.current_frame = 0
 	hitstun_frames = character.hitstun
 	character.velocity.x = 0
@@ -30,6 +37,9 @@ func Exit():
 	pass
 
 func State_Physics_Update(input: Dictionary):
+	var otherplayer_state = otherPlayer.state_machine.current_state.state_name
+	if otherplayer_state == "thrown":
+		otherPlayer.state_machine.current_state.Transitioned.emit(otherPlayer.state_machine.current_state, "idle")
 	#print("HITSTUN UPDATE")
 	character.current_frame += 1
 	

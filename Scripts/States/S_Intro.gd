@@ -15,7 +15,7 @@ func State_Physics_Update(input: Dictionary):
 	
 	
 	if character.current_frame == 1:
-		#character.game_manager.round_intro()
+		character.game_manager.current_game_state = 0
 		character.reset_self()
 	
 	if character.current_frame == 180:

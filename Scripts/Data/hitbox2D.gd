@@ -1,7 +1,7 @@
 class_name Hitbox2D
 extends SGArea2D
 
-signal tell_script(left_side, fixed_pos_x, fixed_pos_y, extents_x, extents_y)
+signal tell_script(left_side, extents_x, extents_y)
 
 @export var timer : NetworkTimer
 @onready var collision_shape = $SGCollisionShape2D
@@ -13,8 +13,6 @@ var left_side := true
 var player := ""
 var extents_x := 293610
 var extents_y := 228220
-var fixed_pos_x := 0
-var fixed_pos_y := 0
 var end_frame := 6000
 var hitstun := 0
 var blockstun := 0
@@ -28,19 +26,26 @@ func net_ready() -> void:
 		set_collision_mask_bit(1, true)
 		remove_from_group("p1_hitbox")
 		add_to_group("p2_hitbox")
-	tell_script.emit(left_side, fixed_pos_x, fixed_pos_y, extents_x, extents_y)
+	tell_script.emit(left_side, extents_x, extents_y)
 	timer.wait_ticks = end_frame
 	timer.start()
 	sync_to_physics_engine()
 
 func tick_physics_process() -> void:
 	sync_to_physics_engine()
+	#print("hitbox posx:" + str(get_global_fixed_position().x) + ", posy:" + str(get_global_fixed_position().y))
 
 func _network_spawn(data: Dictionary) -> void:
 	damage = data['damage']
 	end_frame = data['end_frame']
-	fixed_pos_x = data['fixed_pos_x']
-	fixed_pos_y = data['fixed_pos_y']
+	left_side = data['left_side']
+	
+	if left_side == true:
+		fixed_position_x = data['fixed_pos_x']
+	else:
+		fixed_position_x = -data['fixed_pos_x']
+	
+	fixed_position_y = data['fixed_pos_y']
 	extents_x = data['extents_x']
 	extents_y = data['extents_y']
 	height = data['height']
@@ -48,7 +53,7 @@ func _network_spawn(data: Dictionary) -> void:
 	hitstun = data['hitstun']
 	blockstun = data['blockstun']
 	player = data['player']
-	left_side = data['left_side']
+	
 	net_ready()
 
 func _on_network_timer_timeout() -> void:

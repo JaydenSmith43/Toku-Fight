@@ -32,6 +32,8 @@ func tick_physics_process() -> void:
 	
 	if overlapping_areas.size() > 0:
 		_on_area_entered(overlapping_areas[0])
+	#elif character.is_in_group("player2"):
+		#print("no overlap")
 
 func _on_area_entered(hitbox : Hitbox2D) -> void:
 	if hitbox == null or !character.hittable:
@@ -62,7 +64,7 @@ func block(hitbox: Hitbox2D):
 	SyncManager.despawn(hitbox)
 
 func hit(hitbox: Hitbox2D):
-	print(str(multiplayer.multiplayer_peer.get_unique_id()) + ":current_frame: " + str(character.current_frame) + ": hit")
+	#print(str(multiplayer.multiplayer_peer.get_unique_id()) + ":current_frame: " + str(character.current_frame) + ": hit")
 	if character.is_in_group("player1"):
 		get_tree().get_nodes_in_group("player2")[0].cancel = true
 	else:
@@ -74,13 +76,13 @@ func hit(hitbox: Hitbox2D):
 	character.height_hit = hitbox.height
 	
 	var current_state_name = character.state_machine.current_state.state_name
-	if current_state_name == "juggle" or current_state_name == "jump":
+	if current_state_name == "juggle" or current_state_name == "jump" or current_state_name == "jumpattack":
 		character.state_machine.current_state.Transitioned.emit(character.state_machine.current_state, "juggle")
 	else:
 		character.state_machine.current_state.Transitioned.emit(character.state_machine.current_state, "hitstun")
 	
 	SyncManager.despawn(hitbox) #if hitboxes are grouped, delete the others in the group
-	SyncManager.spawn("hit_particle", get_parent().get_parent(), hit_particle)
+	#SyncManager.spawn("hit_particle", get_parent().get_parent(), hit_particle)
 	choose_hit_sound(hitbox.sfx)
 	
 

@@ -1,7 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://bdap2qts0jac3"]
+[gd_scene load_steps=15 format=3 uid="uid://bdap2qts0jac3"]
 
 [ext_resource type="Shader" uid="uid://bm631gui83f0m" path="res://Materials/simple_shader.tres" id="1_ygjev"]
 [ext_resource type="Texture2D" uid="uid://dyc4mkp2x1dvd" path="res://Sprites/T_flare13.png" id="2_efxln"]
+[ext_resource type="Script" path="res://Scenes/effects/hit_particle.gd" id="3_j7saw"]
+[ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="4_57g0m"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_huqhg"]
 render_priority = 0
@@ -41,10 +43,25 @@ alpha_curve = SubResource("CurveTexture_h875p")
 
 [sub_resource type="QuadMesh" id="QuadMesh_wl3cu"]
 
-[node name="HitParticle" type="GPUParticles3D"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nt8y6"]
+
+[node name="HitParticle" type="Node3D"]
+script = ExtResource("3_j7saw")
+
+[node name="hit_effect" type="GPUParticles3D" parent="."]
 material_override = SubResource("ShaderMaterial_huqhg")
+emitting = false
 amount = 1
 lifetime = 0.25
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_bric4")
 draw_pass_1 = SubResource("QuadMesh_wl3cu")
+
+[node name="sparks" type="GPUParticles3D" parent="."]
+process_material = SubResource("ParticleProcessMaterial_nt8y6")
+
+[node name="NetworkTimer" type="Node" parent="."]
+script = ExtResource("4_57g0m")
+one_shot = true
+
+[connection signal="timeout" from="NetworkTimer" to="." method="_on_network_timer_timeout"]

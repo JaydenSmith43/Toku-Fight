@@ -1,6 +1,6 @@
 extends ProgressBar
 
-@onready var timer = $Timer
+@export var timer : NetworkTimer
 @onready var damage_bar = $DamageBar
 
 var health = 0 : set = _set_health
@@ -14,8 +14,8 @@ func _set_health(new_health):
 		#queue_free()
 	if health < prev_health:
 		timer.start()
-	else:
-		damage_bar.value = health
+	#else:
+	#	damage_bar.value = health
 
 func init_health(_health):
 	health = _health
@@ -24,5 +24,5 @@ func init_health(_health):
 	damage_bar.max_value = health
 	damage_bar.value = health
 
-func _on_timer_timeout():
+func _on_network_timer_timeout() -> void:
 	damage_bar.value = health

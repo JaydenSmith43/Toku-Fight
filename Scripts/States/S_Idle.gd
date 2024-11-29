@@ -38,6 +38,11 @@ func _ready() -> void:
 		otherPlayer = get_tree().get_nodes_in_group("player1")[0]
 
 func Enter():
+	if model.rotation_degrees.y == -180 and character.left_side:
+		model.rotate_y(deg_to_rad(-90))
+	elif model.rotation_degrees.y == 0 and !character.left_side:
+		model.rotate_y(deg_to_rad(90))
+	
 	character.current_frame = 0
 	character.jump_velocity_x = 0
 	character.velocity.y = 0

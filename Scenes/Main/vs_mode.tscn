@@ -3200,11 +3200,12 @@ shadow_mesh = SubResource("ArrayMesh_q6rul")
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_5ed8j")
 
-[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("match_timer", "countdown_timer", "round_end_timer", "fade_texture")]
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("match_timer", "countdown_timer", "round_end_timer", "final_hit_timer", "fade_texture")]
 script = ExtResource("2_g8ds5")
 match_timer = NodePath("MatchTimer")
 countdown_timer = NodePath("CountdownTimer")
 round_end_timer = NodePath("RoundEndTimer")
+final_hit_timer = NodePath("FinalHitTimer")
 fade_texture = NodePath("../CanvasLayer/fade_texture")
 
 [node name="MatchTimer" type="Node" parent="GameManager"]
@@ -3221,6 +3222,11 @@ wait_ticks = 180
 script = ExtResource("3_t4hs0")
 one_shot = true
 wait_ticks = 180
+
+[node name="FinalHitTimer" type="Node" parent="GameManager"]
+script = ExtResource("3_t4hs0")
+one_shot = true
+wait_ticks = 60
 
 [node name="test1" parent="." node_paths=PackedStringArray("game_manager") groups=["player1"] instance=ExtResource("2_c13du")]
 fixed_position_x = -524288
@@ -3833,3 +3839,4 @@ skeleton = NodePath("")
 [connection signal="timeout" from="GameManager/MatchTimer" to="GameManager" method="_on_match_timer_timeout"]
 [connection signal="timeout" from="GameManager/CountdownTimer" to="GameManager" method="_on_countdown_timer_timeout"]
 [connection signal="timeout" from="GameManager/RoundEndTimer" to="GameManager" method="_on_round_end_timer_timeout"]
+[connection signal="timeout" from="GameManager/FinalHitTimer" to="GameManager" method="_on_final_hit_timer_timeout"]

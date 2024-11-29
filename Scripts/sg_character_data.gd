@@ -69,7 +69,7 @@ func take_damage(damage : int):
 	healthbar._set_health(health)
 	
 	if health <= 0:
-		game_manager.round_end()
+		game_manager.final_hit_pause()
 
 func reset_self():
 	if is_in_group("player1"):
@@ -84,17 +84,19 @@ func reset_self():
 		left_side = false
 	sync_to_physics_engine()
 	health = 100
+	healthbar._set_health(health)
 	model.position.x = SGFixed.to_float(fixed_position_x)
 	model.position.y = -SGFixed.to_float(fixed_position_y)
 
 func update_hitboxes():
 	var hitboxes
-	if is_in_group("player1"):
-		hitboxes = get_tree().get_nodes_in_group("p1_hitbox")
-	else:
-		hitboxes = get_tree().get_nodes_in_group("p2_hitbox")
+	hitboxes = get_tree().get_nodes_in_group("p1_hitbox")
 	for hitbox in hitboxes:
 		hitbox.tick_physics_process()
+	hitboxes = get_tree().get_nodes_in_group("p2_hitbox")
+	for hitbox in hitboxes:
+		hitbox.tick_physics_process()
+
 func _get_local_input() -> Dictionary:
 	var input_vector : Vector2i
 	
@@ -141,6 +143,10 @@ func _predict_remote_input(previous_input: Dictionary, ticks_since_real_input: i
 	return input
 
 func _network_process(input: Dictionary) -> void:
+	#if is_in_group("player1"):
+	#	print_rich("[color=CORNFLOWER_BLUE]P1 netprocess: " + str(current_frame))
+	#else:
+	#	print_rich("[color=CORNFLOWER_BLUE]P2 netprocess: " + str(current_frame))
 	#GameManager.game_state_update()
 	#if input.get("a"):
 	#	game_manager.pause_game()
@@ -151,6 +157,7 @@ func _network_process(input: Dictionary) -> void:
 	if game_manager.pause:
 		pass
 	else:
+		update_hitboxes()
 		input_array.input_handler(self, input)
 		input_display.update_input_display()
 		state_machine.tick_physics_process(input)
@@ -185,6 +192,7 @@ func _save_state() -> Dictionary:
 		hittable = hittable,
 		combo = combo,
 		
+		#fade_modulate_a = game_manager.fade_texture.modulate.a,
 		pause = game_manager.pause,
 		p1_rounds = game_manager.p1_rounds,
 		p2_rounds = game_manager.p2_rounds,
@@ -216,16 +224,21 @@ func _load_state(state: Dictionary) -> void:
 	hittable = state['hittable']
 	combo = state['combo']
 	
+	#game_manager.fade_texture.modulate.a = state['fade_modulate_a']
 	game_manager.pause = state['pause']
 	game_manager.p1_rounds = state['p1_rounds']
 	game_manager.p2_rounds = state['p2_rounds']
 	game_manager.current_round = state['current_round']
 	game_manager.current_game_state = state['current_game_state']
 	
+	healthbar.health = health
+	
 	sync_to_physics_engine()
 	#print_rich("[color=CORNFLOWER_BLUE]L_pos_x: " + str(fixed_position_x))
 	#print_rich("[color=CORNFLOWER_BLUE]L_pos_y: " + str(fixed_position_y))
 	#print_rich("[color=CORNFLOWER_BLUE]L_velocity_x: " + str(velocity.x))
 	#print_rich("[color=CORNFLOWER_BLUE]L_velocity_y: " + str(velocity.y))
-	#print_rich("[color=CORNFLOWER_BLUE]L_hittable: " + str(hittable))
+	
+	#print_rich("[color=RED]L_current_frame: " + str(current_frame))
 	#print_rich("[color=CORNFLOWER_BLUE]L_current_state: [color=RED]" + state_machine.current_state.state_name)
+	

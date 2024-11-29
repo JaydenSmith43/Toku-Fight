@@ -12,21 +12,25 @@ enum Game_State {
 @export var match_timer : NetworkTimer
 @export var countdown_timer : NetworkTimer
 @export var round_end_timer : NetworkTimer
+@export var final_hit_timer : NetworkTimer
 @export var fade_texture : Sprite2D
 
 var player1
 var player2
+var current_frame = 0
 
 var current_round := 0
 var p1_rounds := 0
 var p2_rounds := 0
 var pause = false
 var disable_input = false
-var current_game_state = Game_State.ROUND_INTRO
+var current_game_state = Game_State.ROUND
 
 func game_state_update():
+	#print("game_state: " + str(current_game_state))
 	if pause:
 		return
+	
 	match current_game_state:
 		Game_State.ROUND_INTRO:
 			round_intro()
@@ -39,7 +43,7 @@ func game_state_update():
 		Game_State.ROUND_END:
 			pass
 		Game_State.FINAL_HIT_PAUSE:
-			pass
+			final_hit_pause()
 
 
 func fade_in():
@@ -52,12 +56,14 @@ func fade_in():
 func fade_out():
 	fade_texture.modulate.a += 0.05
 	
-	
 	if fade_texture.modulate.a >= 1:
 		fade_texture.modulate.a = 1
 		current_game_state = Game_State.ROUND
 
 func _physics_process(_delta: float) -> void:
+	#player1.input_current_frame += 1
+	#if player1.input_current_frame > current_frame:
+	#current_frame = player1.input_current_frame
 	player1.time_label.text = str(match_timer.ticks_left / 60)
 	player2.time_label.text = str(match_timer.ticks_left / 60)
 	game_state_update()
@@ -71,6 +77,7 @@ func pause_game():
 	else:
 		player1.anim_player.play()
 		player2.anim_player.play()
+
 
 #func game_reset():
 	#player1.reset_self()
@@ -92,7 +99,9 @@ func game_start():
 	p2_rounds = 0
 
 func final_hit_pause():
-	pass
+	if !pause:
+		pause_game()
+		final_hit_timer.start()
 
 func round_intro():
 	current_game_state = Game_State.FADE_IN
@@ -141,6 +150,11 @@ func _on_match_timer_timeout() -> void:
 	round_end()
 
 func _on_round_end_timer_timeout() -> void:
+	###TODO CHECK FOR FINAL ROUND AND THEN END GAME
 	player1.state_machine.current_state.Transitioned.emit(player1.state_machine.current_state, "intro")
 	player2.state_machine.current_state.Transitioned.emit(player2.state_machine.current_state, "intro")
 	round_intro()
+
+func _on_final_hit_timer_timeout() -> void:
+	pause_game()
+	round_end()
