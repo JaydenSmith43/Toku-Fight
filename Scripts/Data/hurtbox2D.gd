@@ -81,8 +81,12 @@ func hit(hitbox: Hitbox2D):
 	else:
 		character.state_machine.current_state.Transitioned.emit(character.state_machine.current_state, "hitstun")
 	
+	SyncManager.spawn("hit_particle", get_parent().get_parent(), hit_particle, {
+		pos_x = SGFixed.to_float(hitbox.get_global_fixed_position().x),
+		pos_y = SGFixed.to_float(hitbox.get_global_fixed_position().y)
+	})
 	SyncManager.despawn(hitbox) #if hitboxes are grouped, delete the others in the group
-	#SyncManager.spawn("hit_particle", get_parent().get_parent(), hit_particle)
+
 	choose_hit_sound(hitbox.sfx)
 	
 

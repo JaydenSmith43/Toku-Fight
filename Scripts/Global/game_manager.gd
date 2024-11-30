@@ -27,7 +27,6 @@ var disable_input = false
 var current_game_state = Game_State.ROUND
 
 func game_state_update():
-	#print("game_state: " + str(current_game_state))
 	if pause:
 		return
 	
@@ -60,7 +59,11 @@ func fade_out():
 		fade_texture.modulate.a = 1
 		current_game_state = Game_State.ROUND
 
-func _physics_process(_delta: float) -> void:
+func game_process() -> void:
+	#print(str(multiplayer.get_unique_id()) + " game_state1: " + str(current_game_state))
+	#print("countdown ticks: " + str(countdown_timer.ticks_left))
+	#print("round end ticks: " + str(round_end_timer.ticks_left))
+	#print("final hit ticks " + str(final_hit_timer.ticks_left))
 	#player1.input_current_frame += 1
 	#if player1.input_current_frame > current_frame:
 	#current_frame = player1.input_current_frame

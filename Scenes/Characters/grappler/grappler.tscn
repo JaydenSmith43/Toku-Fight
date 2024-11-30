@@ -1,6 +1,6 @@
 [gd_scene load_steps=35 format=3 uid="uid://c110s1snwl2cq"]
 
-[ext_resource type="Script" path="res://Scripts/sg_character_data.gd" id="1_fjl6n"]
+[ext_resource type="Script" path="res://Scripts/character_data.gd" id="1_fjl6n"]
 [ext_resource type="Texture2D" uid="uid://bmxre7rw1js2a" path="res://Sprites/grappler_ref.png" id="2_1migp"]
 [ext_resource type="Script" path="res://Scripts/Data/throwbox2D.gd" id="3_3j7rt"]
 [ext_resource type="Script" path="res://Scripts/Data/hurtbox2D.gd" id="4_74vm4"]
