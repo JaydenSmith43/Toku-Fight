@@ -1,8 +1,9 @@
-[gd_scene load_steps=21 format=3 uid="uid://bdap2qts0jac3"]
+[gd_scene load_steps=24 format=3 uid="uid://bdap2qts0jac3"]
 
 [ext_resource type="Shader" uid="uid://bm631gui83f0m" path="res://Materials/simple_shader.tres" id="1_ygjev"]
 [ext_resource type="Script" path="res://Scenes/effects/hit_particle.gd" id="3_j7saw"]
 [ext_resource type="Texture2D" uid="uid://dsl73fck30qnh" path="res://Sprites/T_flare12.png" id="3_s2n87"]
+[ext_resource type="Texture2D" uid="uid://bvgtbqdey8hbh" path="res://Sprites/impact.png" id="4_0yl4m"]
 [ext_resource type="Shader" uid="uid://bbrr4te5sfpbs" path="res://Materials/simple_shader_sparks.tres" id="4_1rv0j"]
 [ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="4_57g0m"]
 [ext_resource type="Texture2D" uid="uid://dxjv8n6jnasog" path="res://Sprites/T_circle42.PNG" id="5_a0b60"]
@@ -13,37 +14,52 @@ shader = ExtResource("1_ygjev")
 shader_parameter/HitTexture = ExtResource("3_s2n87")
 
 [sub_resource type="Curve" id="Curve_ul4c7"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.49812, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 3
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_h875p"]
 curve = SubResource("Curve_ul4c7")
 
-[sub_resource type="Gradient" id="Gradient_pcyma"]
-colors = PackedColorArray(8, 0.8, 0, 1, 1, 0.5, 0.2, 1)
+[sub_resource type="Gradient" id="Gradient_evxf6"]
+colors = PackedColorArray(8, 0.8, 0, 1, 1, 0.5, 0.2, 0.326)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_kxpmq"]
-gradient = SubResource("Gradient_pcyma")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ulv52"]
+gradient = SubResource("Gradient_evxf6")
 use_hdr = true
 
 [sub_resource type="Curve" id="Curve_bommm"]
-_data = [Vector2(0.0968254, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.198544), 0.0, 0.0, 0, 0]
+_data = [Vector2(0.0968254, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.892718), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_8od5k"]
 curve = SubResource("Curve_bommm")
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qqb75"]
+angle_min = -180.0
+angle_max = 180.0
+gravity = Vector3(0, 0, 0)
+scale_min = 1.8
+scale_max = 2.4
+scale_curve = SubResource("CurveTexture_8od5k")
+color_ramp = SubResource("GradientTexture1D_ulv52")
+alpha_curve = SubResource("CurveTexture_h875p")
+
+[sub_resource type="QuadMesh" id="QuadMesh_wl3cu"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ihd84"]
+render_priority = 0
+shader = ExtResource("1_ygjev")
+shader_parameter/HitTexture = ExtResource("4_0yl4m")
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bric4"]
 angle_min = -180.0
 angle_max = 180.0
 gravity = Vector3(0, 0, 0)
-scale_min = 0.9
-scale_max = 1.2
+scale_min = 1.8
+scale_max = 2.4
 scale_curve = SubResource("CurveTexture_8od5k")
-color_ramp = SubResource("GradientTexture1D_kxpmq")
+color_ramp = SubResource("GradientTexture1D_ulv52")
 alpha_curve = SubResource("CurveTexture_h875p")
-
-[sub_resource type="QuadMesh" id="QuadMesh_wl3cu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o6eod"]
 render_priority = 0
@@ -64,8 +80,7 @@ spread = 180.0
 initial_velocity_min = 8.0
 initial_velocity_max = 12.0
 gravity = Vector3(0, 0, 0)
-scale_min = 0.3
-scale_max = 0.5
+scale_min = 0.6
 color = Color(2.5, 2.5, 0.5, 1)
 alpha_curve = SubResource("CurveTexture_m75nn")
 
@@ -78,15 +93,23 @@ script = ExtResource("3_j7saw")
 [node name="hit_effect" type="GPUParticles3D" parent="."]
 material_override = SubResource("ShaderMaterial_huqhg")
 amount = 1
-lifetime = 0.25
+lifetime = 0.2
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_qqb75")
+draw_pass_1 = SubResource("QuadMesh_wl3cu")
+
+[node name="hit_effect2" type="GPUParticles3D" parent="."]
+material_override = SubResource("ShaderMaterial_ihd84")
+amount = 1
+lifetime = 0.2
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_bric4")
 draw_pass_1 = SubResource("QuadMesh_wl3cu")
 
 [node name="sparks" type="GPUParticles3D" parent="."]
 material_override = SubResource("ShaderMaterial_o6eod")
-amount = 16
-lifetime = 0.25
+amount = 12
+lifetime = 0.2
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_nt8y6")
 draw_pass_1 = SubResource("QuadMesh_8cmi7")
@@ -94,6 +117,6 @@ draw_pass_1 = SubResource("QuadMesh_8cmi7")
 [node name="NetworkTimer" type="Node" parent="."]
 script = ExtResource("4_57g0m")
 one_shot = true
-wait_ticks = 15
+wait_ticks = 12
 
 [connection signal="timeout" from="NetworkTimer" to="." method="_on_network_timer_timeout"]
