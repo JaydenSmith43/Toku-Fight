@@ -1,1 +1,1 @@
-{"anim_name":"5b","cancel":"2b,5c,2c","cancel_frame":12,"frames":[{"blockstun":20,"frame":8,"hitbox1":{"damage":5,"end_frame":3,"height":"mid","pos_x":2,"pos_y":3.8,"scale_x":1.8,"scale_y":1.2},"hitstun":40,"sfx":"medium"}],"move_end_frame":22}
+{"anim_name":"5b","cancel":"2b,5c,2c","cancel_frame":12,"frames":[{"blockstun":14,"frame":8,"hitbox1":{"damage":5,"end_frame":3,"height":"mid","pos_x":2,"pos_y":3.8,"scale_x":1.8,"scale_y":1.2},"hitstun":16,"sfx":"medium"}],"move_end_frame":22}

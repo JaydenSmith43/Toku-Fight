@@ -166,7 +166,7 @@ func _network_process(input: Dictionary) -> void:
 		update_hitboxes()
 		hurtbox.tick_physics_process()
 		throwbox.tick_physics_process()
-		update_hitboxes()
+		#update_hitboxes()
 	
 	###TODO try calling screenbounds in here our below. maybe save its position
 
@@ -196,7 +196,7 @@ func _save_state() -> Dictionary:
 		combo = combo,
 		throw_invul = throw_invul,
 		
-		fade_modulate_a = game_manager.fade_texture.modulate.a,
+		fade_modulate_a = game_manager.fade_sprite.modulate.a,
 		pause = game_manager.pause,
 		p1_rounds = game_manager.p1_rounds,
 		p2_rounds = game_manager.p2_rounds,
@@ -230,7 +230,7 @@ func _load_state(state: Dictionary) -> void:
 	combo = state['combo']
 	throw_invul = state['throw_invul']
 	
-	game_manager.fade_texture.modulate.a = state['fade_modulate_a']
+	game_manager.fade_sprite.modulate.a = state['fade_modulate_a']
 	game_manager.pause = state['pause']
 	game_manager.p1_rounds = state['p1_rounds']
 	game_manager.p2_rounds = state['p2_rounds']
@@ -246,6 +246,7 @@ func _load_state(state: Dictionary) -> void:
 	#print_rich("[color=CORNFLOWER_BLUE]L_velocity_x: " + str(velocity.x))
 	#print_rich("[color=CORNFLOWER_BLUE]L_velocity_y: " + str(velocity.y))
 	
+	#print_rich("[color=CORNFLOWER_BLUE]" + str(multiplayer.get_unique_id()) + " L_hitstun: " + str(hitstun))
 	#print_rich("[color=RED]L_current_frame: " + str(current_frame))
-	#print_rich("[color=CORNFLOWER_BLUE]L_current_state: [color=RED]" + state_machine.current_state.state_name)
+	#print_rich("[color=CORNFLOWER_BLUE]" + str(multiplayer.get_unique_id()) + " L_current_state: [color=RED]" + state_machine.current_state.state_name)
 	

@@ -64,7 +64,7 @@ func block(hitbox: Hitbox2D):
 	SyncManager.despawn(hitbox)
 
 func hit(hitbox: Hitbox2D):
-	#print(str(multiplayer.multiplayer_peer.get_unique_id()) + ":current_frame: " + str(character.current_frame) + ": hit")
+	#print(str(multiplayer.multiplayer_peer.get_unique_id()) + " current_frame: " + str(character.current_frame) + ": hit")
 	if character.is_in_group("player1"):
 		get_tree().get_nodes_in_group("player2")[0].cancel = true
 	else:
@@ -73,6 +73,9 @@ func hit(hitbox: Hitbox2D):
 	owner.take_damage(hitbox.damage)
 	
 	character.hitstun = hitbox.hitstun
+	#if character.state_machine.current_state.state_name == "hitstun":
+	#	print("check")
+	#print("NEW HITSTUN: " + str(character.hitstun))
 	character.height_hit = hitbox.height
 	
 	var current_state_name = character.state_machine.current_state.state_name

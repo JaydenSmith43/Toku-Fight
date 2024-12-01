@@ -13,7 +13,9 @@ enum Game_State {
 @export var countdown_timer : NetworkTimer
 @export var round_end_timer : NetworkTimer
 @export var final_hit_timer : NetworkTimer
-@export var fade_texture : Sprite2D
+@export var fade_sprite : Sprite2D
+@export var ko_sprite : Sprite2D
+@export var ko_overlay : Sprite2D
 
 var player1
 var player2
@@ -45,19 +47,20 @@ func game_state_update():
 		Game_State.FINAL_HIT_PAUSE:
 			final_hit_pause()
 
-
 func fade_in():
-	fade_texture.modulate.a -= 0.05
+	ko_overlay.visible = false
+	ko_sprite.visible = false
+	fade_sprite.modulate.a -= 0.05
 	
-	if fade_texture.modulate.a <= 0:
-		fade_texture.modulate.a = 0
+	if fade_sprite.modulate.a <= 0:
+		fade_sprite.modulate.a = 0
 		current_game_state = Game_State.ROUND
 
 func fade_out():
-	fade_texture.modulate.a += 0.05
+	fade_sprite.modulate.a += 0.05
 	
-	if fade_texture.modulate.a >= 1:
-		fade_texture.modulate.a = 1
+	if fade_sprite.modulate.a >= 1:
+		fade_sprite.modulate.a = 1
 		current_game_state = Game_State.ROUND
 
 func game_process() -> void:
@@ -108,8 +111,9 @@ func game_start():
 
 func final_hit_pause():
 	if !pause:
-		
-		pause_game()
+		ko_overlay.visible = true
+		ko_sprite.visible = true
+		#pause_game()
 		final_hit_timer.start()
 
 func round_intro():
@@ -136,7 +140,7 @@ func round_end():
 	#turn off final hit effect
 	
 	disable_input = true
-	fade_texture.modulate.a = -5
+	fade_sprite.modulate.a = -5
 	current_game_state = Game_State.FADE_OUT
 	round_end_timer.start()
 	#pause the screen on that final hit, do this through?:
@@ -168,5 +172,5 @@ func _on_round_end_timer_timeout() -> void:
 	round_intro()
 
 func _on_final_hit_timer_timeout() -> void:
-	pause_game()
+	#pause_game()
 	round_end()

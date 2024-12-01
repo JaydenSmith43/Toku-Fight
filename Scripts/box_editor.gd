@@ -25,7 +25,7 @@ extends Node3D
 @export var var_cancel_frame_edit: LineEdit
 
 var grappler_model = preload("res://Scenes/Characters/grappler/grappler_model.tscn")
-var hitbox = preload("res://Scenes/Characters/hitbox3d_editor.tscn")
+var hitbox = preload("res://Scenes/Characters/editor_hitbox3d.tscn")
 
 var current_model
 var current_anim_player : AnimationPlayer

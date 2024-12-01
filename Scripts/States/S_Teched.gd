@@ -11,9 +11,9 @@ func Enter():
 	anim_player.play("throw_teched")
 	character.current_frame = 0
 	if character.left_side:
-		character.velocity.x = -19660
+		character.velocity.x = -25000 #19660
 	else:
-		character.velocity.x = 19660
+		character.velocity.x = 25000
 
 func State_Physics_Update(input: Dictionary):
 	character.current_frame += 1

@@ -8,8 +8,8 @@
 [ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="3_t4hs0"]
 [ext_resource type="PackedScene" uid="uid://b2ax3p2ss2g8q" path="res://Scenes/Main/sg_boundaries.tscn" id="4_fckii"]
 [ext_resource type="PackedScene" uid="uid://30mde2a3la3" path="res://Scenes/Main/test_menu.tscn" id="5_706ux"]
-[ext_resource type="Texture2D" uid="uid://ca54q0d4bul0x" path="res://Sprites/texture_08.png" id="6_j1mjr"]
-[ext_resource type="Texture2D" uid="uid://ch50o2a8o1xm8" path="res://Sprites/ui/KO-transparent.png" id="7_mklb4"]
+[ext_resource type="Texture2D" uid="uid://b40oslxvafonh" path="res://Sprites/ui/round_count.png" id="6_uidtj"]
+[ext_resource type="Texture2D" uid="uid://3eyqdnmgxple" path="res://Sprites/ui/KO-transparent.png" id="7_mklb4"]
 [ext_resource type="Material" uid="uid://55bnlh6hdplk" path="res://Materials/shiny.tres" id="11_5udsy"]
 [ext_resource type="Material" uid="uid://b25fnqenlhknj" path="res://Materials/Rock.tres" id="12_36gv5"]
 [ext_resource type="Material" uid="uid://bbmtvjlr3d431" path="res://Materials/wood.tres" id="13_8mt1d"]
@@ -3201,13 +3201,15 @@ shadow_mesh = SubResource("ArrayMesh_q6rul")
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_5ed8j")
 
-[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("match_timer", "countdown_timer", "round_end_timer", "final_hit_timer", "fade_texture")]
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("match_timer", "countdown_timer", "round_end_timer", "final_hit_timer", "fade_sprite", "ko_sprite", "ko_overlay")]
 script = ExtResource("2_g8ds5")
 match_timer = NodePath("MatchTimer")
 countdown_timer = NodePath("CountdownTimer")
 round_end_timer = NodePath("RoundEndTimer")
 final_hit_timer = NodePath("FinalHitTimer")
-fade_texture = NodePath("../CanvasLayer/fade_texture")
+fade_sprite = NodePath("../CanvasLayer/fade_sprite")
+ko_sprite = NodePath("../CanvasLayer/KO_overlay")
+ko_overlay = NodePath("../CanvasLayer/KO_sprite")
 
 [node name="MatchTimer" type="Node" parent="GameManager"]
 script = ExtResource("3_t4hs0")
@@ -3276,41 +3278,55 @@ offset = Vector2(0, -21.985)
 zoom = Vector2(15.21, 15.21)
 
 [node name="Floor3D" type="StaticBody3D" parent="."]
+visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+visible = false
 shape = SubResource("BoxShape3D_das85")
 
 [node name="BackgroundPlaceholder" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 46.9764, -35.8835)
+visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BackgroundPlaceholder"]
+visible = false
 shape = SubResource("BoxShape3D_das85")
 
 [node name="Wall3D" type="StaticBody3D" parent="."]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -50, 48, 0)
+visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Wall3D"]
+visible = false
 shape = SubResource("BoxShape3D_das85")
 
 [node name="Wall2-3D" type="StaticBody3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 50, 48, 0)
+visible = false
 
 [node name="TestMenu" parent="." instance=ExtResource("5_706ux")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="fade_texture" type="Sprite2D" parent="CanvasLayer"]
+[node name="KO_overlay" type="Sprite2D" parent="CanvasLayer"]
 visible = false
-modulate = Color(0, 0, 0, 1)
-position = Vector2(1008.96, 537.036)
-scale = Vector2(2.12986, 1.22323)
-texture = ExtResource("6_j1mjr")
+modulate = Color(1, 0, 0, 0.388235)
+position = Vector2(1051.29, 561.349)
+scale = Vector2(27.9267, 16.039)
+texture = ExtResource("6_uidtj")
 
-[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer"]
-position = Vector2(1017.37, 655.968)
-scale = Vector2(2.9408, 2.9408)
+[node name="KO_sprite" type="Sprite2D" parent="CanvasLayer"]
+visible = false
+position = Vector2(953.533, 547.111)
+scale = Vector2(1.12204, 1.12204)
 texture = ExtResource("7_mklb4")
+
+[node name="fade_sprite" type="Sprite2D" parent="CanvasLayer"]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(1051.29, 561.349)
+scale = Vector2(27.9267, 16.039)
+texture = ExtResource("6_uidtj")
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("character1", "character2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 16)
