@@ -24,7 +24,7 @@ func _on_area_entered(throw : Throw2D) -> void:
 		return
 	SyncManager.despawn(throw)
 	
-	if throw.techable:
+	if throw.techable and character.throw_invul == false:
 		state_machine.current_state.Transitioned.emit(state_machine.current_state, "thrown")
-	else:
+	elif character.throw_invul == false:
 		state_machine.current_state.Transitioned.emit(state_machine.current_state, "commandthrown")

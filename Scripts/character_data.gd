@@ -45,7 +45,8 @@ var cancel := false
 var throw_state_frame := 0
 var current_frame := 0
 var hittable = true
-var combo = 0
+var combo := 0
+var throw_invul := false
 
 func _ready():
 	healthbar.init_health(health)
@@ -193,6 +194,7 @@ func _save_state() -> Dictionary:
 		camera_state = camera_state,
 		hittable = hittable,
 		combo = combo,
+		throw_invul = throw_invul,
 		
 		fade_modulate_a = game_manager.fade_texture.modulate.a,
 		pause = game_manager.pause,
@@ -200,6 +202,7 @@ func _save_state() -> Dictionary:
 		p2_rounds = game_manager.p2_rounds,
 		current_round = game_manager.current_round,
 		current_game_state = game_manager.current_game_state,
+		intro = game_manager.intro,
 	}
 
 func _load_state(state: Dictionary) -> void:
@@ -225,6 +228,7 @@ func _load_state(state: Dictionary) -> void:
 	camera_state = state['camera_state']
 	hittable = state['hittable']
 	combo = state['combo']
+	throw_invul = state['throw_invul']
 	
 	game_manager.fade_texture.modulate.a = state['fade_modulate_a']
 	game_manager.pause = state['pause']
@@ -232,6 +236,7 @@ func _load_state(state: Dictionary) -> void:
 	game_manager.p2_rounds = state['p2_rounds']
 	game_manager.current_round = state['current_round']
 	game_manager.current_game_state = state['current_game_state']
+	game_manager.intro = state['intro']
 	
 	healthbar.health = health
 	

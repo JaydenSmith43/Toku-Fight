@@ -7,10 +7,12 @@ func Enter():
 	character.current_frame = 0
 	anim_player.play("knockdown")
 	character.hittable = false
+	character.throw_invul = true
 
 func Exit():
 	character.current_frame = 0
 	character.hittable = true
+	character.throw_invul = false
 
 func State_Physics_Update(input: Dictionary):
 	character.current_frame += 1

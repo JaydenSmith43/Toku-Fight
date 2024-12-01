@@ -16,6 +16,7 @@ func _ready() -> void:
 		otherPlayer = get_tree().get_nodes_in_group("player1")[0]
 
 func Enter():
+	character.throw_invul = true
 	character.current_frame = 0
 	character.velocity.x = character.jump_velocity_x
 	character.velocity.y = -46811
@@ -27,6 +28,7 @@ func Exit():
 	character.velocity.x = 0
 	#character.collision.fixed_position.y += SGFixed.ONE
 	character.set_collision_mask_bit(15, true)
+	character.throw_invul = false
 
 func State_Physics_Update(input: Dictionary): #ADD a check for facing left without changing model
 	character.current_frame += 1

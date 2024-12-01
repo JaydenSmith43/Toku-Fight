@@ -6,6 +6,7 @@ var hitstun_frames := 0
 var otherPlayer : SGCharacterBody2D
 
 func Enter():
+	character.throw_invul = true
 	if character.is_in_group("player1"):
 		otherPlayer = get_tree().get_nodes_in_group("player2")[0]
 	else:
@@ -34,7 +35,7 @@ func Enter():
 		character.velocity.x = 10660
 
 func Exit():
-	pass
+	character.throw_invul = false
 
 func State_Physics_Update(input: Dictionary):
 	var otherplayer_state = otherPlayer.state_machine.current_state.state_name

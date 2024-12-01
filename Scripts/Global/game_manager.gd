@@ -22,9 +22,10 @@ var current_frame = 0
 var current_round := 0
 var p1_rounds := 0
 var p2_rounds := 0
-var pause = false
-var disable_input = false
+var pause := false
+var disable_input := false
 var current_game_state = Game_State.ROUND
+var intro := true
 
 func game_state_update():
 	if pause:
@@ -67,8 +68,12 @@ func game_process() -> void:
 	#player1.input_current_frame += 1
 	#if player1.input_current_frame > current_frame:
 	#current_frame = player1.input_current_frame
-	player1.time_label.text = str(match_timer.ticks_left / 60)
-	player2.time_label.text = str(match_timer.ticks_left / 60)
+	if intro:
+		player1.time_label.text = "60"
+		player2.time_label.text = "60"
+	else:
+		player1.time_label.text = str(match_timer.ticks_left / 60)
+		player2.time_label.text = str(match_timer.ticks_left / 60)
 	game_state_update()
 
 func pause_game():
@@ -103,10 +108,13 @@ func game_start():
 
 func final_hit_pause():
 	if !pause:
+		
 		pause_game()
 		final_hit_timer.start()
 
 func round_intro():
+	intro = true
+	
 	current_game_state = Game_State.FADE_IN
 	disable_input = false
 	current_round += 1
@@ -121,6 +129,7 @@ func round_intro():
 	
 
 func round_start():
+	intro = false
 	match_timer.start()
 
 func round_end():

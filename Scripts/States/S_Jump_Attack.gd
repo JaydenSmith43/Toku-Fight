@@ -13,10 +13,12 @@ var sfx : String = ""
 
 func Enter():
 	character.current_frame = 0
+	character.throw_invul = true
 	#load cancel properties
 
 func Exit():
 	character.current_frame = 0
+	character.throw_invul = false
 
 func State_Physics_Update(input: Dictionary):
 	character.current_frame += 1

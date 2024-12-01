@@ -1,4 +1,4 @@
-[gd_scene load_steps=219 format=4 uid="uid://bmkea3roxko18"]
+[gd_scene load_steps=220 format=4 uid="uid://bmkea3roxko18"]
 
 [ext_resource type="Script" path="res://Scenes/Main/test_vs_mode.gd" id="1_5ed8j"]
 [ext_resource type="PackedScene" uid="uid://c110s1snwl2cq" path="res://Scenes/Characters/grappler/grappler.tscn" id="2_c13du"]
@@ -8,7 +8,8 @@
 [ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="3_t4hs0"]
 [ext_resource type="PackedScene" uid="uid://b2ax3p2ss2g8q" path="res://Scenes/Main/sg_boundaries.tscn" id="4_fckii"]
 [ext_resource type="PackedScene" uid="uid://30mde2a3la3" path="res://Scenes/Main/test_menu.tscn" id="5_706ux"]
-[ext_resource type="Texture2D" uid="uid://b40oslxvafonh" path="res://Sprites/ui/round_count.png" id="6_uidtj"]
+[ext_resource type="Texture2D" uid="uid://ca54q0d4bul0x" path="res://Sprites/texture_08.png" id="6_j1mjr"]
+[ext_resource type="Texture2D" uid="uid://ch50o2a8o1xm8" path="res://Sprites/ui/KO-transparent.png" id="7_mklb4"]
 [ext_resource type="Material" uid="uid://55bnlh6hdplk" path="res://Materials/shiny.tres" id="11_5udsy"]
 [ext_resource type="Material" uid="uid://b25fnqenlhknj" path="res://Materials/Rock.tres" id="12_36gv5"]
 [ext_resource type="Material" uid="uid://bbmtvjlr3d431" path="res://Materials/wood.tres" id="13_8mt1d"]
@@ -3300,10 +3301,16 @@ transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 50, 48
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="fade_texture" type="Sprite2D" parent="CanvasLayer"]
+visible = false
 modulate = Color(0, 0, 0, 1)
-position = Vector2(963.43, 510.888)
-scale = Vector2(21.3601, 12.2676)
-texture = ExtResource("6_uidtj")
+position = Vector2(1008.96, 537.036)
+scale = Vector2(2.12986, 1.22323)
+texture = ExtResource("6_j1mjr")
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(1017.37, 655.968)
+scale = Vector2(2.9408, 2.9408)
+texture = ExtResource("7_mklb4")
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("character1", "character2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 16)
