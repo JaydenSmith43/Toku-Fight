@@ -17,6 +17,7 @@ enum Game_State {
 @export var fade_sprite : Sprite2D
 @export var ko_sprite : Sprite2D
 @export var ko_overlay : Sprite2D
+@export var win_panel : Panel
 
 var STAGE_THEME = preload("res://Audio/Music/stage-theme.mp3")
 
@@ -25,8 +26,8 @@ var player2
 var current_frame := 0
 
 var current_round := 0
-var p1_rounds := 0
-var p2_rounds := 0
+var p1_rounds := 1
+var p2_rounds := 1
 var pause := false
 var disable_input := false
 var current_game_state = Game_State.ROUND
@@ -127,7 +128,6 @@ func round_intro():
 	player2.round_label.text = "Round " + str(current_round)
 	#Do countdown animation
 	
-	
 	#Start time after countdown is over
 	countdown_timer.start()
 	
@@ -155,6 +155,8 @@ func round_end():
 
 func win_game():
 	#go to win screen
+	win_panel.visible = true
+	win_panel.get_child(0).text = "Player 2 Wins!"
 	pass
 
 func _on_countdown_timer_timeout() -> void:

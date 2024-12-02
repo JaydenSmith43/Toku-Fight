@@ -1,4 +1,4 @@
-[gd_scene load_steps=220 format=4 uid="uid://bmkea3roxko18"]
+[gd_scene load_steps=222 format=4 uid="uid://bmkea3roxko18"]
 
 [ext_resource type="Script" path="res://Scenes/Main/test_vs_mode.gd" id="1_5ed8j"]
 [ext_resource type="PackedScene" uid="uid://c110s1snwl2cq" path="res://Scenes/Characters/grappler/grappler.tscn" id="2_c13du"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://30mde2a3la3" path="res://Scenes/Main/test_menu.tscn" id="5_706ux"]
 [ext_resource type="Texture2D" uid="uid://b40oslxvafonh" path="res://Sprites/ui/round_count.png" id="6_uidtj"]
 [ext_resource type="Texture2D" uid="uid://3eyqdnmgxple" path="res://Sprites/ui/KO-transparent.png" id="7_mklb4"]
+[ext_resource type="FontFile" uid="uid://blv6ltia655ri" path="res://Fonts/Bebas Neue Pro Expanded Bold.otf" id="8_1opxn"]
 [ext_resource type="Material" uid="uid://55bnlh6hdplk" path="res://Materials/shiny.tres" id="11_5udsy"]
 [ext_resource type="Material" uid="uid://b25fnqenlhknj" path="res://Materials/Rock.tres" id="12_36gv5"]
 [ext_resource type="Material" uid="uid://bbmtvjlr3d431" path="res://Materials/wood.tres" id="13_8mt1d"]
@@ -25,6 +26,10 @@ extents_y = 65536
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_das85"]
 size = Vector3(100, 1, 11.989)
+
+[sub_resource type="Theme" id="Theme_ibktj"]
+default_font = ExtResource("8_1opxn")
+default_font_size = 100
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_eagx2"]
 _surfaces = [{
@@ -3201,7 +3206,7 @@ shadow_mesh = SubResource("ArrayMesh_q6rul")
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_5ed8j")
 
-[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("match_timer", "countdown_timer", "round_end_timer", "final_hit_timer", "fade_sprite", "ko_sprite", "ko_overlay")]
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("match_timer", "countdown_timer", "round_end_timer", "final_hit_timer", "fade_sprite", "ko_sprite", "ko_overlay", "win_panel")]
 script = ExtResource("2_g8ds5")
 match_timer = NodePath("MatchTimer")
 countdown_timer = NodePath("CountdownTimer")
@@ -3210,6 +3215,7 @@ final_hit_timer = NodePath("FinalHitTimer")
 fade_sprite = NodePath("../CanvasLayer/fade_sprite")
 ko_sprite = NodePath("../CanvasLayer/KO_overlay")
 ko_overlay = NodePath("../CanvasLayer/KO_sprite")
+win_panel = NodePath("../CanvasLayer/WinPanel")
 
 [node name="MatchTimer" type="Node" parent="GameManager"]
 script = ExtResource("3_t4hs0")
@@ -3327,6 +3333,36 @@ modulate = Color(0, 0, 0, 1)
 position = Vector2(1051.29, 561.349)
 scale = Vector2(27.9267, 16.039)
 texture = ExtResource("6_uidtj")
+
+[node name="WinPanel" type="Panel" parent="CanvasLayer"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -959.5
+offset_top = -552.0
+offset_right = 959.5
+offset_bottom = 552.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/WinPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -264.5
+offset_top = -316.048
+offset_right = 264.5
+offset_bottom = -204.048
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_ibktj")
+text = "Player 1 Wins!"
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("character1", "character2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 16)

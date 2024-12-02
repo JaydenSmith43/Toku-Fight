@@ -4,6 +4,9 @@ class_name S_GroundAttack
 #var played : bool = false
 var move_end_frame = 30
 var hitbox = preload("res://Scenes/Characters/hitbox2d.tscn")
+
+
+
 var anim_name := ""
 var player_group := ""
 
