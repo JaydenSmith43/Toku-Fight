@@ -55,7 +55,7 @@ func Exit():
 
 func State_Physics_Update(input: Dictionary):
 	character.current_frame += 1
-	print(str(multiplayer.multiplayer_peer.get_unique_id()) + " idle state: " + str(character.current_frame))
+	#print(str(multiplayer.multiplayer_peer.get_unique_id()) + " idle state: " + str(character.current_frame))
 	#if character.colliding:
 		#pushout_distance = 2
 	#else:

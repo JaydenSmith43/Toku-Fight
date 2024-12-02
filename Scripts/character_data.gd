@@ -70,6 +70,10 @@ func take_damage(damage : int):
 	healthbar._set_health(health)
 	
 	if health <= 0:
+		if is_in_group("player1"):
+			game_manager.p1_rounds += 1
+		else:
+			game_manager.p2_rounds += 1
 		game_manager.final_hit_pause()
 
 func reset_self():
@@ -158,7 +162,8 @@ func _network_process(input: Dictionary) -> void:
 	if game_manager.pause:
 		pass
 	else:
-		game_manager.game_process()
+		if is_in_group("player1"):
+			game_manager.game_process()
 		update_hitboxes()
 		input_array.input_handler(self, input)
 		input_display.update_input_display()
@@ -203,6 +208,7 @@ func _save_state() -> Dictionary:
 		current_round = game_manager.current_round,
 		current_game_state = game_manager.current_game_state,
 		intro = game_manager.intro,
+		song_played = game_manager.song_played,
 	}
 
 func _load_state(state: Dictionary) -> void:
@@ -237,6 +243,7 @@ func _load_state(state: Dictionary) -> void:
 	game_manager.current_round = state['current_round']
 	game_manager.current_game_state = state['current_game_state']
 	game_manager.intro = state['intro']
+	game_manager.song_played = state['song_played']
 	
 	healthbar.health = health
 	

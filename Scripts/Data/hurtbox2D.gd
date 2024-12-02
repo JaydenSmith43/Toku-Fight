@@ -3,18 +3,18 @@ extends SGArea2D
 
 @export var character : SGCharacterBody2D
 
-const SFX_LIGHT_1 = preload("res://SFX/Combat/hit_light/hit_light_1.mp3")
-const SFX_LIGHT_2 = preload("res://SFX/Combat/hit_light/hit_light_2.mp3")
-const SFX_LIGHT_3 = preload("res://SFX/Combat/hit_light/hit_light_3.mp3")
-const SFX_MEDIUM_1 = preload("res://SFX/Combat/hit_medium/hit_medium_1.mp3")
-const SFX_MEDIUM_2 = preload("res://SFX/Combat/hit_medium/hit_medium_2.mp3")
-const SFX_MEDIUM_3 = preload("res://SFX/Combat/hit_medium/hit_medium_3.mp3")
-const SFX_HEAVY_1 = preload("res://SFX/Combat/hit_heavy/hit_heavy_1.mp3")
-const SFX_HEAVY_2 = preload("res://SFX/Combat/hit_heavy/hit_heavy_2.mp3")
-const SFX_HEAVY_3 = preload("res://SFX/Combat/hit_heavy/hit_heavy_3.mp3")
-const SFX_BLOCK_1 = preload("res://SFX/Combat/block/block_1.mp3")
-const SFX_BLOCK_2 = preload("res://SFX/Combat/block/block_2.mp3")
-const SFX_BLOCK_3 = preload("res://SFX/Combat/block/block_3.mp3")
+const SFX_LIGHT_1 = preload("res://Audio/SFX/Combat/hit_light/hit_light_1.mp3")
+const SFX_LIGHT_2 = preload("res://Audio/SFX/Combat/hit_light/hit_light_2.mp3")
+const SFX_LIGHT_3 = preload("res://Audio/SFX/Combat/hit_light/hit_light_3.mp3")
+const SFX_MEDIUM_1 = preload("res://Audio/SFX/Combat/hit_medium/hit_medium_1.mp3")
+const SFX_MEDIUM_2 = preload("res://Audio/SFX/Combat/hit_medium/hit_medium_2.mp3")
+const SFX_MEDIUM_3 = preload("res://Audio/SFX/Combat/hit_medium/hit_medium_3.mp3")
+const SFX_HEAVY_1 = preload("res://Audio/SFX/Combat/hit_heavy/hit_heavy_1.mp3")
+const SFX_HEAVY_2 = preload("res://Audio/SFX/Combat/hit_heavy/hit_heavy_2.mp3")
+const SFX_HEAVY_3 = preload("res://Audio/SFX/Combat/hit_heavy/hit_heavy_3.mp3")
+const SFX_BLOCK_1 = preload("res://Audio/SFX/Combat/block/block_1.mp3")
+const SFX_BLOCK_2 = preload("res://Audio/SFX/Combat/block/block_2.mp3")
+const SFX_BLOCK_3 = preload("res://Audio/SFX/Combat/block/block_3.mp3")
 
 const hit_particle = preload("res://Scenes/effects/hit_particle.tscn")
 

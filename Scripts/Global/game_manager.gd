@@ -1,6 +1,7 @@
 extends Node
 
 enum Game_State {
+	#GAME_START,
 	ROUND_INTRO,
 	ROUND,
 	ROUND_END,
@@ -17,9 +18,11 @@ enum Game_State {
 @export var ko_sprite : Sprite2D
 @export var ko_overlay : Sprite2D
 
+var STAGE_THEME = preload("res://Audio/Music/stage-theme.mp3")
+
 var player1
 var player2
-var current_frame = 0
+var current_frame := 0
 
 var current_round := 0
 var p1_rounds := 0
@@ -28,6 +31,7 @@ var pause := false
 var disable_input := false
 var current_game_state = Game_State.ROUND
 var intro := true
+var song_played := false
 
 func game_state_update():
 	if pause:
@@ -64,17 +68,10 @@ func fade_out():
 		current_game_state = Game_State.ROUND
 
 func game_process() -> void:
-	#print(str(multiplayer.get_unique_id()) + " game_state1: " + str(current_game_state))
-	#print("countdown ticks: " + str(countdown_timer.ticks_left))
-	#print("round end ticks: " + str(round_end_timer.ticks_left))
-	#print("final hit ticks " + str(final_hit_timer.ticks_left))
-	#player1.input_current_frame += 1
-	#if player1.input_current_frame > current_frame:
-	#current_frame = player1.input_current_frame
 	if intro:
 		player1.time_label.text = "60"
 		player2.time_label.text = "60"
-	else:
+	elif !match_timer.is_stopped():
 		player1.time_label.text = str(match_timer.ticks_left / 60)
 		player2.time_label.text = str(match_timer.ticks_left / 60)
 	game_state_update()
@@ -110,6 +107,7 @@ func game_start():
 	p2_rounds = 0
 
 func final_hit_pause():
+	disable_input = true
 	if !pause:
 		ko_overlay.visible = true
 		ko_sprite.visible = true
@@ -117,6 +115,9 @@ func final_hit_pause():
 		final_hit_timer.start()
 
 func round_intro():
+	if !song_played:
+		SyncManager.play_sound(str(get_path()) + ":theme", STAGE_THEME, {volume_db = -10})
+		song_played = true
 	intro = true
 	
 	current_game_state = Game_State.FADE_IN
@@ -124,7 +125,6 @@ func round_intro():
 	current_round += 1
 	player1.round_label.text = "Round " + str(current_round)
 	player2.round_label.text = "Round " + str(current_round)
-	
 	#Do countdown animation
 	
 	
@@ -143,6 +143,7 @@ func round_end():
 	fade_sprite.modulate.a = -5
 	current_game_state = Game_State.FADE_OUT
 	round_end_timer.start()
+	match_timer.stop()
 	#pause the screen on that final hit, do this through?:
 		#modulate canvas node to #ff0000
 		#setting a boolean in the player that when true doesn't run physics process
@@ -150,9 +151,6 @@ func round_end():
 		#then after resume
 	#fade from red to no alpha
 	#make all objects black/very dark
-	
-	#determine winner an give them point
-	#check for if that resulted in a win
 	
 
 func win_game():
@@ -167,9 +165,11 @@ func _on_match_timer_timeout() -> void:
 
 func _on_round_end_timer_timeout() -> void:
 	###TODO CHECK FOR FINAL ROUND AND THEN END GAME
-	player1.state_machine.current_state.Transitioned.emit(player1.state_machine.current_state, "intro")
-	player2.state_machine.current_state.Transitioned.emit(player2.state_machine.current_state, "intro")
-	round_intro()
+	if p1_rounds == 2 or p2_rounds == 2:
+		win_game()
+	else:
+		player1.state_machine.current_state.Transitioned.emit(player1.state_machine.current_state, "intro")
+		player2.state_machine.current_state.Transitioned.emit(player2.state_machine.current_state, "intro")
 
 func _on_final_hit_timer_timeout() -> void:
 	#pause_game()

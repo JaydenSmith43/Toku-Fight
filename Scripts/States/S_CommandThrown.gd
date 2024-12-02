@@ -12,7 +12,7 @@ var jump_velocity = 46811
 var jump_gravity = 1000
 var fall_gravity = 674
 
-const SFX_EXPLOSION = preload("res://SFX/Combat/explosion.mp3")
+const SFX_EXPLOSION = preload("res://Audio/SFX/Combat/explosion.mp3")
 
 func _ready() -> void:
 	if character.is_in_group("player1"):
