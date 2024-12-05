@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://c110s1snwl2cq"]
+[gd_scene load_steps=36 format=3 uid="uid://c110s1snwl2cq"]
 
 [ext_resource type="Script" path="res://Scripts/character_data.gd" id="1_fjl6n"]
 [ext_resource type="Texture2D" uid="uid://bmxre7rw1js2a" path="res://Sprites/grappler_ref.png" id="2_1migp"]
@@ -28,6 +28,7 @@
 [ext_resource type="Script" path="res://Scripts/States/S_CommandThrown.gd" id="22_y72th"]
 [ext_resource type="Script" path="res://Scripts/States/S_Juggle.gd" id="23_sbkx2"]
 [ext_resource type="Script" path="res://Scripts/States/S_Knockdown.gd" id="24_r24n8"]
+[ext_resource type="Script" path="res://Scripts/States/S_Grapplerj214.gd" id="29_00vnh"]
 
 [sub_resource type="SGCapsuleShape2D" id="SGCapsuleShape2D_yoyix"]
 radius = 40262
@@ -290,3 +291,9 @@ script = ExtResource("24_r24n8")
 character = NodePath("../..")
 model = NodePath("../../model")
 state_name = "knockdown"
+
+[node name="Grapplerj214" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+script = ExtResource("29_00vnh")
+character = NodePath("../..")
+model = NodePath("../../model")
+state_name = "grapplerj214"

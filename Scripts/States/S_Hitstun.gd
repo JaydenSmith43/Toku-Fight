@@ -30,9 +30,9 @@ func Enter():
 		anim_player.play("hit_low")
 	
 	if character.left_side:
-		character.velocity.x = -10660 #stun_velocity
+		character.velocity.x = -8000 #stun_velocity #-10660
 	else:
-		character.velocity.x = 10660
+		character.velocity.x = 8000
 
 func Exit():
 	character.throw_invul = false

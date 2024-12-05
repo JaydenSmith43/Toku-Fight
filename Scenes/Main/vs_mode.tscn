@@ -1,4 +1,4 @@
-[gd_scene load_steps=225 format=4 uid="uid://bmkea3roxko18"]
+[gd_scene load_steps=231 format=4 uid="uid://bmkea3roxko18"]
 
 [ext_resource type="Script" path="res://Scenes/Main/test_vs_mode.gd" id="1_5ed8j"]
 [ext_resource type="PackedScene" uid="uid://c110s1snwl2cq" path="res://Scenes/Characters/grappler/grappler.tscn" id="2_c13du"]
@@ -12,10 +12,13 @@
 [ext_resource type="Texture2D" uid="uid://b40oslxvafonh" path="res://Sprites/ui/round_count.png" id="6_uidtj"]
 [ext_resource type="Texture2D" uid="uid://3eyqdnmgxple" path="res://Sprites/ui/KO-transparent.png" id="7_mklb4"]
 [ext_resource type="FontFile" uid="uid://blv6ltia655ri" path="res://Fonts/Bebas Neue Pro Expanded Bold.otf" id="8_1opxn"]
+[ext_resource type="Texture2D" uid="uid://b4q0273q6ak3q" path="res://Sprites/ui/ready.png" id="10_fglt3"]
 [ext_resource type="Material" uid="uid://55bnlh6hdplk" path="res://Materials/shiny.tres" id="11_5udsy"]
+[ext_resource type="Texture2D" uid="uid://dpvvyyw33ri8j" path="res://Sprites/ui/fight.png" id="11_pm2yw"]
 [ext_resource type="Material" uid="uid://b25fnqenlhknj" path="res://Materials/Rock.tres" id="12_36gv5"]
 [ext_resource type="Material" uid="uid://bbmtvjlr3d431" path="res://Materials/wood.tres" id="13_8mt1d"]
 [ext_resource type="Material" uid="uid://brrm3bwvedoer" path="res://Materials/shader_material_thing.tres" id="14_c08op"]
+[ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkAnimationPlayer.gd" id="19_mqee6"]
 
 [sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_3na81"]
 extents_x = 3276800
@@ -3212,6 +3215,67 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_q6rul")
 
+[sub_resource type="Animation" id="Animation_6nw6i"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/ready:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/fight:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_3kih0"]
+resource_name = "round_start"
+length = 3.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/ready:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/fight:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2.83333, 3, 3.2, 3.36667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ag8ye"]
+_data = {
+"RESET": SubResource("Animation_6nw6i"),
+"round_start": SubResource("Animation_3kih0")
+}
+
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_5ed8j")
 
@@ -3411,6 +3475,18 @@ modulate = Color(0, 0, 0, 1)
 position = Vector2(1051.29, 561.349)
 scale = Vector2(27.9267, 16.039)
 texture = ExtResource("6_uidtj")
+
+[node name="ready" type="Sprite2D" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(959.867, 526)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("10_fglt3")
+
+[node name="fight" type="Sprite2D" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(959.333, 536)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("11_pm2yw")
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("character1", "character2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 16)
@@ -3942,6 +4018,12 @@ skeleton = NodePath("")
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -3.38129)
 mesh = SubResource("ArrayMesh_3chle")
 skeleton = NodePath("")
+
+[node name="NetworkAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ag8ye")
+}
+script = ExtResource("19_mqee6")
 
 [connection signal="timeout" from="GameManager/MatchTimer" to="GameManager" method="_on_match_timer_timeout"]
 [connection signal="timeout" from="GameManager/CountdownTimer" to="GameManager" method="_on_countdown_timer_timeout"]

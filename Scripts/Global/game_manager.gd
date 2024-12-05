@@ -21,6 +21,7 @@ enum Game_State {
 @export var test_menu : Node
 
 @onready var audioplayer : AudioStreamPlayer = $AudioStreamPlayer
+@onready var anim_player : NetworkAnimationPlayer = $"../NetworkAnimationPlayer"
 
 var STAGE_THEME = preload("res://Audio/Music/stage-theme2.mp3")
 
@@ -107,8 +108,8 @@ func game_start():
 		return
 	
 	current_round = 0
-	p1_rounds = 1
-	p2_rounds = 1
+	p1_rounds = 0
+	p2_rounds = 0
 
 func final_hit_pause():
 	disable_input = true
@@ -125,6 +126,7 @@ func round_intro():
 		song_played = true
 		test_menu.disable_message_label()
 	intro = true
+	anim_player.play("round_start")
 	
 	current_game_state = Game_State.FADE_IN
 	disable_input = false
@@ -153,13 +155,13 @@ func round_end():
 		player1.round_count_2.modulate.b = 0
 	
 	if p1_rounds == 1:
-		player1.round_count_1.modulate.r = 255
-		player1.round_count_1.modulate.g = 255
-		player1.round_count_1.modulate.b = 0
+		player2.round_count_1.modulate.r = 255
+		player2.round_count_1.modulate.g = 255
+		player2.round_count_1.modulate.b = 0
 	elif p2_rounds == 2:
-		player1.round_count_2.modulate.r = 255
-		player1.round_count_2.modulate.g = 255
-		player1.round_count_2.modulate.b = 0
+		player2.round_count_2.modulate.r = 255
+		player2.round_count_2.modulate.g = 255
+		player2.round_count_2.modulate.b = 0
 	
 	disable_input = true
 	fade_sprite.modulate.a = -5

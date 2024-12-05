@@ -79,7 +79,7 @@ func hit(hitbox: Hitbox2D):
 	character.height_hit = hitbox.height
 	
 	var current_state_name = character.state_machine.current_state.state_name
-	if current_state_name == "juggle" or current_state_name == "jump" or current_state_name == "jumpattack":
+	if current_state_name == "juggle" or current_state_name == "jump" or current_state_name == "jumpattack" or current_state_name == "grapplerj214":
 		character.state_machine.current_state.Transitioned.emit(character.state_machine.current_state, "juggle")
 	else:
 		character.state_machine.current_state.Transitioned.emit(character.state_machine.current_state, "hitstun")

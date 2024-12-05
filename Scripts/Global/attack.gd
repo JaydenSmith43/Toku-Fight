@@ -30,9 +30,9 @@ func check_motions_available(character: SGCharacterBody2D, input_array: Node, mo
 		if check_motion(character, input_array, [6,3,2,1,4], move_button):
 			do_special(character, move_button, "63214")
 			return
-	if character.motions.has("j236") and state == "jump":
-		if check_motion(character, input_array, [2,3,6], move_button):
-			do_special(character, move_button, "j236")
+	if character.motions.has("j214") and state == "jump":
+		if check_motion(character, input_array, [2,1,4], move_button):
+			do_special(character, move_button, "j214")
 			return
 	
 	if state == "ground":
