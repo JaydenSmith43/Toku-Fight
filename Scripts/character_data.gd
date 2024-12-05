@@ -47,6 +47,7 @@ var current_frame := 0
 var hittable = true
 var combo := 0
 var throw_invul := false
+var rematch := true
 
 func _ready():
 	healthbar.init_health(health)
@@ -101,6 +102,22 @@ func update_hitboxes():
 	hitboxes = get_tree().get_nodes_in_group("p2_hitbox")
 	for hitbox in hitboxes:
 		hitbox.tick_physics_process()
+
+func disable_ui():
+	healthbar.visible = false
+	round_label.visible = false
+	time_label.visible = false
+	name_label.visible = false
+	round_count_1.visible = false
+	round_count_2.visible = false
+
+func enable_ui():
+	healthbar.visible = true
+	round_label.visible = true
+	time_label.visible = true
+	name_label.visible = true
+	round_count_1.visible = true
+	round_count_2.visible = true
 
 func _get_local_input() -> Dictionary:
 	var input_vector : Vector2i
@@ -200,6 +217,7 @@ func _save_state() -> Dictionary:
 		hittable = hittable,
 		combo = combo,
 		throw_invul = throw_invul,
+		rematch = rematch,
 		
 		fade_modulate_a = game_manager.fade_sprite.modulate.a,
 		pause = game_manager.pause,
@@ -235,6 +253,7 @@ func _load_state(state: Dictionary) -> void:
 	hittable = state['hittable']
 	combo = state['combo']
 	throw_invul = state['throw_invul']
+	rematch = state['rematch']
 	
 	game_manager.fade_sprite.modulate.a = state['fade_modulate_a']
 	game_manager.pause = state['pause']

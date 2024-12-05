@@ -14,6 +14,7 @@ func State_Physics_Update(input: Dictionary):
 	character.current_frame += 1
 	
 	if character.current_frame == 1:
+		character.rematch = false
 		character.reset_self()
 		if character.is_in_group("player1"):
 			character.game_manager.current_game_state = 0

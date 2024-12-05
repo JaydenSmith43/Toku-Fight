@@ -9,6 +9,8 @@ const DummyNetworkAdapter = preload("res://addons/godot-rollback-netcode/DummyNe
 @onready var message_label = $CanvasLayer/MessageLabel
 @onready var sync_lost_label = $CanvasLayer/SyncLostLabel
 @onready var reset_button = $CanvasLayer/ResetButton
+@onready var local_button = $CanvasLayer/MainMenu/LocalButton
+@onready var online_button = $CanvasLayer/MainMenu/OnlineButton
 
 const LOG_FILE_DIRECTORY = 'user://detailed_logs'
 
@@ -55,6 +57,7 @@ func _on_peer_connected(peer_id: int):
 		SyncManager.start()
 
 func _on_peer_disconnected(peer_id: int):
+	message_label.visible
 	message_label.text = "Disconnected!"
 	SyncManager.remove_peer(peer_id)
 
@@ -100,6 +103,7 @@ func _on_SyncManager_sync_regained() -> void:
 	sync_lost_label.visible = false
 
 func _on_SyncManager_sync_error(msg: String) -> void:
+	message_label.visible = true
 	message_label.text = "Fatal sync error: " + msg
 	sync_lost_label.visible = false
 	
@@ -114,6 +118,8 @@ func setup_match_for_replay(my_peer_id: int, peer_ids: Array, match_info: Dictio
 	reset_button.visible = false
 
 func _on_online_button_pressed() -> void:
+	local_button.visible = false
+	online_button.visible = false
 	connection_panel.popup_centered()
 	SyncManager.reset_network_adaptor()
 
@@ -122,3 +128,11 @@ func _on_local_button_pressed() -> void:
 	get_parent().get_node("test2").input_prefix = "P2_"
 	SyncManager.network_adaptor = DummyNetworkAdapter.new()
 	SyncManager.start()
+
+func disable_message_label() -> void:
+	message_label.visible = false
+
+
+func _on_rematch_button_button_down() -> void:
+	SyncManager._sound_manager._on_SyncManager_sync_stopped()
+	_on_reset_button_pressed()

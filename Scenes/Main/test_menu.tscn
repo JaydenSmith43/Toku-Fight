@@ -1,9 +1,18 @@
-[gd_scene load_steps=7 format=3 uid="uid://30mde2a3la3"]
+[gd_scene load_steps=10 format=3 uid="uid://30mde2a3la3"]
 
 [ext_resource type="Script" path="res://Scenes/Main/test_menu.gd" id="1_gbjgu"]
+[ext_resource type="FontFile" uid="uid://bk4os2yyrjyde" path="res://Fonts/Bebas Neue Pro Expanded Regular.otf" id="2_e6cb3"]
 
 [sub_resource type="Theme" id="Theme_l03eg"]
 default_font_size = 40
+
+[sub_resource type="Theme" id="Theme_4uuyn"]
+default_font = ExtResource("2_e6cb3")
+default_font_size = 100
+
+[sub_resource type="Theme" id="Theme_c7740"]
+default_font = ExtResource("2_e6cb3")
+default_font_size = 100
 
 [sub_resource type="Theme" id="Theme_vx7wg"]
 default_font_size = 40
@@ -39,10 +48,12 @@ theme = SubResource("Theme_l03eg")
 
 [node name="LocalButton" type="Button" parent="CanvasLayer/MainMenu"]
 layout_mode = 2
+theme = SubResource("Theme_4uuyn")
 text = "Play Local"
 
 [node name="OnlineButton" type="Button" parent="CanvasLayer/MainMenu"]
 layout_mode = 2
+theme = SubResource("Theme_c7740")
 text = "Play Online"
 
 [node name="ConnectionPanel" type="Window" parent="CanvasLayer"]
@@ -102,6 +113,7 @@ theme = SubResource("Theme_1lvh5")
 horizontal_alignment = 1
 
 [node name="ResetButton" type="Button" parent="CanvasLayer"]
+visible = false
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0

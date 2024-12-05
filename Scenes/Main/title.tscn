@@ -1,3 +1,155 @@
-[gd_scene format=3 uid="uid://b13nagmgdrjur"]
+[gd_scene load_steps=17 format=3 uid="uid://b13nagmgdrjur"]
+
+[ext_resource type="Texture2D" uid="uid://4jntsskvqrs1" path="res://Sprites/ui/square.png" id="1_dyjog"]
+[ext_resource type="Script" path="res://Scenes/Main/title.gd" id="1_nhn6d"]
+[ext_resource type="PackedScene" uid="uid://c1j0rb77tkwo" path="res://Materials/ProceduralFireTutorial/title_shader.tscn" id="2_pjwlh"]
+[ext_resource type="Shader" path="res://Materials/ProceduralFireTutorial/procedural-fire.gdshader" id="3_olntl"]
+[ext_resource type="FontFile" uid="uid://4ahc3p5yg0fh" path="res://Fonts/Bebas Neue Pro Expanded Bold Italic.otf" id="3_yj7w7"]
+[ext_resource type="Texture2D" uid="uid://ctp4nh2gt8sqr" path="res://Materials/ProceduralFireTutorial/tokfight.png" id="4_cgqqq"]
+[ext_resource type="AudioStream" uid="uid://bq1q2dcxkmtnj" path="res://Audio/SFX/UI/cursor01.wav" id="7_lwwvj"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_acc5q"]
+noise_type = 3
+frequency = 0.026
+fractal_lacunarity = 1.77
+fractal_weighted_strength = 0.5
+domain_warp_enabled = true
+domain_warp_frequency = 0.01
+domain_warp_fractal_lacunarity = 6.35
+domain_warp_fractal_gain = 0.165
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_406wg"]
+width = 256
+height = 256
+seamless = true
+noise = SubResource("FastNoiseLite_acc5q")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_uykjr"]
+frequency = 0.035
+fractal_lacunarity = 1.445
+fractal_gain = 0.395
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_rtw4j"]
+width = 256
+height = 256
+seamless = true
+noise = SubResource("FastNoiseLite_uykjr")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jyhl4"]
+shader = ExtResource("3_olntl")
+shader_parameter/light_color = Color(0, 0, 0, 1)
+shader_parameter/dark_color = Color(0.187905, 0, 0, 1)
+shader_parameter/emission = -24.19
+shader_parameter/displacement_strength = 0.01
+shader_parameter/displacement_speed = 5.0
+shader_parameter/noise_tex = SubResource("NoiseTexture2D_406wg")
+shader_parameter/noise_tex2 = SubResource("NoiseTexture2D_rtw4j")
+
+[sub_resource type="Theme" id="Theme_vaxlw"]
+default_font = ExtResource("3_yj7w7")
+default_font_size = 30
+
+[sub_resource type="Animation" id="Animation_5y1s3"]
+resource_name = "new_animation"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"load_next_scene"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_7iax1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pgcad"]
+_data = {
+"RESET": SubResource("Animation_7iax1"),
+"new_animation": SubResource("Animation_5y1s3")
+}
 
 [node name="Node2D" type="Node2D"]
+script = ExtResource("1_nhn6d")
+
+[node name="Background" type="Sprite2D" parent="."]
+modulate = Color(0.117109, 0.117109, 0.117109, 1)
+position = Vector2(895, 582.5)
+scale = Vector2(2.25, 2.25)
+texture = ExtResource("1_dyjog")
+
+[node name="Demo2" type="Node2D" parent="."]
+position = Vector2(954.439, 319.723)
+scale = Vector2(1.31, 1.31)
+
+[node name="Sprite2D" type="Sprite2D" parent="Demo2"]
+material = SubResource("ShaderMaterial_jyhl4")
+texture = ExtResource("4_cgqqq")
+
+[node name="Demo" parent="." instance=ExtResource("2_pjwlh")]
+position = Vector2(954.439, 305.323)
+scale = Vector2(1.31, 1.31)
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 843.211
+offset_top = 988.265
+offset_right = 1065.21
+offset_bottom = 1023.27
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_vaxlw")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+text = "PRESS ANY BUTTON"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FadeSprite" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 0)
+position = Vector2(935.144, 519.975)
+scale = Vector2(2.01897, 1.54289)
+texture = ExtResource("1_dyjog")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_pgcad")
+}
+
+[node name="SelectSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_lwwvj")
