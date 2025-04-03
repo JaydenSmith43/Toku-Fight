@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://yga6ng3yyyl8"]
 
-[ext_resource type="Script" path="res://Scenes/Main/2D-Demo/main_camera.gd" id="1_7mt1p"]
+[ext_resource type="Script" uid="uid://f8kt6ppah8ty" path="res://Scenes/Main/2D-Demo/main_camera.gd" id="1_7mt1p"]
 
 [node name="mainCamera" type="Camera2D"]
 zoom = Vector2(2, 2)

@@ -1,13 +1,13 @@
 extends Node3D
 
-@onready var test_menu = $TestMenu
+@onready var test_menu = $Game/TestMenu
 
-@onready var floor = $Floor
-@onready var left_wall = $LeftWall
-@onready var right_wall = $RightWall
-@onready var screen_boundaries = $ScreenBoundaries
-@onready var player1 = $test1
-@onready var player2 = $test2
+@onready var floor = $Game/Floor
+@onready var left_wall = $Game/LeftWall
+@onready var right_wall = $Game/RightWall
+@onready var screen_boundaries = $Game/ScreenBoundaries
+@onready var player1 = $Game/test1
+@onready var player2 = $Game/test2
 
 var visible_2D := false
 

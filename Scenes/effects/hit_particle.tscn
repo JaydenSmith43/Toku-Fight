@@ -1,11 +1,11 @@
 [gd_scene load_steps=24 format=3 uid="uid://bdap2qts0jac3"]
 
 [ext_resource type="Shader" uid="uid://bm631gui83f0m" path="res://Materials/simple_shader.tres" id="1_ygjev"]
-[ext_resource type="Script" path="res://Scenes/effects/hit_particle.gd" id="3_j7saw"]
+[ext_resource type="Script" uid="uid://c00y1ht4efrvq" path="res://Scenes/effects/hit_particle.gd" id="3_j7saw"]
 [ext_resource type="Texture2D" uid="uid://dsl73fck30qnh" path="res://Sprites/T_flare12.png" id="3_s2n87"]
 [ext_resource type="Texture2D" uid="uid://bvgtbqdey8hbh" path="res://Sprites/impact.png" id="4_0yl4m"]
 [ext_resource type="Shader" uid="uid://bbrr4te5sfpbs" path="res://Materials/simple_shader_sparks.tres" id="4_1rv0j"]
-[ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="4_57g0m"]
+[ext_resource type="Script" uid="uid://b4c7xgk076ycj" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="4_57g0m"]
 [ext_resource type="Texture2D" uid="uid://dxjv8n6jnasog" path="res://Sprites/T_circle42.PNG" id="5_a0b60"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_huqhg"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://c1j0rb77tkwo"]
 
-[ext_resource type="Shader" path="res://Materials/ProceduralFireTutorial/procedural-fire.gdshader" id="1_tr3ny"]
+[ext_resource type="Shader" uid="uid://bbx2tfn4w5fgn" path="res://Materials/ProceduralFireTutorial/procedural-fire.gdshader" id="1_tr3ny"]
 [ext_resource type="Texture2D" uid="uid://ctp4nh2gt8sqr" path="res://Materials/ProceduralFireTutorial/tokfight.png" id="2_jjnhf"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_acc5q"]

@@ -1,0 +1,1 @@
+{"anim_name":"5a","cancel":"5a,2a,5b,2b","cancel_frame":11,"frames":[{"blockstun":14,"frame":5,"hitbox1":{"damage":2,"end_frame":40,"height":"mid","pos_x":3,"pos_y":4,"scale_x":1.2,"scale_y":1},"hitstun":16,"sfx":"light"}],"move_end_frame":13}

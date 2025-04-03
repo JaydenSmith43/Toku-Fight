@@ -1,38 +1,43 @@
-[gd_scene load_steps=36 format=3 uid="uid://c110s1snwl2cq"]
+[gd_scene load_steps=38 format=3 uid="uid://c110s1snwl2cq"]
 
-[ext_resource type="Script" path="res://Scripts/character_data.gd" id="1_fjl6n"]
+[ext_resource type="Script" uid="uid://7qfajh51c36j" path="res://Scripts/character_data.gd" id="1_fjl6n"]
 [ext_resource type="Texture2D" uid="uid://bmxre7rw1js2a" path="res://Sprites/grappler_ref.png" id="2_1migp"]
-[ext_resource type="Script" path="res://Scripts/Data/throwbox2D.gd" id="3_3j7rt"]
-[ext_resource type="Script" path="res://Scripts/Data/hurtbox2D.gd" id="4_74vm4"]
-[ext_resource type="Script" path="res://Scripts/Data/hitbox2D_collision.gd" id="5_1dpco"]
+[ext_resource type="Script" uid="uid://ol7n1dl8dsyu" path="res://Scripts/Data/throwbox2D.gd" id="3_3j7rt"]
+[ext_resource type="Script" uid="uid://7cmeu30mlmgj" path="res://Scenes/Characters/grappler/pushbox2D.gd" id="3_awpgt"]
+[ext_resource type="Script" uid="uid://b66hexw5unjtp" path="res://Scripts/Data/hurtbox2D.gd" id="4_74vm4"]
+[ext_resource type="Script" uid="uid://dm714i23d8bg3" path="res://Scripts/Data/hitbox2D_collision.gd" id="5_1dpco"]
 [ext_resource type="PackedScene" uid="uid://1h0q2rqr7tyo" path="res://Scenes/Characters/grappler/grappler_model.tscn" id="6_sd7cd"]
-[ext_resource type="Script" path="res://Scripts/input.gd" id="7_pp3wx"]
+[ext_resource type="Script" uid="uid://dihyymi7wja5e" path="res://Scripts/input.gd" id="7_pp3wx"]
 [ext_resource type="PackedScene" uid="uid://ook7dmepmfw5" path="res://Scenes/UI/ui.tscn" id="8_rphqq"]
 [ext_resource type="PackedScene" uid="uid://bh6x5sy31wviu" path="res://Scenes/UI/health_bar.tscn" id="9_risx0"]
 [ext_resource type="Texture2D" uid="uid://b40oslxvafonh" path="res://Sprites/ui/round_count.png" id="10_aqghq"]
-[ext_resource type="Script" path="res://Scripts/States/state_machine.gd" id="10_t1wsc"]
+[ext_resource type="Script" uid="uid://btnoosxgfpuga" path="res://Scripts/States/state_machine.gd" id="10_t1wsc"]
 [ext_resource type="FontFile" uid="uid://fhg21esccaad" path="res://Fonts/Bebas Neue Pro Expanded ExtraBold Italic.otf" id="11_aw5gt"]
-[ext_resource type="Script" path="res://Scripts/States/S_Idle.gd" id="11_s2jcs"]
-[ext_resource type="Script" path="res://Scripts/States/S_Ground_Attack.gd" id="12_qkye0"]
+[ext_resource type="Script" uid="uid://b37gwr5lu1wq2" path="res://Scripts/States/S_Idle.gd" id="11_s2jcs"]
+[ext_resource type="Script" uid="uid://qtcggad5avyt" path="res://Scripts/States/S_Ground_Attack.gd" id="12_qkye0"]
 [ext_resource type="FontFile" uid="uid://blv6ltia655ri" path="res://Fonts/Bebas Neue Pro Expanded Bold.otf" id="12_xgqsd"]
-[ext_resource type="Script" path="res://Scripts/States/S_Grappler63214.gd" id="13_0jsj3"]
-[ext_resource type="Script" path="res://Scripts/States/S_Intro.gd" id="14_b7ffk"]
-[ext_resource type="Script" path="res://Scripts/States/S_Jump.gd" id="14_k2vgv"]
-[ext_resource type="Script" path="res://Scripts/States/S_Block.gd" id="15_kiua0"]
-[ext_resource type="Script" path="res://Scripts/States/S_Prejump.gd" id="16_5qm8e"]
-[ext_resource type="Script" path="res://Scripts/States/S_Hitstun.gd" id="17_d3vqd"]
-[ext_resource type="Script" path="res://Scripts/States/S_Thrower.gd" id="18_qhqye"]
-[ext_resource type="Script" path="res://Scripts/States/S_Thrown.gd" id="19_3jq6r"]
-[ext_resource type="Script" path="res://Scripts/States/S_Teched.gd" id="20_g2jt5"]
-[ext_resource type="Script" path="res://Scripts/States/S_Jump_Attack.gd" id="21_4fove"]
-[ext_resource type="Script" path="res://Scripts/States/S_CommandThrown.gd" id="22_y72th"]
-[ext_resource type="Script" path="res://Scripts/States/S_Juggle.gd" id="23_sbkx2"]
-[ext_resource type="Script" path="res://Scripts/States/S_Knockdown.gd" id="24_r24n8"]
-[ext_resource type="Script" path="res://Scripts/States/S_Grapplerj214.gd" id="29_00vnh"]
+[ext_resource type="Script" uid="uid://bkb1mbciydoho" path="res://Scripts/States/S_Grappler63214.gd" id="13_0jsj3"]
+[ext_resource type="Script" uid="uid://l0ydnp1rqa3i" path="res://Scripts/States/S_Intro.gd" id="14_b7ffk"]
+[ext_resource type="Script" uid="uid://doe53i8en31ub" path="res://Scripts/States/S_Jump.gd" id="14_k2vgv"]
+[ext_resource type="Script" uid="uid://c3nie88ybul8s" path="res://Scripts/States/S_Block.gd" id="15_kiua0"]
+[ext_resource type="Script" uid="uid://cr3tpoikfsqlr" path="res://Scripts/States/S_Prejump.gd" id="16_5qm8e"]
+[ext_resource type="Script" uid="uid://qlyhkbf0k3px" path="res://Scripts/States/S_Hitstun.gd" id="17_d3vqd"]
+[ext_resource type="Script" uid="uid://bas01js14chkv" path="res://Scripts/States/S_Thrower.gd" id="18_qhqye"]
+[ext_resource type="Script" uid="uid://cg17vyasa1f7" path="res://Scripts/States/S_Thrown.gd" id="19_3jq6r"]
+[ext_resource type="Script" uid="uid://cbwhnnanv6e0s" path="res://Scripts/States/S_Teched.gd" id="20_g2jt5"]
+[ext_resource type="Script" uid="uid://dh2jj532g4cr6" path="res://Scripts/States/S_Jump_Attack.gd" id="21_4fove"]
+[ext_resource type="Script" uid="uid://by8b40rkkj1kk" path="res://Scripts/States/S_CommandThrown.gd" id="22_y72th"]
+[ext_resource type="Script" uid="uid://bpnjsjga63j8b" path="res://Scripts/States/S_Juggle.gd" id="23_sbkx2"]
+[ext_resource type="Script" uid="uid://b0lm0p3giy7si" path="res://Scripts/States/S_Knockdown.gd" id="24_r24n8"]
+[ext_resource type="Script" uid="uid://b0i56ow6ctvpp" path="res://Scripts/States/S_Grapplerj214.gd" id="29_00vnh"]
 
 [sub_resource type="SGCapsuleShape2D" id="SGCapsuleShape2D_yoyix"]
-radius = 40262
-height = 160159
+radius = 13672
+height = 156944
+
+[sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_makta"]
+extents_x = 108635
+extents_y = 92808
 
 [sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_kha3f"]
 extents_x = 52101
@@ -65,15 +70,26 @@ state_machine = NodePath("StateMachine")
 model = NodePath("model")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false
 position = Vector2(-0.00781274, -2.5065)
 scale = Vector2(0.00787602, 0.00829784)
 texture = ExtResource("2_1migp")
 
 [node name="collision" type="SGCollisionShape2D" parent="."]
 shape = SubResource("SGCapsuleShape2D_yoyix")
-fixed_position_y = -121658
-position = Vector2(0, -1.85635)
+fixed_position_y = -92218
+position = Vector2(0, -1.40714)
+
+[node name="Pushbox" type="SGArea2D" parent="."]
+collision_layer = 512
+collision_mask = 512
+script = ExtResource("3_awpgt")
+
+[node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="Pushbox"]
+shape = SubResource("SGRectangleShape2D_makta")
+fixed_position_y = -93350
+fixed_scale_x = 42636
+position = Vector2(0, -1.42441)
+scale = Vector2(0.650574, 1)
 
 [node name="Throwbox" type="SGArea2D" parent="." node_paths=PackedStringArray("character", "state_machine")]
 collision_layer = 32

@@ -1,18 +1,18 @@
-[gd_scene load_steps=18 format=3 uid="uid://yey7lvkuwcd1"]
+[gd_scene load_steps=19 format=3 uid="uid://yey7lvkuwcd1"]
 
-[ext_resource type="Script" path="res://Scenes/Main/2D-Demo/2Dtest.gd" id="1_p15gt"]
-[ext_resource type="SpriteFrames" path="res://Sprites/Character/testRyu/ryu_sprite.tres" id="2_lo3f1"]
-[ext_resource type="Shape2D" path="res://Scenes/Characters/testCh1/IdleCol.tres" id="3_0prmg"]
-[ext_resource type="Script" path="res://Scripts/input.gd" id="3_87miu"]
-[ext_resource type="Shape2D" path="res://Scenes/Characters/testCh1/JumpCol.tres" id="3_cmowc"]
-[ext_resource type="Script" path="res://Scripts/Data/hurtbox3D.gd" id="4_1oxew"]
+[ext_resource type="Script" uid="uid://b0crpc1wix4kq" path="res://Scenes/Main/2D-Demo/2Dtest.gd" id="1_p15gt"]
+[ext_resource type="Script" uid="uid://dihyymi7wja5e" path="res://Scripts/input.gd" id="3_87miu"]
+[ext_resource type="Script" uid="uid://1ftcs4tcroth" path="res://Scripts/Data/hurtbox3D.gd" id="4_1oxew"]
 [ext_resource type="PackedScene" uid="uid://ook7dmepmfw5" path="res://Scenes/UI/ui.tscn" id="4_qrdf1"]
-[ext_resource type="Script" path="res://Scripts/States/state_machine.gd" id="5_2ikf7"]
-[ext_resource type="Script" path="res://Scripts/States/S_Idle.gd" id="6_vvwnm"]
-[ext_resource type="Script" path="res://Scripts/States/S_Ground_Attack.gd" id="7_suixc"]
+[ext_resource type="Script" uid="uid://btnoosxgfpuga" path="res://Scripts/States/state_machine.gd" id="5_2ikf7"]
+[ext_resource type="Script" uid="uid://b37gwr5lu1wq2" path="res://Scripts/States/S_Idle.gd" id="6_vvwnm"]
+[ext_resource type="Script" uid="uid://qtcggad5avyt" path="res://Scripts/States/S_Ground_Attack.gd" id="7_suixc"]
 [ext_resource type="PackedScene" uid="uid://bh6x5sy31wviu" path="res://Scenes/UI/health_bar.tscn" id="7_xdp0n"]
-[ext_resource type="Script" path="res://Scripts/States/S_Grappler63214.gd" id="8_t17ag"]
-[ext_resource type="Script" path="res://Scripts/States/S_Jump.gd" id="9_lhso1"]
+[ext_resource type="Script" uid="uid://bkb1mbciydoho" path="res://Scripts/States/S_Grappler63214.gd" id="8_t17ag"]
+[ext_resource type="Script" uid="uid://doe53i8en31ub" path="res://Scripts/States/S_Jump.gd" id="9_lhso1"]
+
+[sub_resource type="Resource" id="Resource_ippk6"]
+metadata/__load_path__ = "res://Sprites/Character/testRyu/ryu_sprite.tres"
 
 [sub_resource type="Animation" id="Animation_xifwo"]
 length = 0.001
@@ -22,12 +22,21 @@ resource_name = "test_jab"
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rvoa7"]
 _data = {
-"RESET": SubResource("Animation_xifwo"),
-"test_jab": SubResource("Animation_ega2o")
+&"RESET": SubResource("Animation_xifwo"),
+&"test_jab": SubResource("Animation_ega2o")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jciv6"]
 size = Vector2(128, 322)
+
+[sub_resource type="Resource" id="Resource_xpict"]
+metadata/__load_path__ = "res://Scenes/Characters/testCh1/IdleCol.tres"
+
+[sub_resource type="Resource" id="Resource_nmwug"]
+metadata/__load_path__ = "res://Scenes/Characters/testCh1/IdleCol.tres"
+
+[sub_resource type="Resource" id="Resource_0cp3b"]
+metadata/__load_path__ = "res://Scenes/Characters/testCh1/JumpCol.tres"
 
 [node name="test" type="CharacterBody2D"]
 scale = Vector2(0.5, 0.5)
@@ -36,7 +45,7 @@ script = ExtResource("1_p15gt")
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(120, -109)
 scale = Vector2(5, 5)
-sprite_frames = ExtResource("2_lo3f1")
+sprite_frames = SubResource("Resource_ippk6")
 animation = &"jab"
 autoplay = "idle"
 
@@ -57,7 +66,7 @@ debug_color = Color(0, 0.647059, 0.243137, 0.419608)
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, 105)
-shape = ExtResource("3_0prmg")
+shape = SubResource("Resource_xpict")
 
 [node name="AttackTimer" type="Timer" parent="."]
 one_shot = true
@@ -79,7 +88,7 @@ initial_state = NodePath("Idle")
 
 [node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("character")]
 script = ExtResource("6_vvwnm")
-idleCol = ExtResource("3_0prmg")
+idleCol = SubResource("Resource_nmwug")
 character = NodePath("../..")
 
 [node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("character")]
@@ -93,7 +102,7 @@ character = NodePath("../..")
 [node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("collision", "character")]
 script = ExtResource("9_lhso1")
 collision = NodePath("../../Collision")
-jumpCol = ExtResource("3_cmowc")
+jumpCol = SubResource("Resource_0cp3b")
 character = NodePath("../..")
 
 [node name="StateLabel" type="Label" parent="."]

@@ -34,6 +34,7 @@ var p1_rounds := 0
 var p2_rounds := 0
 var pause := false
 var disable_input := false
+var disable_damage := false
 var current_game_state = Game_State.ROUND
 var intro := true
 var song_played := false
@@ -130,6 +131,7 @@ func round_intro():
 	
 	current_game_state = Game_State.FADE_IN
 	disable_input = false
+	disable_damage = false
 	current_round += 1
 	player1.round_label.text = "Round " + str(current_round)
 	player2.round_label.text = "Round " + str(current_round)
@@ -158,12 +160,13 @@ func round_end():
 		player2.round_count_1.modulate.r = 255
 		player2.round_count_1.modulate.g = 255
 		player2.round_count_1.modulate.b = 0
-	elif p2_rounds == 2:
+	elif p1_rounds == 2:
 		player2.round_count_2.modulate.r = 255
 		player2.round_count_2.modulate.g = 255
 		player2.round_count_2.modulate.b = 0
 	
 	disable_input = true
+	disable_damage = true
 	fade_sprite.modulate.a = -5
 	current_game_state = Game_State.FADE_OUT
 	round_end_timer.start()
@@ -191,10 +194,14 @@ func _on_countdown_timer_timeout() -> void:
 	round_start()
 
 func _on_match_timer_timeout() -> void:
+	if player1.health > player2.health:
+		p2_rounds += 1
+	elif player2.health > player1.health:
+		p1_rounds += 1
+	
 	round_end()
 
 func _on_round_end_timer_timeout() -> void:
-	###TODO CHECK FOR FINAL ROUND AND THEN END GAME
 	if p1_rounds == 2 or p2_rounds == 2:
 		win_game()
 	else:

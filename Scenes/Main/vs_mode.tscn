@@ -1,11 +1,11 @@
-[gd_scene load_steps=231 format=4 uid="uid://bmkea3roxko18"]
+[gd_scene load_steps=230 format=4 uid="uid://bmkea3roxko18"]
 
-[ext_resource type="Script" path="res://Scenes/Main/test_vs_mode.gd" id="1_5ed8j"]
+[ext_resource type="Script" uid="uid://bp8n1mtf6dy68" path="res://Scenes/Main/test_vs_mode.gd" id="1_5ed8j"]
 [ext_resource type="PackedScene" uid="uid://c110s1snwl2cq" path="res://Scenes/Characters/grappler/grappler.tscn" id="2_c13du"]
-[ext_resource type="Script" path="res://Scripts/Global/game_manager.gd" id="2_g8ds5"]
-[ext_resource type="Script" path="res://Scenes/Main/2D-Demo/main_camera.gd" id="2_ndysc"]
+[ext_resource type="Script" uid="uid://ddvuyepxymyc2" path="res://Scripts/Global/game_manager.gd" id="2_g8ds5"]
+[ext_resource type="Script" uid="uid://f8kt6ppah8ty" path="res://Scenes/Main/2D-Demo/main_camera.gd" id="2_ndysc"]
 [ext_resource type="Environment" uid="uid://jsqpfw82fbi" path="res://world_environment.tres" id="3_k4mgk"]
-[ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="3_t4hs0"]
+[ext_resource type="Script" uid="uid://b4c7xgk076ycj" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="3_t4hs0"]
 [ext_resource type="PackedScene" uid="uid://b2ax3p2ss2g8q" path="res://Scenes/Main/sg_boundaries.tscn" id="4_fckii"]
 [ext_resource type="AudioStream" uid="uid://dqj8ftiimo08g" path="res://Audio/Music/stage-theme2.mp3" id="4_s22pu"]
 [ext_resource type="PackedScene" uid="uid://30mde2a3la3" path="res://Scenes/Main/test_menu.tscn" id="5_706ux"]
@@ -18,7 +18,7 @@
 [ext_resource type="Material" uid="uid://b25fnqenlhknj" path="res://Materials/Rock.tres" id="12_36gv5"]
 [ext_resource type="Material" uid="uid://bbmtvjlr3d431" path="res://Materials/wood.tres" id="13_8mt1d"]
 [ext_resource type="Material" uid="uid://brrm3bwvedoer" path="res://Materials/shader_material_thing.tres" id="14_c08op"]
-[ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkAnimationPlayer.gd" id="19_mqee6"]
+[ext_resource type="Script" uid="uid://chtd24fbrqsrs" path="res://addons/godot-rollback-netcode/NetworkAnimationPlayer.gd" id="19_mqee6"]
 
 [sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_3na81"]
 extents_x = 3276800
@@ -27,9 +27,6 @@ extents_y = 196608
 [sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_gvhyg"]
 extents_x = 3276800
 extents_y = 65536
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_das85"]
-size = Vector3(100, 1, 11.989)
 
 [sub_resource type="Theme" id="Theme_ibktj"]
 default_font = ExtResource("8_1opxn")
@@ -3272,8 +3269,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ag8ye"]
 _data = {
-"RESET": SubResource("Animation_6nw6i"),
-"round_start": SubResource("Animation_3kih0")
+&"RESET": SubResource("Animation_6nw6i"),
+&"round_start": SubResource("Animation_3kih0")
 }
 
 [node name="Node3D" type="Node3D"]
@@ -3289,7 +3286,7 @@ fade_sprite = NodePath("../CanvasLayer/fade_sprite")
 ko_sprite = NodePath("../CanvasLayer/KO_overlay")
 ko_overlay = NodePath("../CanvasLayer/KO_sprite")
 win_panel = NodePath("../CanvasLayer2/WinPanel")
-test_menu = NodePath("../TestMenu")
+test_menu = NodePath("../Game/TestMenu")
 
 [node name="MatchTimer" type="Node" parent="GameManager"]
 script = ExtResource("3_t4hs0")
@@ -3314,27 +3311,31 @@ wait_ticks = 60
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="GameManager"]
 stream = ExtResource("4_s22pu")
 
-[node name="test1" parent="." node_paths=PackedStringArray("game_manager") groups=["player1"] instance=ExtResource("2_c13du")]
+[node name="Game" type="Node2D" parent="."]
+position = Vector2(960, 650)
+scale = Vector2(15, 15)
+
+[node name="test1" parent="Game" node_paths=PackedStringArray("game_manager") groups=["player1"] instance=ExtResource("2_c13du")]
 fixed_position_x = -524288
 visible = false
 position = Vector2(-8, 0)
-game_manager = NodePath("../GameManager")
+game_manager = NodePath("../../GameManager")
 
-[node name="test2" parent="." node_paths=PackedStringArray("game_manager") groups=["player2"] instance=ExtResource("2_c13du")]
+[node name="test2" parent="Game" node_paths=PackedStringArray("game_manager") groups=["player2"] instance=ExtResource("2_c13du")]
 fixed_position_x = 524288
 visible = false
 position = Vector2(8, 0)
-game_manager = NodePath("../GameManager")
+game_manager = NodePath("../../GameManager")
 
-[node name="Floor" type="SGStaticBody2D" parent="."]
+[node name="Floor" type="SGStaticBody2D" parent="Game"]
 fixed_position_y = 196650
 visible = false
 position = Vector2(0, 3.00064)
 
-[node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="Floor"]
+[node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="Game/Floor"]
 shape = SubResource("SGRectangleShape2D_3na81")
 
-[node name="LeftWall" type="SGStaticBody2D" parent="."]
+[node name="LeftWall" type="SGStaticBody2D" parent="Game"]
 fixed_position_x = -3233380
 fixed_position_y = -3276800
 fixed_rotation = 102944
@@ -3342,10 +3343,10 @@ visible = false
 position = Vector2(-49.3375, -50)
 rotation = 1.5708
 
-[node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="LeftWall"]
+[node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="Game/LeftWall"]
 shape = SubResource("SGRectangleShape2D_gvhyg")
 
-[node name="RightWall" type="SGStaticBody2D" parent="."]
+[node name="RightWall" type="SGStaticBody2D" parent="Game"]
 fixed_position_x = 3233380
 fixed_position_y = -3276800
 fixed_rotation = 102944
@@ -3353,42 +3354,15 @@ visible = false
 position = Vector2(49.3375, -50)
 rotation = 1.5708
 
-[node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="RightWall"]
+[node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="Game/RightWall"]
 shape = SubResource("SGRectangleShape2D_gvhyg")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-offset = Vector2(0, -21.985)
-zoom = Vector2(15.21, 15.21)
-
-[node name="Floor3D" type="StaticBody3D" parent="."]
+[node name="ScreenBoundaries" parent="Game" node_paths=PackedStringArray("character1", "character2") instance=ExtResource("4_fckii")]
 visible = false
+character1 = NodePath("../test1")
+character2 = NodePath("../test2")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-visible = false
-shape = SubResource("BoxShape3D_das85")
-
-[node name="BackgroundPlaceholder" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 46.9764, -35.8835)
-visible = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="BackgroundPlaceholder"]
-visible = false
-shape = SubResource("BoxShape3D_das85")
-
-[node name="Wall3D" type="StaticBody3D" parent="."]
-transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -50, 48, 0)
-visible = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall3D"]
-visible = false
-shape = SubResource("BoxShape3D_das85")
-
-[node name="Wall2-3D" type="StaticBody3D" parent="."]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 50, 48, 0)
-visible = false
-
-[node name="TestMenu" parent="." instance=ExtResource("5_706ux")]
+[node name="TestMenu" parent="Game" instance=ExtResource("5_706ux")]
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 layer = 10
@@ -3488,540 +3462,567 @@ position = Vector2(959.333, 536)
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("11_pm2yw")
 
-[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("character1", "character2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 16)
+[node name="Cameras" type="Node" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="Cameras"]
+offset = Vector2(960, 540)
+
+[node name="BGCam" type="Camera3D" parent="Cameras" node_paths=PackedStringArray("character1", "character2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 17)
+cull_mask = 1
 current = true
 fov = 40.0
 size = 13.5631
 script = ExtResource("2_ndysc")
-character1 = NodePath("../test1")
-character2 = NodePath("../test2")
+character1 = NodePath("../../Game/test1")
+character2 = NodePath("../../Game/test2")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Cameras"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="Cameras/SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+canvas_cull_mask = 4293918721
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="CharacterCam" type="Camera3D" parent="Cameras/SubViewportContainer/SubViewport" node_paths=PackedStringArray("character1", "character2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 16)
+cull_mask = 2
+projection = 1
+current = true
+fov = 40.0
+size = 11.329
+script = ExtResource("2_ndysc")
+character1 = NodePath("../../../../Game/test1")
+character2 = NodePath("../../../../Game/test2")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.642788, 0.766044, 0, -0.766044, 0.642788, 0, 12, 10)
+layers = 3
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("3_k4mgk")
 
-[node name="ScreenBoundaries" parent="." node_paths=PackedStringArray("character1", "character2") instance=ExtResource("4_fckii")]
-visible = false
-character1 = NodePath("../test1")
-character2 = NodePath("../test2")
-
-[node name="stage3" type="Node3D" parent="."]
+[node name="stage" type="Node3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 
-[node name="Cube_001" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_001" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(3.69267, 5.24345, 3.33005, -0.523309, 49.6843, -0.202028, -3.33022, -1.99325, 3.72424, 262.927, 0, -27.326)
 mesh = SubResource("ArrayMesh_oryeu")
 skeleton = NodePath("")
 
-[node name="Cube_002" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_002" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(3.47083, -0.474944, 3.59876, -0.298923, 49.7849, 0.354001, -3.58664, -4.60886, 3.45306, 144.509, -7.63019, -52.3085)
 mesh = SubResource("ArrayMesh_f7tk3")
 skeleton = NodePath("")
 
-[node name="Cube_003" type="Node3D" parent="stage3"]
+[node name="Cube_003" type="Node3D" parent="stage"]
 transform = Transform3D(25.91, 0, 0, 0, 6.67, 0, 0, 0, 24.93, 52.6198, -17.106, -52.2079)
 
-[node name="Cube_004" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_004" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(3.89879, 6.46293, 3.06296, 0.325178, 47.822, -1.42297, -3.11347, 13.0877, 3.68692, 262.927, -26.5393, 38.5606)
 mesh = SubResource("ArrayMesh_tmlsd")
 skeleton = NodePath("")
 
-[node name="Cube_005" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_005" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(3.62999, -3.52143, 3.42041, 0.876573, 49.0415, -0.425384, -3.32488, 9.08475, 3.62213, 144.509, -7.63019, 64.4007)
 mesh = SubResource("ArrayMesh_755al")
 skeleton = NodePath("")
 
-[node name="Cube_006" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_006" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(220.83, 0, 0, 0, 15.52, 0, 0, 0, 186.2, 204.018, -19.4676, -265.636)
 mesh = SubResource("ArrayMesh_oxj6f")
 skeleton = NodePath("")
 
-[node name="Cube_007" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_007" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(220.83, 0, 0, 0, 15.52, 0, 0, 0, 184.17, 204.018, -19.4676, 289.093)
 mesh = SubResource("ArrayMesh_1afy0")
 skeleton = NodePath("")
 
-[node name="bridge2" type="MeshInstance3D" parent="stage3"]
+[node name="bridge2" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 50, -3, -0.5, 0)
 mesh = SubResource("ArrayMesh_bl16u")
 skeleton = NodePath("")
 
-[node name="bridge1" type="MeshInstance3D" parent="stage3"]
+[node name="bridge1" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 50, 3, -0.5, 0)
 mesh = SubResource("ArrayMesh_1xxlx")
 skeleton = NodePath("")
 
-[node name="Cube" type="MeshInstance3D" parent="stage3"]
+[node name="Cube" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 0)
 mesh = SubResource("ArrayMesh_iydeb")
 skeleton = NodePath("")
 
-[node name="Cube_008" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_008" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 1.57526)
 mesh = SubResource("ArrayMesh_n7fwy")
 skeleton = NodePath("")
 
-[node name="Cube_009" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_009" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 3.2316)
 mesh = SubResource("ArrayMesh_hbq2t")
 skeleton = NodePath("")
 
-[node name="Cube_010" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_010" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 4.93293)
 mesh = SubResource("ArrayMesh_xvk0k")
 skeleton = NodePath("")
 
-[node name="Cube_011" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_011" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 6.67562)
 mesh = SubResource("ArrayMesh_uwq0x")
 skeleton = NodePath("")
 
-[node name="Cube_012" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_012" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 8.32179)
 mesh = SubResource("ArrayMesh_8c4j4")
 skeleton = NodePath("")
 
-[node name="Cube_013" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_013" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 18.2635)
 mesh = SubResource("ArrayMesh_33cxn")
 skeleton = NodePath("")
 
-[node name="Cube_014" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_014" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 16.6173)
 mesh = SubResource("ArrayMesh_vtc3k")
 skeleton = NodePath("")
 
-[node name="Cube_015" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_015" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 14.8746)
 mesh = SubResource("ArrayMesh_18j3a")
 skeleton = NodePath("")
 
-[node name="Cube_016" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_016" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 13.1733)
 mesh = SubResource("ArrayMesh_rdyrr")
 skeleton = NodePath("")
 
-[node name="Cube_017" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_017" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 11.5169)
 mesh = SubResource("ArrayMesh_stc63")
 skeleton = NodePath("")
 
-[node name="Cube_018" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_018" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 9.94169)
 mesh = SubResource("ArrayMesh_v4vmw")
 skeleton = NodePath("")
 
-[node name="Cube_019" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_019" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 29.9408)
 mesh = SubResource("ArrayMesh_ef5oc")
 skeleton = NodePath("")
 
-[node name="Cube_020" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_020" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 31.5161)
 mesh = SubResource("ArrayMesh_0wgdg")
 skeleton = NodePath("")
 
-[node name="Cube_021" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_021" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 33.1724)
 mesh = SubResource("ArrayMesh_kpjtx")
 skeleton = NodePath("")
 
-[node name="Cube_022" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_022" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 34.8737)
 mesh = SubResource("ArrayMesh_lrjqi")
 skeleton = NodePath("")
 
-[node name="Cube_023" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_023" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 36.6164)
 mesh = SubResource("ArrayMesh_djrke")
 skeleton = NodePath("")
 
-[node name="Cube_024" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_024" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 38.2626)
 mesh = SubResource("ArrayMesh_4hj3o")
 skeleton = NodePath("")
 
-[node name="Cube_025" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_025" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 28.3209)
 mesh = SubResource("ArrayMesh_ormrr")
 skeleton = NodePath("")
 
-[node name="Cube_026" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_026" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 26.6747)
 mesh = SubResource("ArrayMesh_ls4tt")
 skeleton = NodePath("")
 
-[node name="Cube_027" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_027" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 24.932)
 mesh = SubResource("ArrayMesh_lcmw8")
 skeleton = NodePath("")
 
-[node name="Cube_028" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_028" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 23.2307)
 mesh = SubResource("ArrayMesh_hdqt0")
 skeleton = NodePath("")
 
-[node name="Cube_029" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_029" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 21.5744)
 mesh = SubResource("ArrayMesh_ba77e")
 skeleton = NodePath("")
 
-[node name="Cube_030" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_030" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 19.9991)
 mesh = SubResource("ArrayMesh_04l8k")
 skeleton = NodePath("")
 
-[node name="Cube_043" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_043" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 49.8948)
 mesh = SubResource("ArrayMesh_06sa4")
 skeleton = NodePath("")
 
-[node name="Cube_049" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_049" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 48.2749)
 mesh = SubResource("ArrayMesh_up0cu")
 skeleton = NodePath("")
 
-[node name="Cube_050" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_050" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 46.6287)
 mesh = SubResource("ArrayMesh_kr1bn")
 skeleton = NodePath("")
 
-[node name="Cube_051" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_051" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 44.886)
 mesh = SubResource("ArrayMesh_0l765")
 skeleton = NodePath("")
 
-[node name="Cube_052" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_052" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 43.1847)
 mesh = SubResource("ArrayMesh_7j8pg")
 skeleton = NodePath("")
 
-[node name="Cube_053" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_053" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 41.5283)
 mesh = SubResource("ArrayMesh_ync5o")
 skeleton = NodePath("")
 
-[node name="Cube_054" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_054" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 39.9531)
 mesh = SubResource("ArrayMesh_tdicy")
 skeleton = NodePath("")
 
-[node name="Plane_001" type="MeshInstance3D" parent="stage3"]
+[node name="Plane_001" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(500, 0, 0, 0, 1, 0, 0, 0, 500, 27.2639, -20.9746, 0)
 mesh = SubResource("ArrayMesh_wppi6")
 skeleton = NodePath("")
 
-[node name="Cube_055" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_055" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 39.9531)
 mesh = SubResource("ArrayMesh_dx4xv")
 skeleton = NodePath("")
 
-[node name="Cube_056" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_056" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 41.5283)
 mesh = SubResource("ArrayMesh_jyvh4")
 skeleton = NodePath("")
 
-[node name="Cube_057" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_057" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 43.1847)
 mesh = SubResource("ArrayMesh_g0aq3")
 skeleton = NodePath("")
 
-[node name="Cube_058" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_058" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 44.886)
 mesh = SubResource("ArrayMesh_ogu6p")
 skeleton = NodePath("")
 
-[node name="Cube_059" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_059" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 46.6287)
 mesh = SubResource("ArrayMesh_n5tg6")
 skeleton = NodePath("")
 
-[node name="Cube_060" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_060" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 48.2749)
 mesh = SubResource("ArrayMesh_157e2")
 skeleton = NodePath("")
 
-[node name="Cube_066" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_066" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 49.8948)
 mesh = SubResource("ArrayMesh_d0ysp")
 skeleton = NodePath("")
 
-[node name="Cube_079" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_079" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 19.9991)
 mesh = SubResource("ArrayMesh_7golv")
 skeleton = NodePath("")
 
-[node name="Cube_080" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_080" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 21.5744)
 mesh = SubResource("ArrayMesh_my5v4")
 skeleton = NodePath("")
 
-[node name="Cube_081" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_081" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 23.2307)
 mesh = SubResource("ArrayMesh_1rd58")
 skeleton = NodePath("")
 
-[node name="Cube_082" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_082" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 24.932)
 mesh = SubResource("ArrayMesh_vsqlb")
 skeleton = NodePath("")
 
-[node name="Cube_083" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_083" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 26.6747)
 mesh = SubResource("ArrayMesh_twnr8")
 skeleton = NodePath("")
 
-[node name="Cube_084" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_084" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 28.3209)
 mesh = SubResource("ArrayMesh_t0n8a")
 skeleton = NodePath("")
 
-[node name="Cube_085" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_085" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 38.2626)
 mesh = SubResource("ArrayMesh_pegt6")
 skeleton = NodePath("")
 
-[node name="Cube_086" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_086" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 36.6164)
 mesh = SubResource("ArrayMesh_pl2mn")
 skeleton = NodePath("")
 
-[node name="Cube_087" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_087" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 34.8737)
 mesh = SubResource("ArrayMesh_jufas")
 skeleton = NodePath("")
 
-[node name="Cube_088" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_088" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 33.1724)
 mesh = SubResource("ArrayMesh_u6wne")
 skeleton = NodePath("")
 
-[node name="Cube_089" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_089" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 31.5161)
 mesh = SubResource("ArrayMesh_4mr70")
 skeleton = NodePath("")
 
-[node name="Cube_090" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_090" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 29.9408)
 mesh = SubResource("ArrayMesh_7yqd8")
 skeleton = NodePath("")
 
-[node name="Cube_091" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_091" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 9.94169)
 mesh = SubResource("ArrayMesh_mye4a")
 skeleton = NodePath("")
 
-[node name="Cube_092" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_092" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 11.5169)
 mesh = SubResource("ArrayMesh_cnd2s")
 skeleton = NodePath("")
 
-[node name="Cube_093" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_093" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 13.1733)
 mesh = SubResource("ArrayMesh_6drce")
 skeleton = NodePath("")
 
-[node name="Cube_094" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_094" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 14.8746)
 mesh = SubResource("ArrayMesh_v7x63")
 skeleton = NodePath("")
 
-[node name="Cube_095" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_095" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 16.6173)
 mesh = SubResource("ArrayMesh_3xfpq")
 skeleton = NodePath("")
 
-[node name="Cube_096" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_096" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 18.2635)
 mesh = SubResource("ArrayMesh_gqgoe")
 skeleton = NodePath("")
 
-[node name="Cube_097" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_097" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 8.32179)
 mesh = SubResource("ArrayMesh_lejr2")
 skeleton = NodePath("")
 
-[node name="Cube_098" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_098" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 6.67562)
 mesh = SubResource("ArrayMesh_42np6")
 skeleton = NodePath("")
 
-[node name="Cube_099" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_099" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 4.93293)
 mesh = SubResource("ArrayMesh_k7mvk")
 skeleton = NodePath("")
 
-[node name="Cube_100" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_100" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 3.2316)
 mesh = SubResource("ArrayMesh_81m64")
 skeleton = NodePath("")
 
-[node name="Cube_101" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_101" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 1.57526)
 mesh = SubResource("ArrayMesh_k28yx")
 skeleton = NodePath("")
 
-[node name="Cube_102" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_102" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, 0)
 mesh = SubResource("ArrayMesh_knjbt")
 skeleton = NodePath("")
 
-[node name="Cube_109" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_109" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -50.01)
 mesh = SubResource("ArrayMesh_801o7")
 skeleton = NodePath("")
 
-[node name="Cube_110" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_110" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -48.4347)
 mesh = SubResource("ArrayMesh_o085o")
 skeleton = NodePath("")
 
-[node name="Cube_111" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_111" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -46.7784)
 mesh = SubResource("ArrayMesh_2e3c7")
 skeleton = NodePath("")
 
-[node name="Cube_112" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_112" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -45.077)
 mesh = SubResource("ArrayMesh_jisyt")
 skeleton = NodePath("")
 
-[node name="Cube_113" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_113" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -43.3344)
 mesh = SubResource("ArrayMesh_m8haa")
 skeleton = NodePath("")
 
-[node name="Cube_114" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_114" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -41.6882)
 mesh = SubResource("ArrayMesh_vxdfr")
 skeleton = NodePath("")
 
-[node name="Cube_121" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_121" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -19.9986)
 mesh = SubResource("ArrayMesh_lk1hk")
 skeleton = NodePath("")
 
-[node name="Cube_122" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_122" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -18.4234)
 mesh = SubResource("ArrayMesh_2ty04")
 skeleton = NodePath("")
 
-[node name="Cube_123" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_123" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -16.767)
 mesh = SubResource("ArrayMesh_6f6eo")
 skeleton = NodePath("")
 
-[node name="Cube_124" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_124" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -15.0657)
 mesh = SubResource("ArrayMesh_lp63i")
 skeleton = NodePath("")
 
-[node name="Cube_125" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_125" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -13.323)
 mesh = SubResource("ArrayMesh_jc3xt")
 skeleton = NodePath("")
 
-[node name="Cube_126" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_126" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -11.6768)
 mesh = SubResource("ArrayMesh_chamu")
 skeleton = NodePath("")
 
-[node name="Cube_127" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_127" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -1.73512)
 mesh = SubResource("ArrayMesh_ag13x")
 skeleton = NodePath("")
 
-[node name="Cube_128" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_128" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -6.82531)
 mesh = SubResource("ArrayMesh_aicv1")
 skeleton = NodePath("")
 
-[node name="Cube_129" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_129" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -8.48165)
 mesh = SubResource("ArrayMesh_wvay7")
 skeleton = NodePath("")
 
-[node name="Cube_130" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_130" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -10.0569)
 mesh = SubResource("ArrayMesh_gwykm")
 skeleton = NodePath("")
 
-[node name="Cube_131" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_131" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -30.056)
 mesh = SubResource("ArrayMesh_w6q6b")
 skeleton = NodePath("")
 
-[node name="Cube_132" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_132" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -28.4808)
 mesh = SubResource("ArrayMesh_74q3g")
 skeleton = NodePath("")
 
-[node name="Cube_133" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_133" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -26.8244)
 mesh = SubResource("ArrayMesh_xtllv")
 skeleton = NodePath("")
 
-[node name="Cube_134" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_134" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -25.1231)
 mesh = SubResource("ArrayMesh_pvuly")
 skeleton = NodePath("")
 
-[node name="Cube_135" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_135" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -23.3804)
 mesh = SubResource("ArrayMesh_bi2hp")
 skeleton = NodePath("")
 
-[node name="Cube_136" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_136" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -21.7342)
 mesh = SubResource("ArrayMesh_uaymy")
 skeleton = NodePath("")
 
-[node name="Cube_137" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_137" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -31.6759)
 mesh = SubResource("ArrayMesh_jyl28")
 skeleton = NodePath("")
 
-[node name="Cube_138" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_138" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -33.3221)
 mesh = SubResource("ArrayMesh_o1wpy")
 skeleton = NodePath("")
 
-[node name="Cube_139" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_139" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -35.0648)
 mesh = SubResource("ArrayMesh_wmveg")
 skeleton = NodePath("")
 
-[node name="Cube_140" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_140" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -36.7661)
 mesh = SubResource("ArrayMesh_8sfqa")
 skeleton = NodePath("")
 
-[node name="Cube_141" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_141" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -38.4225)
 mesh = SubResource("ArrayMesh_5veg8")
 skeleton = NodePath("")
 
-[node name="Cube_142" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_142" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -39.9977)
 mesh = SubResource("ArrayMesh_ypmi1")
 skeleton = NodePath("")
 
-[node name="Cube_143" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_143" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -5.12399)
 mesh = SubResource("ArrayMesh_qc333")
 skeleton = NodePath("")
 
-[node name="Cube_144" type="MeshInstance3D" parent="stage3"]
+[node name="Cube_144" type="MeshInstance3D" parent="stage"]
 transform = Transform3D(2.43, 0, 0, 0, 0.5, 0, 0, 0, 0.68, 0, -0.5, -3.38129)
 mesh = SubResource("ArrayMesh_3chle")
 skeleton = NodePath("")
 
 [node name="NetworkAnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_ag8ye")
+&"": SubResource("AnimationLibrary_ag8ye")
 }
 script = ExtResource("19_mqee6")
 
@@ -4029,4 +4030,4 @@ script = ExtResource("19_mqee6")
 [connection signal="timeout" from="GameManager/CountdownTimer" to="GameManager" method="_on_countdown_timer_timeout"]
 [connection signal="timeout" from="GameManager/RoundEndTimer" to="GameManager" method="_on_round_end_timer_timeout"]
 [connection signal="timeout" from="GameManager/FinalHitTimer" to="GameManager" method="_on_final_hit_timer_timeout"]
-[connection signal="button_down" from="CanvasLayer2/WinPanel/RematchButton" to="TestMenu" method="_on_rematch_button_button_down"]
+[connection signal="button_down" from="CanvasLayer2/WinPanel/RematchButton" to="Game/TestMenu" method="_on_rematch_button_button_down"]

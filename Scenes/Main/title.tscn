@@ -1,9 +1,9 @@
 [gd_scene load_steps=17 format=3 uid="uid://b13nagmgdrjur"]
 
 [ext_resource type="Texture2D" uid="uid://4jntsskvqrs1" path="res://Sprites/ui/square.png" id="1_dyjog"]
-[ext_resource type="Script" path="res://Scenes/Main/title.gd" id="1_nhn6d"]
+[ext_resource type="Script" uid="uid://cl8p7wj4ckjh6" path="res://Scenes/Main/title.gd" id="1_nhn6d"]
 [ext_resource type="PackedScene" uid="uid://c1j0rb77tkwo" path="res://Materials/ProceduralFireTutorial/title_shader.tscn" id="2_pjwlh"]
-[ext_resource type="Shader" path="res://Materials/ProceduralFireTutorial/procedural-fire.gdshader" id="3_olntl"]
+[ext_resource type="Shader" uid="uid://bbx2tfn4w5fgn" path="res://Materials/ProceduralFireTutorial/procedural-fire.gdshader" id="3_olntl"]
 [ext_resource type="FontFile" uid="uid://4ahc3p5yg0fh" path="res://Fonts/Bebas Neue Pro Expanded Bold Italic.otf" id="3_yj7w7"]
 [ext_resource type="Texture2D" uid="uid://ctp4nh2gt8sqr" path="res://Materials/ProceduralFireTutorial/tokfight.png" id="4_cgqqq"]
 [ext_resource type="AudioStream" uid="uid://bq1q2dcxkmtnj" path="res://Audio/SFX/UI/cursor01.wav" id="7_lwwvj"]
@@ -96,8 +96,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pgcad"]
 _data = {
-"RESET": SubResource("Animation_7iax1"),
-"new_animation": SubResource("Animation_5y1s3")
+&"RESET": SubResource("Animation_7iax1"),
+&"new_animation": SubResource("Animation_5y1s3")
 }
 
 [node name="Node2D" type="Node2D"]
@@ -148,7 +148,7 @@ texture = ExtResource("1_dyjog")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_pgcad")
+&"": SubResource("AnimationLibrary_pgcad")
 }
 
 [node name="SelectSound" type="AudioStreamPlayer" parent="."]

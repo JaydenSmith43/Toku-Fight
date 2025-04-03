@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://2c8wkrhnuh73"]
 
-[ext_resource type="Script" path="res://Scripts/Data/throw2D.gd" id="1_6j7g8"]
-[ext_resource type="Script" path="res://Scripts/Data/hitbox2D_collision.gd" id="2_a0v5b"]
-[ext_resource type="Script" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="3_fqft2"]
+[ext_resource type="Script" uid="uid://dugp3pgg3os3k" path="res://Scripts/Data/throw2D.gd" id="1_6j7g8"]
+[ext_resource type="Script" uid="uid://dm714i23d8bg3" path="res://Scripts/Data/hitbox2D_collision.gd" id="2_a0v5b"]
+[ext_resource type="Script" uid="uid://b4c7xgk076ycj" path="res://addons/godot-rollback-netcode/NetworkTimer.gd" id="3_fqft2"]
 
 [sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_seygm"]
 

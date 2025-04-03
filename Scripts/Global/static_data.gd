@@ -7,8 +7,8 @@ var data_file_path = ""
 var current_move_p1
 var current_move_p2
 
-func load_json_file(fileName: String, player: String):
-	data_file_path = "res://Scripts/MoveData/" + fileName + ".json"
+func load_json_file(characterName: String, fileName: String, player: String):
+	data_file_path = "res://Scripts/MoveData/" + characterName + "/" + fileName + ".json"
 	var parsedResult
 	
 	var dataFile = FileAccess.open(data_file_path, FileAccess.READ)
@@ -23,15 +23,13 @@ func load_json_file(fileName: String, player: String):
 		else:
 			P2_move_data = parsedResult
 	else:
-			print("Error reading file!")
-	#else:
-		#print("File doesn't exist!")
+		print("Error reading file!")
 
-func check_new_move(fileName: String, player: String):
-	var move_already_loaded = false
+func check_new_move(characterName: String, fileName: String, player: String):
+	#var move_already_loaded = false
 	
 	if player == "player1" and fileName != current_move_p1:
-		load_json_file(fileName, player)
+		load_json_file(characterName, fileName, player)
 	elif player == "player2"  and fileName != current_move_p2:
-		load_json_file(fileName, player)
+		load_json_file(characterName, fileName, player)
 	

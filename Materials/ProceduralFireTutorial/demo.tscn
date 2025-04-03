@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://cnet5y5x31swa"]
 
-[ext_resource type="Shader" path="res://Materials/ProceduralFireTutorial/procedural-fire.gdshader" id="1_576hm"]
+[ext_resource type="Shader" uid="uid://bbx2tfn4w5fgn" path="res://Materials/ProceduralFireTutorial/procedural-fire.gdshader" id="1_576hm"]
 [ext_resource type="Texture2D" uid="uid://v8m2pk7215li" path="res://Materials/ProceduralFireTutorial/mask.png" id="2_4aymv"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_acc5q"]

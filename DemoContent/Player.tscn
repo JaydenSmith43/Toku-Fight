@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bi5b8syctmsra"]
 
-[ext_resource type="Script" path="res://DemoContent/Player.gd" id="1"]
+[ext_resource type="Script" uid="uid://dlh5f1rathjxi" path="res://DemoContent/Player.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://dxmln5laa5hjw" path="res://Sprites/icon.svg" id="2"]
 
 [node name="Player" type="Sprite2D" groups=["network_sync"]]

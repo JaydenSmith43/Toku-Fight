@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b2ax3p2ss2g8q"]
 
-[ext_resource type="Script" path="res://Scripts/sg_bounds.gd" id="1_ciaun"]
+[ext_resource type="Script" uid="uid://bvaxjswgqs1tj" path="res://Scripts/sg_bounds.gd" id="1_ciaun"]
 
 [sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_sr2e0"]
 extents_x = 65536

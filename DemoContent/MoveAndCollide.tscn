@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://c7mjfc0nu8g16"]
 
-[ext_resource type="Script" path="res://DemoContent/MoveAndCollide.gd" id="1_tidnq"]
+[ext_resource type="Script" uid="uid://dw14djsmyndkj" path="res://DemoContent/MoveAndCollide.gd" id="1_tidnq"]
 [ext_resource type="Texture2D" uid="uid://cgbjhrh37tx7c" path="res://DemoContent/tank_blue.png" id="2_b6iah"]
 
 [sub_resource type="SGRectangleShape2D" id="1"]

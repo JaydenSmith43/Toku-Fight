@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ook7dmepmfw5"]
 
-[ext_resource type="Script" path="res://Scripts/ui.gd" id="1_gpq0r"]
+[ext_resource type="Script" uid="uid://7fx5km3ddwle" path="res://Scripts/ui.gd" id="1_gpq0r"]
 [ext_resource type="FontFile" uid="uid://bk4os2yyrjyde" path="res://Fonts/Bebas Neue Pro Expanded Regular.otf" id="3_307je"]
 
 [sub_resource type="Theme" id="Theme_4rc5n"]

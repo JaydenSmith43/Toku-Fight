@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://cp8mtuqrprxjf"]
 
-[ext_resource type="Script" path="res://Scripts/Data/hitbox3D_editor.gd" id="1_0y2xl"]
-[ext_resource type="Script" path="res://Scripts/Data/hitbox_collision.gd" id="2_00ij2"]
+[ext_resource type="Script" uid="uid://v87jhr0tvpqr" path="res://Scripts/Data/hitbox3D_editor.gd" id="1_0y2xl"]
+[ext_resource type="Script" uid="uid://bdra5o8ykj216" path="res://Scripts/Data/hitbox_collision.gd" id="2_00ij2"]
 [ext_resource type="Material" uid="uid://bsy2dn4qn34yq" path="res://Materials/hitbox_mat.tres" id="3_uicbp"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_asypi"]

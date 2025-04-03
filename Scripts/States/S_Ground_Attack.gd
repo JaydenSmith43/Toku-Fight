@@ -25,11 +25,11 @@ func State_Physics_Update(input: Dictionary):
 	character.current_frame += 1
 	
 	if character.get_groups()[0] == "player1":
-		StaticData.load_json_file(character.move_name, character.get_groups()[0])
+		StaticData.load_json_file(character.character_name, character.move_name, character.get_groups()[0])
 		anim_name = StaticData.P1_move_data["anim_name"]
 		move_end_frame = StaticData.P1_move_data["move_end_frame"]
 	else:
-		StaticData.load_json_file(character.move_name, character.get_groups()[0])
+		StaticData.load_json_file(character.character_name, character.move_name, character.get_groups()[0])
 		anim_name = StaticData.P2_move_data["anim_name"]
 		move_end_frame = StaticData.P2_move_data["move_end_frame"]
 	#if character.game_manager.pause

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://d0fr6d8ojvuo7"]
 
-[ext_resource type="Script" path="res://Scripts/input_value.gd" id="1_mapei"]
+[ext_resource type="Script" uid="uid://dnn40gqob83vn" path="res://Scripts/input_value.gd" id="1_mapei"]
 
 [node name="InputValue" type="Node"]
 script = ExtResource("1_mapei")

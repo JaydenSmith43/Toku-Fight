@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://5efx2gio6788"]
 
-[ext_resource type="Script" path="res://DemoContent/gravity_demo/gravity_player.gd" id="1_3yjt3"]
+[ext_resource type="Script" uid="uid://bt5v1ub2n7k2e" path="res://DemoContent/gravity_demo/gravity_player.gd" id="1_3yjt3"]
 
 [sub_resource type="SGRectangleShape2D" id="1"]
 extents_x = 10551296

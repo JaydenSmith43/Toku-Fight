@@ -67,6 +67,8 @@ func _ready():
 	game_manager.game_start()
 
 func take_damage(damage : int):
+	if game_manager.disable_damage == true: 
+		return
 	health -= damage
 	healthbar._set_health(health)
 	

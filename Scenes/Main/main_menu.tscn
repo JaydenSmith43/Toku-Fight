@@ -2,9 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://4jntsskvqrs1" path="res://Sprites/ui/square.png" id="1_3yrey"]
 [ext_resource type="Texture2D" uid="uid://j28vawu3pmdi" path="res://Sprites/ui/title_background.png" id="1_45ckf"]
-[ext_resource type="Script" path="res://Scenes/Main/main_menu.gd" id="1_pnq27"]
+[ext_resource type="Script" uid="uid://btr513owk0rug" path="res://Scenes/Main/main_menu.gd" id="1_pnq27"]
 [ext_resource type="FontFile" uid="uid://4ahc3p5yg0fh" path="res://Fonts/Bebas Neue Pro Expanded Bold Italic.otf" id="3_rkwvb"]
-[ext_resource type="Script" path="res://Scenes/Main/menu_button.gd" id="4_yaaee"]
+[ext_resource type="Script" uid="uid://nybslnewghhr" path="res://Scenes/Main/menu_button.gd" id="4_yaaee"]
 [ext_resource type="Texture2D" uid="uid://biy3bbqeggxap" path="res://Sprites/ui/button.png" id="6_2vowa"]
 [ext_resource type="Texture2D" uid="uid://0r2p8gp578le" path="res://Sprites/ui/button_pressed.png" id="7_hulxc"]
 [ext_resource type="FontFile" uid="uid://bk4os2yyrjyde" path="res://Fonts/Bebas Neue Pro Expanded Regular.otf" id="8_4k0ob"]
@@ -159,12 +159,12 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7koas"]
 _data = {
-"RESET": SubResource("Animation_pmpjs"),
-"credits_fade_in": SubResource("Animation_jk650"),
-"credits_fade_out": SubResource("Animation_oibhg"),
-"fade_in": SubResource("Animation_jdml5"),
-"fade_out": SubResource("Animation_wwumh"),
-"fade_out_2": SubResource("Animation_51r4g")
+&"RESET": SubResource("Animation_pmpjs"),
+&"credits_fade_in": SubResource("Animation_jk650"),
+&"credits_fade_out": SubResource("Animation_oibhg"),
+&"fade_in": SubResource("Animation_jdml5"),
+&"fade_out": SubResource("Animation_wwumh"),
+&"fade_out_2": SubResource("Animation_51r4g")
 }
 
 [node name="Node2D" type="Node2D"]
@@ -257,7 +257,7 @@ texture = ExtResource("1_3yrey")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_7koas")
+&"": SubResource("AnimationLibrary_7koas")
 }
 autoplay = "fade_in"
 
