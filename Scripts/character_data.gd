@@ -14,6 +14,7 @@ var input_prefix : String = "P1_"
 @onready var collision = $collision
 @export var hurtbox : SGArea2D
 @export var throwbox : SGArea2D
+@export var pushbox : SGArea2D
 @export var state_machine : Node
 @export var model : Node3D
 @export var game_manager : Node
@@ -189,6 +190,7 @@ func _network_process(input: Dictionary) -> void:
 		state_machine.tick_physics_process(input)
 		update_hitboxes()
 		hurtbox.tick_physics_process()
+		pushbox.tick_physics_process()
 		throwbox.tick_physics_process()
 		#update_hitboxes()
 	

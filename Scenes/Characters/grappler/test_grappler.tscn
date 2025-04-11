@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://1ftcs4tcroth" path="res://Scripts/Data/hurtbox3D.gd" id="2_nkben"]
 [ext_resource type="Script" uid="uid://vf57scyejaq8" path="res://Scenes/Characters/pushout.gd" id="2_qmc12"]
 [ext_resource type="PackedScene" uid="uid://1h0q2rqr7tyo" path="res://Scenes/Characters/grappler/grappler_model.tscn" id="3_hvpd6"]
-[ext_resource type="Script" uid="uid://dihyymi7wja5e" path="res://Scripts/input.gd" id="4_vqsk8"]
+[ext_resource type="Script" uid="uid://dihyymi7wja5e" path="res://Scripts/Data/input.gd" id="4_vqsk8"]
 [ext_resource type="PackedScene" uid="uid://ook7dmepmfw5" path="res://Scenes/UI/ui.tscn" id="5_7e86r"]
 [ext_resource type="PackedScene" uid="uid://bh6x5sy31wviu" path="res://Scenes/UI/health_bar.tscn" id="6_3344m"]
 [ext_resource type="Script" uid="uid://btnoosxgfpuga" path="res://Scripts/States/state_machine.gd" id="7_0d10p"]

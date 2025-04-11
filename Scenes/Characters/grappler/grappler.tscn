@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://b66hexw5unjtp" path="res://Scripts/Data/hurtbox2D.gd" id="4_74vm4"]
 [ext_resource type="Script" uid="uid://dm714i23d8bg3" path="res://Scripts/Data/hitbox2D_collision.gd" id="5_1dpco"]
 [ext_resource type="PackedScene" uid="uid://1h0q2rqr7tyo" path="res://Scenes/Characters/grappler/grappler_model.tscn" id="6_sd7cd"]
-[ext_resource type="Script" uid="uid://dihyymi7wja5e" path="res://Scripts/input.gd" id="7_pp3wx"]
+[ext_resource type="Script" uid="uid://dihyymi7wja5e" path="res://Scripts/Data/input.gd" id="7_pp3wx"]
 [ext_resource type="PackedScene" uid="uid://ook7dmepmfw5" path="res://Scenes/UI/ui.tscn" id="8_rphqq"]
 [ext_resource type="PackedScene" uid="uid://bh6x5sy31wviu" path="res://Scenes/UI/health_bar.tscn" id="9_risx0"]
 [ext_resource type="Texture2D" uid="uid://b40oslxvafonh" path="res://Sprites/ui/round_count.png" id="10_aqghq"]
@@ -36,7 +36,7 @@ radius = 13672
 height = 156944
 
 [sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_makta"]
-extents_x = 108635
+extents_x = 71280
 extents_y = 92808
 
 [sub_resource type="SGRectangleShape2D" id="SGRectangleShape2D_kha3f"]
@@ -59,13 +59,14 @@ default_font_size = 30
 default_font = ExtResource("12_xgqsd")
 default_font_size = 100
 
-[node name="SGCharacter" type="SGCharacterBody2D" node_paths=PackedStringArray("hurtbox", "throwbox", "state_machine", "model") groups=["network_sync"]]
+[node name="SGCharacter" type="SGCharacterBody2D" node_paths=PackedStringArray("hurtbox", "throwbox", "pushbox", "state_machine", "model") groups=["network_sync"]]
 floor_max_angle = 1
 collision_layer = 32768
 collision_mask = 32769
 script = ExtResource("1_fjl6n")
 hurtbox = NodePath("Hurtbox")
 throwbox = NodePath("Throwbox")
+pushbox = NodePath("Pushbox")
 state_machine = NodePath("StateMachine")
 model = NodePath("model")
 
@@ -79,17 +80,18 @@ shape = SubResource("SGCapsuleShape2D_yoyix")
 fixed_position_y = -92218
 position = Vector2(0, -1.40714)
 
-[node name="Pushbox" type="SGArea2D" parent="."]
+[node name="Pushbox" type="SGArea2D" parent="." node_paths=PackedStringArray("character", "collision_area", "model")]
 collision_layer = 512
 collision_mask = 512
 script = ExtResource("3_awpgt")
+character = NodePath("..")
+collision_area = NodePath("SGCollisionShape2D")
+model = NodePath("../model")
 
 [node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="Pushbox"]
 shape = SubResource("SGRectangleShape2D_makta")
 fixed_position_y = -93350
-fixed_scale_x = 42636
 position = Vector2(0, -1.42441)
-scale = Vector2(0.650574, 1)
 
 [node name="Throwbox" type="SGArea2D" parent="." node_paths=PackedStringArray("character", "state_machine")]
 collision_layer = 32

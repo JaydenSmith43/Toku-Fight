@@ -13,7 +13,7 @@ var I_light : String
 var I_medium : String
 var I_heavy : String
 
-var otherPlayer : SGCharacterBody2D
+var opposingPlayer : SGCharacterBody2D
 
 func _ready() -> void:
 	if character.is_in_group("player1"):
@@ -25,7 +25,7 @@ func _ready() -> void:
 		I_medium = "P1_Medium"
 		I_heavy = "P1_Heavy"
 		
-		otherPlayer = get_tree().get_nodes_in_group("player2")[0]
+		opposingPlayer = get_tree().get_nodes_in_group("player2")[0]
 	else:
 		I_left = "P2_Left"
 		I_right = "P2_Right"
@@ -35,7 +35,7 @@ func _ready() -> void:
 		I_medium = "P2_Medium"
 		I_heavy = "P2_Heavy"
 		
-		otherPlayer = get_tree().get_nodes_in_group("player1")[0]
+		opposingPlayer = get_tree().get_nodes_in_group("player1")[0]
 
 func Enter():
 	if model.rotation_degrees.y == -180 and character.left_side:
@@ -63,7 +63,7 @@ func State_Physics_Update(input: Dictionary):
 	
 	#print("Distance: " + str(character.position.x - otherPlayer.position.x))
 	
-	if (character.fixed_position.x - otherPlayer.fixed_position.x < 0):
+	if (character.fixed_position.x - opposingPlayer.fixed_position.x < 0):
 		model.rotation_degrees.z = 0
 		model.scale = Vector3(1,1,1)
 		character.left_side = true

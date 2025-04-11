@@ -3317,13 +3317,11 @@ scale = Vector2(15, 15)
 
 [node name="test1" parent="Game" node_paths=PackedStringArray("game_manager") groups=["player1"] instance=ExtResource("2_c13du")]
 fixed_position_x = -524288
-visible = false
 position = Vector2(-8, 0)
 game_manager = NodePath("../../GameManager")
 
 [node name="test2" parent="Game" node_paths=PackedStringArray("game_manager") groups=["player2"] instance=ExtResource("2_c13du")]
 fixed_position_x = 524288
-visible = false
 position = Vector2(8, 0)
 game_manager = NodePath("../../GameManager")
 
@@ -3445,6 +3443,7 @@ scale = Vector2(1.12204, 1.12204)
 texture = ExtResource("7_mklb4")
 
 [node name="fade_sprite" type="Sprite2D" parent="CanvasLayer"]
+visible = false
 modulate = Color(0, 0, 0, 1)
 position = Vector2(1051.29, 561.349)
 scale = Vector2(27.9267, 16.039)

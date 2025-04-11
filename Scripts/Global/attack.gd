@@ -107,7 +107,6 @@ func jump_buffer(character: SGCharacterBody2D, input: Dictionary, cancel_array):
 				character.buffered_move = "jump_a"
 				return
 
-
 func check_motion(character: SGCharacterBody2D, input_array: Node, motion_array: Array[int], move_button: String):
 	if !character.left_side:
 		motion_array = flip_motion(motion_array)
