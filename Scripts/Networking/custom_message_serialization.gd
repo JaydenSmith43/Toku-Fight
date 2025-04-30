@@ -1,8 +1,8 @@
 extends "res://addons/godot-rollback-netcode/MessageSerializer.gd"
 
 const input_path_mapping := {
-	'/root/Node3D/test1': 1,
-	'/root/Node3D/test2': 2
+	'/root/Node3D/Game/test1': 1,
+	'/root/Node3D/Game/test2': 2
 }
 
 enum HeaderFlags {

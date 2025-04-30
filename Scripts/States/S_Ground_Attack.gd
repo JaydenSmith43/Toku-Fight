@@ -35,7 +35,7 @@ func State_Physics_Update(input: Dictionary):
 	#if character.game_manager.pause
 	anim_player.play(anim_name)
 	
-	Attack.check_cancel(character, input, "ground")
+	Attack.check_cancel(character, input, input_array, "ground")
 	
 	if character.get_groups()[0] == "player1":
 		if character.current_frame >= StaticData.P1_move_data["cancel_frame"] and character.buffered_move != "":
@@ -49,7 +49,6 @@ func State_Physics_Update(input: Dictionary):
 			Attack.do_ground_attack(character, character.buffered_move)
 	
 	check_frame()
-	
 	
 	if character.current_frame >= move_end_frame:
 		if character.get_groups()[0] == "player1":

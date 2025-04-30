@@ -42,7 +42,7 @@ func check_motions_available(character: SGCharacterBody2D, input_array: Node, mo
 		do_jump_attack(character, move_button)
 		return
 
-func check_cancel(character: SGCharacterBody2D, input: Dictionary, state: String):
+func check_cancel(character: SGCharacterBody2D, input: Dictionary, input_array: Node, state: String):
 	if character.buffered_move != "":
 		return
 	
@@ -54,54 +54,54 @@ func check_cancel(character: SGCharacterBody2D, input: Dictionary, state: String
 	
 	if character.cancel and cancel_array != null:
 		if state == "ground":
-			ground_buffer(character, input, cancel_array)
+			ground_buffer(character, input, input_array, cancel_array)
 		if state == "jump":
-			jump_buffer(character, input, cancel_array)
+			jump_buffer(character, input, input_array, cancel_array)
 
-func ground_buffer(character: SGCharacterBody2D, input: Dictionary, cancel_array):
-	if input.get("a") and input.get("input_vector", Vector2.ZERO).y == 0:
+func ground_buffer(character: SGCharacterBody2D, input: Dictionary, input_array: Node, cancel_array):
+	if input_array.was_pressed("A") and input.get("input_vector", Vector2.ZERO).y == 0:
 		for cancels in cancel_array:
 			if cancels == "5a":
 				character.buffered_move = "5a"
 				return
-	if input.get("a") and input.get("input_vector", Vector2.ZERO).y == -1:
+	if input_array.was_pressed("A") and input.get("input_vector", Vector2.ZERO).y == -1:
 		for cancels in cancel_array:
 			if cancels == "2a":
 				character.buffered_move = "2a"
 				return
-	if input.get("b") and input.get("input_vector", Vector2.ZERO).y == 0:
+	if input_array.was_pressed("B") and input.get("input_vector", Vector2.ZERO).y == 0:
 		for cancels in cancel_array:
 			if cancels == "5b":
 				character.buffered_move = "5b"
 				return
-	if input.get("b") and input.get("input_vector", Vector2.ZERO).y == -1:
+	if input_array.was_pressed("B") and input.get("input_vector", Vector2.ZERO).y == -1:
 		for cancels in cancel_array:
 			if cancels == "2b":
 				character.buffered_move = "2b"
 				return
-	if input.get("c") and input.get("input_vector", Vector2.ZERO).y == 0:
+	if input_array.was_pressed("C") and input.get("input_vector", Vector2.ZERO).y == 0:
 		for cancels in cancel_array:
 			if cancels == "5c":
 				character.buffered_move = "5c"
 				return
-	if input.get("c") and input.get("input_vector", Vector2.ZERO).y == -1:
+	if input_array.was_pressed("C") and input.get("input_vector", Vector2.ZERO).y == -1:
 		for cancels in cancel_array:
 			if cancels == "2c":
 				character.buffered_move = "2c"
 				return
 
-func jump_buffer(character: SGCharacterBody2D, input: Dictionary, cancel_array):
-	if input.get("c"):
+func jump_buffer(character: SGCharacterBody2D, input: Dictionary, input_array: Node, cancel_array):
+	if input_array.was_pressed("C"):
 		for cancels in cancel_array:
 			if cancels == "jump_c":
 				character.buffered_move = "jump_c"
 				return
-	if input.get("b"):
+	if input_array.was_pressed("B"):
 		for cancels in cancel_array:
 			if cancels == "jump_b":
 				character.buffered_move = "jump_b"
 				return
-	if input.get("a"):
+	if input_array.was_pressed("A"):
 		for cancels in cancel_array:
 			if cancels == "jump_a":
 				character.buffered_move = "jump_a"
@@ -111,15 +111,15 @@ func check_motion(character: SGCharacterBody2D, input_array: Node, motion_array:
 	if !character.left_side:
 		motion_array = flip_motion(motion_array)
 	
-	var n : int = 0
+	#var n : int = 0
 	var current_motion_direction : int = 0
 	
-	while n < input_array.inputs.size():
+	#while n < input_array.inputs.size():
+	for n in range(input_array.inputs.size() - 1, -1, -1):
 		if input_array.inputs[n] == str(motion_array[current_motion_direction]):
 			if current_motion_direction == motion_array.size() - 1:
 				return true
 			current_motion_direction += 1
-		n += 1
 	return false
 
 func flip_motion(motion_array: Array[int]):

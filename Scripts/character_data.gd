@@ -1,14 +1,8 @@
 extends SGCharacterBody2D
+class_name CharacterData
 
 var input_prefix : String = "P1_"
-@onready var healthbar = $UI/HealthBar
-@onready var input_display = $UI
-@onready var name_label = $UI/NameLabel
-@onready var round_label = $UI/RoundLabel
-@onready var time_label = $UI/TimeLabel
-@onready var round_count_1 = $UI/RoundCount1
-@onready var round_count_2 = $UI/RoundCount2
-#@onready var label = $UI/HealthBar/StateLabel
+
 @onready var input_array = $Input
 @onready var anim_player = $model/AnimationPlayer
 @onready var collision = $collision
@@ -17,7 +11,7 @@ var input_prefix : String = "P1_"
 @export var pushbox : SGArea2D
 @export var state_machine : Node
 @export var model : Node3D
-@export var game_manager : Node
+@export var game_manager : GameManager
 
 var character_name = "grappler"
 var motions = ["j214", "63214"]
@@ -49,29 +43,30 @@ var hittable = true
 var combo := 0
 var throw_invul := false
 var rematch := true
+var yVelocity : int = 0
+var xVelocity : int = 0
+var airborne : bool = false
 
 func _ready():
-	healthbar.init_health(health)
 	up_direction = SGFixed.vector2(0, -65536)
 	
 	if is_in_group("player1"):
 		game_manager.player1 = self
 	else:
 		game_manager.player2 = self
-		healthbar.position.x = 1100
-		healthbar.rotation_degrees = 180
-		name_label.position.x = 1908 - 202
-		name_label.horizontal_alignment = 1
-		round_count_1.position.x = 1123
-		round_count_2.position.x = 1159
 		model.swap_color(2)
-	game_manager.game_start()
+	health = 100
+	game_manager.game_start(health)
 
 func take_damage(damage : int):
 	if game_manager.disable_damage == true: 
 		return
 	health -= damage
-	healthbar._set_health(health)
+	if is_in_group("player1"):
+		game_manager.update_health(true, health)
+	else:
+		game_manager.update_health(false, health)
+	
 	
 	if health <= 0:
 		if is_in_group("player1"):
@@ -93,7 +88,7 @@ func reset_self():
 		left_side = false
 	sync_to_physics_engine()
 	health = 100
-	healthbar._set_health(health)
+	game_manager.init_health(health)
 	model.position.x = SGFixed.to_float(fixed_position_x)
 	model.position.y = -SGFixed.to_float(fixed_position_y)
 
@@ -107,20 +102,10 @@ func update_hitboxes():
 		hitbox.tick_physics_process()
 
 func disable_ui():
-	healthbar.visible = false
-	round_label.visible = false
-	time_label.visible = false
-	name_label.visible = false
-	round_count_1.visible = false
-	round_count_2.visible = false
+	game_manager.disable_ui()
 
 func enable_ui():
-	healthbar.visible = true
-	round_label.visible = true
-	time_label.visible = true
-	name_label.visible = true
-	round_count_1.visible = true
-	round_count_2.visible = true
+	game_manager.enable_ui()
 
 func _get_local_input() -> Dictionary:
 	var input_vector : Vector2i
@@ -139,11 +124,11 @@ func _get_local_input() -> Dictionary:
 	if Input.is_action_pressed(input_prefix + "Up"):
 		input_vector.y += 1
 	
-	if Input.is_action_just_pressed(input_prefix + "Light"):
+	if Input.is_action_pressed(input_prefix + "Light"):
 		a_button = true
-	if Input.is_action_just_pressed(input_prefix + "Medium"):
+	if Input.is_action_pressed(input_prefix + "Medium"):
 		b_button = true
-	if Input.is_action_just_pressed(input_prefix + "Heavy"):
+	if Input.is_action_pressed(input_prefix + "Heavy"):
 		c_button = true
 	
 	var input := {}
@@ -184,19 +169,32 @@ func _network_process(input: Dictionary) -> void:
 	else:
 		if is_in_group("player1"):
 			game_manager.game_process()
+		
 		update_hitboxes()
 		input_array.input_handler(self, input)
-		input_display.update_input_display()
+		
 		state_machine.tick_physics_process(input)
-		update_hitboxes()
-		hurtbox.tick_physics_process()
+		#xVelocity = velocity.x
+		#yVelocity = velocity.y
+		#velocity.x = 0
+		#velocity.y = 0
+		
 		pushbox.tick_physics_process()
+		update_hitboxes()
+		
+		hurtbox.tick_physics_process()
 		throwbox.tick_physics_process()
 		#update_hitboxes()
 	
 	###TODO try calling screenbounds in here our below. maybe save its position
 
 func _save_state() -> Dictionary:
+	#if is_in_group("player1"):
+		#print_rich("[color=RED]S_current_frame: " + str(current_frame))
+		#print_rich("[color=GREEN]" + str(multiplayer.get_unique_id()) + " S_current_state: [color=RED]" + state_machine.current_state.state_name)
+		#print_rich("[color=GREEN]S_velocity_x: " + str(velocity.x))
+		#print_rich("[color=GREEN]S_velocity_y: " + str(velocity.y))
+	
 	return {
 		current_state_name = state_machine.current_state.state_name,
 		current_frame = current_frame,
@@ -232,6 +230,7 @@ func _save_state() -> Dictionary:
 		intro = game_manager.intro,
 		song_played = game_manager.song_played,
 	}
+	
 
 func _load_state(state: Dictionary) -> void:
 	state_machine.load_state_network(state)
@@ -268,15 +267,14 @@ func _load_state(state: Dictionary) -> void:
 	game_manager.intro = state['intro']
 	game_manager.song_played = state['song_played']
 	
-	healthbar.health = health
+	if is_in_group("player1"):
+		game_manager.update_health(true, health)
+	else:
+		game_manager.update_health(false, health)
 	
 	sync_to_physics_engine()
-	#print_rich("[color=CORNFLOWER_BLUE]L_pos_x: " + str(fixed_position_x))
-	#print_rich("[color=CORNFLOWER_BLUE]L_pos_y: " + str(fixed_position_y))
-	#print_rich("[color=CORNFLOWER_BLUE]L_velocity_x: " + str(velocity.x))
-	#print_rich("[color=CORNFLOWER_BLUE]L_velocity_y: " + str(velocity.y))
-	
-	#print_rich("[color=CORNFLOWER_BLUE]" + str(multiplayer.get_unique_id()) + " L_hitstun: " + str(hitstun))
-	#print_rich("[color=RED]L_current_frame: " + str(current_frame))
-	#print_rich("[color=CORNFLOWER_BLUE]" + str(multiplayer.get_unique_id()) + " L_current_state: [color=RED]" + state_machine.current_state.state_name)
-	
+	#if is_in_group("player1"):
+		#print_rich("[color=RED]L_current_frame: " + str(current_frame))
+		#print_rich("[color=CORNFLOWER_BLUE]" + str(multiplayer.get_unique_id()) + " L_current_state: [color=RED]" + state_machine.current_state.state_name)
+		#print_rich("[color=CORNFLOWER_BLUE]L_velocity_x: " + str(velocity.x))
+		#print_rich("[color=CORNFLOWER_BLUE]L_velocity_y: " + str(velocity.y))

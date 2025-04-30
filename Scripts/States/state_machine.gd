@@ -1,7 +1,8 @@
 extends Node
 
+@onready var character: CharacterData = $".."
 @export var initial_state : State
-@onready var state_label = $"../UI/HealthBar/StateLabel"
+#@onready var state_label = $"../UI/HealthBar/StateLabel"
 
 var current_state : State
 var states : Dictionary = {}
@@ -15,8 +16,10 @@ func _ready():
 	if initial_state:
 		initial_state.Enter()
 		current_state = initial_state
-		state_label.text = "State: \n" + current_state.name
-		#print(state_label.text)
+		#if character.is_in_group("player1"):
+			#character.game_manager.get_state_label(true).text = "State: \n" + current_state.name
+		#else:
+			#character.game_manager.get_state_label(false).text = "State: \n" + current_state.name
 
 func tick_physics_process(input: Dictionary):
 	current_state.State_Physics_Update(input)

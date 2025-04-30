@@ -2,13 +2,14 @@ extends State
 class_name S_Prejump
 
 func Enter():
+	character.airborne = true
 	character.current_frame = 0
 	character.low_blocking = false
 	character.high_blocking = false
 	anim_player.play("jump")
 
 func Exit():
-	character.throw_invul = false
+	pass
 
 func State_Physics_Update(input: Dictionary):
 	character.current_frame += 1

@@ -137,25 +137,25 @@ func network_checkInputs(input: Dictionary) -> void:
 		Transitioned.emit(self, "prejump")
 		return
 
-	if input.get("a") and input.get("b") and character.crouch == false:
+	if input_array.was_pressed("A") and input_array.was_pressed("B") and character.crouch == false:
 		Attack.do_throw(character)
 		return
-	elif input.get("c") and character.crouch == false:
+	elif input_array.was_pressed("C") and character.crouch == false:
 		Attack.check_motions_available(character, input_array, "5c", "ground")
 		return
-	elif input.get("b") and character.crouch == false:
+	elif input_array.was_pressed("B") and character.crouch == false:
 		Attack.check_motions_available(character, input_array, "5b", "ground")
 		return
-	elif input.get("a") and character.crouch == false:
+	elif input_array.was_pressed("A") and character.crouch == false:
 		Attack.check_motions_available(character, input_array, "5a", "ground")
 		return
 
-	if input.get("c") and character.crouch == true:
+	if input_array.was_pressed("C") and character.crouch == true:
 		Attack.do_ground_attack(character, "2c")
 		return
-	elif input.get("b") and character.crouch == true:
+	elif input_array.was_pressed("B") and character.crouch == true:
 		Attack.do_ground_attack(character, "2b")
 		return
-	elif input.get("a") and character.crouch == true:
+	elif input_array.was_pressed("A") and character.crouch == true:
 		Attack.do_ground_attack(character, "2a")
 		return

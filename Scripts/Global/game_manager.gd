@@ -1,4 +1,5 @@
 extends Node
+class_name GameManager
 
 enum Game_State {
 	#GAME_START,
@@ -19,6 +20,17 @@ enum Game_State {
 @export var ko_overlay : Sprite2D
 @export var win_panel : Panel
 @export var test_menu : Node
+@export var ui : CanvasLayer
+@export var p1_healthbar : ProgressBar
+@export var p2_healthbar : ProgressBar
+@export var p1_state_label : Label
+@export var p2_state_label : Label
+@export var p1_round_count1 : TextureRect
+@export var p1_round_count2 : TextureRect
+@export var p2_round_count1 : TextureRect
+@export var p2_round_count2 : TextureRect
+@export var time_label : Label
+@export var round_label : Label
 
 @onready var audioplayer : AudioStreamPlayer = $AudioStreamPlayer
 @onready var anim_player : NetworkAnimationPlayer = $"../NetworkAnimationPlayer"
@@ -75,11 +87,9 @@ func fade_out():
 
 func game_process() -> void:
 	if intro:
-		player1.time_label.text = "60"
-		player2.time_label.text = "60"
+		time_label.text = "60"
 	elif !match_timer.is_stopped():
-		player1.time_label.text = str(match_timer.ticks_left / 60)
-		player2.time_label.text = str(match_timer.ticks_left / 60)
+		time_label.text = str(match_timer.ticks_left / 60)
 	game_state_update()
 
 func pause_game():
@@ -104,9 +114,11 @@ func pause_game():
 	#p1_rounds = 0
 	#p2_rounds = 0
 
-func game_start():
+func game_start(_health):
 	if player1 == null or player2 == null:
 		return
+	
+	init_health(_health)
 	
 	current_round = 0
 	p1_rounds = 0
@@ -133,13 +145,11 @@ func round_intro():
 	disable_input = false
 	disable_damage = false
 	current_round += 1
-	player1.round_label.text = "Round " + str(current_round)
-	player2.round_label.text = "Round " + str(current_round)
+	round_label.text = "Round " + str(current_round)
 	#Do countdown animation
 	
 	#Start time after countdown is over
 	countdown_timer.start()
-	
 
 func round_start():
 	intro = false
@@ -148,22 +158,16 @@ func round_start():
 func round_end():
 	#turn off final hit effect
 	if p2_rounds == 1:
-		player1.round_count_1.modulate.r = 255
-		player1.round_count_1.modulate.g = 255
-		player1.round_count_1.modulate.b = 0
+		p1_round_count1.modulate = Color(255,255,0)
 	elif p2_rounds == 2:
-		player1.round_count_2.modulate.r = 255
-		player1.round_count_2.modulate.g = 255
-		player1.round_count_2.modulate.b = 0
+		p1_round_count1.modulate = Color(255,255,0)
+		p1_round_count2.modulate = Color(255,255,0)
 	
 	if p1_rounds == 1:
-		player2.round_count_1.modulate.r = 255
-		player2.round_count_1.modulate.g = 255
-		player2.round_count_1.modulate.b = 0
+		p2_round_count1.modulate = Color(255,255,0)
 	elif p1_rounds == 2:
-		player2.round_count_2.modulate.r = 255
-		player2.round_count_2.modulate.g = 255
-		player2.round_count_2.modulate.b = 0
+		p2_round_count1.modulate = Color(255,255,0)
+		p2_round_count2.modulate = Color(255,255,0)
 	
 	disable_input = true
 	disable_damage = true
@@ -178,7 +182,6 @@ func round_end():
 		#then after resume
 	#fade from red to no alpha
 	#make all objects black/very dark
-	
 
 func win_game():
 	#go to win screen
@@ -211,6 +214,28 @@ func _on_round_end_timer_timeout() -> void:
 func _on_final_hit_timer_timeout() -> void:
 	#pause_game()
 	round_end()
+
+func disable_ui():
+	ui.visible = false
+
+func enable_ui():
+	ui.visible = true
+
+func init_health(_health):
+	p1_healthbar.init_health(_health)
+	p2_healthbar.init_health(_health)
+
+func update_health(is_player1: bool, update_health: float):
+	if is_player1:
+		p1_healthbar.health = update_health
+	else:
+		p2_healthbar.health = update_health
+
+func get_state_label(is_player1: bool):
+	if is_player1:
+		return p1_state_label
+	else:
+		return p2_state_label
 
 #func _on_rematch_button_button_down() -> void:
 	##if multiplayer.get_unique_id() == 1:

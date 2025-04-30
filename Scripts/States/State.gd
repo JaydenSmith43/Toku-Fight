@@ -3,7 +3,7 @@ class_name State
 
 signal Transitioned
 
-@export var character : SGCharacterBody2D
+@export var character : CharacterData
 @export var model : Node3D
 @export var state_name : String
 @onready var attack_timer : Timer = $"../../AttackTimer" #TODO get rid of this

@@ -46,6 +46,7 @@ func State_Physics_Update(input: Dictionary): #ADD a check for facing left witho
 	check_jump_attack(input)
 	
 	if character.is_on_floor(): #and current_frame > 20
+		character.airborne = false
 		Transitioned.emit(self, "idle")
 		return
 

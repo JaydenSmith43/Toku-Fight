@@ -20,7 +20,7 @@ shadow_offset = Vector2(0, 7)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uxqov"]
 bg_color = Color(0.873877, 0.317756, 0.149607, 1)
 
-[node name="HealthBar" type="ProgressBar" node_paths=PackedStringArray("timer")]
+[node name="HealthBar" type="ProgressBar" node_paths=PackedStringArray("timer", "damage_bar")]
 z_index = 1
 offset_top = 34.0
 offset_right = 800.0
@@ -32,6 +32,7 @@ value = 60.0
 show_percentage = false
 script = ExtResource("1_gov50")
 timer = NodePath("NetworkTimer")
+damage_bar = NodePath("DamageBar")
 
 [node name="DamageBar" type="ProgressBar" parent="."]
 z_index = -1

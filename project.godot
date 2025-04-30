@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="TokuFight"
-run/main_scene="res://Scenes/Main/title.tscn"
+run/main_scene="uid://bmkea3roxko18"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://Sprites/icon.svg"
 
@@ -154,6 +154,7 @@ Visible_Toggle={
 
 rollback/sound_manager/default_sound_bus="Sound"
 rollback/classes/message_serializer="res://Scripts/Networking/custom_message_serialization.gd"
+rollback/debug/rollback_ticks=3
 rollback/log_inspector/replay_match_scene_path="res://Scenes/Main/vs_mode.tscn"
 
 [rendering]

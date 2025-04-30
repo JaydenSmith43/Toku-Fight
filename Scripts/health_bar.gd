@@ -1,7 +1,7 @@
 extends ProgressBar
 
 @export var timer : NetworkTimer
-@onready var damage_bar = $DamageBar
+@export var damage_bar: ProgressBar
 
 var health = 0 : set = _set_health
 

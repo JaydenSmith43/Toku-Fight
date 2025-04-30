@@ -48,7 +48,7 @@ func State_Physics_Update(input: Dictionary):
 		move_end_frame = StaticData.P2_move_data["move_end_frame"]
 	anim_player.play(anim_name)
 	
-	Attack.check_cancel(character, input, "jump")
+	Attack.check_cancel(character, input, input_array, "jump")
 	
 	if character.get_groups()[0] == "player1":
 		if character.current_frame >= StaticData.P1_move_data["cancel_frame"] and character.buffered_move != "":
