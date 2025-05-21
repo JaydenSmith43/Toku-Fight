@@ -14,7 +14,8 @@ var input_prefix : String = "P1_"
 @export var game_manager : GameManager
 
 var character_name = "grappler"
-var motions = ["j214", "63214"]
+var ground_motions = ["63214"] # Ideally listed in order of priority
+var jump_motions = ["j214"] # Ideally listed in order of priority
 var charge = ["28"]
 var camera_state = "normal"
 
@@ -67,7 +68,6 @@ func take_damage(damage : int):
 	else:
 		game_manager.update_health(false, health)
 	
-	
 	if health <= 0:
 		if is_in_group("player1"):
 			game_manager.p1_rounds += 1
@@ -114,7 +114,6 @@ func _get_local_input() -> Dictionary:
 	var b_button := false
 	var c_button := false
 	
-	#input_vector = Input.get_vector(input_prefix + "Left", input_prefix + "Right", input_prefix + "Up", input_prefix + "Down")
 	if Input.is_action_pressed(input_prefix + "Left"):
 		input_vector.x -= 1
 	if Input.is_action_pressed(input_prefix + "Right"):

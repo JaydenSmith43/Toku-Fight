@@ -3,7 +3,6 @@ extends Node2D
 var credits_fade : bool = false
 
 @onready var anim_player : AnimationPlayer = $AnimationPlayer
-
 @onready var select_sound : AudioStreamPlayer = $SelectSound
 @onready var focus_sound : AudioStreamPlayer = $FocusSound
 

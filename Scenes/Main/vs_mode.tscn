@@ -1,4 +1,4 @@
-[gd_scene load_steps=236 format=4 uid="uid://bmkea3roxko18"]
+[gd_scene load_steps=239 format=4 uid="uid://bmkea3roxko18"]
 
 [ext_resource type="Script" uid="uid://bp8n1mtf6dy68" path="res://Scenes/Main/test_vs_mode.gd" id="1_5ed8j"]
 [ext_resource type="PackedScene" uid="uid://c110s1snwl2cq" path="res://Scenes/Characters/grappler/grappler.tscn" id="2_c13du"]
@@ -20,6 +20,7 @@
 [ext_resource type="Material" uid="uid://b25fnqenlhknj" path="res://Materials/Rock.tres" id="12_36gv5"]
 [ext_resource type="FontFile" uid="uid://fhg21esccaad" path="res://Fonts/Bebas Neue Pro Expanded ExtraBold Italic.otf" id="12_j6t2p"]
 [ext_resource type="Material" uid="uid://bbmtvjlr3d431" path="res://Materials/wood.tres" id="13_8mt1d"]
+[ext_resource type="Script" uid="uid://bvwr376fju5ie" path="res://Scenes/Main/combo_counter.gd" id="13_qhnmc"]
 [ext_resource type="Material" uid="uid://brrm3bwvedoer" path="res://Materials/shader_material_thing.tres" id="14_c08op"]
 [ext_resource type="Script" uid="uid://chtd24fbrqsrs" path="res://addons/godot-rollback-netcode/NetworkAnimationPlayer.gd" id="19_mqee6"]
 
@@ -54,6 +55,12 @@ default_font_size = 30
 [sub_resource type="Theme" id="Theme_xggex"]
 default_font = ExtResource("12_j6t2p")
 default_font_size = 40
+
+[sub_resource type="Theme" id="Theme_ocpmr"]
+default_font = ExtResource("8_1opxn")
+
+[sub_resource type="Theme" id="Theme_qhnmc"]
+default_font = ExtResource("8_1opxn")
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_eagx2"]
 _surfaces = [{
@@ -3300,19 +3307,19 @@ final_hit_timer = NodePath("FinalHitTimer")
 fade_sprite = NodePath("../ImageCanvas/fade_sprite")
 ko_sprite = NodePath("../ImageCanvas/KO_overlay")
 ko_overlay = NodePath("../ImageCanvas/KO_sprite")
-win_panel = NodePath("../UI/WinPanel")
+win_panel = NodePath("../UI Canvas/WinPanel")
 test_menu = NodePath("../Game/TestMenu")
-ui = NodePath("../UI")
-p1_healthbar = NodePath("../UI/P1_UI/P1HealthBar")
-p2_healthbar = NodePath("../UI/P2_UI/P2HealthBar")
-p1_state_label = NodePath("../UI/P1_UI/P1StateLabel")
-p2_state_label = NodePath("../UI/P2_UI/P2StateLabel")
-p1_round_count1 = NodePath("../UI/P1_UI/P1RoundCount1")
-p1_round_count2 = NodePath("../UI/P1_UI/P1RoundCount2")
-p2_round_count1 = NodePath("../UI/P2_UI/P2RoundCount1")
-p2_round_count2 = NodePath("../UI/P2_UI/P2RoundCount2")
-time_label = NodePath("../UI/TimeLabel")
-round_label = NodePath("../UI/RoundLabel")
+ui = NodePath("../UI Canvas")
+p1_healthbar = NodePath("../UI Canvas/P1_UI/P1HealthBar")
+p2_healthbar = NodePath("../UI Canvas/P2_UI/P2HealthBar")
+p1_state_label = NodePath("../UI Canvas/P1_UI/P1StateLabel")
+p2_state_label = NodePath("../UI Canvas/P2_UI/P2StateLabel")
+p1_round_count1 = NodePath("../UI Canvas/P1_UI/P1RoundCount1")
+p1_round_count2 = NodePath("../UI Canvas/P1_UI/P1RoundCount2")
+p2_round_count1 = NodePath("../UI Canvas/P2_UI/P2RoundCount1")
+p2_round_count2 = NodePath("../UI Canvas/P2_UI/P2RoundCount2")
+time_label = NodePath("../UI Canvas/TimeLabel")
+round_label = NodePath("../UI Canvas/RoundLabel")
 
 [node name="MatchTimer" type="Node" parent="GameManager"]
 script = ExtResource("3_t4hs0")
@@ -3388,9 +3395,9 @@ character2 = NodePath("../test2")
 
 [node name="TestMenu" parent="Game" instance=ExtResource("5_706ux")]
 
-[node name="UI" parent="." instance=ExtResource("9_ocpmr")]
+[node name="UI Canvas" parent="." instance=ExtResource("9_ocpmr")]
 
-[node name="WinPanel" type="Panel" parent="UI"]
+[node name="WinPanel" type="Panel" parent="UI Canvas"]
 visible = false
 anchors_preset = 8
 anchor_left = 0.5
@@ -3404,7 +3411,7 @@ offset_bottom = 552.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="UI/WinPanel"]
+[node name="Label" type="Label" parent="UI Canvas/WinPanel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -3420,7 +3427,7 @@ grow_vertical = 2
 theme = SubResource("Theme_ibktj")
 text = "Player 2 Wins!"
 
-[node name="MenuButton" type="Button" parent="UI/WinPanel"]
+[node name="MenuButton" type="Button" parent="UI Canvas/WinPanel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -3436,7 +3443,7 @@ grow_vertical = 2
 theme = SubResource("Theme_binyg")
 text = "Main Menu"
 
-[node name="RematchButton" type="Button" parent="UI/WinPanel"]
+[node name="RematchButton" type="Button" parent="UI Canvas/WinPanel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -3452,7 +3459,7 @@ grow_vertical = 2
 theme = SubResource("Theme_t1uhw")
 text = "Play Another Match"
 
-[node name="TimeLabel" type="Label" parent="UI"]
+[node name="TimeLabel" type="Label" parent="UI Canvas"]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -3467,7 +3474,7 @@ theme_override_constants/outline_size = 20
 text = "99"
 horizontal_alignment = 1
 
-[node name="RoundLabel" type="Label" parent="UI"]
+[node name="RoundLabel" type="Label" parent="UI Canvas"]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -3482,23 +3489,16 @@ theme_override_constants/outline_size = 10
 text = "Round 1"
 horizontal_alignment = 1
 
-[node name="P1_UI" type="Node" parent="UI"]
+[node name="P1_UI" type="Node" parent="UI Canvas"]
 
-[node name="P1Panel" type="Panel" parent="UI/P1_UI"]
-z_index = -1
-offset_left = 11.0
-offset_top = 119.0
-offset_right = 85.0
-offset_bottom = 839.0
-
-[node name="P1HealthBar" parent="UI/P1_UI" instance=ExtResource("10_qhnmc")]
+[node name="P1HealthBar" parent="UI Canvas/P1_UI" instance=ExtResource("10_qhnmc")]
 offset_left = 18.0
 offset_top = 74.0
 offset_right = 818.0
 offset_bottom = 112.0
 pivot_offset = Vector2(400, 19)
 
-[node name="P1StateLabel" type="Label" parent="UI/P1_UI"]
+[node name="P1StateLabel" type="Label" parent="UI Canvas/P1_UI"]
 visible = false
 offset_left = 130.0
 offset_top = 147.0
@@ -3509,7 +3509,7 @@ text = "State:
 id"
 horizontal_alignment = 1
 
-[node name="P1RoundCount1" type="TextureRect" parent="UI/P1_UI"]
+[node name="P1RoundCount1" type="TextureRect" parent="UI Canvas/P1_UI"]
 modulate = Color(0.395367, 0.395367, 0.395367, 1)
 offset_left = 797.0
 offset_top = 136.0
@@ -3519,7 +3519,7 @@ texture = ExtResource("6_uidtj")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="P1RoundCount2" type="TextureRect" parent="UI/P1_UI"]
+[node name="P1RoundCount2" type="TextureRect" parent="UI Canvas/P1_UI"]
 modulate = Color(0.395367, 0.395367, 0.395367, 1)
 offset_left = 761.0
 offset_top = 136.0
@@ -3529,7 +3529,7 @@ texture = ExtResource("6_uidtj")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="P1NameLabel" type="Label" parent="UI/P1_UI"]
+[node name="P1NameLabel" type="Label" parent="UI Canvas/P1_UI"]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -3544,16 +3544,47 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
 text = "Grappler Guy"
 
-[node name="P2_UI" type="Node" parent="UI"]
+[node name="HitLabel" type="RichTextLabel" parent="UI Canvas/P1_UI" node_paths=PackedStringArray("player")]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -182.5
+offset_right = 421.0
+offset_bottom = 182.5
+grow_vertical = 2
+theme = SubResource("Theme_ocpmr")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+bbcode_enabled = true
+text = "[font_size={100}]49[/font_size][font_size={50}]HIT[/font_size]"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("13_qhnmc")
+player = NodePath("../../../Game/test1")
 
-[node name="P2Panel" type="Panel" parent="UI/P2_UI"]
-z_index = -1
-offset_left = 1833.0
-offset_top = 119.0
-offset_right = 1907.0
-offset_bottom = 839.0
+[node name="FeedbackLabel" type="RichTextLabel" parent="UI Canvas/P1_UI/HitLabel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -210.5
+offset_top = 158.0
+offset_right = 210.5
+offset_bottom = 368.0
+grow_horizontal = 2
+theme = SubResource("Theme_qhnmc")
+theme_override_colors/default_color = Color(0.74642, 0.74642, 0.74642, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+bbcode_enabled = true
+text = "[font_size={30}]NICE COMBO[/font_size]"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="P2HealthBar" parent="UI/P2_UI" instance=ExtResource("10_qhnmc")]
+[node name="P2_UI" type="Node" parent="UI Canvas"]
+
+[node name="P2HealthBar" parent="UI Canvas/P2_UI" instance=ExtResource("10_qhnmc")]
 offset_left = 1100.0
 offset_top = 74.0
 offset_right = 1900.0
@@ -3561,7 +3592,7 @@ offset_bottom = 112.0
 rotation = 3.14159
 pivot_offset = Vector2(400, 19)
 
-[node name="P2StateLabel" type="Label" parent="UI/P2_UI"]
+[node name="P2StateLabel" type="Label" parent="UI Canvas/P2_UI"]
 visible = false
 anchors_preset = 1
 anchor_left = 1.0
@@ -3576,7 +3607,7 @@ text = "State:
 id"
 horizontal_alignment = 1
 
-[node name="P2RoundCount1" type="TextureRect" parent="UI/P2_UI"]
+[node name="P2RoundCount1" type="TextureRect" parent="UI Canvas/P2_UI"]
 modulate = Color(0.395367, 0.395367, 0.395367, 1)
 anchors_preset = 1
 anchor_left = 1.0
@@ -3590,7 +3621,7 @@ texture = ExtResource("6_uidtj")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="P2RoundCount2" type="TextureRect" parent="UI/P2_UI"]
+[node name="P2RoundCount2" type="TextureRect" parent="UI Canvas/P2_UI"]
 modulate = Color(0.395367, 0.395367, 0.395367, 1)
 anchors_preset = 1
 anchor_left = 1.0
@@ -3604,7 +3635,7 @@ texture = ExtResource("6_uidtj")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="P2NameLabel" type="Label" parent="UI/P2_UI"]
+[node name="P2NameLabel" type="Label" parent="UI Canvas/P2_UI"]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -3619,6 +3650,46 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
 text = "Grappler Guy"
 horizontal_alignment = 2
+
+[node name="HitLabel" type="RichTextLabel" parent="UI Canvas/P2_UI"]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -421.0
+offset_top = -182.5
+offset_bottom = 182.5
+grow_horizontal = 0
+grow_vertical = 2
+theme = SubResource("Theme_ocpmr")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+bbcode_enabled = true
+text = "[font_size={100}]49[/font_size][font_size={50}]HIT[/font_size]"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("13_qhnmc")
+
+[node name="FeedbackLabel" type="RichTextLabel" parent="UI Canvas/P2_UI/HitLabel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -210.5
+offset_top = 158.0
+offset_right = 210.5
+offset_bottom = 368.0
+grow_horizontal = 2
+theme = SubResource("Theme_qhnmc")
+theme_override_colors/default_color = Color(0.74642, 0.74642, 0.74642, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+bbcode_enabled = true
+text = "[font_size={30}]NICE COMBO[/font_size]"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ImageCanvas" type="CanvasLayer" parent="."]
 
@@ -3686,10 +3757,11 @@ render_target_update_mode = 4
 [node name="CharacterCam" type="Camera3D" parent="Cameras/SubViewportContainer/SubViewport" node_paths=PackedStringArray("character1", "character2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 16)
 cull_mask = 2
+v_offset = -0.25
 projection = 1
 current = true
 fov = 40.0
-size = 11.329
+size = 10.0
 script = ExtResource("2_ndysc")
 character1 = NodePath("../../../../Game/test1")
 character2 = NodePath("../../../../Game/test2")
@@ -4222,4 +4294,4 @@ script = ExtResource("19_mqee6")
 [connection signal="timeout" from="GameManager/CountdownTimer" to="GameManager" method="_on_countdown_timer_timeout"]
 [connection signal="timeout" from="GameManager/RoundEndTimer" to="GameManager" method="_on_round_end_timer_timeout"]
 [connection signal="timeout" from="GameManager/FinalHitTimer" to="GameManager" method="_on_final_hit_timer_timeout"]
-[connection signal="button_down" from="UI/WinPanel/RematchButton" to="Game/TestMenu" method="_on_rematch_button_button_down"]
+[connection signal="button_down" from="UI Canvas/WinPanel/RematchButton" to="Game/TestMenu" method="_on_rematch_button_button_down"]

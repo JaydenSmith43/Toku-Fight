@@ -6,7 +6,6 @@ extends Node3D
 var mat1 = preload("res://Materials/grappler_1_mat.tres")
 var mat2 = preload("res://Materials/grappler_2_mat.tres")
 
-
 func swap_color(color_id: int):
 	match color_id:
 		1:

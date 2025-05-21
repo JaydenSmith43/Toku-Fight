@@ -26,13 +26,16 @@ func do_jump_attack(character: SGCharacterBody2D, move_button: String):
 	character.state_machine.current_state.Transitioned.emit(character.state_machine.current_state, "jumpattack")
 
 func check_motions_available(character: SGCharacterBody2D, input_array: Node, move_button: String, state: String):
-	if character.motions.has("63214") and state == "ground":
-		if check_motion(character, input_array, [6,3,2,1,4], move_button):
-			do_special(character, move_button, "63214")
-			return
-	if character.motions.has("j214") and state == "jump":
-		if check_motion(character, input_array, [2,1,4], move_button):
-			do_special(character, move_button, "j214")
+	var list_of_motions
+	
+	if state == "ground":
+		list_of_motions = character.ground_motions
+	elif state == "jump":
+		list_of_motions = character.jump_motions
+	
+	for motion in list_of_motions:
+		if check_motion(character, input_array, string_to_int_array(motion), move_button):
+			do_special(character, move_button, motion)
 			return
 	
 	if state == "ground":
@@ -55,53 +58,40 @@ func check_cancel(character: SGCharacterBody2D, input: Dictionary, input_array: 
 	if character.cancel and cancel_array != null:
 		if state == "ground":
 			ground_buffer(character, input, input_array, cancel_array)
-		if state == "jump":
+		elif state == "jump":
 			jump_buffer(character, input, input_array, cancel_array)
 
 func ground_buffer(character: SGCharacterBody2D, input: Dictionary, input_array: Node, cancel_array):
-	if input_array.was_pressed("A") and input.get("input_vector", Vector2.ZERO).y == 0:
-		for cancels in cancel_array:
-			if cancels == "5a":
-				character.buffered_move = "5a"
-				return
-	if input_array.was_pressed("A") and input.get("input_vector", Vector2.ZERO).y == -1:
-		for cancels in cancel_array:
-			if cancels == "2a":
-				character.buffered_move = "2a"
-				return
-	if input_array.was_pressed("B") and input.get("input_vector", Vector2.ZERO).y == 0:
-		for cancels in cancel_array:
-			if cancels == "5b":
-				character.buffered_move = "5b"
-				return
-	if input_array.was_pressed("B") and input.get("input_vector", Vector2.ZERO).y == -1:
-		for cancels in cancel_array:
-			if cancels == "2b":
-				character.buffered_move = "2b"
-				return
-	if input_array.was_pressed("C") and input.get("input_vector", Vector2.ZERO).y == 0:
-		for cancels in cancel_array:
-			if cancels == "5c":
-				character.buffered_move = "5c"
-				return
-	if input_array.was_pressed("C") and input.get("input_vector", Vector2.ZERO).y == -1:
-		for cancels in cancel_array:
-			if cancels == "2c":
-				character.buffered_move = "2c"
-				return
+	# Loop through and check for buffered normal cancels
+	var input_check_sequence = ["A", "B", "C"]
+	var cancel_check_sequence = ["5a", "2a", "5b", "2b", "5c", "2c"]
+	var current_check_index = 0
+	
+	for input_check in input_check_sequence: # Checks for stand and crouch normal for input
+		if input_array.was_pressed(input_check, 1) and input.get("input_vector", Vector2.ZERO).y == 0:
+			for cancels in cancel_array:
+				if cancels == cancel_check_sequence[current_check_index]:
+					character.buffered_move = cancel_check_sequence[current_check_index]
+					return
+		if input_array.was_pressed(input_check, 1) and input.get("input_vector", Vector2.ZERO).y == -1:
+			for cancels in cancel_array:
+				if cancels == cancel_check_sequence[current_check_index + 1]:
+					character.buffered_move = cancel_check_sequence[current_check_index + 1]
+					return
+		current_check_index += 2
 
 func jump_buffer(character: SGCharacterBody2D, input: Dictionary, input_array: Node, cancel_array):
-	if input_array.was_pressed("C"):
+	if input_array.was_pressed("C", 1):
 		for cancels in cancel_array:
 			if cancels == "jump_c":
 				character.buffered_move = "jump_c"
 				return
-	if input_array.was_pressed("B"):
+	if input_array.was_pressed("B", 1):
 		for cancels in cancel_array:
 			if cancels == "jump_b":
 				character.buffered_move = "jump_b"
 				return
-	if input_array.was_pressed("A"):
+	if input_array.was_pressed("A", 1):
 		for cancels in cancel_array:
 			if cancels == "jump_a":
 				character.buffered_move = "jump_a"
@@ -111,16 +101,25 @@ func check_motion(character: SGCharacterBody2D, input_array: Node, motion_array:
 	if !character.left_side:
 		motion_array = flip_motion(motion_array)
 	
-	#var n : int = 0
 	var current_motion_direction : int = 0
 	
-	#while n < input_array.inputs.size():
 	for n in range(input_array.inputs.size() - 1, -1, -1):
 		if input_array.inputs[n] == str(motion_array[current_motion_direction]):
 			if current_motion_direction == motion_array.size() - 1:
 				return true
 			current_motion_direction += 1
+	
 	return false
+
+func string_to_int_array(motion_string: String):
+	var int_array: Array[int]
+	
+	if motion_string[0] == "j":
+		motion_string = motion_string.substr(1)
+		pass
+	for char in motion_string:
+		int_array.append(int(char))
+	return int_array
 
 func flip_motion(motion_array: Array[int]):
 	var new_motion_array : Array[int]

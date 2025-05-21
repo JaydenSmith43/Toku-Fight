@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://c110s1snwl2cq"]
+[gd_scene load_steps=32 format=3 uid="uid://c110s1snwl2cq"]
 
 [ext_resource type="Script" uid="uid://7qfajh51c36j" path="res://Scripts/character_data.gd" id="1_fjl6n"]
 [ext_resource type="Texture2D" uid="uid://bmxre7rw1js2a" path="res://Sprites/grappler_ref.png" id="2_1migp"]
@@ -9,22 +9,24 @@
 [ext_resource type="PackedScene" uid="uid://1h0q2rqr7tyo" path="res://Scenes/Characters/grappler/grappler_model.tscn" id="6_sd7cd"]
 [ext_resource type="Script" uid="uid://dihyymi7wja5e" path="res://Scripts/Data/input.gd" id="7_pp3wx"]
 [ext_resource type="Script" uid="uid://btnoosxgfpuga" path="res://Scripts/States/state_machine.gd" id="10_t1wsc"]
-[ext_resource type="Script" uid="uid://b37gwr5lu1wq2" path="res://Scripts/States/S_Idle.gd" id="11_s2jcs"]
-[ext_resource type="Script" uid="uid://qtcggad5avyt" path="res://Scripts/States/S_Ground_Attack.gd" id="12_qkye0"]
-[ext_resource type="Script" uid="uid://bkb1mbciydoho" path="res://Scripts/States/S_Grappler63214.gd" id="13_0jsj3"]
-[ext_resource type="Script" uid="uid://l0ydnp1rqa3i" path="res://Scripts/States/S_Intro.gd" id="14_b7ffk"]
-[ext_resource type="Script" uid="uid://doe53i8en31ub" path="res://Scripts/States/S_Jump.gd" id="14_k2vgv"]
-[ext_resource type="Script" uid="uid://c3nie88ybul8s" path="res://Scripts/States/S_Block.gd" id="15_kiua0"]
-[ext_resource type="Script" uid="uid://cr3tpoikfsqlr" path="res://Scripts/States/S_Prejump.gd" id="16_5qm8e"]
-[ext_resource type="Script" uid="uid://qlyhkbf0k3px" path="res://Scripts/States/S_Hitstun.gd" id="17_d3vqd"]
-[ext_resource type="Script" uid="uid://bas01js14chkv" path="res://Scripts/States/S_Thrower.gd" id="18_qhqye"]
-[ext_resource type="Script" uid="uid://cg17vyasa1f7" path="res://Scripts/States/S_Thrown.gd" id="19_3jq6r"]
-[ext_resource type="Script" uid="uid://cbwhnnanv6e0s" path="res://Scripts/States/S_Teched.gd" id="20_g2jt5"]
-[ext_resource type="Script" uid="uid://dh2jj532g4cr6" path="res://Scripts/States/S_Jump_Attack.gd" id="21_4fove"]
-[ext_resource type="Script" uid="uid://by8b40rkkj1kk" path="res://Scripts/States/S_CommandThrown.gd" id="22_y72th"]
-[ext_resource type="Script" uid="uid://bpnjsjga63j8b" path="res://Scripts/States/S_Juggle.gd" id="23_sbkx2"]
-[ext_resource type="Script" uid="uid://b0lm0p3giy7si" path="res://Scripts/States/S_Knockdown.gd" id="24_r24n8"]
-[ext_resource type="Script" uid="uid://b0i56ow6ctvpp" path="res://Scripts/States/S_Grapplerj214.gd" id="29_00vnh"]
+[ext_resource type="Script" uid="uid://b37gwr5lu1wq2" path="res://Scripts/States/grappler/S_Idle.gd" id="11_s2jcs"]
+[ext_resource type="Script" uid="uid://qtcggad5avyt" path="res://Scripts/States/grappler/S_Ground_Attack.gd" id="12_qkye0"]
+[ext_resource type="Script" uid="uid://bkb1mbciydoho" path="res://Scripts/States/grappler/S_Grappler63214.gd" id="13_0jsj3"]
+[ext_resource type="Script" uid="uid://l0ydnp1rqa3i" path="res://Scripts/States/grappler/S_Intro.gd" id="14_b7ffk"]
+[ext_resource type="Script" uid="uid://doe53i8en31ub" path="res://Scripts/States/grappler/S_Jump.gd" id="14_k2vgv"]
+[ext_resource type="Script" uid="uid://cq8ir2c0722lg" path="res://Scripts/States/grappler/S_Back_Dash.gd" id="15_a3wut"]
+[ext_resource type="Script" uid="uid://c3nie88ybul8s" path="res://Scripts/States/grappler/S_Block.gd" id="15_kiua0"]
+[ext_resource type="Script" uid="uid://cr3tpoikfsqlr" path="res://Scripts/States/grappler/S_Prejump.gd" id="16_5qm8e"]
+[ext_resource type="Script" uid="uid://qlyhkbf0k3px" path="res://Scripts/States/grappler/S_Hitstun.gd" id="17_d3vqd"]
+[ext_resource type="Script" uid="uid://bas01js14chkv" path="res://Scripts/States/grappler/S_Thrower.gd" id="18_qhqye"]
+[ext_resource type="Script" uid="uid://cg17vyasa1f7" path="res://Scripts/States/grappler/S_Thrown.gd" id="19_3jq6r"]
+[ext_resource type="Script" uid="uid://cbwhnnanv6e0s" path="res://Scripts/States/grappler/S_Teched.gd" id="20_g2jt5"]
+[ext_resource type="Script" uid="uid://dh2jj532g4cr6" path="res://Scripts/States/grappler/S_Jump_Attack.gd" id="21_4fove"]
+[ext_resource type="Script" uid="uid://by8b40rkkj1kk" path="res://Scripts/States/grappler/S_CommandThrown.gd" id="22_y72th"]
+[ext_resource type="Script" uid="uid://bpnjsjga63j8b" path="res://Scripts/States/grappler/S_Juggle.gd" id="23_sbkx2"]
+[ext_resource type="Script" uid="uid://b0lm0p3giy7si" path="res://Scripts/States/grappler/S_Knockdown.gd" id="24_r24n8"]
+[ext_resource type="Script" uid="uid://h3886ftxhj8l" path="res://Scripts/States/grappler/S_Forward_Dash.gd" id="26_s0cbb"]
+[ext_resource type="Script" uid="uid://b0i56ow6ctvpp" path="res://Scripts/States/grappler/S_Grapplerj214.gd" id="29_00vnh"]
 
 [sub_resource type="SGCapsuleShape2D" id="SGCapsuleShape2D_yoyix"]
 radius = 13672
@@ -125,17 +127,11 @@ character = NodePath("../..")
 model = NodePath("../../model")
 state_name = "idle"
 
-[node name="GroundAttack" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
-script = ExtResource("12_qkye0")
+[node name="Prejump" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+script = ExtResource("16_5qm8e")
 character = NodePath("../..")
 model = NodePath("../../model")
-state_name = "groundattack"
-
-[node name="Grappler63214" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
-script = ExtResource("13_0jsj3")
-character = NodePath("../..")
-model = NodePath("../../model")
-state_name = "grappler63214"
+state_name = "prejump"
 
 [node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
 script = ExtResource("14_k2vgv")
@@ -145,23 +141,25 @@ character = NodePath("../..")
 model = NodePath("../../model")
 state_name = "jump"
 
-[node name="JumpAttack" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
-script = ExtResource("21_4fove")
+[node name="Forward_Dash" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+script = ExtResource("26_s0cbb")
 character = NodePath("../..")
 model = NodePath("../../model")
-state_name = "jumpattack"
+state_name = "forward_dash"
+metadata/_custom_type_script = "uid://h3886ftxhj8l"
+
+[node name="Back_Dash" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+script = ExtResource("15_a3wut")
+character = NodePath("../..")
+model = NodePath("../../model")
+state_name = "back_dash"
+metadata/_custom_type_script = "uid://cq8ir2c0722lg"
 
 [node name="Block" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
 script = ExtResource("15_kiua0")
 character = NodePath("../..")
 model = NodePath("../../model")
 state_name = "block"
-
-[node name="Prejump" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
-script = ExtResource("16_5qm8e")
-character = NodePath("../..")
-model = NodePath("../../model")
-state_name = "prejump"
 
 [node name="Hitstun" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
 script = ExtResource("17_d3vqd")
@@ -205,8 +203,26 @@ character = NodePath("../..")
 model = NodePath("../../model")
 state_name = "knockdown"
 
+[node name="GroundAttack" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+script = ExtResource("12_qkye0")
+character = NodePath("../..")
+model = NodePath("../../model")
+state_name = "groundattack"
+
+[node name="JumpAttack" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+script = ExtResource("21_4fove")
+character = NodePath("../..")
+model = NodePath("../../model")
+state_name = "jumpattack"
+
 [node name="Grapplerj214" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
 script = ExtResource("29_00vnh")
 character = NodePath("../..")
 model = NodePath("../../model")
 state_name = "grapplerj214"
+
+[node name="Grappler63214" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
+script = ExtResource("13_0jsj3")
+character = NodePath("../..")
+model = NodePath("../../model")
+state_name = "grappler63214"

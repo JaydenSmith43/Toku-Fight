@@ -34,6 +34,8 @@ enum Game_State {
 
 @onready var audioplayer : AudioStreamPlayer = $AudioStreamPlayer
 @onready var anim_player : NetworkAnimationPlayer = $"../NetworkAnimationPlayer"
+@onready var p1_combo_counter : ComboCounter = $"../UI Canvas/P1_UI/HitLabel"
+@onready var p2_combo_counter : ComboCounter = $"../UI Canvas/P2_UI/HitLabel"
 
 var STAGE_THEME = preload("res://Audio/Music/stage-theme2.mp3")
 
@@ -236,6 +238,18 @@ func get_state_label(is_player1: bool):
 		return p1_state_label
 	else:
 		return p2_state_label
+
+func increase_combo_counter(player1: bool):
+	if player1:
+		p1_combo_counter.increase_combo_counter()
+	else:
+		p2_combo_counter.increase_combo_counter()
+
+func combo_end(player1: bool):
+	if player1:
+		p1_combo_counter.combo_end()
+	else:
+		p2_combo_counter.combo_end()
 
 #func _on_rematch_button_button_down() -> void:
 	##if multiplayer.get_unique_id() == 1:
