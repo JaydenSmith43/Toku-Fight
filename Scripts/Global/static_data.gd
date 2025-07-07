@@ -8,7 +8,7 @@ var current_move_p1
 var current_move_p2
 
 func load_json_file(characterName: String, fileName: String, player: String):
-	data_file_path = "res://Scripts/MoveData/" + characterName + "/" + fileName + ".json"
+	data_file_path = "res://MoveData/" + characterName + "/" + fileName + ".json"
 	var parsedResult
 	
 	var dataFile = FileAccess.open(data_file_path, FileAccess.READ)

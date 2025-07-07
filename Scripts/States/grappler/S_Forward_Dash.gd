@@ -1,11 +1,12 @@
 extends State
 class_name S_Forward_Dash
 
-@export var dash_frames := 24
-@export var dash_velocity = 20000
-var I_left : String
-var I_right : String
-var I_down : String
+@export var dash_frames := 0
+@export var dash_velocity = 0
+var current_velocity = 0
+#var I_left : String
+#var I_right : String
+#var I_down : String
 
 var otherPlayer : SGCharacterBody2D
 
@@ -16,24 +17,24 @@ func Enter():
 	if anim_player.is_playing():
 		anim_player.stop()
 	
-	anim_player.play("stand_block")
+	anim_player.play("forward_dash")
 	
 	if character.left_side:
-		character.velocity.x = -10660 #dash velocity
+		current_velocity = dash_velocity
 	else:
-		character.velocity.x = 10660
+		current_velocity = -dash_velocity
+	
 
 func Exit():
 	pass
 
 func State_Physics_Update(input: Dictionary):
 	character.current_frame += 1
-	character.velocity.x = dash_velocity
+	character.velocity.x = current_velocity
 	
 	character.move_and_slide()
 	model.position.x = SGFixed.to_float(character.fixed_position_x)
 	model.position.y = -SGFixed.to_float(character.fixed_position_y)
-	
 	
 	if character.current_frame == dash_frames:
 		character.blockstun = 0

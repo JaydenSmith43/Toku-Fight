@@ -123,6 +123,8 @@ state_name = "intro"
 
 [node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
 script = ExtResource("11_s2jcs")
+forward_walk_speed = 12500
+backwards_walk_speed = 10000
 character = NodePath("../..")
 model = NodePath("../../model")
 state_name = "idle"
@@ -143,6 +145,8 @@ state_name = "jump"
 
 [node name="Forward_Dash" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
 script = ExtResource("26_s0cbb")
+dash_frames = 22
+dash_velocity = 17500
 character = NodePath("../..")
 model = NodePath("../../model")
 state_name = "forward_dash"
@@ -150,6 +154,8 @@ metadata/_custom_type_script = "uid://h3886ftxhj8l"
 
 [node name="Back_Dash" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "model")]
 script = ExtResource("15_a3wut")
+dash_frames = 23
+dash_velocity = -15000
 character = NodePath("../..")
 model = NodePath("../../model")
 state_name = "back_dash"

@@ -1,0 +1,1 @@
+{"anim_name":"jump_c","cancel_frame":100,"frames":[{"blockstun":25,"frame":11,"hitbox1":{"damage":8,"end_frame":6,"height":"high","pos_x":1.5,"pos_y":2.5,"scale_x":2,"scale_y":2,"sfx":"light"},"hitstop":5,"hitstun":50,"sfx":"heavy"}],"move_end_frame":1000}

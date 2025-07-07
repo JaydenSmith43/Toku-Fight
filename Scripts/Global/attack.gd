@@ -34,7 +34,7 @@ func check_motions_available(character: SGCharacterBody2D, input_array: Node, mo
 		list_of_motions = character.jump_motions
 	
 	for motion in list_of_motions:
-		if check_motion(character, input_array, string_to_int_array(motion), move_button):
+		if check_motion(character, input_array, string_to_int_array(motion), move_button, 20):
 			do_special(character, move_button, motion)
 			return
 	
@@ -97,17 +97,20 @@ func jump_buffer(character: SGCharacterBody2D, input: Dictionary, input_array: N
 				character.buffered_move = "jump_a"
 				return
 
-func check_motion(character: SGCharacterBody2D, input_array: Node, motion_array: Array[int], move_button: String):
+func check_motion(character: SGCharacterBody2D, input_array: Node, motion_array: Array[int], move_button: String, input_window: int):
 	if !character.left_side:
 		motion_array = flip_motion(motion_array)
 	
-	var current_motion_direction : int = 0
+	input_window = 59 - input_window
+	var motion_direction_index : int = 0
 	
-	for n in range(input_array.inputs.size() - 1, -1, -1):
-		if input_array.inputs[n] == str(motion_array[current_motion_direction]):
-			if current_motion_direction == motion_array.size() - 1:
+	
+	# Iterate backwards from size (basically always 59) - window to 0 
+	for n in range(input_array.input_frame.size() - input_window - 1, -1, -1):
+		if input_array.input_frame[n][0] == str(motion_array[motion_direction_index]):
+			if motion_direction_index == motion_array.size() - 1:
 				return true
-			current_motion_direction += 1
+			motion_direction_index += 1
 	
 	return false
 

@@ -2,8 +2,9 @@ extends State
 class_name S_Idle
 
 var gravity : float = 60
-var move_speed : int = 17476
-var pushout_distance = 2
+@export var forward_walk_speed : int = 0
+@export var backwards_walk_speed : int = 0
+#var pushout_distance = 2
 
 var I_left : String
 var I_right : String
@@ -110,17 +111,17 @@ func network_checkInputs(input: Dictionary) -> void:
 	
 	elif input.get("input_vector", Vector2.ZERO).x < 0 and character.crouch == false: #left
 		if character.left_side == true:
-			character.velocity.x = -15291 #-14/60*65536
+			character.velocity.x = -backwards_walk_speed #-14/60*65536
 			anim_player.play("forward_walk")
 		else:
-			character.velocity.x = -17476 
+			character.velocity.x = -forward_walk_speed
 			anim_player.play("forward_walk")
 	elif input.get("input_vector", Vector2.ZERO).x > 0 and character.crouch == false: #right
 		if character.left_side == false:
-			character.velocity.x = 15291
+			character.velocity.x = backwards_walk_speed
 			anim_player.play("forward_walk")
 		else:
-			character.velocity.x = 17476
+			character.velocity.x = forward_walk_speed
 			anim_player.play("forward_walk")
 		 #TODO BackWalk animation
 
@@ -136,29 +137,37 @@ func network_checkInputs(input: Dictionary) -> void:
 		character.jump_velocity_x = character.velocity.x
 		Transitioned.emit(self, "prejump")
 		return
-	if Attack.check_motion(character, input_array, [6, 5, 6], ""):
+	if Attack.check_motion(character, input_array, [6, 5, 6], "", 12):
 		Transitioned.emit(self, "forward_dash")
 		return
-
+	if Attack.check_motion(character, input_array, [4, 5, 4], "", 12):
+		Transitioned.emit(self, "back_dash")
+		return
+	
+	var button_check_order = ["C","B","A"]
+	var standing_corresponding_notation = ["5c", "5b", "5a"]
+	var crouching_corresponding_notation = ["2c", "2b", "2a"]
+	
 	if input_array.was_pressed("A", 1) and input_array.was_pressed("B", 1) and character.crouch == false:
 		Attack.do_throw(character)
 		return
-	elif input_array.was_pressed("C", 1) and character.crouch == false:
-		Attack.check_motions_available(character, input_array, "5c", "ground")
-		return
-	elif input_array.was_pressed("B", 1) and character.crouch == false:
-		Attack.check_motions_available(character, input_array, "5b", "ground")
-		return
-	elif input_array.was_pressed("A", 1) and character.crouch == false:
-		Attack.check_motions_available(character, input_array, "5a", "ground")
-		return
+	
+	for n in range(button_check_order.size()):
+		if input_array.was_pressed(button_check_order[n], 1) and character.crouch == false:
+			Attack.check_motions_available(character, input_array, standing_corresponding_notation[n], "ground")
+			return
+	
+	for n in range(button_check_order.size()):
+		if input_array.was_pressed(button_check_order[n], 1) and character.crouch == true:
+			Attack.do_ground_attack(character, crouching_corresponding_notation[n])
+			return
 
-	if input_array.was_pressed("C", 1) and character.crouch == true:
-		Attack.do_ground_attack(character, "2c")
-		return
-	elif input_array.was_pressed("B", 1) and character.crouch == true:
-		Attack.do_ground_attack(character, "2b")
-		return
-	elif input_array.was_pressed("A", 1) and character.crouch == true:
-		Attack.do_ground_attack(character, "2a")
-		return
+	#if input_array.was_pressed("C", 1) and character.crouch == true:
+		#Attack.do_ground_attack(character, "2c")
+		#return
+	#elif input_array.was_pressed("B", 1) and character.crouch == true:
+		#Attack.do_ground_attack(character, "2b")
+		#return
+	#elif input_array.was_pressed("A", 1) and character.crouch == true:
+		#Attack.do_ground_attack(character, "2a")
+		#return

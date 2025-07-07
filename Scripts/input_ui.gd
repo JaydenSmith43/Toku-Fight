@@ -43,12 +43,15 @@ func _physics_process(delta: float) -> void:
 	
 	for x in range(p1_input_array.input_buffer_times.size()):
 		if p1_input_array.input_buffer_times[x] == 1:
-			p1_current_inputs.append(p1_input_array.inputs[x].to_lower())
+			for input in p1_input_array.input_frame[x]:
+				p1_current_inputs.append(input.to_lower())
+			
 		else:
 			break
 	for x in range(p2_input_array.input_buffer_times.size()):
 		if p2_input_array.input_buffer_times[x] == 1:
-			p2_current_inputs.append(p2_input_array.inputs[x].to_lower())
+			for input in p2_input_array.input_frame[x]:
+				p2_current_inputs.append(input.to_lower())
 		else:
 			break
 	if p1_current_inputs.size() > 0:

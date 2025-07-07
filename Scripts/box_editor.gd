@@ -165,7 +165,7 @@ func check_for_file():
 	var charactername = character_option_button.get_item_text(character_option_button.get_selected_id())
 	var movename = animation_option_button.get_item_text(animation_option_button.get_selected_id())
 	
-	StaticData.load_json_file(charactername + "_" + movename, "player1")
+	StaticData.load_json_file(charactername, charactername + "_" + movename, "player1")
 	load_array_data()
 	load_frame_data()
 
