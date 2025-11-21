@@ -6,26 +6,14 @@ extends Node3D
 @export var current_frame_edit : LineEdit
 @export var end_frame_edit : LineEdit
 @export var total_frame_label : Label
+@export var var_line_edits : Array[LineEdit]
 
-@export var var_frame_edit : LineEdit
-@export var var_end_frame_edit : LineEdit
-@export var var_position_x_edit : LineEdit
-@export var var_position_y_edit : LineEdit
-@export var var_scale_x_edit : LineEdit
-@export var var_scale_y_edit : LineEdit
-@export var var_damage_edit : LineEdit
-@export var var_blockstun_edit: LineEdit
-@export var var_hitstun_edit : LineEdit
-@export var var_hitstop_edit : LineEdit
-@export var var_pushback_edit : LineEdit
-@export var var_pushtime_edit : LineEdit
-@export var var_height_edit : LineEdit
-@export var var_sfx_edit : LineEdit
-@export var var_cancel_edit : LineEdit
-@export var var_cancel_frame_edit: LineEdit
+var var_edits_dict : Dictionary[String, LineEdit] = {}
 
 var grappler_model = preload("res://Scenes/Characters/grappler/grappler_model.tscn")
 var hitbox = preload("res://Scenes/Characters/editor_hitbox3d.tscn")
+var box_check_order = ["blockstun","hitstun","hitstop","pushback","pushtime","sfx"]
+var load_check_order = ["damage","pos_x","pos_y","scale_x","scale_y","end_frame","height"]
 
 var current_model
 var current_anim_player : AnimationPlayer
@@ -46,7 +34,12 @@ var blockstun = true
 var hitstun = true
 
 func _ready() -> void:
+	set_var_dict()
 	load_character_data(0)
+
+func set_var_dict():
+	for x in var_line_edits.size():
+		var_edits_dict[var_line_edits[x].key] = var_line_edits[x]
 
 func load_character_data(index : int):
 	if current_model:
@@ -80,14 +73,14 @@ func load_animation():
 		end_frame_edit.text = str(move_data["move_end_frame"])
 	
 	if move_data.has("cancel"):
-		var_cancel_edit.text = str(move_data["cancel"])
+		var_edits_dict["cancel"].text = str(move_data["cancel"])
 	else:
-		var_cancel_edit.text = ""
+		var_edits_dict["cancel"].text = ""
 	
 	if move_data.has("cancel_frame"):
-		var_cancel_frame_edit.text = str(move_data["cancel_frame"])
+		var_edits_dict["cancel_frame"].text = str(move_data["cancel_frame"])
 	else:
-		var_cancel_frame_edit.text = ""
+		var_edits_dict["cancel_frame"].text = ""
 	
 	load_box_items()
 	load_box_variables(0)
@@ -102,7 +95,7 @@ func load_box_items():
 	if move_data.has("frames"):
 		for data in move_data["frames"]:
 			var frame = data["frame"]
-		
+			
 			while data.has(hitbox_input):
 				hitbox_option_button.add_item(str(frame) + ": " + hitbox_input)
 				hitbox_index += 1
@@ -117,42 +110,19 @@ func load_box_variables(index : int):
 	if move_data.has("frames"):
 		for data in move_data["frames"]:
 			if data["frame"] == float(hitbox_string[0]):
-				var_frame_edit.text = str(data["frame"])
-				if data.has("blockstun"):
-					var_blockstun_edit.text = str(data["blockstun"])
-				else:
-					var_blockstun_edit.text = ""
-				if data.has("hitstun"):
-					var_hitstun_edit.text = str(data["hitstun"])
-				else:
-					var_hitstun_edit.text = ""
-				if data.has("hitstop"):
-					var_hitstop_edit.text = str(data["hitstop"])
-				else:
-					var_hitstop_edit.text = ""
-				if data.has("pushback"):
-					var_pushback_edit.text = str(data["pushback"])
-				else:
-					var_pushback_edit.text = ""
-				if data.has("pushtime"):
-					var_pushtime_edit.text = str(data["pushtime"])
-				else:
-					var_pushtime_edit.text = ""
-				if data.has("sfx"):
-					var_sfx_edit.text = str(data["sfx"])
-				else:
-					var_sfx_edit.text = ""
+				var_edits_dict["frame"].text = str(data["frame"])
+				
+				for check in box_check_order:
+					if data.has(check):
+						var_edits_dict[check].text = str(data[check])
+					else:
+						var_edits_dict[check].text = ""
 				if data.has(str(hitbox_string[1])):
 					load_hitbox_variables(data[hitbox_string[1]])
 
 func load_hitbox_variables(data):
-	var_damage_edit.text = str(data["damage"])
-	var_position_x_edit.text = str(data["pos_x"])
-	var_position_y_edit.text = str(data["pos_y"])
-	var_scale_x_edit.text = str(data["scale_x"])
-	var_scale_y_edit.text = str(data["scale_y"])
-	var_end_frame_edit.text = str(data["end_frame"])
-	var_height_edit.text = str(data["height"])
+	for check in load_check_order:
+		var_edits_dict[check].text = str(data[check])
 
 func load_anim_frame(frame : float):
 	current_frame = frame
@@ -186,22 +156,8 @@ func load_frame_data():
 			no_data()
 
 func no_data():
-	var_frame_edit.text = ""
-	var_blockstun_edit.text = ""
-	var_hitstun_edit.text = ""
-	var_hitstop_edit.text = ""
-	var_pushback_edit.text = ""
-	var_pushtime_edit.text = ""
-	var_damage_edit.text = ""
-	var_position_x_edit.text = ""
-	var_position_y_edit.text = ""
-	var_scale_x_edit.text = ""
-	var_scale_y_edit.text = ""
-	var_end_frame_edit.text = ""
-	var_height_edit.text = ""
-	var_sfx_edit.text = ""
-	var_cancel_edit.text = ""
-	var_cancel_frame_edit.text = ""
+	for edit in var_line_edits:
+		edit.text = ""
 	
 	hitbox_option_button.remove_item(0)
 
@@ -238,7 +194,7 @@ func load_hitbox_data(data):
 		hitbox_index += 1
 		hitbox_input = hitbox_string + str(hitbox_index)
 
-func create_hitbox_from_data(data, name : String):
+func create_hitbox_from_data(data, move_name : String):
 	var new_hitbox = hitbox.instantiate()
 	new_hitbox.pos_y = data["pos_y"]
 	new_hitbox.pos_x = data["pos_x"]
@@ -246,11 +202,11 @@ func create_hitbox_from_data(data, name : String):
 	new_hitbox.scale_y = data["scale_y"]
 	new_hitbox.leftside = true
 	new_hitbox.player = "player1"
-	new_hitbox.label.text = name
+	new_hitbox.label.text = move_name
 	current_boxes.append(new_hitbox)
 	add_child(new_hitbox)
 
-func create_new_hitbox(name : String):
+func create_new_hitbox(move_name : String):
 	var same_frame = false
 	var new_data = {
 		frame = current_frame,
@@ -258,7 +214,7 @@ func create_new_hitbox(name : String):
 		hitstun = 1
 	}
 	
-	new_data[name] = {
+	new_data[move_name] = {
 		damage = 1,
 		pos_x = 0,
 		pos_y = 0,
@@ -281,13 +237,7 @@ func create_new_hitbox(name : String):
 	load_frame_data()
 
 func _on_option_button_item_selected(index: int) -> void:
-	match index:
-		0:
-			load_character_data(0)
-		1:
-			load_character_data(1)
-		2:
-			load_character_data(2)
+	load_character_data(index)
 
 func _on_animation_option_button_item_selected(_index: int) -> void:
 	load_animation()
@@ -324,19 +274,16 @@ func _on_hitbox_button_button_down() -> void:
 				hitbox_index += 1
 				hitbox_input = hitbox_string + str(hitbox_index)
 	create_new_hitbox(hitbox_input)
-	pass
 
 func _on_hurtbox_button_button_down() -> void:
 	pass # Replace with function body.
 
 func _on_save_button_button_down() -> void:
-	var name = character_option_button.get_item_text(character_option_button.get_selected_id())
+	var character_name = character_option_button.get_item_text(character_option_button.get_selected_id())
 	var move = animation_option_button.get_item_text(animation_option_button.get_selected_id())
-	var path = "res://Scripts/MoveData/" + name + "_" + move + ".json"
-	
-	var json_string = JSON.stringify(move_data)
+	var path = "res://MoveData/" + character_name + "/" + character_name + "_" + move + ".json"
+	var json_string = JSON.stringify(move_data, "\t")
 	var file = FileAccess.open(path, FileAccess.WRITE)
-	
 	file.store_string(json_string)
 
 func _on_delete_button_button_down() -> void:
@@ -351,11 +298,39 @@ func _on_delete_button_button_down() -> void:
 			load_frame_data()
 
 #region variables
-func _on_var_frame_edit_text_submitted(new_text: String) -> void:
+var check_edit = {
+	"frame":"frame",
+	"blockstun":"float","hitstun":"float","hitstop":"float","pushback":"float","pushtime":"float",
+	"sfx":"string",
+	"damage":"hitbox_float","pos_x":"hitbox_float","pos_y":"hitbox_float","scale_x":"hitbox_float",
+	"scale_y":"hitbox_float","end_frame":"hitbox_float",
+	"height":"hitbox_string",
+	"cancel":"cancel",
+	"cancel_frame":"cancel_frame"
+}
+
+func _on_var_edit(new_text: String, key: String) -> void:
 	var index = hitbox_option_button.get_selected_id()
 	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
 	hitbox_string[1] = hitbox_string[1].strip_edges()
 	
+	match check_edit[key]:
+		"frame":
+			var_edit_frame(new_text, hitbox_string, index)
+		"float":
+			var_edit_float(new_text, key, hitbox_string)
+		"string":
+			var_edit_string(new_text, key, hitbox_string)
+		"hitbox_float":
+			var_edit_hitbox_float(new_text, key, hitbox_string)
+		"hitbox_string":
+			var_edit_hitbox_string(new_text, key, hitbox_string)
+		"cancel":
+			var_cancel_edit(new_text)
+		"cancel_frame":
+			var_cancel_frame_edit(new_text)
+
+func var_edit_frame(new_text: String, hitbox_string: PackedStringArray, index: int) -> void:
 	if new_text.is_valid_float():
 		for data in move_data["frames"]:
 			if data["frame"] == float(hitbox_string[0]):
@@ -363,161 +338,37 @@ func _on_var_frame_edit_text_submitted(new_text: String) -> void:
 				hitbox_option_button.set_item_text(index, new_text + ": " + hitbox_string[1])
 				load_frame_data()
 
-func _on_var_blockstun_edit_text_submitted(new_text: String) -> void:
-	var index = hitbox_option_button.get_selected_id()
-	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
-	hitbox_string[1] = hitbox_string[1].strip_edges()
-	
+func var_edit_float(new_text: String, key: String, hitbox_string: PackedStringArray) -> void:
 	if new_text.is_valid_float():
 		for data in move_data["frames"]:
 			if data["frame"] == float(hitbox_string[0]):
-				data["blockstun"] = float(new_text)
+				data[key] = float(new_text)
 				load_frame_data()
 
-func _on_var_hitstun_edit_text_submitted(new_text: String) -> void:
-	var index = hitbox_option_button.get_selected_id()
-	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
-	hitbox_string[1] = hitbox_string[1].strip_edges()
-	
-	if new_text.is_valid_float():
-		for data in move_data["frames"]:
-			if data["frame"] == float(hitbox_string[0]):
-				data["hitstun"] = float(new_text)
-				load_frame_data()
-
-func _on_var_damage_edit_text_submitted(new_text: String) -> void:
-	var index = hitbox_option_button.get_selected_id()
-	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
-	hitbox_string[1] = hitbox_string[1].strip_edges()
-	
-	if new_text.is_valid_float():
-		for data in move_data["frames"]:
-			if data["frame"] == float(hitbox_string[0]):
-				data[hitbox_string[1]]["damage"] = float(new_text)
-				load_frame_data()
-
-func _on_var_position_x_edit_text_submitted(new_text: String) -> void:
-	var index = hitbox_option_button.get_selected_id()
-	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
-	hitbox_string[1] = hitbox_string[1].strip_edges()
-	
-	if new_text.is_valid_float():
-		for data in move_data["frames"]:
-			if data["frame"] == float(hitbox_string[0]):
-				data[hitbox_string[1]]["pos_x"] = float(new_text)
-				load_frame_data()
-
-func _on_var_position_y_edit_text_submitted(new_text: String) -> void:
-	var index = hitbox_option_button.get_selected_id()
-	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
-	hitbox_string[1] = hitbox_string[1].strip_edges()
-	
-	if new_text.is_valid_float():
-		for data in move_data["frames"]:
-			if data["frame"] == float(hitbox_string[0]):
-				data[hitbox_string[1]]["pos_y"] = float(new_text)
-				load_frame_data()
-
-func _on_var_scale_x_edit_text_submitted(new_text: String) -> void:
-	var index = hitbox_option_button.get_selected_id()
-	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
-	hitbox_string[1] = hitbox_string[1].strip_edges()
-	
-	if new_text.is_valid_float():
-		for data in move_data["frames"]:
-			if data["frame"] == float(hitbox_string[0]):
-				data[hitbox_string[1]]["scale_x"] = float(new_text)
-				load_frame_data()
-
-func _on_var_scale_y_edit_text_submitted(new_text: String) -> void:
-	var index = hitbox_option_button.get_selected_id()
-	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
-	hitbox_string[1] = hitbox_string[1].strip_edges()
-	
-	if new_text.is_valid_float():
-		for data in move_data["frames"]:
-			if data["frame"] == float(hitbox_string[0]):
-				data[hitbox_string[1]]["scale_y"] = float(new_text)
-				load_frame_data()
-
-func _on_var_end_frame_edit_text_submitted(new_text: String) -> void:
-	var index = hitbox_option_button.get_selected_id()
-	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
-	hitbox_string[1] = hitbox_string[1].strip_edges()
-	
-	if new_text.is_valid_float():
-		for data in move_data["frames"]:
-			if data["frame"] == float(hitbox_string[0]):
-				data[hitbox_string[1]]["end_frame"] = float(new_text)
-				load_frame_data()
-
-func _on_var_hitstop_edit_text_submitted(new_text: String) -> void:
-	var index = hitbox_option_button.get_selected_id()
-	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
-	hitbox_string[1] = hitbox_string[1].strip_edges()
-	
-	if new_text.is_valid_float():
-		for data in move_data["frames"]:
-			if data["frame"] == float(hitbox_string[0]):
-				data["hitstop"] = float(new_text)
-				load_frame_data()
-
-func _on_var_pushback_edit_text_submitted(new_text: String) -> void:
-	var index = hitbox_option_button.get_selected_id()
-	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
-	hitbox_string[1] = hitbox_string[1].strip_edges()
-	
-	if new_text.is_valid_float():
-		for data in move_data["frames"]:
-			if data["frame"] == float(hitbox_string[0]):
-				data["pushback"] = float(new_text)
-				load_frame_data()
-
-func _on_var_push_time_edit_text_submitted(new_text: String) -> void:
-	var index = hitbox_option_button.get_selected_id()
-	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
-	hitbox_string[1] = hitbox_string[1].strip_edges()
-	
-	if new_text.is_valid_float():
-		for data in move_data["frames"]:
-			if data["frame"] == float(hitbox_string[0]):
-				data["pushback"] = float(new_text)
-				load_frame_data()
-
-func _on_var_height_edit_text_submitted(new_text: String) -> void:
-	var index = hitbox_option_button.get_selected_id()
-	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
-	hitbox_string[1] = hitbox_string[1].strip_edges()
-	
+func var_edit_string(new_text: String, key: String, hitbox_string: PackedStringArray) -> void:
 	for data in move_data["frames"]:
 		if data["frame"] == float(hitbox_string[0]):
-			data[hitbox_string[1]]["height"] = new_text
+			data[key] = new_text
 			load_frame_data()
 
-func _on_var_sfx_edit_text_submitted(new_text: String) -> void:
-	var index = hitbox_option_button.get_selected_id()
-	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
-	hitbox_string[1] = hitbox_string[1].strip_edges()
-	
+func var_edit_hitbox_float(new_text: String, key: String, hitbox_string: PackedStringArray) -> void:
+	if new_text.is_valid_float():
+		for data in move_data["frames"]:
+			if data["frame"] == float(hitbox_string[0]):
+				data[hitbox_string[1]][key] = float(new_text)
+				load_frame_data()
+
+func var_edit_hitbox_string(new_text: String, key: String, hitbox_string: PackedStringArray) -> void:	
 	for data in move_data["frames"]:
 		if data["frame"] == float(hitbox_string[0]):
-			data["sfx"] = new_text
+			data[hitbox_string[1]][key] = new_text
 			load_frame_data()
 
-func _on_var_cancel_edit_text_submitted(new_text: String) -> void:
-	var index = hitbox_option_button.get_selected_id()
-	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
-	hitbox_string[1] = hitbox_string[1].strip_edges()
-	
+func var_cancel_edit(new_text: String) -> void:
 	move_data["cancel"] = new_text
 	load_frame_data()
 
-func _on_var_cancel_frame_edit_text_submitted(new_text: String) -> void:
-	var index = hitbox_option_button.get_selected_id()
-	var hitbox_string = hitbox_option_button.get_item_text(index).split(":", false, 1)
-	hitbox_string[1] = hitbox_string[1].strip_edges()
-	
-	
+func var_cancel_frame_edit(new_text: String) -> void:
 	if new_text.is_valid_float():
 		move_data["cancel_frame"] = float(new_text)
 		load_frame_data()

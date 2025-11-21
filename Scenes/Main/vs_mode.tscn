@@ -3343,6 +3343,7 @@ wait_ticks = 60
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="GameManager"]
 stream = ExtResource("4_s22pu")
+bus = &"Music"
 
 [node name="Game" type="Node2D" parent="."]
 position = Vector2(960, 500)
@@ -3544,7 +3545,7 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
 text = "Grappler Guy"
 
-[node name="HitLabel" type="RichTextLabel" parent="UI Canvas/P1_UI" node_paths=PackedStringArray("player")]
+[node name="HitLabel" type="RichTextLabel" parent="UI Canvas/P1_UI" node_paths=PackedStringArray("player", "feedback_label")]
 modulate = Color(1, 1, 1, 0)
 anchors_preset = 4
 anchor_top = 0.5
@@ -3562,6 +3563,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("13_qhnmc")
 player = NodePath("../../../Game/test1")
+feedback_label = NodePath("FeedbackLabel")
 
 [node name="FeedbackLabel" type="RichTextLabel" parent="UI Canvas/P1_UI/HitLabel"]
 layout_mode = 1
@@ -3651,7 +3653,7 @@ theme_override_constants/outline_size = 10
 text = "Grappler Guy"
 horizontal_alignment = 2
 
-[node name="HitLabel" type="RichTextLabel" parent="UI Canvas/P2_UI"]
+[node name="HitLabel" type="RichTextLabel" parent="UI Canvas/P2_UI" node_paths=PackedStringArray("player", "feedback_label")]
 modulate = Color(1, 1, 1, 0)
 anchors_preset = 6
 anchor_left = 1.0
@@ -3671,6 +3673,8 @@ text = "[font_size={100}]49[/font_size][font_size={50}]HIT[/font_size]"
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("13_qhnmc")
+player = NodePath("../../../Game/test2")
+feedback_label = NodePath("FeedbackLabel")
 
 [node name="FeedbackLabel" type="RichTextLabel" parent="UI Canvas/P2_UI/HitLabel"]
 layout_mode = 1

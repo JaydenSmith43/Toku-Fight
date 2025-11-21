@@ -1,8 +1,6 @@
 extends State
 class_name S_Hitstun
 
-#var hitstun_frames := 0
-
 var otherPlayer : SGCharacterBody2D
 
 func Enter():
@@ -42,15 +40,16 @@ func Enter():
 func Exit():
 	character.throw_invul = false
 
-func State_Physics_Update(input: Dictionary):
+func State_Physics_Update(_input: Dictionary):
 	var otherplayer_state = otherPlayer.state_machine.current_state.state_name
 	if otherplayer_state == "thrown":
 		otherPlayer.state_machine.current_state.Transitioned.emit(otherPlayer.state_machine.current_state, "idle")
 
 	character.current_frame += 1
-	character.velocity.x = lerp(character.velocity.x, 0, 0.1)
+	if character.current_frame > character.hitstop:
+		character.velocity.x = lerp(character.velocity.x, 0, 0.1)
+		character.move_and_slide()
 	
-	character.move_and_slide()
 	model.position.x = SGFixed.to_float(character.fixed_position_x)
 	model.position.y = -SGFixed.to_float(character.fixed_position_y)
 	

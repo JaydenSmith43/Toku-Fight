@@ -15,6 +15,7 @@ var extents_x := 293610
 var extents_y := 228220
 var end_frame := 6000
 var hitstun := 0
+var hitstop := 0
 var blockstun := 0
 
 func net_ready() -> void:
@@ -51,6 +52,7 @@ func _network_spawn(data: Dictionary) -> void:
 	height = data['height']
 	sfx = data['sfx']
 	hitstun = data['hitstun']
+	hitstop = data["hitstop"]
 	blockstun = data['blockstun']
 	player = data['player']
 	

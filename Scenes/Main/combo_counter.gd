@@ -18,7 +18,7 @@ func combo_end():
 		modulate = Color.WEB_GRAY
 		timer_active = true
 
-func increase_combo_counter():
+func increment_combo_counter():
 	if (player.combo > 1):
 		set_combo_text()
 		on_screen_timer = 0.5

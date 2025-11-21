@@ -227,11 +227,11 @@ func init_health(_health):
 	p1_healthbar.init_health(_health)
 	p2_healthbar.init_health(_health)
 
-func update_health(is_player1: bool, update_health: float):
+func update_health(is_player1: bool, new_health: float):
 	if is_player1:
-		p1_healthbar.health = update_health
+		p1_healthbar.health = new_health
 	else:
-		p2_healthbar.health = update_health
+		p2_healthbar.health = new_health
 
 func get_state_label(is_player1: bool):
 	if is_player1:
@@ -239,14 +239,14 @@ func get_state_label(is_player1: bool):
 	else:
 		return p2_state_label
 
-func increase_combo_counter(player1: bool):
-	if player1:
-		p1_combo_counter.increase_combo_counter()
+func increase_combo_counter(is_player1: bool):
+	if is_player1:
+		p1_combo_counter.increment_combo_counter()
 	else:
-		p2_combo_counter.increase_combo_counter()
+		p2_combo_counter.increment_combo_counter()
 
-func combo_end(player1: bool):
-	if player1:
+func combo_end(is_player1: bool):
+	if is_player1:
 		p1_combo_counter.combo_end()
 	else:
 		p2_combo_counter.combo_end()

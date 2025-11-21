@@ -8,6 +8,7 @@ var player_group := ""
 
 var move_end_frame = 30
 var hitstun : int = 0
+var hitstop : int = 0
 var blockstun : int = 0
 var sfx : String = ""
 
@@ -35,17 +36,11 @@ func State_Physics_Update(input: Dictionary):
 	Attack.check_cancel(character, input, input_array, "ground")
 	
 	if character.get_groups()[0] == "player1":
-		if character.current_frame >= StaticData.P1_move_data["cancel_frame"] and character.buffered_move != "":
-			character.cancel = false
-			anim_player.stop()
-			Attack.do_ground_attack(character, character.buffered_move)
+		check_cancel_window(StaticData.P1_move_data)
 	else:
-		if character.current_frame >= StaticData.P2_move_data["cancel_frame"] and character.buffered_move != "":
-			character.cancel = false
-			anim_player.stop()
-			Attack.do_ground_attack(character, character.buffered_move)
+		check_cancel_window(StaticData.P2_move_data)
 	
-	check_frame()
+	check_player_frame()
 	
 	if character.current_frame >= move_end_frame:
 		if character.get_groups()[0] == "player1":
@@ -58,36 +53,34 @@ func State_Physics_Update(input: Dictionary):
 		character.move_name = "idle"
 		Transitioned.emit(self, "idle")
 
-func check_frame():
+func check_cancel_window(move_data):
+	if character.current_frame >= move_data["cancel_frame"] and character.buffered_move != "":
+		character.cancel = false
+		anim_player.stop()
+		Attack.do_ground_attack(character, character.buffered_move)
+
+func check_player_frame():
 	if character.get_groups()[0] == "player1":
 		for data in StaticData.P1_move_data["frames"]:
-			if character.current_frame == data["frame"]:
-				hitstun = data["hitstun"]
-				blockstun = data["blockstun"]
-				
-				var hitbox_string = "hitbox"
-				var hitbox_index = 1
-				var hitbox_input = hitbox_string + str(hitbox_index)
-			
-				while data.has(hitbox_input):
-					create_hitbox(data[hitbox_input])
-					hitbox_index += 1
-					hitbox_input = hitbox_string + str(hitbox_index)
+			check_frame(data)
 	else:
 		for data in StaticData.P2_move_data["frames"]:
-			if character.current_frame == data["frame"]:
-				hitstun = data["hitstun"]
-				blockstun = data["blockstun"]
-				sfx = data['sfx']
-				
-				var hitbox_string = "hitbox"
-				var hitbox_index = 1
-				var hitbox_input = hitbox_string + str(hitbox_index)
-			
-				while data.has(hitbox_input):
-					create_hitbox(data[hitbox_input])
-					hitbox_index += 1
-					hitbox_input = hitbox_string + str(hitbox_index)
+			check_frame(data)
+
+func check_frame(data):
+	if character.current_frame == data["frame"]:
+		hitstun = data["hitstun"]
+		hitstop = data["hitstop"]
+		blockstun = data["blockstun"]
+		
+		var hitbox_string = "hitbox"
+		var hitbox_index = 1
+		var hitbox_input = hitbox_string + str(hitbox_index)
+		
+		while data.has(hitbox_input):
+			create_hitbox(data[hitbox_input])
+			hitbox_index += 1
+			hitbox_input = hitbox_string + str(hitbox_index)
 
 func create_hitbox(data):
 	var player : String
@@ -106,6 +99,7 @@ func create_hitbox(data):
 		height = data['height'],
 		sfx = sfx,
 		hitstun = hitstun,
+		hitstop = hitstop,
 		blockstun = blockstun,
 		player = player,
 		character = character,

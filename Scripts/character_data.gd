@@ -30,6 +30,7 @@ var crouch := false
 var move_name := "null"
 var buffered_move := ""
 var hitstun := 0
+var hitstop := 0
 var blockstun := 0
 var height_hit := ""
 var colliding := false
@@ -204,6 +205,7 @@ func _save_state() -> Dictionary:
 		velocity_y = velocity.y,
 		move_name = move_name,
 		hitstun = hitstun,
+		hitstop = hitstop,
 		blockstun = blockstun,
 		health = health,
 		being_thrown = being_thrown,
@@ -241,6 +243,7 @@ func _load_state(state: Dictionary) -> void:
 	velocity.y = state['velocity_y']
 	move_name = state['move_name']
 	hitstun = state['hitstun']
+	hitstop = state['hitstop']
 	blockstun = state['blockstun']
 	health = state['health']
 	being_thrown = state['being_thrown']

@@ -1,1 +1,25 @@
-{"anim_name":"jump_a","cancel":"jump_b","cancel_frame":10,"frames":[{"blockstun":8,"frame":4,"hitbox1":{"damage":2,"end_frame":100,"height":"high","pos_x":-0.2,"pos_y":1.4,"scale_x":2,"scale_y":2,"sfx":"light"},"hitstop":2,"hitstun":20,"sfx":"light"}],"move_end_frame":1000}
+{
+	"anim_name": "jump_a",
+	"cancel": "jump_b",
+	"cancel_frame": 10.0,
+	"frames": [
+		{
+			"blockstun": 8.0,
+			"frame": 4.0,
+			"hitbox1": {
+				"damage": 2.0,
+				"end_frame": 100.0,
+				"height": "high",
+				"pos_x": -0.2,
+				"pos_y": 1.4,
+				"scale_x": 2.0,
+				"scale_y": 2.0,
+				"sfx": "light"
+			},
+			"hitstop": 2.0,
+			"hitstun": 20.0,
+			"sfx": "light"
+		}
+	],
+	"move_end_frame": 1000.0
+}

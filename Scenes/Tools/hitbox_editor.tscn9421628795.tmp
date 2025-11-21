@@ -429,7 +429,6 @@ grow_vertical = 2
 theme = SubResource("Theme_auj21")
 placeholder_text = "1"
 script = ExtResource("5_4nh4c")
-key = "scale_x"
 
 [node name="VarScaleYEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/Scale"]
 layout_mode = 1
@@ -444,7 +443,6 @@ grow_vertical = 2
 theme = SubResource("Theme_auj21")
 placeholder_text = "1"
 script = ExtResource("5_4nh4c")
-key = "scale_y"
 
 [node name="EndFrame" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
@@ -463,7 +461,6 @@ grow_vertical = 2
 theme = SubResource("Theme_auj21")
 placeholder_text = "1"
 script = ExtResource("5_4nh4c")
-key = "end_frame"
 
 [node name="VarEndFrameLabel" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/EndFrame"]
 layout_mode = 1
@@ -548,7 +545,6 @@ grow_vertical = 2
 theme = SubResource("Theme_auj21")
 placeholder_text = "1"
 script = ExtResource("5_4nh4c")
-key = "height"
 
 [node name="Pushback" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
@@ -582,7 +578,6 @@ grow_vertical = 2
 theme = SubResource("Theme_auj21")
 placeholder_text = "1"
 script = ExtResource("5_4nh4c")
-key = "pushback"
 
 [node name="PushTime" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
@@ -616,7 +611,6 @@ grow_vertical = 2
 theme = SubResource("Theme_auj21")
 placeholder_text = "1"
 script = ExtResource("5_4nh4c")
-key = "pushtime"
 
 [node name="Hitstop" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
@@ -650,7 +644,6 @@ grow_vertical = 2
 theme = SubResource("Theme_auj21")
 placeholder_text = "1"
 script = ExtResource("5_4nh4c")
-key = "hitstop"
 
 [node name="SFX" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
@@ -684,7 +677,6 @@ grow_vertical = 2
 theme = SubResource("Theme_auj21")
 placeholder_text = "light"
 script = ExtResource("5_4nh4c")
-key = "sfx"
 
 [node name="Cancel" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
@@ -767,3 +759,19 @@ key = "cancel_frame"
 [connection signal="pressed" from="RightButton" to="." method="_on_right_button_pressed"]
 [connection signal="text_changed" from="CurrentFrameEdit" to="." method="_on_current_frame_edit_text_changed"]
 [connection signal="text_changed" from="EndFrameEdit" to="." method="_on_end_frame_edit_text_changed"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/Frame/VarFrameEdit" to="." method="_on_var_frame_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/Blockstun/VarBlockstunEdit" to="." method="_on_var_blockstun_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/Hitstun/VarHitstunEdit" to="." method="_on_var_hitstun_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/Damage/VarDamageEdit" to="." method="_on_var_damage_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/Position/VarPositionXEdit" to="." method="_on_var_position_x_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/Position/VarPositionYEdit" to="." method="_on_var_position_y_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/Scale/VarScaleXEdit" to="." method="_on_var_scale_x_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/Scale/VarScaleYEdit" to="." method="_on_var_scale_y_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/EndFrame/VarEndFrameEdit" to="." method="_on_var_end_frame_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/Height/VarHeightEdit" to="." method="_on_var_height_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/Pushback/VarPushbackEdit" to="." method="_on_var_pushback_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/PushTime/VarPushTimeEdit" to="." method="_on_var_push_time_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/Hitstop/VarHitstopEdit" to="." method="_on_var_hitstop_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/SFX/VarSFXEdit" to="." method="_on_var_sfx_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/Cancel/VarCancelEdit" to="." method="_on_var_cancel_edit_text_submitted"]
+[connection signal="text_submitted" from="ScrollContainer/MarginContainer/VBoxContainer/CancelFrame/VarCancelFrameEdit" to="." method="_on_var_cancel_frame_edit_text_submitted"]

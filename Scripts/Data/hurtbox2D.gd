@@ -73,6 +73,7 @@ func hit(hitbox: Hitbox2D):
 	owner.take_damage(hitbox.damage)
 	
 	character.hitstun = hitbox.hitstun
+	character.hitstop = hitbox.hitstop
 	#if character.state_machine.current_state.state_name == "hitstun":
 	#	print("check")
 	#print("NEW HITSTUN: " + str(character.hitstun))

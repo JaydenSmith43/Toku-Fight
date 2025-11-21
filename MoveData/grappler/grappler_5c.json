@@ -1,1 +1,24 @@
-{"anim_name":"5c","cancel":"2c","cancel_frame":22,"frames":[{"blockstun":30,"frame":14,"hitbox1":{"damage":7,"end_frame":5,"height":"high","pos_x":1.2,"pos_y":4,"scale_x":2,"scale_y":2},"hitstun":40,"sfx":"heavy"}],"move_end_frame":34}
+{
+	"anim_name": "5c",
+	"cancel": "2c",
+	"cancel_frame": 22.0,
+	"frames": [
+		{
+			"blockstun": 30.0,
+			"frame": 14.0,
+			"hitbox1": {
+				"damage": 7.0,
+				"end_frame": 5.0,
+				"height": "high",
+				"pos_x": 1.2,
+				"pos_y": 4.0,
+				"scale_x": 2.0,
+				"scale_y": 2.0
+			},
+			"hitstop": 10.0,
+			"hitstun": 40.0,
+			"sfx": "heavy"
+		}
+	],
+	"move_end_frame": 34.0
+}

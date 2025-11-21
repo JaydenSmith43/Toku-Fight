@@ -1,1 +1,26 @@
-{"anim_name":"2a","cancel":"2a,5b,2b","cancel_frame":10,"frames":[{"blockstun":20,"frame":4,"hitbox1":{"damage":2,"end_frame":2,"height":"low","pos_x":2,"pos_y":0.4,"scale_x":1.6,"scale_y":1.2},"hitstop":2,"hitstun":20,"pushback":1,"sfx":"light"}],"move_end_frame":16}
+{
+	"anim_name": "2a",
+	"cancel": "2a,5b,2b",
+	"cancel_frame": 10.0,
+	"frames": [
+		{
+			"blockstun": 21.0,
+			"frame": 4.0,
+			"hitbox1": {
+				"damage": 2.0,
+				"end_frame": 3.0,
+				"height": "low",
+				"pos_x": 2.0,
+				"pos_y": 0.4,
+				"scale_x": 1.6,
+				"scale_y": 1.2
+			},
+			"hitstop": 3.0,
+			"hitstun": 21.0,
+			"pushback": 1.0,
+			"pushtime": 1.0,
+			"sfx": "light"
+		}
+	],
+	"move_end_frame": 16.0
+}
