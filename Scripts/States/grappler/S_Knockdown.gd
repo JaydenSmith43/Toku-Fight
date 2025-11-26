@@ -14,7 +14,7 @@ func Exit():
 	character.hittable = true
 	character.throw_invul = false
 
-func State_Physics_Update(input: Dictionary):
+func State_Physics_Update(_input: Dictionary):
 	character.current_frame += 1
 	
 	if character.current_frame == 1:

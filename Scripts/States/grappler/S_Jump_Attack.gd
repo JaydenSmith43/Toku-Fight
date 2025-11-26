@@ -7,8 +7,6 @@ var hitbox = preload("res://Scenes/Characters/hitbox2d.tscn")
 var anim_name := ""
 var player_group := ""
 
-var hitstun : int = 0
-var blockstun : int = 0
 var sfx : String = ""
 
 func Enter():
@@ -61,7 +59,6 @@ func State_Physics_Update(input: Dictionary):
 	
 	check_frame()
 	
-	
 	if character.current_frame >= move_end_frame:
 		if character.get_groups()[0] == "player1":
 			StaticData.current_move_p1 = ""
@@ -77,8 +74,6 @@ func check_frame():
 	if character.get_groups()[0] == "player1":
 		for data in StaticData.P1_move_data["frames"]:
 			if character.current_frame == data["frame"]:
-				hitstun = data["hitstun"]
-				blockstun = data["blockstun"]
 				
 				var hitbox_string = "hitbox"
 				var hitbox_index = 1
@@ -91,8 +86,6 @@ func check_frame():
 	else:
 		for data in StaticData.P2_move_data["frames"]:
 			if character.current_frame == data["frame"]:
-				hitstun = data["hitstun"]
-				blockstun = data["blockstun"]
 				sfx = data['sfx']
 				
 				var hitbox_string = "hitbox"
@@ -104,24 +97,27 @@ func check_frame():
 					hitbox_index += 1
 					hitbox_input = hitbox_string + str(hitbox_index)
 
-func create_hitbox(data):
+func create_hitbox(hitbox_data):
 	var player : String
 	if character.is_in_group("player1"):
 		player = "player1"
 	else:
 		player = "player2"
 	
+
+	
 	SyncManager.spawn("Hitbox", get_parent().get_parent(), hitbox, { 
-		damage = data["damage"],
-		end_frame = data["end_frame"],
-		fixed_pos_x = SGFixed.from_float(data["pos_x"]),
-		fixed_pos_y = -SGFixed.from_float(data["pos_y"]),
-		extents_x = SGFixed.div(SGFixed.from_float(data["scale_x"]), 131072),
-		extents_y = SGFixed.div(SGFixed.from_float(data["scale_y"]), 131072),
-		height = data['height'],
+		damage = hitbox_data["damage"],
+		end_frame = hitbox_data["end_frame"],
+		fixed_pos_x = SGFixed.from_float(hitbox_data["pos_x"]),
+		fixed_pos_y = -SGFixed.from_float(hitbox_data["pos_y"]),
+		extents_x = SGFixed.div(SGFixed.from_float(hitbox_data["scale_x"]), 131072),
+		extents_y = SGFixed.div(SGFixed.from_float(hitbox_data["scale_y"]), 131072),
+		height = hitbox_data['height'],
 		sfx = sfx,
-		hitstun = hitstun,
-		blockstun = blockstun,
+		hitstop = hitbox_data['hitstop'],
+		hitstun = hitbox_data["hitstun"],
+		blockstun = hitbox_data["blockstun"],
 		player = player,
 		character = character,
 		left_side = character.left_side

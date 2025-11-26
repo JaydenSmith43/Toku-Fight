@@ -4,20 +4,20 @@
 	"cancel_frame": 10.0,
 	"frames": [
 		{
-			"blockstun": 21.0,
 			"frame": 4.0,
 			"hitbox1": {
+				"blockstun": 21.0,
 				"damage": 2.0,
 				"end_frame": 3.0,
 				"height": "low",
-				"pos_x": 2.0,
-				"pos_y": 0.4,
-				"scale_x": 1.6,
-				"scale_y": 1.2,
 				"hitstop": 3.0,
 				"hitstun": 21.0,
+				"pos_x": 2.0,
+				"pos_y": 0.4,
 				"pushback": 1.0,
 				"pushtime": 1.0,
+				"scale_x": 1.6,
+				"scale_y": 1.2
 			},
 			"sfx": "light"
 		}

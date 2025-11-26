@@ -4,7 +4,6 @@
 	"cancel_frame": 11.0,
 	"frames": [
 		{
-			"blockstun": 14.0,
 			"frame": 5.0,
 			"hitbox1": {
 				"damage": 2.0,
@@ -16,6 +15,7 @@
 				"scale_y": 1.0,
 				"hitstop": 3.0,
 				"hitstun": 16.0,
+				"blockstun": 14.0,
 			},
 			"sfx": "light"
 		}

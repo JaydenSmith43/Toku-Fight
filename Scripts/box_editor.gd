@@ -13,13 +13,13 @@ var var_edits_dict : Dictionary[String, LineEdit] = {}
 
 var grappler_model = preload("res://Scenes/Characters/grappler/grappler_model.tscn")
 var hitbox = preload("res://Scenes/Characters/editor_hitbox3d.tscn")
-var box_check_order = ["sfx"]
-var load_check_order = ["damage","pos_x","pos_y","scale_x","scale_y","end_frame","height", "blockstun","hitstun","hitstop","pushback","pushtime"]
+var data_check_order = ["sfx"]
+var load_check_order = ["damage","pos_x","pos_y","scale_x","scale_y","end_frame","height","blockstun","hitstun","hitstop","pushback","pushtime"]
 
 var current_model
 var current_anim_player : AnimationPlayer
 var current_frame = 1
-var animations = [] ###
+var animations = []
 var current_boxes = []
 var move_data = {}
 
@@ -115,7 +115,7 @@ func load_box_variables(index : int):
 			if data["frame"] == float(hitbox_string[0]):
 				var_edits_dict["frame"].text = str(data["frame"])
 				
-				for check in box_check_order:
+				for check in data_check_order:
 					if data.has(check):
 						var_edits_dict[check].text = str(data[check])
 					else:
@@ -309,7 +309,6 @@ func check_empty_vars():
 		log_label.text = "Log: placeholder data inserted into empty vars!"
 		log_label.self_modulate.a = 2
 		log_label.new_text = true
-		#play anim
 		return
 
 func _on_delete_button_button_down() -> void:
@@ -326,10 +325,10 @@ func _on_delete_button_button_down() -> void:
 #region variables
 var check_edit = {
 	"frame":"frame",
-	"blockstun":"float","hitstun":"float","hitstop":"float","pushback":"float","pushtime":"float",
 	"sfx":"string",
 	"damage":"hitbox_float","pos_x":"hitbox_float","pos_y":"hitbox_float","scale_x":"hitbox_float",
-	"scale_y":"hitbox_float","end_frame":"hitbox_float",
+	"blockstun":"hitbox_float","hitstun":"hitbox_float","hitstop":"hitbox_float","pushback":"hitbox_float",
+	"pushtime":"hitbox_float","scale_y":"hitbox_float","end_frame":"hitbox_float",
 	"height":"hitbox_string",
 	"cancel":"cancel",
 	"cancel_frame":"cancel_frame"

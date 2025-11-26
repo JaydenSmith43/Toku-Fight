@@ -28,7 +28,7 @@ func Enter():
 func Exit():
 	pass
 
-func State_Physics_Update(input: Dictionary):
+func State_Physics_Update(_input: Dictionary):
 	character.current_frame += 1
 	character.velocity.x = current_velocity
 	
