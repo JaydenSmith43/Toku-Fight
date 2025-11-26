@@ -13,11 +13,12 @@
 				"pos_x": 2.6,
 				"pos_y": 2.0,
 				"scale_x": 1.8,
-				"scale_y": 1.0
+				"scale_y": 1.0,
+				"hitstop": 2.0,
+				"hitstun": 18.0,
+				"pushback": 1.0,
+				"pushtime": 1.0,
 			},
-			"hitstop": 2.0,
-			"hitstun": 18.0,
-			"pushback": 1.0,
 			"sfx": "medium"
 		}
 	],

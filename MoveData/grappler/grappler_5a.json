@@ -13,10 +13,10 @@
 				"pos_x": 3.0,
 				"pos_y": 4.0,
 				"scale_x": 1.2,
-				"scale_y": 1.0
+				"scale_y": 1.0,
+				"hitstop": 3.0,
+				"hitstun": 16.0,
 			},
-			"hitstop": 3.0,
-			"hitstun": 16.0,
 			"sfx": "light"
 		}
 	],

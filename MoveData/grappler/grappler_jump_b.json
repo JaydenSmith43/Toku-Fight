@@ -14,9 +14,11 @@
 				"pos_y": 1.8,
 				"scale_x": 2.0,
 				"scale_y": 1.5,
-				"sfx": "light"
+				"hitstop": 4.0,
+				"hitstun": 25.0,
+				"pushback": 2.0,
+				"pushtime": 1.0,
 			},
-			"hitstun": 25.0,
 			"sfx": "medium"
 		}
 	],

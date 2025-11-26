@@ -6,6 +6,7 @@ func do_throw(character: SGCharacterBody2D):
 	character.state_machine.current_state.Transitioned.emit(character.state_machine.current_state, "thrower")
 
 func do_special(character: SGCharacterBody2D, move_button: String, motion_string: String):
+	###TODO move button determines type of move when unique strength specials added
 	character.low_blocking = false
 	character.high_blocking = false
 	var state_name = character.character_name + motion_string
@@ -48,8 +49,8 @@ func check_motions_available(character: SGCharacterBody2D, input_array: Node, mo
 func check_cancel(character: SGCharacterBody2D, input: Dictionary, input_array: Node, state: String):
 	if character.buffered_move != "":
 		return
-	
 	var cancel_array
+	
 	if character.get_groups()[0] == "player1" and StaticData.P1_move_data.has("cancel"):
 		cancel_array = StaticData.P1_move_data["cancel"].split(",", false)
 	elif StaticData.P2_move_data.has("cancel"):
@@ -103,7 +104,6 @@ func check_motion(character: SGCharacterBody2D, input_array: Node, motion_array:
 	
 	input_window = 59 - input_window
 	var motion_direction_index : int = 0
-	
 	
 	# Iterate backwards from size (basically always 59) - window to 0 
 	for n in range(input_array.input_frame.size() - input_window - 1, -1, -1):

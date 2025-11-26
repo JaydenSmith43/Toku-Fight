@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://cie2e7ge67p4w"]
+[gd_scene load_steps=16 format=3 uid="uid://cie2e7ge67p4w"]
 
 [ext_resource type="Script" uid="uid://bb0qas0h4bcar" path="res://Scripts/box_editor.gd" id="1_1srkk"]
 [ext_resource type="Script" uid="uid://cjotv0ui8dm6r" path="res://Scenes/Tools/editor_camera.gd" id="2_e446d"]
 [ext_resource type="Environment" uid="uid://jsqpfw82fbi" path="res://world_environment.tres" id="2_ekjgq"]
 [ext_resource type="Material" uid="uid://boov5m5w86nyq" path="res://Materials/grid_mat.tres" id="3_14lqj"]
 [ext_resource type="Script" uid="uid://bljoo4e0fhmcl" path="res://Scenes/Tools/var_edit.gd" id="5_4nh4c"]
+[ext_resource type="Script" uid="uid://d1v1t63e54jk2" path="res://Scenes/Tools/log_label.gd" id="5_l5axq"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_ysvca"]
 material = ExtResource("3_14lqj")
@@ -34,8 +35,7 @@ default_font_size = 20
 [sub_resource type="Theme" id="Theme_m2wye"]
 default_font_size = 28
 
-[node name="Node3D" type="Node3D" node_paths=PackedStringArray("animation_option_button", "character_option_button", "hitbox_option_button", "current_frame_edit", "end_frame_edit", "total_frame_label", "var_line_edits")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.985718, 0, 0)
+[node name="Node3D" type="Node3D" node_paths=PackedStringArray("animation_option_button", "character_option_button", "hitbox_option_button", "current_frame_edit", "end_frame_edit", "total_frame_label", "log_label", "var_line_edits")]
 script = ExtResource("1_1srkk")
 animation_option_button = NodePath("AnimationOptionButton")
 character_option_button = NodePath("CharacterOptionButton")
@@ -43,6 +43,7 @@ hitbox_option_button = NodePath("HitboxOptionButton")
 current_frame_edit = NodePath("CurrentFrameEdit")
 end_frame_edit = NodePath("EndFrameEdit")
 total_frame_label = NodePath("TotalFrameLabel")
+log_label = NodePath("LogLabel")
 var_line_edits = [NodePath("ScrollContainer/MarginContainer/VBoxContainer/Frame/VarFrameEdit"), NodePath("ScrollContainer/MarginContainer/VBoxContainer/Blockstun/VarBlockstunEdit"), NodePath("ScrollContainer/MarginContainer/VBoxContainer/Hitstun/VarHitstunEdit"), NodePath("ScrollContainer/MarginContainer/VBoxContainer/Damage/VarDamageEdit"), NodePath("ScrollContainer/MarginContainer/VBoxContainer/Position/VarPositionXEdit"), NodePath("ScrollContainer/MarginContainer/VBoxContainer/Position/VarPositionYEdit"), NodePath("ScrollContainer/MarginContainer/VBoxContainer/Scale/VarScaleXEdit"), NodePath("ScrollContainer/MarginContainer/VBoxContainer/Scale/VarScaleYEdit"), NodePath("ScrollContainer/MarginContainer/VBoxContainer/EndFrame/VarEndFrameEdit"), NodePath("ScrollContainer/MarginContainer/VBoxContainer/Height/VarHeightEdit"), NodePath("ScrollContainer/MarginContainer/VBoxContainer/Pushback/VarPushbackEdit"), NodePath("ScrollContainer/MarginContainer/VBoxContainer/PushTime/VarPushTimeEdit"), NodePath("ScrollContainer/MarginContainer/VBoxContainer/Hitstop/VarHitstopEdit"), NodePath("ScrollContainer/MarginContainer/VBoxContainer/SFX/VarSFXEdit"), NodePath("ScrollContainer/MarginContainer/VBoxContainer/Cancel/VarCancelEdit"), NodePath("ScrollContainer/MarginContainer/VBoxContainer/CancelFrame/VarCancelFrameEdit")]
 
 [node name="Camera3D" type="Camera3D" parent="."]
@@ -193,6 +194,23 @@ offset_bottom = 303.0
 theme = SubResource("Theme_auj21")
 text = "1"
 placeholder_text = "1"
+
+[node name="LogLabel" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -318.4875
+offset_right = 318.4875
+offset_bottom = 123.0
+grow_horizontal = 2
+theme = SubResource("Theme_t275h")
+theme_override_colors/font_color = Color(1, 0.78431374, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "Log: Nothing"
+horizontal_alignment = 1
+autowrap_mode = 3
+script = ExtResource("5_l5axq")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 anchors_preset = 15

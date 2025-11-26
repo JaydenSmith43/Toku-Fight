@@ -19,5 +19,5 @@ func Exit():
 func State_Update(_delta: float):
 	pass
 
-func State_Physics_Update(input: Dictionary):
+func State_Physics_Update(_input: Dictionary):
 	pass

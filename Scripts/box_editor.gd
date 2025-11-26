@@ -6,14 +6,15 @@ extends Node3D
 @export var current_frame_edit : LineEdit
 @export var end_frame_edit : LineEdit
 @export var total_frame_label : Label
+@export var log_label : Label
 @export var var_line_edits : Array[LineEdit]
 
 var var_edits_dict : Dictionary[String, LineEdit] = {}
 
 var grappler_model = preload("res://Scenes/Characters/grappler/grappler_model.tscn")
 var hitbox = preload("res://Scenes/Characters/editor_hitbox3d.tscn")
-var box_check_order = ["blockstun","hitstun","hitstop","pushback","pushtime","sfx"]
-var load_check_order = ["damage","pos_x","pos_y","scale_x","scale_y","end_frame","height"]
+var box_check_order = ["sfx"]
+var load_check_order = ["damage","pos_x","pos_y","scale_x","scale_y","end_frame","height", "blockstun","hitstun","hitstop","pushback","pushtime"]
 
 var current_model
 var current_anim_player : AnimationPlayer
@@ -34,10 +35,10 @@ var blockstun = true
 var hitstun = true
 
 func _ready() -> void:
-	set_var_dict()
+	set_var_edit_dict()
 	load_character_data(0)
 
-func set_var_dict():
+func set_var_edit_dict():
 	for x in var_line_edits.size():
 		var_edits_dict[var_line_edits[x].key] = var_line_edits[x]
 
@@ -58,12 +59,14 @@ func load_character_data(index : int):
 	
 	current_anim_player = current_model.get_node("AnimationPlayer")
 	
-	var animsss = current_anim_player.get_animation_list()
-	for anim_name in animsss:
+	var anims = current_anim_player.get_animation_list()
+	for anim_name in anims:
 		animation_option_button.add_item(anim_name)
 	load_animation()
 
 func load_animation():
+	log_label.text = ""
+	log_label.self_modulate.a = 0
 	current_anim_player.play(animation_option_button.get_item_text(animation_option_button.get_selected_id()))
 	_on_current_frame_edit_text_changed(str(int(current_frame_edit.text)))
 	total_frame_label.text = "Total Anim Frames: " + str(int(current_anim_player.current_animation_length * 60))
@@ -151,7 +154,7 @@ func load_frame_data():
 	if move_data.has("frames"):
 		for data in move_data["frames"]:
 			if current_frame == data["frame"]:
-				load_hitbox_data(data)
+				load_hitbox_to_display(data)
 		if move_data["frames"].size() == 0:
 			no_data()
 
@@ -184,7 +187,7 @@ func load_prev_hitbox_data(prev_frame: int, data):
 		hitbox_index += 1
 		hitbox_input = hitbox_string + str(hitbox_index)
 
-func load_hitbox_data(data):
+func load_hitbox_to_display(data):
 	var hitbox_string = "hitbox"
 	var hitbox_index = 1
 	var hitbox_input = hitbox_string + str(hitbox_index)
@@ -279,12 +282,35 @@ func _on_hurtbox_button_button_down() -> void:
 	pass # Replace with function body.
 
 func _on_save_button_button_down() -> void:
+	check_empty_vars()
+	
 	var character_name = character_option_button.get_item_text(character_option_button.get_selected_id())
 	var move = animation_option_button.get_item_text(animation_option_button.get_selected_id())
 	var path = "res://MoveData/" + character_name + "/" + character_name + "_" + move + ".json"
 	var json_string = JSON.stringify(move_data, "\t")
 	var file = FileAccess.open(path, FileAccess.WRITE)
 	file.store_string(json_string)
+	if log_label.new_text == false:
+		log_label.text = "Log: saved!"
+		log_label.self_modulate.a = 2
+	
+	load_box_items()
+	load_box_variables(0)
+	log_label.new_text = false
+
+func check_empty_vars():
+	var filled_empty_vars = false
+	
+	for edit in var_line_edits:
+		if edit.text == "":
+			filled_empty_vars = true
+			_on_var_edit("", edit.key)
+	if filled_empty_vars:
+		log_label.text = "Log: placeholder data inserted into empty vars!"
+		log_label.self_modulate.a = 2
+		log_label.new_text = true
+		#play anim
+		return
 
 func _on_delete_button_button_down() -> void:
 	var index = hitbox_option_button.get_selected_id()
@@ -331,6 +357,8 @@ func _on_var_edit(new_text: String, key: String) -> void:
 			var_cancel_frame_edit(new_text)
 
 func var_edit_frame(new_text: String, hitbox_string: PackedStringArray, index: int) -> void:
+	if new_text == "":
+		new_text = "1"
 	if new_text.is_valid_float():
 		for data in move_data["frames"]:
 			if data["frame"] == float(hitbox_string[0]):
@@ -339,6 +367,8 @@ func var_edit_frame(new_text: String, hitbox_string: PackedStringArray, index: i
 				load_frame_data()
 
 func var_edit_float(new_text: String, key: String, hitbox_string: PackedStringArray) -> void:
+	if new_text == "":
+		new_text = "1"
 	if new_text.is_valid_float():
 		for data in move_data["frames"]:
 			if data["frame"] == float(hitbox_string[0]):
@@ -346,29 +376,39 @@ func var_edit_float(new_text: String, key: String, hitbox_string: PackedStringAr
 				load_frame_data()
 
 func var_edit_string(new_text: String, key: String, hitbox_string: PackedStringArray) -> void:
+	if new_text == "":
+		new_text = "placeholder"
 	for data in move_data["frames"]:
 		if data["frame"] == float(hitbox_string[0]):
 			data[key] = new_text
 			load_frame_data()
 
 func var_edit_hitbox_float(new_text: String, key: String, hitbox_string: PackedStringArray) -> void:
+	if new_text == "":
+		new_text = "1"
 	if new_text.is_valid_float():
 		for data in move_data["frames"]:
 			if data["frame"] == float(hitbox_string[0]):
 				data[hitbox_string[1]][key] = float(new_text)
 				load_frame_data()
 
-func var_edit_hitbox_string(new_text: String, key: String, hitbox_string: PackedStringArray) -> void:	
+func var_edit_hitbox_string(new_text: String, key: String, hitbox_string: PackedStringArray) -> void:
+	if new_text == "":
+		new_text = "placeholder"
 	for data in move_data["frames"]:
 		if data["frame"] == float(hitbox_string[0]):
 			data[hitbox_string[1]][key] = new_text
 			load_frame_data()
 
 func var_cancel_edit(new_text: String) -> void:
+	if new_text == "":
+		new_text = "placeholder"
 	move_data["cancel"] = new_text
 	load_frame_data()
 
 func var_cancel_frame_edit(new_text: String) -> void:
+	if new_text == "":
+		new_text = "1"
 	if new_text.is_valid_float():
 		move_data["cancel_frame"] = float(new_text)
 		load_frame_data()
