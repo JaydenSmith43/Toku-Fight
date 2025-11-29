@@ -57,7 +57,7 @@ func State_Physics_Update(input: Dictionary):
 			character.cancel = false
 			Attack.do_jump_attack(character, character.buffered_move)
 	
-	check_frame()
+	check_for_box_on_frame()
 	
 	if character.current_frame >= move_end_frame:
 		if character.get_groups()[0] == "player1":
@@ -70,7 +70,7 @@ func State_Physics_Update(input: Dictionary):
 		character.move_name = "idle"
 		Transitioned.emit(self, "idle")
 
-func check_frame():
+func check_for_box_on_frame():
 	if character.get_groups()[0] == "player1":
 		for data in StaticData.P1_move_data["frames"]:
 			if character.current_frame == data["frame"]:
@@ -103,8 +103,6 @@ func create_hitbox(hitbox_data):
 		player = "player1"
 	else:
 		player = "player2"
-	
-
 	
 	SyncManager.spawn("Hitbox", get_parent().get_parent(), hitbox, { 
 		damage = hitbox_data["damage"],

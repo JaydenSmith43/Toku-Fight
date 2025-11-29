@@ -18,36 +18,39 @@ var ground_motions = ["63214"] # Ideally listed in order of priority
 var jump_motions = ["j214"] # Ideally listed in order of priority
 var charge = ["28"]
 var camera_state = "normal"
-
 var health := 100
-var list_of_hitboxes = []
 
+var list_of_active_hitboxes = []
+var move_name := "null"
+var buffered_move := ""
+var height_hit := ""
+var hitstun := 0
+var hitstop := 0
+var blockstun := 0
+
+var current_frame := 0
 var input_current_frame := 0
 var left_side := false
 var low_blocking := false
 var high_blocking := false
 var crouch := false
-var move_name := "null"
-var buffered_move := ""
-var hitstun := 0
-var hitstop := 0
-var blockstun := 0
-var height_hit := ""
+var cancel := false
+
 var colliding := false
 var jump_velocity_x : int = 0
-var being_thrown := false
-var throwing := false
-var teching := false
-var cancel := false
-var throw_state_frame := 0
-var current_frame := 0
-var hittable = true
-var combo := 0
-var throw_invul := false
-var rematch := true
 var yVelocity : int = 0
 var xVelocity : int = 0
 var airborne : bool = false
+
+var throw_state_frame := 0
+var being_thrown := false
+var throwing := false
+var teching := false
+var throw_invul := false
+var hittable = true
+
+var combo := 0
+var rematch := true
 
 func _ready():
 	up_direction = SGFixed.vector2(0, -65536)
@@ -143,7 +146,7 @@ func _get_local_input() -> Dictionary:
 	
 	return input
 
-func _predict_remote_input(previous_input: Dictionary, ticks_since_real_input: int) -> Dictionary:
+func _predict_remote_input(previous_input: Dictionary, _ticks_since_real_input: int) -> Dictionary:
 	var input = previous_input.duplicate()
 	input.erase("a")
 	input.erase("b")

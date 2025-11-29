@@ -37,7 +37,7 @@ func input_handler(character: SGCharacterBody2D, input: Dictionary):
 		
 		add_time()
 
-func handle_directions(character: SGCharacterBody2D, input: Dictionary, new_input_array):
+func handle_directions(_character: SGCharacterBody2D, input: Dictionary, new_input_array):
 	var directions_pressed = false
 	var directions_check := [
 		Vector2i(-1,1), Vector2i(-1,-1), Vector2i(-1,0), Vector2i(1,1),
@@ -51,7 +51,7 @@ func handle_directions(character: SGCharacterBody2D, input: Dictionary, new_inpu
 			return # can only have one direction input
 			#input_buffer_times.push_front(0)
 
-func handle_buttons(character: SGCharacterBody2D, input: Dictionary, new_input_array):
+func handle_buttons(_character: SGCharacterBody2D, input: Dictionary, new_input_array):
 	var button_pressed = false
 	var input_checks = ["a", "A", "b", "B", "c", "C"]
 	var inputs_pressed

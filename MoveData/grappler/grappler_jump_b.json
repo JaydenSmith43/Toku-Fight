@@ -10,7 +10,7 @@
 				"damage": 4.0,
 				"end_frame": 5.0,
 				"height": "high",
-				"hitstop": 4.0,
+				"hitstop": 9.0,
 				"hitstun": 25.0,
 				"pos_x": 2.0,
 				"pos_y": 1.8,

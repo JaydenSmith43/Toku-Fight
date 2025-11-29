@@ -6,16 +6,18 @@
 		{
 			"frame": 5.0,
 			"hitbox1": {
+				"blockstun": 14.0,
 				"damage": 2.0,
 				"end_frame": 40.0,
 				"height": "mid",
+				"hitstop": 6.0,
+				"hitstun": 16.0,
 				"pos_x": 3.0,
 				"pos_y": 4.0,
+				"pushback": 1.0,
+				"pushtime": 1.0,
 				"scale_x": 1.2,
-				"scale_y": 1.0,
-				"hitstop": 3.0,
-				"hitstun": 16.0,
-				"blockstun": 14.0,
+				"scale_y": 1.0
 			},
 			"sfx": "light"
 		}

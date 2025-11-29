@@ -67,13 +67,16 @@ func hit(hitbox: Hitbox2D):
 	#print(str(multiplayer.multiplayer_peer.get_unique_id()) + " current_frame: " + str(character.current_frame) + ": hit")
 	if character.is_in_group("player1"):
 		get_tree().get_nodes_in_group("player2")[0].cancel = true
+		get_tree().get_nodes_in_group("player2")[0].hitstop = hitbox.hitstop
 	else:
 		get_tree().get_nodes_in_group("player1")[0].cancel = true
+		get_tree().get_nodes_in_group("player1")[0].hitstop = hitbox.hitstop
 	
 	owner.take_damage(hitbox.damage)
 	
 	character.hitstun = hitbox.hitstun
 	character.hitstop = hitbox.hitstop
+	
 	#if character.state_machine.current_state.state_name == "hitstun":
 	#	print("check")
 	#print("NEW HITSTUN: " + str(character.hitstun))
@@ -92,7 +95,6 @@ func hit(hitbox: Hitbox2D):
 	SyncManager.despawn(hitbox) #if hitboxes are grouped, delete the others in the group
 
 	choose_hit_sound(hitbox.sfx)
-	
 
 func choose_hit_sound(effect : String):
 	match effect:

@@ -25,7 +25,7 @@ func Exit():
 	character.current_frame = 0
 	character.throw_state_frame = 0
 
-func State_Physics_Update(input: Dictionary):
+func State_Physics_Update(_input: Dictionary):
 	if !character.throwing:
 		character.current_frame += 1
 		

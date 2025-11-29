@@ -32,6 +32,8 @@ func Enter():
 	elif character.height_hit == "low":
 		anim_player.play("hit_low")
 	
+	anim_player.stop()
+	
 	if character.left_side:
 		character.velocity.x = -8000 #stun_velocity #-10660
 	else:
@@ -47,8 +49,12 @@ func State_Physics_Update(_input: Dictionary):
 
 	character.current_frame += 1
 	if character.current_frame > character.hitstop:
+		model.hitstop_active = false
+		anim_player.play()
 		character.velocity.x = lerp(character.velocity.x, 0, 0.1)
 		character.move_and_slide()
+	else:
+		model.hitstop_active = true
 	
 	model.position.x = SGFixed.to_float(character.fixed_position_x)
 	model.position.y = -SGFixed.to_float(character.fixed_position_y)
@@ -56,6 +62,7 @@ func State_Physics_Update(_input: Dictionary):
 	if character.current_frame == character.hitstun:
 		character.hitstun = 0
 		otherPlayer.combo = 0
+		character.height_hit = "none"
 		if otherPlayer.is_in_group("player1"):
 			otherPlayer.game_manager.combo_end(true)
 		else:

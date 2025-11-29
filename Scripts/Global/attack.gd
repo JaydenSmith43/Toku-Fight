@@ -5,7 +5,7 @@ func do_throw(character: SGCharacterBody2D):
 	character.high_blocking = false
 	character.state_machine.current_state.Transitioned.emit(character.state_machine.current_state, "thrower")
 
-func do_special(character: SGCharacterBody2D, move_button: String, motion_string: String):
+func do_special(character: SGCharacterBody2D, _move_button: String, motion_string: String):
 	###TODO move button determines type of move when unique strength specials added
 	character.low_blocking = false
 	character.high_blocking = false
@@ -81,7 +81,7 @@ func ground_buffer(character: SGCharacterBody2D, input: Dictionary, input_array:
 					return
 		current_check_index += 2
 
-func jump_buffer(character: SGCharacterBody2D, input: Dictionary, input_array: Node, cancel_array):
+func jump_buffer(character: SGCharacterBody2D, _input: Dictionary, input_array: Node, cancel_array):
 	if input_array.was_pressed("C", 1):
 		for cancels in cancel_array:
 			if cancels == "jump_c":
@@ -98,7 +98,7 @@ func jump_buffer(character: SGCharacterBody2D, input: Dictionary, input_array: N
 				character.buffered_move = "jump_a"
 				return
 
-func check_motion(character: SGCharacterBody2D, input_array: Node, motion_array: Array[int], move_button: String, input_window: int):
+func check_motion(character: SGCharacterBody2D, input_array: Node, motion_array: Array[int], _move_button: String, input_window: int):
 	if !character.left_side:
 		motion_array = flip_motion(motion_array)
 	
@@ -120,8 +120,8 @@ func string_to_int_array(motion_string: String):
 	if motion_string[0] == "j":
 		motion_string = motion_string.substr(1)
 		pass
-	for char in motion_string:
-		int_array.append(int(char))
+	for character in motion_string:
+		int_array.append(int(character))
 	return int_array
 
 func flip_motion(motion_array: Array[int]):

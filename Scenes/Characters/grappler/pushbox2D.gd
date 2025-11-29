@@ -42,8 +42,8 @@ func _on_area_entered(pushbox : SGArea2D):
 		characterVelocityX = right_push_check / 2
 		opposingVelocityX = -right_push_check / 2
 	
-	var current_state_name = character.state_machine.current_state.state_name
-	var opposing_state_name = opposingPlayer.state_machine.current_state.state_name
+	#var current_state_name = character.state_machine.current_state.state_name
+	#var opposing_state_name = opposingPlayer.state_machine.current_state.state_name
 	
 	character.move_and_collide(SGFixed.vector2(characterVelocityX, 0))
 	opposingPlayer.move_and_collide(SGFixed.vector2(opposingVelocityX, 0))
